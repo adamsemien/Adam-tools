@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto Partner Plan — Month by Month</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #00B09B;
+  --navy: #0F1F3D;
+  --orange: #E8651A;
+  --cream: #F7F3EE;
+  --warm: #EDE8E1;
+  --text: #1A1A2E;
+  --muted: #6B7080;
+  --border: #DDD8D0;
+  --white: #FFFFFF;
+  --green: #166534;
+  --green-bg: #F0FAF4;
+  --amber: #92400E;
+  --amber-bg: #FFFBEB;
+  --blue: #1E40AF;
+  --blue-bg: #EFF6FF;
+  --purple: #6B21A8;
+  --purple-bg: #FAF5FF;
+  --red: #991B1B;
+  --red-bg: #FEF2F2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
+
+.header{background:var(--navy);padding:20px 36px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--teal);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--teal);}
+.header-right{font-size:12px;color:rgba(255,255,255,0.4);font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:1px;}
+
+.month-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 36px;display:flex;gap:0;overflow-x:auto;}
+.mnav-btn{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:14px 16px;border:none;background:none;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.mnav-btn:hover{color:var(--navy);}
+.mnav-btn.active{color:var(--teal);border-bottom-color:var(--teal);}
+.mnav-btn.corp{position:relative;}
+.mnav-btn.corp::after{content:'★';font-size:8px;color:var(--orange);position:absolute;top:8px;right:4px;}
+
+.main{max-width:1100px;margin:0 auto;padding:36px;}
+.section{display:none;}
+.section.active{display:block;}
+
+.month-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:32px;}
+.month-title{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--navy);line-height:1;}
+.month-subtitle{font-size:14px;color:var(--muted);margin-top:6px;}
+.month-target{text-align:right;}
+.month-target-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-family:'Syne',sans-serif;color:var(--muted);}
+.month-target-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--teal);}
+.month-target-sub{font-size:12px;color:var(--muted);}
+
+.week-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+.week-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.week-label{font-family:'Syne',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
+.week-item{font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid var(--warm);line-height:1.4;}
+.week-item:last-child{border-bottom:none;}
+.week-item.event{font-weight:600;color:var(--navy);}
+.week-item.prep{color:var(--muted);}
+.week-item.follow{color:var(--teal);}
+
+.focus-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.focus-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.focus-card-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.focus-items{list-style:none;}
+.focus-item{font-size:13px;color:var(--text);padding:7px 0;border-bottom:1px solid var(--warm);padding-left:16px;position:relative;line-height:1.5;}
+.focus-item::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:11px;top:8px;}
+.focus-item:last-child{border-bottom:none;}
+
+.event-block{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:16px;}
+.event-block.must{border-left:4px solid var(--orange);}
+.event-block.corp{border-left:4px solid var(--blue);}
+.event-block.activation{border-left:4px solid var(--purple);}
+.event-block.assoc{border-left:4px solid var(--teal);}
+.event-block.pending{border-left:4px solid var(--muted);opacity:0.75;}
+
+.event-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px;}
+.event-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--navy);}
+.event-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px;}
+.tag{font-size:10px;font-weight:600;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.5px;padding:3px 9px;border-radius:20px;}
+.tag-must{background:#FFF7ED;color:var(--orange);border:1px solid #FED7AA;}
+.tag-corp{background:var(--blue-bg);color:var(--blue);border:1px solid #BFDBFE;}
+.tag-act{background:var(--purple-bg);color:var(--purple);border:1px solid #DDD6FE;}
+.tag-date{background:var(--warm);color:var(--text);}
+.tag-city{background:#F3F4F6;color:#374151;}
+.tag-pending{background:#F9FAFB;color:var(--muted);border:1px solid var(--border);}
+.tag-assoc{background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0;}
+
+.event-pipeline{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--teal);white-space:nowrap;}
+.event-pipeline-label{font-size:11px;color:var(--muted);text-align:right;}
+
+.event-body{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px;}
+
+.experience-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;}
+.exp-block{border-radius:8px;padding:12px 14px;}
+.exp-block.dinner{background:#FFF7ED;}
+.exp-block.happy{background:var(--green-bg);}
+.exp-block.round{background:var(--blue-bg);}
+.exp-block.morning{background:var(--purple-bg);}
+.exp-block.webinar{background:#F0F4FF;}
+.exp-block-label{font-size:10px;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+.exp-block-val{font-size:12px;line-height:1.5;color:var(--text);}
+
+.play-box{background:var(--navy);border-radius:8px;padding:14px 16px;margin-top:12px;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.65;}
+.play-box strong{color:var(--teal);}
+
+.checklist{list-style:none;margin:0;}
+.check-li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--warm);font-size:13px;line-height:1.5;}
+.check-li:last-child{border-bottom:none;}
+.check-box{width:16px;height:16px;border:2px solid var(--border);border-radius:3px;flex-shrink:0;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;justify-content:center;margin-top:2px;background:var(--white);}
+.check-box.done{background:var(--teal);border-color:var(--teal);}
+.check-box.done::after{content:'✓';color:white;font-size:10px;font-weight:700;}
+.check-label.done{text-decoration:line-through;color:var(--muted);}
+
+.pipeline-bar{margin-bottom:8px;}
+.pb-header{display:flex;justify-content:space-between;margin-bottom:4px;}
+.pb-label{font-size:12px;color:var(--muted);}
+.pb-val{font-size:12px;font-weight:500;color:var(--navy);}
+.pb-track{background:var(--warm);border-radius:4px;height:8px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:4px;background:var(--teal);}
+
+.callout{border-radius:8px;padding:14px 18px;font-size:13px;line-height:1.65;margin:14px 0;}
+.co{background:#FFF7ED;border-left:3px solid var(--orange);color:#7C2D12;}
+.ct{background:var(--green-bg);border-left:3px solid var(--teal);color:#134E4A;}
+.cn{background:var(--blue-bg);border-left:3px solid var(--navy);color:var(--navy);}
+.cp{background:var(--purple-bg);border-left:3px solid var(--purple);color:#4C1D95;}
+
+.section-h{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin:24px 0 12px;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+
+@media(max-width:768px){.main{padding:20px;}.week-strip,.focus-grid,.two-col,.three-col,.experience-row{grid-template-columns:1fr;}.month-hero{flex-direction:column;}.month-target{text-align:left;}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <div class="logo">CANTO</div>
+    <div>
+      <div style="color:white;font-size:14px;font-weight:500;">Month-by-Month Partner Plan 2026</div>
+      <div style="color:rgba(255,255,255,0.4);font-size:12px;">Adam · Channel Partnerships · $1M pipeline → $250K closed</div>
+    </div>
+  </div>
+  <div class="header-right">★ = corp team present</div>
+</header>
+
+<nav class="month-nav">
+  <button class="mnav-btn active" onclick="show('overview',this)">Overview</button>
+  <button class="mnav-btn" onclick="show('mar',this)">March</button>
+  <button class="mnav-btn" onclick="show('apr',this)">April</button>
+  <button class="mnav-btn" onclick="show('may',this)">May</button>
+  <button class="mnav-btn corp" onclick="show('jun',this)">June</button>
+  <button class="mnav-btn" onclick="show('jul',this)">July</button>
+  <button class="mnav-btn" onclick="show('aug',this)">August</button>
+  <button class="mnav-btn" onclick="show('sep',this)">September</button>
+  <button class="mnav-btn corp" onclick="show('oct',this)">October</button>
+  <button class="mnav-btn" onclick="show('nov',this)">November</button>
+  <button class="mnav-btn" onclick="show('dec',this)">December</button>
+</nav>
+
+<main class="main">
+
+<!-- OVERVIEW -->
+<section id="overview" class="section active">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">2026 Plan</div>
+      <div class="month-subtitle">$1M partner pipeline → $250K closed won · 8–9 deals at $30K ACV · 25% close rate</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline needed</div>
+      <div class="month-target-val">$1M+</div>
+      <div class="month-target-sub">conservative at 25% close rate</div>
+    </div>
+  </div>
+
+  <div class="three-col" style="margin-bottom:24px;">
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;border-top:3px solid var(--orange);">
+      <div style="font-family:'Syne',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--orange);margin-bottom:8px;">Q2 · Apr–Jun</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">Activate & Source</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">GROW LA · Salsify DSS · Minneapolis eCom · CommerceNext · Fancy Food Show<br><br>Agency association play begins. First partner dinners.</div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--warm);font-size:13px;color:var(--teal);font-weight:600;">Target: $300–350K pipeline</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;border-top:3px solid var(--teal);">
+      <div style="font-family:'Syne',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--teal);margin-bottom:8px;">Q3 · Jul–Sep</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">Co-Sell & Deepen</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">Camp Commerce · CPG Roundtable · SuiteConnect test · Shopify community play · First co-sell calls</div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--warm);font-size:13px;color:var(--teal);font-weight:600;">Cumulative: $600–700K pipeline</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;border-top:3px solid var(--blue);">
+      <div style="font-family:'Syne',sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:8px;">Q4 · Oct–Dec</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">Close & Lock 2027</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7;">Shoptalk Fall · CMWorld · SuiteWorld · Glossy Summit (conditional) · Year-end partner dinner</div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--warm);font-size:13px;color:var(--teal);font-weight:600;">Final: $1M+ pipeline · $250K closed</div>
+    </div>
+  </div>
+
+  <div class="section-h">Pipeline by event</div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;">
+    <div id="pipeline-bars"></div>
+  </div>
+
+  <div class="callout co">
+    <strong>The two piggybacking events are your most efficient spend.</strong> Fancy Food Show and Content Marketing World both have your corp team present — your incremental cost is a dinner and a flight. Those two events alone represent $340–420K in estimated pipeline at near-zero marginal budget. Protect them above everything else.
+  </div>
+
+  <div class="callout cp" style="margin-top:12px;">
+    <strong>Association / user group layer (pending activation):</strong> One co-hosted chapter event per quarter with an agency partner — SFA orbit with Barrel/Netalico (Q2), Shopify Partner meetup with any agency (Q3), NetSuite user group with SI partner (Q4). Each activation is $500–1,000 and borrows your partner's community credibility. Details pending partner confirmation.
+  </div>
+</section>
+
+<!-- MARCH -->
+<section id="mar" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">March</div>
+      <div class="month-subtitle">No events. All groundwork. This month funds everything that follows.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$0</div>
+      <div class="month-target-sub">plant seeds only</div>
+    </div>
+  </div>
+
+  <div class="callout co">
+    <strong>March is the most important month you won't feel productive in.</strong> Every deal that closes in Q4 starts with a conversation you have now. Partner activation sequences take 6–8 weeks to yield a warm referral. Don't skip this.
+  </div>
+
+  <div class="section-h">This month's job: get 4 things done</div>
+
+  <div class="focus-grid">
+    <div class="focus-card" style="border-top:3px solid var(--orange);">
+      <div class="focus-card-title" style="color:var(--orange);">🚀 Must-Do This Month</div>
+      <ul class="focus-items">
+        <li class="focus-item">Apply to Camp Commerce (campcommerce.nyc) — fills fast, zero cost to apply</li>
+        <li class="focus-item">Reach out to Sitation re: Salsify DSS — "I'll be there May 4–6, let's meet and I want to host a dinner night 2, can I put you on the list?"</li>
+        <li class="focus-item">Reach out to Gournay — same message, find contact via LinkedIn if you don't have one</li>
+        <li class="focus-item">Call Minneapolis eCom Summit organizer — ask for last year's attendee vertical breakdown before committing to the trip</li>
+        <li class="focus-item">Register for GROW LA (April 23) and confirm Avex or BlueSwitch are attending</li>
+        <li class="focus-item">Investigate Salsify DSS sponsorship — email partnerships@salsify.com this week to ask about late sponsor options</li>
+      </ul>
+    </div>
+    <div class="focus-card" style="border-top:3px solid var(--teal);">
+      <div class="focus-card-title" style="color:var(--teal);">📋 Partner Activation Sequences</div>
+      <ul class="focus-items">
+        <li class="focus-item">Start Sitation 6-touch sequence — Touch 1 this week</li>
+        <li class="focus-item">Start Gournay sequence — Touch 1 this week</li>
+        <li class="focus-item">Brief Barrel on Fancy Food Show (June 28–30) — confirm their attendance and ask for client list</li>
+        <li class="focus-item">Brief Netalico on Fancy Food Show — same ask</li>
+        <li class="focus-item">Brief Avex or BlueSwitch on GROW LA — confirm LA presence and identify clients to meet</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-h">Content & co-marketing</div>
+  <div class="focus-card">
+    <div class="focus-card-title" style="color:var(--navy);">✍️ Publish before GROW LA</div>
+    <ul class="focus-items">
+      <li class="focus-item">Draft first LinkedIn co-content piece with an agency partner — CPG asset ops angle, no pitch, just diagnosis</li>
+      <li class="focus-item">Tag 5 real CPG/fashion brand accounts in the post — this is how you get inbound before you show up anywhere</li>
+      <li class="focus-item">Write Salsify community piece: "Canto + Salsify coexistence — how brands manage the DAM-to-PIM handoff"</li>
+    </ul>
+  </div>
+</section>
+
+<!-- APRIL -->
+<section id="apr" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">April</div>
+      <div class="month-subtitle">First event of the year. Q2 opener. Low cost, high operator density.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$60–80K</div>
+      <div class="month-target-sub">first seeds planted</div>
+    </div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">GROW LA</div>
+        <div class="event-tags">
+          <span class="tag tag-must">★★★ Must</span>
+          <span class="tag tag-date">April 23</span>
+          <span class="tag tag-city">West Hollywood, CA</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$80–100K</div>
+      </div>
+    </div>
+    <div class="event-body">800+ DTC brand operators at the Directors Guild of America. One day, all-day open bar, curated 1:1 meetings. Vuori, Lululemon, Steve Madden alumni. Strong CPG, fashion, and health & beauty density. Your Q2 opener — low cost, high ICP density. Avex and BlueSwitch are LA-based so they anchor this event.</div>
+    <div class="experience-row">
+      <div class="exp-block happy">
+        <div class="exp-block-label">Pre-event (Apr 22 evening)</div>
+        <div class="exp-block-val">Dinner with Avex/BlueSwitch contact. Brief them on the 5–6 brand clients you want to meet tomorrow. Seat plan.</div>
+      </div>
+      <div class="exp-block happy">
+        <div class="exp-block-label">Day of (Apr 23)</div>
+        <div class="exp-block-val">Walk floor with agency partner. Use the built-in happy hour. No formal dinner needed — the event has it. Let the agency make intros naturally.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">Follow-up (Apr 24–25)</div>
+        <div class="exp-block-val">Personal follow-up to everyone you spoke with. Reference something specific from the conversation. Add to CRM. Tag for Salsify DSS dinner invite.</div>
+      </div>
+    </div>
+    <div class="play-box"><strong>The Play:</strong> Pre-identify 5–6 CPG/fashion brand attendees from the registration list. Get Avex or BlueSwitch to make warm intros on the floor. The event's all-day open bar is a built-in happy hour — use it, you don't need to spend $2K on a separate dinner. Best conversation wins the follow-up.</div>
+  </div>
+
+  <div class="section-h">Rest of April — between events</div>
+  <div class="focus-grid">
+    <div class="focus-card">
+      <div class="focus-card-title" style="color:var(--orange);">Before GROW LA (Apr 1–22)</div>
+      <ul class="focus-items">
+        <li class="focus-item">Book AUS → LAX for Apr 22, return Apr 24</li>
+        <li class="focus-item">Get GROW LA attendee list — identify target brands pre-flight</li>
+        <li class="focus-item">Brief Avex/BlueSwitch on 3 specific clients you want to meet</li>
+        <li class="focus-item">Touch 3 of Sitation sequence — reference DSS dinner invite</li>
+        <li class="focus-item">Touch 3 of Gournay sequence</li>
+        <li class="focus-item">Book Atlanta dinner venue for Salsify DSS (May 5 evening) — do this now, not in May</li>
+      </ul>
+    </div>
+    <div class="focus-card">
+      <div class="focus-card-title" style="color:var(--teal);">After GROW LA (Apr 24–30)</div>
+      <ul class="focus-items">
+        <li class="focus-item">Follow up all GROW LA conversations within 48 hours</li>
+        <li class="focus-item">Confirm Barrel + Netalico for Fancy Food Show (June 28–30) — lock in now</li>
+        <li class="focus-item">Book NYC flights for June 21 arrival, July 1 departure (CommerceNext + Fancy Food stack)</li>
+        <li class="focus-item">Apply to CommerceNext hosted meetings program</li>
+        <li class="focus-item">Confirm Salsify DSS dinner guest list — target 8–10, send invites now</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout ct">
+    <strong>Association layer (pending):</strong> Ask Barrel or Netalico this month whether they're involved in any SFA chapter events or local food & bev community meetups. If yes, ask to co-host one in Q2 or Q3. This is the association activation — it costs nothing to ask.
+  </div>
+</section>
+
+<!-- MAY -->
+<section id="may" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">May</div>
+      <div class="month-subtitle">Two events in two cities. Highest ICP concentration of Q2.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$120–150K</div>
+      <div class="month-target-sub">cumulative from Q2 start</div>
+    </div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Salsify Digital Shelf Summit</div>
+        <div class="event-tags">
+          <span class="tag tag-must">★★★ Must</span>
+          <span class="tag tag-date">May 4–6</span>
+          <span class="tag tag-city">Atlanta, GA</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$120–150K</div>
+      </div>
+    </div>
+    <div class="event-body">Highest ICP concentration of any vertical event. CPG, food & bev, and manufacturing brands who already paid for the problem Canto solves downstream. Sitation (Score 27/30) and Gournay (Score 28/30) will both be here. You either sponsor (if you moved fast in March) or you attend and run the dinner. Either way you're going.</div>
+    <div class="experience-row">
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Night 2 — May 5 (Partner Dinner)</div>
+        <div class="exp-block-val">8–10 guests. Private room. Sitation + Gournay + 2–3 CPG brand attendees pre-identified. One Canto customer if possible. No pitch — one real question.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">Day 1–2 (Floor strategy)</div>
+        <div class="exp-block-val">Map which CPG/food & bev brands are in attendance. When a panelist describes the image governance problem — that's your opening. Don't pitch on the floor.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">Follow-up window</div>
+        <div class="exp-block-val">Within 24 hours of the dinner: personal note to each guest referencing a specific thing they said. This is where referral habits form.</div>
+      </div>
+    </div>
+    <div class="play-box"><strong>Dinner topic:</strong> "What's still broken about product content workflows for mid-market brands in 2026?" Let Sitation and Gournay talk. You listen and position Canto only when someone describes a problem you directly solve. No deck. No demo. Follow up with a Kinder's or Nalgene case study the next morning.</div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Minneapolis eCom Summit</div>
+        <div class="event-tags">
+          <span class="tag tag-must">★★★ Confirmed</span>
+          <span class="tag tag-date">May 14</span>
+          <span class="tag tag-city">Minneapolis, MN</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$40–70K</div>
+      </div>
+    </div>
+    <div class="event-body">Corp team confirmed. Boutique one-day event — 85% brand-side operators. Midwest food & bev, CPG, and sporting goods density. You piggyback on the corp team's presence and run the evening activation yourself.</div>
+    <div class="experience-row">
+      <div class="exp-block happy">
+        <div class="exp-block-label">Day of (May 14)</div>
+        <div class="exp-block-val">Work the roundtables. Identify food & bev and CPG Creative Directors. These are referral targets for Netalico/Barrel — flag them in real time.</div>
+      </div>
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Evening (May 14)</div>
+        <div class="exp-block-val">Dinner for 6–8 people. Invite the best conversations from the day. "The Canto partner team is hosting a small dinner tonight — join us." Fast, casual, no ceremony.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">Follow-up (May 15)</div>
+        <div class="exp-block-val">Personal notes within 24 hours. Connect on LinkedIn. Pass warm Midwest leads to Netalico with a specific intro note — don't just forward names.</div>
+      </div>
+    </div>
+    <div class="callout cn" style="margin-top:12px;"><strong>Conditional:</strong> Only book this trip if the organizer confirms Midwest CPG/food & bev density in last year's attendee breakdown. Call them in March before committing flights.</div>
+  </div>
+
+  <div class="section-h">Between events</div>
+  <div class="focus-card">
+    <div class="focus-card-title" style="color:var(--navy);">May to-dos (non-event)</div>
+    <ul class="focus-items">
+      <li class="focus-item">Write Salsify DSS follow-up content within 1 week of the event — post about what you heard, tag attendees</li>
+      <li class="focus-item">Send Kinder's or Nalgene case study to all DSS dinner guests within 48 hours</li>
+      <li class="focus-item">Pitch CPG vertical roundtable to Barrel for Q3 — "you send the invite, I facilitate, co-branded, their client list"</li>
+      <li class="focus-item">Touch 5 on Sitation and Gournay sequences — post-event warm follow-up</li>
+      <li class="focus-item">Confirm NYC accommodation for June 21–July 1 (Airbnb cheaper than hotel for 10 days)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- JUNE -->
+<section id="jun" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">June</div>
+      <div class="month-subtitle">NYC week. Two events, 10 days, two dinners. Corp team at Fancy Food. Your most stacked month.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$250–300K</div>
+      <div class="month-target-sub">cumulative by end of June</div>
+    </div>
+  </div>
+
+  <div class="callout co" style="margin-bottom:20px;">
+    <strong>NYC week logic:</strong> AUS → NYC round trip is $400–600. Flying twice (once for CommerceNext, once for Fancy Food) costs $800–1,200 and wastes 2 travel days. Book one trip June 21–July 1. Use the gap days for partner meetings, agency lunches, and dinner prep.
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">CommerceNext Growth Show</div>
+        <div class="event-tags">
+          <span class="tag tag-must">★★★ Must</span>
+          <span class="tag tag-date">June 23–24</span>
+          <span class="tag tag-city">NYC · Hilton Midtown</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$120–160K</div>
+      </div>
+    </div>
+    <div class="event-body">2,700+ brand-side retail and DTC leaders. Past speakers include Ulta, Vuori, Foot Locker, Coach, Sephora. Apply for the hosted meetings program — qualified brand operators get a free ticket and $2K travel credit, and the invite-only side events (yacht, private dinners) are the highest-value moments at this conference.</div>
+    <div class="experience-row">
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Evening June 23 (Dinner)</div>
+        <div class="exp-block-val">8–10 guests. Barrel + agency partners attending + 4–5 brand-side contacts from the day. Private room. NYC pricing so ~$150–200/head.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">June 23–24 (Floor)</div>
+        <div class="exp-block-val">Apply for hosted 1:1 meetings. Target Creative Directors and VP Marketing from CPG/fashion/health & beauty brands. These are your direct buyer titles.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">Gap days June 25–27</div>
+        <div class="exp-block-val">Agency partner lunches and coffees in NYC. Barrel HQ visit. Netalico intro if they have NYC presence. Use the time, don't just sit in the hotel.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block corp">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Summer Fancy Food Show</div>
+        <div class="event-tags">
+          <span class="tag tag-corp">Corp Team Present</span>
+          <span class="tag tag-must">★★★ Must</span>
+          <span class="tag tag-date">June 28–30</span>
+          <span class="tag tag-city">NYC · Javits Center</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$180–220K</div>
+      </div>
+    </div>
+    <div class="event-body">30,000+ food & bev professionals. 2,400+ exhibiting brands. Corp team is anchoring the booth. You walk the floor with Barrel and/or Netalico — their clients are exhibiting, you get natural introductions. Your incremental cost is a dinner. This is the highest buyer-density event of your year.</div>
+    <div class="experience-row">
+      <div class="exp-block round">
+        <div class="exp-block-label">Pre-event (by June 20)</div>
+        <div class="exp-block-val">Get Barrel/Netalico to send you a list of 5 clients exhibiting. Pre-plan which booths to hit and in what order. Coordinate with corp team on who covers what.</div>
+      </div>
+      <div class="exp-block happy">
+        <div class="exp-block-label">June 28–30 (Floor)</div>
+        <div class="exp-block-val">Walk floor as agency partner's guest. Natural intros to brand Creative Directors at their clients' booths. Don't pitch — just connect and invite to dinner.</div>
+      </div>
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Evening June 29 (Post-Show Dinner)</div>
+        <div class="exp-block-val">8 guests. Agency partner + the 4–5 best brand conversations from the floor. Let the agency pick the restaurant — their credibility with clients. You cover the check.</div>
+      </div>
+    </div>
+    <div class="play-box"><strong>Dinner question:</strong> "How are brands in this room handling retailer digital asset requests at scale — the Costco and Walmart requirements?" That's the Canto problem in one sentence. Let the brand ops people diagnose it. You listen, and follow up the next morning with the Kinder's case study.</div>
+  </div>
+
+  <div class="callout cp">
+    <strong>Association layer (pending):</strong> If Barrel or Netalico is involved in any SFA member events during NYC week, ask to co-host a happy hour or side activation. Even a casual drinks event with 20 SFA member brand contacts during Fancy Food week is worth more than a trade show booth.
+  </div>
+</section>
+
+<!-- JULY -->
+<section id="jul" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">July</div>
+      <div class="month-subtitle">Camp Commerce if accepted. CPG roundtable. No major travel — consolidate Q2 pipeline.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$400–500K</div>
+      <div class="month-target-sub">cumulative by end of July</div>
+    </div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Camp Commerce</div>
+        <div class="event-tags">
+          <span class="tag tag-must">Apply Now</span>
+          <span class="tag tag-date">Summer TBD</span>
+          <span class="tag tag-city">Hamptons, NY</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$80–120K</div>
+      </div>
+    </div>
+    <div class="event-body">150 people, 70% brand operators. Private invite-only retreat at the Billions compound. Poolside breakfasts, sunset bonfires. The format is the product — conversations happen naturally because of the environment, not despite it. If you get in, this replaces two conference trips in terms of relationship quality.</div>
+    <div class="experience-row">
+      <div class="exp-block happy">
+        <div class="exp-block-label">Pre-event</div>
+        <div class="exp-block-val">Apply at campcommerce.nyc immediately. If sponsor activation slot available (morning coffee, branded gift), take it — gets you on the invite list.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">At the event</div>
+        <div class="exp-block-val">No pitch. One genuine conversation per person. Bring a Kinder's or Nalgene rep if possible — a real customer in that room is a referral machine.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">Follow-up</div>
+        <div class="exp-block-val">Personal handwritten follow-up within 48 hours. Reference something specific. These relationships are your 2027 foundation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block activation">
+    <div class="event-top">
+      <div>
+        <div class="event-name">CPG Vertical Roundtable (Self-Hosted)</div>
+        <div class="event-tags">
+          <span class="tag tag-act">Self-Hosted Activation</span>
+          <span class="tag tag-date">Q3 — NYC or Chicago</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$60–80K</div>
+      </div>
+    </div>
+    <div class="event-body">Co-hosted with Barrel or Netalico. Their client list, your facilitation. 6–8 CPG brand-side Marketing Directors and Creative Directors. 90 minutes. Peer conversation on product content workflows. Canto comes up naturally when someone describes the problem you solve.</div>
+    <div class="experience-row">
+      <div class="exp-block morning">
+        <div class="exp-block-label">Format</div>
+        <div class="exp-block-val">Morning session or lunch. Private room or agency office. 6–8 attendees, not 20. Partner sends the invite — their brand, not Canto's.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">Topic</div>
+        <div class="exp-block-val">"How are mid-market CPG brands managing product content for retail distribution in 2026?" One question. 90 minutes. Let them diagnose.</div>
+      </div>
+      <div class="exp-block happy">
+        <div class="exp-block-label">Leave-behind</div>
+        <div class="exp-block-val">1-page "asset governance benchmark for CPG brands." Not a pitch deck. Something useful they'll actually keep and share.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-h">July non-event priorities</div>
+  <div class="focus-grid">
+    <div class="focus-card">
+      <div class="focus-card-title" style="color:var(--teal);">Pipeline work</div>
+      <ul class="focus-items">
+        <li class="focus-item">First co-sell calls — brief every agency partner: "Loop me into any call where a client mentions asset chaos or retailer requests"</li>
+        <li class="focus-item">Follow up all June contacts with a specific next step — not "let me know if I can help"</li>
+        <li class="focus-item">Sitation/Gournay check-in — do they have live deals where Canto is relevant? Offer to join a discovery call.</li>
+        <li class="focus-item">Test a SuiteConnect one-day event (NYC or Chicago) to validate NetSuite audience quality before SuiteWorld commitment</li>
+      </ul>
+    </div>
+    <div class="focus-card">
+      <div class="focus-card-title" style="color:var(--purple);">Association layer (pending)</div>
+      <ul class="focus-items">
+        <li class="focus-item">Ask agency partners about Shopify Partner meetup schedules in their city — offer to co-present a CPG case study</li>
+        <li class="focus-item">Identify 2–3 regional NetSuite user group chapters (NUSUG) — ask the SI partners you met at SuiteConnect to bring you as a guest to a chapter meeting</li>
+        <li class="focus-item">Confirm with Barrel/Netalico whether they have any SFA community events in Q3</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- AUGUST -->
+<section id="aug" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">August</div>
+      <div class="month-subtitle">No major events. Deepest co-sell month of the year. Convert pipeline to active deals.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$550–650K</div>
+      <div class="month-target-sub">cumulative — deals should be moving</div>
+    </div>
+  </div>
+
+  <div class="callout co" style="margin-bottom:20px;">
+    <strong>August is when the rubber meets the road.</strong> You've been to 4–5 events, hosted 3–4 dinners, and run an activation or two. The contacts who said "let's talk more" in May and June — this is the month you convert them into active pipeline. Not events, not content. Conversations and co-sells.
+  </div>
+
+  <div class="event-block activation">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Partner-Led Webinar</div>
+        <div class="event-tags">
+          <span class="tag tag-act">Self-Hosted Activation</span>
+          <span class="tag tag-date">August — date TBD</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$40–60K</div>
+      </div>
+    </div>
+    <div class="event-body">Partner is the host and speaker. Their brand brings the audience. You provide the case study. Target: Barrel or Netalico presents "How CPG brands on Shopify manage 500+ SKUs." You present 10-min Kinder's or Nalgene case study. 15-min Q&A. Their client list gets invited. Every attendee who asks a question gets a personal follow-up from the partner — not from you.</div>
+    <div class="experience-row">
+      <div class="exp-block webinar">
+        <div class="exp-block-label">Format</div>
+        <div class="exp-block-val">45-min Zoom webinar. Partner presents 20 min. You present 10 min. Q&A 15 min. Recorded. Promoted on LinkedIn by both parties.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">Audience target</div>
+        <div class="exp-block-val">Partner's client base + LinkedIn promo. Target 50+ brand-side attendees. Any attendee who asks a question = warm lead for a discovery call.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">Conversion play</div>
+        <div class="exp-block-val">Partner follows up personally with every attendee within 48 hours. Not Canto. The partner's credibility drives the next step.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-h">August priorities</div>
+  <div class="focus-card">
+    <div class="focus-card-title" style="color:var(--navy);">Co-sell and pipeline conversion</div>
+    <ul class="focus-items">
+      <li class="focus-item">Target: 3+ active co-sell calls with agency partners and their live prospects this month</li>
+      <li class="focus-item">MAGIC Las Vegas (Aug 10–12) — low-cost option if Avex or BlueSwitch is exhibiting; attend as their guest for 1 day only</li>
+      <li class="focus-item">Begin Shoptalk Fall prep — confirm agency partner attendance, book Nashville flights and hotel</li>
+      <li class="focus-item">Book Nashville dinner venue for late September — do this in August not September</li>
+      <li class="focus-item">Confirm SuiteWorld decision — based on SuiteConnect test in July, commit or skip</li>
+      <li class="focus-item">Submit CMWorld 2027 speaker proposal — deadline is typically August/September</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SEPTEMBER -->
+<section id="sep" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">September</div>
+      <div class="month-subtitle">Shoptalk Fall to close the month. Q4 tech budget conversations are starting — be in the room.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$700–800K</div>
+      <div class="month-target-sub">cumulative — Q4 deals in motion</div>
+    </div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Shoptalk Fall</div>
+        <div class="event-tags">
+          <span class="tag tag-must">★★★ Must</span>
+          <span class="tag tag-date">Sept 29 – Oct 1</span>
+          <span class="tag tag-city">Nashville, TN</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$100–140K</div>
+      </div>
+    </div>
+    <div class="event-body">1-in-3 attendees is C-suite. Nashville is more intimate than Spring Vegas. Q4 timing is ideal — buyers are in budget planning mode for next year. Attend with Barrel or whichever agency has the most active client relationships by September. Do not exhibit.</div>
+    <div class="experience-row">
+      <div class="exp-block round">
+        <div class="exp-block-label">Sept 29–30 (Floor)</div>
+        <div class="exp-block-val">Work sessions and hallways. Agency partner makes intros to their clients who are attending. Target VP Marketing and Creative Director titles at $20M–$150M brands.</div>
+      </div>
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Evening Sept 30 (Dinner)</div>
+        <div class="exp-block-val">10 guests. Agency partners + brand contacts you've cultivated all year. Nashville has great restaurant options — book a private room somewhere with personality. This dinner is a conversion moment.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">Oct 1 (Follow day)</div>
+        <div class="exp-block-val">Personal follow-ups before you fly to Denver for CMWorld. Reference dinner conversation specifically. Every contact gets a next step, not a generic "great to meet you."</div>
+      </div>
+    </div>
+    <div class="play-box"><strong>Nashville note:</strong> Fly in Sept 28. Event ends Oct 1. Fly direct AUS → DEN Oct 2 or 3 — CMWorld starts Oct 5 in Denver. You have 2–3 days between events to decompress and prep.</div>
+  </div>
+
+  <div class="section-h">Early September priorities</div>
+  <div class="focus-card">
+    <div class="focus-card-title" style="color:var(--navy);">Pre-Shoptalk prep</div>
+    <ul class="focus-items">
+      <li class="focus-item">Confirm agency partner attendance at Shoptalk Fall — whoever is going, you're their shadow for the event</li>
+      <li class="focus-item">Pre-identify 8–10 dinner guests from Shoptalk attendee list — send personal invites 2 weeks before the event</li>
+      <li class="focus-item">Brief Sitation/Gournay on any SI deals in pipeline — set expectation of a Q4 close conversation</li>
+      <li class="focus-item">Shopify Plus community play: ask Barrel/Avex to publish joint LinkedIn post targeting Shopify Plus merchants with high SKU counts</li>
+    </ul>
+  </div>
+</section>
+
+<!-- OCTOBER -->
+<section id="oct" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">October</div>
+      <div class="month-subtitle">Three events in 4 weeks. Corp team at CMWorld. Your heaviest travel month.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$900K–$1M</div>
+      <div class="month-target-sub">cumulative — close window opening</div>
+    </div>
+  </div>
+
+  <div class="callout co" style="margin-bottom:20px;">
+    <strong>October stack:</strong> Shoptalk Fall ends Oct 1 in Nashville. CMWorld Oct 5–6 in Denver. SuiteWorld Oct 26–29 in Las Vegas. Three separate trips but AUS makes all three cheap and direct. Don't try to link Nashville and Denver — go home between them.
+  </div>
+
+  <div class="event-block corp">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Content Marketing World</div>
+        <div class="event-tags">
+          <span class="tag tag-corp">Corp Team Present</span>
+          <span class="tag tag-must">★★★ Confirmed</span>
+          <span class="tag tag-date">Oct 5–6</span>
+          <span class="tag tag-city">Denver, CO</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$120–160K</div>
+      </div>
+    </div>
+    <div class="event-body">3,400+ marketing professionals. You loved it last year. Corp team anchors the event — your incremental cost is flights and hotel. The audience is Creative Directors and Marketing Directors thinking about content operations at scale. Your buyer, pre-pain. Plant seeds, host a dinner, and submit your 2027 speaker proposal while you're there.</div>
+    <div class="experience-row">
+      <div class="exp-block round">
+        <div class="exp-block-label">Oct 5–6 (Sessions)</div>
+        <div class="exp-block-val">Session-hop strategically. Hallway conversations are where deals start. Coordinate with corp team — divide and conquer the floor.</div>
+      </div>
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Evening Oct 5 (Dinner)</div>
+        <div class="exp-block-val">8 guests. Mix of conference contacts from the day + any agency partner attending. Denver has great restaurant options. Private room.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">2027 speaker pitch</div>
+        <div class="exp-block-val">Submit proposal on-site or immediately after: "How mid-market product brands built a content ops system that works — with Kinder's/Nalgene." Real case, real customer, gets accepted.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-block high" style="border-left:4px solid var(--blue);">
+    <div class="event-top">
+      <div>
+        <div class="event-name">SuiteWorld (NetSuite)</div>
+        <div class="event-tags">
+          <span class="tag tag-corp">ERP Activation</span>
+          <span class="tag tag-date">Oct 26–29</span>
+          <span class="tag tag-city">Las Vegas · Caesars Forum</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$40–70K</div>
+      </div>
+    </div>
+    <div class="event-body">Conditional on SuiteConnect test in Q3. If the one-day free event validated the audience quality, commit to SuiteWorld. Oracle NetSuite powers hundreds of mid-market CPG, food & bev, and manufacturing brands — your ICP. These companies have clean ERP data and chaotic product assets. You are the only person in this room solving that next problem.</div>
+    <div class="experience-row">
+      <div class="exp-block round">
+        <div class="exp-block-label">Strategy</div>
+        <div class="exp-block-val">Attend consumer goods and manufacturing breakout tracks. Target NetSuite SIs in those verticals. "When your client asks about product assets after go-live — that's Canto."</div>
+      </div>
+      <div class="exp-block happy">
+        <div class="exp-block-label">Target outcome</div>
+        <div class="exp-block-val">2–3 NetSuite SI partners recruited as referral sources for 2027. This is a slow-burn channel — ROI is Q1 2027, not Q4 2026.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">Cost note</div>
+        <div class="exp-block-val">AUS → LAS is one of the cheapest routes from Austin. 3 nights, cheap flights. Low-risk investment even if yield is modest in 2026.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVEMBER -->
+<section id="nov" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">November</div>
+      <div class="month-subtitle">Close deals. Host Glossy Summit (conditional). Year-end partner dinner.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Pipeline target</div>
+      <div class="month-target-val">$1M+</div>
+      <div class="month-target-sub">deals closing · first $250K in sight</div>
+    </div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Glossy Beauty × Wellness Summit</div>
+        <div class="event-tags">
+          <span class="tag tag-pending">Conditional</span>
+          <span class="tag tag-date">November</span>
+          <span class="tag tag-city">Newport Beach, CA</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Est. pipeline</div>
+        <div class="event-pipeline">$60–90K</div>
+      </div>
+    </div>
+    <div class="event-body">Retreat-style summit from Glossy/Digiday. Curated indie brand founders and retail partners. High health & beauty brand density. Only attend if BlueSwitch or Avex confirms their attendance first — you go as their guest, they anchor the room. Without a partner anchor, skip it and roll the budget into the year-end dinner.</div>
+    <div class="play-box"><strong>Go / No-Go:</strong> If BlueSwitch confirms by October 1 → book it. If not confirmed by October 1 → skip it. The year-end partner dinner is more valuable than going to Glossy solo.</div>
+  </div>
+
+  <div class="event-block must">
+    <div class="event-top">
+      <div>
+        <div class="event-name">Year-End Partner Dinner</div>
+        <div class="event-tags">
+          <span class="tag tag-must">★★★ Non-Negotiable</span>
+          <span class="tag tag-date">Late November</span>
+          <span class="tag tag-city">Austin or NYC</span>
+        </div>
+      </div>
+      <div>
+        <div class="event-pipeline-label">Objective</div>
+        <div class="event-pipeline" style="font-size:14px;">2027 commits</div>
+      </div>
+    </div>
+    <div class="event-body">Closed-door dinner for 6–8 active partners. Celebrate wins. Share the year's pipeline and closed revenue numbers. Get each partner to commit to one specific event and one specific referral for 2027. This dinner is what converts transactional partner relationships into durable referral habits that compound next year.</div>
+    <div class="experience-row">
+      <div class="exp-block dinner">
+        <div class="exp-block-label">Guest list (max 8)</div>
+        <div class="exp-block-val">Active agency partners (Barrel, Netalico, Avex, BlueSwitch whoever is active) + Sitation + Gournay. No brand contacts — just partners.</div>
+      </div>
+      <div class="exp-block round">
+        <div class="exp-block-label">Agenda (no slides)</div>
+        <div class="exp-block-val">Each person shares one deal they're excited about for 2027. You share the referral fees paid out this year. Everyone commits to one thing for next year.</div>
+      </div>
+      <div class="exp-block morning">
+        <div class="exp-block-label">City call</div>
+        <div class="exp-block-val">Host in Austin if partners are south/central US. Host in NYC if agencies are primarily east coast. Decide based on who's attending.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout cp">
+    <strong>Association layer (pending):</strong> If the AAFA or NetSuite user group activation identified any chapter events in Nov/Dec, ask an agency partner to co-sponsor a Q4 happy hour or working session with their members. $500–1,000, borrowed credibility, 20–30 brand contacts in the room.
+  </div>
+</section>
+
+<!-- DECEMBER -->
+<section id="dec" class="section">
+  <div class="month-hero">
+    <div>
+      <div class="month-title">December</div>
+      <div class="month-subtitle">No events. Close deals. Plan 2027. Recharge.</div>
+    </div>
+    <div class="month-target">
+      <div class="month-target-label">Revenue target</div>
+      <div class="month-target-val">$250K</div>
+      <div class="month-target-sub">closed won by Dec 31</div>
+    </div>
+  </div>
+
+  <div class="callout co" style="margin-bottom:20px;">
+    <strong>December is not for prospecting.</strong> Any deal that closes in December was started in Q2 or Q3. Your job this month is to remove obstacles from deals already in motion, get procurement through before the holidays, and lock in 2027 partner commitments from the year-end dinner.
+  </div>
+
+  <div class="focus-grid">
+    <div class="focus-card">
+      <div class="focus-card-title" style="color:var(--orange);">Close deals</div>
+      <ul class="focus-items">
+        <li class="focus-item">Work with AE team on every deal in late-stage pipeline — your job is partner escalation, not AE work</li>
+        <li class="focus-item">For each stalled deal: identify the one person at the partner company who can unlock it and call them directly</li>
+        <li class="focus-item">Push for December 15 as the soft close date — anything after Dec 20 slips to January</li>
+        <li class="focus-item">Document every partner-influenced deal for year-end reporting — you need the attribution data</li>
+      </ul>
+    </div>
+    <div class="focus-card">
+      <div class="focus-card-title" style="color:var(--teal);">Plan 2027</div>
+      <ul class="focus-items">
+        <li class="focus-item">EEE Miami 2027 waitlist — sign up at eeemiami.com now, it becomes your Q1 2027 anchor event</li>
+        <li class="focus-item">CMWorld 2027 speaker confirmation — follow up on October proposal submission</li>
+        <li class="focus-item">Lock in 2027 partner commitments from November dinner — get them in writing (email is fine)</li>
+        <li class="focus-item">NetSuite SI partners from SuiteWorld — schedule Q1 2027 intro calls with the 2–3 you identified</li>
+        <li class="focus-item">Present year-end partner program report to Alan — pipeline sourced, events attended, ROI per dollar spent</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout ct">
+    <strong>The number that matters for your review:</strong> Partner-sourced closed won revenue vs. $250K target. Not pipeline. Not events attended. Not partner relationships built. Closed. Won. Revenue. Everything in this plan was built backward from that number.
+  </div>
+</section>
+
+</main>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.mnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+const pipelineData = [
+  {label:'Fancy Food Show (June)', val:200, max:220, color:'#E8651A'},
+  {label:'CommerceNext (June)', val:140, max:160, color:'#00B09B'},
+  {label:'Salsify DSS (May)', val:135, max:150, color:'#E8651A'},
+  {label:'Content Marketing World (Oct)', val:140, max:160, color:'#1E40AF'},
+  {label:'Shoptalk Fall (Sept)', val:120, max:140, color:'#00B09B'},
+  {label:'GROW LA (Apr)', val:90, max:100, color:'#6B21A8'},
+  {label:'Camp Commerce (Jul)', val:100, max:120, color:'#6B21A8'},
+  {label:'CPG Roundtable (self-hosted)', val:70, max:80, color:'#166534'},
+  {label:'Glossy Summit (Nov, conditional)', val:75, max:90, color:'#92400E'},
+  {label:'SuiteWorld (Oct, conditional)', val:55, max:70, color:'#1E40AF'},
+  {label:'Minneapolis eCom (May)', val:55, max:70, color:'#6B7080'},
+];
+
+const container = document.getElementById('pipeline-bars');
+if (container) {
+  pipelineData.forEach(item => {
+    const pct = Math.round((item.val / 220) * 100);
+    container.innerHTML += `
+    <div class="pipeline-bar">
+      <div class="pb-header">
+        <span class="pb-label">${item.label}</span>
+        <span class="pb-val">$${item.val}K–${item.max}K</span>
+      </div>
+      <div class="pb-track">
+        <div class="pb-fill" style="width:${pct}%;background:${item.color};"></div>
+      </div>
+    </div>`;
+  });
+
+  const total = pipelineData.reduce((a,b) => a + b.val, 0);
+  container.innerHTML += `
+  <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy);">Total estimated pipeline</span>
+    <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--teal);">~$${total.toLocaleString()}K</span>
+  </div>`;
+}
+</script>
+</body>
+</html>

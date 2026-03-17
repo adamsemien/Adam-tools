@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto Partner Targeting Tool v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0C0F14; --surface: #13181F; --surface2: #1A2030;
+  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
+  --orange: #FF6B2B; --orange-dim: rgba(255,107,43,0.15); --orange-glow: rgba(255,107,43,0.08);
+  --text: #F0F2F5; --muted: #6B7280; --muted2: #9CA3AF;
+  --green: #22C55E; --green-dim: rgba(34,197,94,0.12);
+  --yellow: #F59E0B; --yellow-dim: rgba(245,158,11,0.12);
+  --red: #EF4444; --red-dim: rgba(239,68,68,0.12);
+  --blue: #3B82F6; --blue-dim: rgba(59,130,246,0.12);
+  --purple: #A855F7; --purple-dim: rgba(168,85,247,0.12);
+  --teal: #14B8A6; --teal-dim: rgba(20,184,166,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
+
+/* TABS */
+.tab-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); padding: 0 32px; position: sticky; top: 0; z-index: 50; }
+.tab-btn { padding: 14px 20px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--muted2); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; white-space: nowrap; margin-bottom: -1px; }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+.tab-content { display: none; } .tab-content.active { display: block; }
+
+/* HEADER */
+.header { padding: 18px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--surface); }
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-mark { width: 34px; height: 34px; background: var(--orange); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; color: white; }
+.header-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -0.3px; }
+.header-sub { font-size: 12px; color: var(--muted2); margin-top: 1px; }
+.header-stats { display: flex; gap: 24px; }
+.hstat { text-align: right; }
+.hstat-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--orange); }
+.hstat-label { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* TOOLBAR */
+.toolbar { padding: 14px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--surface); }
+.search-wrap { position: relative; flex: 1; min-width: 180px; max-width: 280px; }
+.search-input { width: 100%; background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; padding: 8px 12px 8px 34px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; transition: border-color 0.15s; }
+.search-input:focus { border-color: var(--orange); }
+.search-input::placeholder { color: var(--muted); }
+.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+.filter-group { display: flex; gap: 3px; }
+.filter-btn { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--muted2); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; cursor: pointer; transition: all 0.12s; white-space: nowrap; }
+.filter-btn:hover { border-color: var(--orange); color: var(--orange); }
+.filter-btn.active { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); font-weight: 600; }
+.view-toggle { display: flex; gap: 2px; margin-left: auto; }
+.view-btn { width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border2); background: transparent; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.12s; }
+.view-btn.active { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+
+/* MAIN */
+.main { padding: 24px 32px; }
+
+/* ICP BANNER */
+.icp-banner { background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px; }
+.icp-banner-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; color: var(--orange); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 12px; }
+.icp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.icp-item { background: var(--surface2); border-radius: 8px; padding: 10px 14px; }
+.icp-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.icp-val { font-size: 12.5px; color: var(--muted2); line-height: 1.5; }
+
+/* PROGRAM BANNER */
+.program-strip { background: linear-gradient(135deg, rgba(255,107,43,0.08), rgba(255,107,43,0.03)); border: 1px solid rgba(255,107,43,0.18); border-radius: 10px; padding: 12px 18px; margin-bottom: 20px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.prog-tier { text-align: center; }
+.prog-name { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.prog-comm { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--orange); }
+.prog-detail { font-size: 11px; color: var(--muted2); margin-top: 2px; }
+.prog-divider { width: 1px; height: 40px; background: var(--border2); }
+.prog-note { font-size: 12px; color: var(--muted2); line-height: 1.5; flex: 1; min-width: 200px; }
+
+/* GRID */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.15s; position: relative; overflow: hidden; }
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background 0.15s; }
+.card:hover { border-color: rgba(255,107,43,0.3); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+.card:hover::before { background: var(--orange); }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.card-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.2px; }
+.card-type { font-size: 11px; color: var(--muted2); margin-top: 3px; }
+.card-score-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.score-badge { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; line-height: 1; }
+.score-label { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+.tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px; text-transform: uppercase; }
+.card-why { font-size: 12.5px; color: var(--muted2); line-height: 1.55; margin-bottom: 12px; }
+
+/* BUYER PROFILE MINI */
+.buyer-mini { background: var(--surface2); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+.buyer-mini-item { font-size: 11px; color: var(--muted2); }
+.buyer-mini-item strong { color: var(--teal); font-weight: 600; }
+
+.card-signals { margin-bottom: 12px; }
+.signals-title { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.signal-item { font-size: 12px; color: var(--muted2); padding: 3px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; }
+.signal-item:last-child { border-bottom: none; }
+.signal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 5px; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+.priority-indicator { font-size: 11px; font-weight: 600; }
+.status-select { background: var(--bg); border: 1px solid var(--border2); border-radius: 6px; padding: 4px 8px; color: var(--muted2); font-family: 'DM Sans', sans-serif; font-size: 11px; cursor: pointer; outline: none; }
+.status-select:focus { border-color: var(--orange); }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid var(--border2); white-space: nowrap; cursor: pointer; user-select: none; }
+th:hover { color: var(--orange); }
+td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.td-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; }
+.td-name:hover { color: var(--orange); }
+.td-score { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; }
+.td-why { font-size: 12px; color: var(--muted2); max-width: 280px; }
+
+/* MODAL */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px); }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border2); border-radius: 16px; width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; box-shadow: 0 32px 80px rgba(0,0,0,0.6); }
+.modal-top { padding: 22px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; position: sticky; top: 0; background: var(--surface); border-radius: 16px 16px 0 0; }
+.modal-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+.modal-subtitle { font-size: 13px; color: var(--muted2); margin-top: 4px; }
+.modal-score-big { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 48px; line-height: 1; letter-spacing: -2px; color: var(--orange); flex-shrink: 0; }
+.modal-close { background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; width: 30px; height: 30px; color: var(--muted); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.modal-body { padding: 22px 24px; }
+.score-breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 20px; }
+.score-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+.score-item-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 24px; }
+.score-item-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+.modal-section { margin-bottom: 20px; }
+.modal-section-title { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.modal-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* BUYER PROFILE BOX */
+.buyer-box { background: rgba(20,184,166,0.06); border: 1px solid rgba(20,184,166,0.2); border-radius: 8px; padding: 14px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.buyer-field { }
+.buyer-field-label { font-size: 10px; color: var(--teal); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 3px; }
+.buyer-field-val { font-size: 12.5px; color: var(--muted2); line-height: 1.45; }
+
+.outreach-box { background: var(--bg); border: 1px solid var(--border2); border-radius: 8px; padding: 14px 16px; font-size: 13px; color: var(--muted2); line-height: 1.65; font-style: italic; }
+.outreach-box strong { color: var(--text); font-style: normal; }
+.action-step { display: flex; align-items: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.action-step:last-child { border-bottom: none; }
+.step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--orange-dim); border: 1px solid rgba(255,107,43,0.3); color: var(--orange); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-text { font-size: 13px; color: var(--muted2); line-height: 1.5; }
+.step-text strong { color: var(--text); }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.modal-tag { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 5px; background: var(--surface2); border: 1px solid var(--border2); color: var(--muted2); }
+.action-bar { display: flex; gap: 8px; padding-top: 18px; border-top: 1px solid var(--border); margin-top: 18px; }
+.btn-primary { flex: 1; padding: 10px; background: var(--orange); color: white; border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.12s; }
+.btn-primary:hover { background: #ff8c55; }
+.btn-secondary { padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border2); color: var(--muted2); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; }
+.btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+/* SCORE COLORS */
+.s-hot { color: var(--orange); } .s-warm { color: var(--yellow); } .s-cold { color: var(--muted2); }
+
+/* EMPTY */
+.empty { text-align: center; padding: 80px 20px; color: var(--muted); }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--surface2); border: 1px solid var(--border2); color: var(--text); padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 999; }
+.toast.show { opacity: 1; }
+
+/* ── SEQUENCES TAB ────────────────────────────────────── */
+.seq-main { padding: 28px 32px; }
+.seq-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; gap: 20px; flex-wrap: wrap; }
+.seq-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+.seq-sub { font-size: 13px; color: var(--muted2); margin-top: 5px; line-height: 1.5; }
+.seq-legend { display: flex; gap: 16px; flex-wrap: wrap; }
+.seq-leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted2); }
+.seq-leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.seq-partner-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+.seq-ptab { padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border2); background: transparent; color: var(--muted2); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.12s; }
+.seq-ptab:hover { border-color: var(--orange); color: var(--orange); }
+.seq-ptab.active { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); font-weight: 700; }
+
+.seq-container { display: none; }
+.seq-container.active { display: block; }
+
+.seq-overview { background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.seq-ov-left { flex: 1; min-width: 200px; }
+.seq-ov-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.seq-ov-type { font-size: 12px; color: var(--muted2); margin-top: 3px; }
+.seq-ov-strategy { font-size: 13px; color: var(--muted2); margin-top: 10px; line-height: 1.6; }
+.seq-ov-right { display: flex; gap: 12px; flex-wrap: wrap; }
+.seq-stat { text-align: center; background: var(--surface2); border-radius: 8px; padding: 10px 16px; }
+.seq-stat-val { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--orange); }
+.seq-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-top: 2px; }
+
+.touch-timeline { position: relative; }
+.touch-timeline::before { content: ''; position: absolute; left: 18px; top: 0; bottom: 0; width: 1px; background: var(--border2); z-index: 0; }
+
+.touch { position: relative; display: flex; gap: 16px; margin-bottom: 16px; }
+.touch-marker { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; z-index: 1; border: 2px solid; }
+.touch-marker.email { background: var(--blue-dim); border-color: var(--blue); color: var(--blue); }
+.touch-marker.linkedin { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
+.touch-marker.call { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+.touch-marker.value { background: var(--yellow-dim); border-color: var(--yellow); color: var(--yellow); }
+.touch-marker.final { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+
+.touch-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.touch-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.touch-day { font-size: 10px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 0.5px; }
+.touch-channel { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.3px; }
+.touch-channel.email { background: var(--blue-dim); color: var(--blue); }
+.touch-channel.linkedin { background: var(--purple-dim); color: var(--purple); }
+.touch-channel.call { background: var(--green-dim); color: var(--green); }
+.touch-channel.value { background: var(--yellow-dim); color: var(--yellow); }
+.touch-channel.final { background: var(--red-dim); color: var(--red); }
+.touch-goal { font-size: 11px; color: var(--muted2); margin-left: auto; font-style: italic; }
+.touch-subject { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+.touch-body { font-size: 13px; color: var(--muted2); line-height: 1.65; white-space: pre-wrap; }
+.touch-body strong { color: var(--text); }
+.touch-note { font-size: 11px; color: var(--yellow); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+
+.copy-touch { float: right; background: var(--surface2); border: 1px solid var(--border2); color: var(--muted2); padding: 3px 10px; border-radius: 5px; font-size: 11px; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: -2px; transition: all 0.12s; }
+.copy-touch:hover { border-color: var(--orange); color: var(--orange); }
+
+@media (max-width: 768px) {
+  .tab-bar { padding: 0 16px; }
+  .header { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+  .toolbar { padding: 10px 16px; }
+  .main { padding: 16px; }
+  .seq-main { padding: 16px; }
+  .grid { grid-template-columns: 1fr; }
+  .buyer-box { grid-template-columns: 1fr; }
+  .touch-timeline::before { left: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV TABS -->
+<div class="tab-bar">
+  <div class="header-left" style="padding:12px 0;margin-right:24px">
+    <div class="header-mark">C</div>
+    <div>
+      <div class="header-title">Partner Targeting</div>
+    </div>
+  </div>
+  <button class="tab-btn active" onclick="switchTab('partners',this)">Partner Evaluation</button>
+  <button class="tab-btn" onclick="switchTab('sequences',this)">Outreach Sequences</button>
+</div>
+
+<!-- ══ TAB 1: PARTNERS ══════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-partners">
+
+<div class="header">
+  <div>
+    <div style="font-size:12px;color:var(--muted2)">Scoring: ICP Overlap + Active Convos + Referral Willingness = max 30 &nbsp;|&nbsp; 24+ = call this week &nbsp;|&nbsp; 18-23 = Q2 pipeline</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-num" id="statTotal">0</div><div class="hstat-label">Partners</div></div>
+    <div class="hstat"><div class="hstat-num" id="statHot">0</div><div class="hstat-label">Hot (24+)</div></div>
+    <div class="hstat"><div class="hstat-num" id="statQ2">0</div><div class="hstat-label">Q2 Priority</div></div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+    <input class="search-input" id="searchInput" placeholder="Search…" oninput="render()">
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('type','all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('type','SI',this)">SIs</button>
+    <button class="filter-btn" onclick="setFilter('type','Agency',this)">Agencies</button>
+    <button class="filter-btn" onclick="setFilter('type','Consultant',this)">Consultants</button>
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('priority','all',this)">All Priority</button>
+    <button class="filter-btn" onclick="setFilter('priority','Q2',this)">Q2</button>
+    <button class="filter-btn" onclick="setFilter('priority','Q3',this)">Q3</button>
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('vertical','all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('vertical','CPG',this)">CPG</button>
+    <button class="filter-btn" onclick="setFilter('vertical','Fashion',this)">Fashion</button>
+    <button class="filter-btn" onclick="setFilter('vertical','Sporting Goods',this)">Sporting</button>
+  </div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid"><svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg></button>
+    <button class="view-btn" id="tableBtn" onclick="setView('table')" title="Table"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M10 3v18"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg></button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ICP PROFILE -->
+  <div class="icp-banner">
+    <div class="icp-banner-title">🎯 DAM for Products ICP — Based on Kinder's, Nalgene, Lake Champlain Chocolates</div>
+    <div class="icp-grid">
+      <div class="icp-item"><div class="icp-label">Buyer Title</div><div class="icp-val">Creative Director, Marketing Director, or IT Manager — <em>not</em> a data engineer</div></div>
+      <div class="icp-item"><div class="icp-label">Company Size</div><div class="icp-val">$20M–$150M revenue, 50–500 employees, real marketing team</div></div>
+      <div class="icp-item"><div class="icp-label">Prior Stack</div><div class="icp-val">Google Drive, Dropbox, FTP, SharePoint, or QNAP. No DAM. No PIM. Spreadsheets for product data.</div></div>
+      <div class="icp-item"><div class="icp-label">SKU Profile</div><div class="icp-val">100–2,000 active SKUs with variants. Enough that spreadsheets break, not enough to need Salsify.</div></div>
+      <div class="icp-item"><div class="icp-label">Sales Channels</div><div class="icp-val">Own website + 2–5 retail/wholesale channels (Costco, Walmart, regional distributors)</div></div>
+      <div class="icp-item"><div class="icp-label">Trigger Event</div><div class="icp-val">New retail partner request, fast growth, failed first platform, remote work exposing gaps</div></div>
+      <div class="icp-item"><div class="icp-label">Top Verticals</div><div class="icp-val">CPG · Food & Bev · Sporting Goods · Manufacturing · Fashion & Apparel</div></div>
+      <div class="icp-item"><div class="icp-label">The Real Pain</div><div class="icp-val">"The image and the spec live in two different places and everyone's wasting time connecting them manually."</div></div>
+    </div>
+  </div>
+
+  <!-- PROGRAM TIERS -->
+  <div class="program-strip">
+    <div class="prog-tier"><div class="prog-name">Professional Tier</div><div class="prog-comm">10–20%</div><div class="prog-detail">$1–$249K annual · New + upgrade volume</div></div>
+    <div class="prog-divider"></div>
+    <div class="prog-tier"><div class="prog-name">Elite Tier</div><div class="prog-comm">20–30%</div><div class="prog-detail">$250K+ annual · Volume + service attachment</div></div>
+    <div class="prog-divider"></div>
+    <div class="prog-note">At $30K ACV, 2 referred deals/yr = <strong style="color:var(--orange)">~$9,000</strong> in referral fees at Professional mid-rate. Lead with the math — most agency contacts have never heard a DAM referral fee number before. Deal registration required.</div>
+  </div>
+
+  <div id="gridView" class="grid"></div>
+  <div id="tableView" class="table-wrap" style="display:none"><table><thead><tr>
+    <th onclick="sortBy('name')">Partner <span id="sort-name"></span></th>
+    <th onclick="sortBy('type')">Type <span id="sort-type"></span></th>
+    <th onclick="sortBy('score')">Score <span id="sort-score">↓</span></th>
+    <th onclick="sortBy('priority')">Priority <span id="sort-priority"></span></th>
+    <th>Verticals</th><th>Why</th><th>Status</th>
+  </tr></thead><tbody id="tableBody"></tbody></table></div>
+  <div class="empty" id="emptyState" style="display:none"><div style="font-size:32px;margin-bottom:10px;opacity:0.4">🔍</div><div style="color:var(--muted2)">No partners match</div></div>
+</div>
+
+</div><!-- /tab-partners -->
+
+<!-- ══ TAB 2: SEQUENCES ══════════════════════════════════════════ -->
+<div class="tab-content" id="tab-sequences">
+<div class="seq-main">
+  <div class="seq-header">
+    <div>
+      <div class="seq-title">Outreach Sequences — Top 5 Targets</div>
+      <div class="seq-sub">6-touch cadence per partner. Copy any individual message. Channel mix: Email → LinkedIn → Email → Call prep → Value → Close.</div>
+    </div>
+    <div class="seq-legend">
+      <div class="seq-leg-item"><div class="seq-leg-dot" style="background:var(--blue)"></div>Email</div>
+      <div class="seq-leg-item"><div class="seq-leg-dot" style="background:var(--purple)"></div>LinkedIn</div>
+      <div class="seq-leg-item"><div class="seq-leg-dot" style="background:var(--green)"></div>Call</div>
+      <div class="seq-leg-item"><div class="seq-leg-dot" style="background:var(--yellow)"></div>Value Drop</div>
+      <div class="seq-leg-item"><div class="seq-leg-dot" style="background:var(--red)"></div>Final</div>
+    </div>
+  </div>
+
+  <div class="seq-partner-tabs">
+    <button class="seq-ptab active" onclick="switchSeq('sitation',this)">🔥 Sitation</button>
+    <button class="seq-ptab" onclick="switchSeq('gournay',this)">🔥 Gournay</button>
+    <button class="seq-ptab" onclick="switchSeq('barrel',this)">🔥 Barrel</button>
+    <button class="seq-ptab" onclick="switchSeq('netalico',this)">⚡ Netalico</button>
+    <button class="seq-ptab" onclick="switchSeq('avex',this)">⚡ Avex</button>
+  </div>
+
+  <!-- SITATION -->
+  <div class="seq-container active" id="seq-sitation">
+    <div class="seq-overview">
+      <div class="seq-ov-left">
+        <div class="seq-ov-name">Sitation</div>
+        <div class="seq-ov-type">SI · Salsify Platinum Partner · 200+ implementations</div>
+        <div class="seq-ov-strategy">Strategy: Lead with the asset gap they see on every deployment. Don't pitch Canto as a DAM — pitch it as "what completes a Salsify rollout." The referral fee math ($9K+/yr at 2 deals) is your close. Target the Head of Partnerships or a senior Practice Lead — not a random sales rep.</div>
+      </div>
+      <div class="seq-ov-right">
+        <div class="seq-stat"><div class="seq-stat-val">27</div><div class="seq-stat-label">Score</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">30d</div><div class="seq-stat-label">Cadence</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">6</div><div class="seq-stat-label">Touches</div></div>
+      </div>
+    </div>
+    <div class="touch-timeline">
+
+      <div class="touch">
+        <div class="touch-marker email">1</div>
+        <div class="touch-card">
+          <div class="touch-meta">
+            <span class="touch-day">Day 1</span>
+            <span class="touch-channel email">Email</span>
+            <span class="touch-goal">Goal: Get a reply, not a meeting</span>
+            <button class="copy-touch" onclick="copyTouch(this)">Copy</button>
+          </div>
+          <div class="touch-subject">Subject: Salsify deployments + the DAM gap</div>
+          <div class="touch-body">Hi [Name],
+
+I lead channel partnerships at Canto — we're a DAM platform purpose-built for product-driven brands.
+
+I've been mapping Salsify SIs and Sitation kept coming up as the Platinum partner. Which means you've seen this pattern hundreds of times: implementation goes well, and then someone asks "where are the images actually coming from?"
+
+That's us. We're the DAM layer upstream of Salsify — assets and product data in one place, structured around SKUs, publishing directly to Shopify and retail channels. Clients like Kinder's (CPG, 200+ SKUs) and Nalgene (sporting goods) are using us exactly this way.
+
+For your mid-market clients that don't have a DAM and couldn't justify Bynder's price — there's a co-sell motion worth building.
+
+Worth 20 minutes?
+
+[Your name]
+Canto | Channel Partnerships</div>
+          <div class="touch-note">⚡ Personalize: Find their name on sitation.com/about or LinkedIn before sending. If you know a specific Sitation client in CPG or food & bev, name-drop them here.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker linkedin">2</div>
+        <div class="touch-card">
+          <div class="touch-meta">
+            <span class="touch-day">Day 4</span>
+            <span class="touch-channel linkedin">LinkedIn</span>
+            <span class="touch-goal">Goal: Connection + short note</span>
+            <button class="copy-touch" onclick="copyTouch(this)">Copy</button>
+          </div>
+          <div class="touch-subject">LinkedIn Connection Request Note</div>
+          <div class="touch-body">Hi [Name] — sent you a note about Canto + Salsify earlier this week. We're building a co-sell program with SIs and Sitation is top of my list. Happy to connect.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker email">3</div>
+        <div class="touch-card">
+          <div class="touch-meta">
+            <span class="touch-day">Day 8</span>
+            <span class="touch-channel email">Email</span>
+            <span class="touch-goal">Goal: Add value, reframe the ask</span>
+            <button class="copy-touch" onclick="copyTouch(this)">Copy</button>
+          </div>
+          <div class="touch-subject">Subject: The $9K question for Sitation</div>
+          <div class="touch-body">Hi [Name],
+
+Following up from last week. Wanted to put a number on the table.
+
+Our Professional partner tier pays 10–20% commission on net new deals. At our average $30K ACV, two referred deals a year is roughly $9,000 in referral fees — with zero implementation work required on your end.
+
+The ask is simple: when a client asks "how do we manage the images that go into Salsify?" — you send them to us. We close the deal, you get the commission, they get a complete stack.
+
+No exclusivity. No volume commitment to get started. Just deal registration.
+
+Still worth 20 minutes?
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker call">4</div>
+        <div class="touch-card">
+          <div class="touch-meta">
+            <span class="touch-day">Day 14</span>
+            <span class="touch-channel call">Call</span>
+            <span class="touch-goal">Goal: Live conversation — qualify the opportunity</span>
+            <button class="copy-touch" onclick="copyTouch(this)">Copy</button>
+          </div>
+          <div class="touch-subject">Call script / voicemail if no answer</div>
+          <div class="touch-body">Voicemail: "Hi [Name], Adam from Canto — I've sent a couple of emails about building a co-sell motion around your Salsify practice. Short version: we solve the DAM gap that comes up on every deployment, and we pay 10–20% commission on referred deals. I'll send one more note but would love to connect. [number]."
+
+If they answer — open with: "I'll be quick. I lead partnerships at Canto and I've been watching Sitation's Salsify work. The pattern I keep seeing is that after implementation, clients ask about assets. We solve that. Two questions: one, are your clients asking about it? And two, is there someone on your team I should be talking to about a referral structure?"</div>
+          <div class="touch-note">⚡ Two questions only. Let them talk. Don't pitch the product on this call — pitch the partnership model.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker value">5</div>
+        <div class="touch-card">
+          <div class="touch-meta">
+            <span class="touch-day">Day 21</span>
+            <span class="touch-channel value">Value Drop</span>
+            <span class="touch-goal">Goal: Stay visible, give something useful</span>
+            <button class="copy-touch" onclick="copyTouch(this)">Copy</button>
+          </div>
+          <div class="touch-subject">Subject: One resource + one question</div>
+          <div class="touch-body">Hi [Name],
+
+Not going to pitch again. Just sending this Canto + Salsify integration brief [link to your one-pager once built] in case it's useful for a client conversation.
+
+One honest question: is DAM coming up with your clients post-implementation, or is it not a live issue for them?
+
+Either answer helps me understand whether there's something here.
+
+[Your name]</div>
+          <div class="touch-note">⚡ This touch requires a one-pager to be built. If you don't have it yet, swap to: "sharing a customer story — Kinder's, a CPG brand with 200+ SKUs, was in the same boat as your clients" and link the case study.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker final">6</div>
+        <div class="touch-card">
+          <div class="touch-meta">
+            <span class="touch-day">Day 30</span>
+            <span class="touch-channel final">Final</span>
+            <span class="touch-goal">Goal: Get a yes, a no, or a redirect</span>
+            <button class="copy-touch" onclick="copyTouch(this)">Copy</button>
+          </div>
+          <div class="touch-subject">Subject: Last note from me</div>
+          <div class="touch-body">Hi [Name],
+
+Last one from me on this.
+
+If the timing isn't right or this isn't the right conversation, just say so — I'll stop reaching out and check back in a quarter.
+
+If there's any interest in exploring a referral structure, 20 minutes on the calendar is all it takes.
+
+Either way — appreciate your time.
+
+[Your name]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GOURNAY -->
+  <div class="seq-container" id="seq-gournay">
+    <div class="seq-overview">
+      <div class="seq-ov-left">
+        <div class="seq-ov-name">Gournay Consulting</div>
+        <div class="seq-ov-type">SI · Salsify Premier Partner · Builds Bynder integrations today</div>
+        <div class="seq-ov-strategy">Strategy: This is a displacement conversation. They already do DAM integrations — with Bynder. Your angle is "there's a segment of your clients where Bynder is overkill and Canto is the right answer." Don't trash Bynder. Just make the mid-market case. They're commercially driven — the referral fee math will land.</div>
+      </div>
+      <div class="seq-ov-right">
+        <div class="seq-stat"><div class="seq-stat-val">28</div><div class="seq-stat-label">Score</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">30d</div><div class="seq-stat-label">Cadence</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">6</div><div class="seq-stat-label">Touches</div></div>
+      </div>
+    </div>
+    <div class="touch-timeline">
+
+      <div class="touch">
+        <div class="touch-marker email">1</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 1</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Intrigue, not pitch</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Your Bynder clients + a segment you might be turning away</div>
+          <div class="touch-body">Hi [Name],
+
+I noticed Gournay builds DAM integrations alongside Salsify — Bynder is in the mix on your site.
+
+I'm not here to pitch against Bynder. But I am curious whether you have clients that come to you needing the full Salsify + DAM stack, and Bynder's price or complexity doesn't fit them.
+
+Canto is the DAM that mid-market product brands — $20M–$100M, 100–2,000 SKUs, no prior PIM or DAM — actually buy. We have a native Salsify integration, and we pay 10–20% referral commission on deals partners register.
+
+If there's a tier of your client base where you're currently saying "Bynder isn't right for you but I don't have an alternative" — that's the conversation I want to have.
+
+20 minutes worth it?
+
+[Your name]
+Canto | Channel Partnerships</div>
+          <div class="touch-note">⚡ High-value opener because it shows you did your research AND frames a real business problem for them (losing mid-market clients). Don't oversell — the question mark at the end invites a conversation.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker linkedin">2</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 4</span><span class="touch-channel linkedin">LinkedIn</span><span class="touch-goal">Goal: Connect + reinforce</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">LinkedIn note</div>
+          <div class="touch-body">Hi [Name] — Adam from Canto. Dropped you a note about Bynder's mid-market gap and how Canto fills it alongside Salsify. Would be great to connect.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker email">3</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 8</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Proof point</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: What a Canto customer looks like (relevant to your work)</div>
+          <div class="touch-body">Hi [Name],
+
+Following up. Wanted to make the ICP concrete rather than abstract.
+
+Kinder's — CPG seasoning brand, 200+ SKUs, selling into Costco/Walmart/Sam's Club — came to Canto from print outs and spreadsheets. No DAM, no PIM. Canto DAM for Products gave them assets and product data in one place.
+
+That's the customer profile. Creative Director or Marketing Director, product-driven brand, overwhelmed by manual asset assembly for retailer partners.
+
+If Gournay is occasionally recommending Salsify to brands like this and the DAM question stays unanswered — that's the gap we fill, and we'd give you a referral structure to make it worth your while.
+
+Still think there's a conversation here?
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker call">4</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 14</span><span class="touch-channel call">Call</span><span class="touch-goal">Goal: Qualify displacement opportunity</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Call guide</div>
+          <div class="touch-body">Open: "Two quick things — one question and one number. Question: when you're deploying Salsify for mid-market clients, is DAM being solved or left to the client? And the number: we pay 10–20% commission on referred deals. At our ACV, two deals a year is roughly $9,000. That's it — does that change whether this is worth 20 minutes?"
+
+If they engage: ask about their typical client size for Salsify deployments, and whether Bynder comes up as an option they can't close because of price. That's your opening.</div>
+          <div class="touch-note">⚡ The goal of this call is to learn whether Gournay has mid-market Salsify clients where DAM is unsolved. If yes, that's a live co-sell opportunity. If no, you may want to deprioritize them.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker value">5</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 21</span><span class="touch-channel value">Value Drop</span><span class="touch-goal">Goal: Stay relevant</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Canto + Salsify — how the integration works</div>
+          <div class="touch-body">Hi [Name],
+
+One more useful thing before I stop following up.
+
+[Link to Canto integrations page or one-pager] — this shows how Canto sits upstream of Salsify in the stack. Assets governed in Canto, product data structured in Canto DAM for Products, feeds into Salsify for channel distribution.
+
+If you ever have a client evaluation where this is relevant, happy to join a call.
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker final">6</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 30</span><span class="touch-channel final">Final</span><span class="touch-goal">Goal: Definitive answer</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Closing the loop</div>
+          <div class="touch-body">Hi [Name],
+
+Closing the loop on my end.
+
+If there's any interest in a referral structure — especially for mid-market Salsify clients where Bynder doesn't fit — I'm one email away.
+
+If it's not relevant right now, no hard feelings. I'll check back in a quarter.
+
+[Your name]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BARREL -->
+  <div class="seq-container" id="seq-barrel">
+    <div class="seq-overview">
+      <div class="seq-ov-left">
+        <div class="seq-ov-name">Barrel</div>
+        <div class="seq-ov-type">Agency · Shopify Platinum · CPG & Food/Bev specialist · NYC</div>
+        <div class="seq-ov-strategy">Strategy: Different from the SI play. Barrel doesn't implement DAMs — they build Shopify stores. Your angle is "when your CPG clients hit the asset wall, I want to be the name you call." Lean into their specific client names (McCormick, Once Upon A Farm) and the long-term retainer model — they stay close to clients, which means they hear the pain. Keep tone peer-level, not vendor-pitch.</div>
+      </div>
+      <div class="seq-ov-right">
+        <div class="seq-stat"><div class="seq-stat-val">27</div><div class="seq-stat-label">Score</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">30d</div><div class="seq-stat-label">Cadence</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">6</div><div class="seq-stat-label">Touches</div></div>
+      </div>
+    </div>
+    <div class="touch-timeline">
+
+      <div class="touch">
+        <div class="touch-marker email">1</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 1</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Pattern recognition — make them nod</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: The asset chaos question your CPG clients keep asking</div>
+          <div class="touch-body">Hi [Name],
+
+I lead partnerships at Canto. We're a DAM built specifically for product brands — the kind Barrel works with.
+
+The pattern I keep seeing: a CPG or food & bev brand launches a great Shopify store. Six months later, someone asks "how do we get the right image to the right retailer without emailing a Drive link every time?" The store is solved. The assets aren't.
+
+I know Barrel works with brands like McCormick and Once Upon A Farm. Those brands have 200+ SKUs, seasonal launches, and retailer partners who need complete product content packages. That's exactly who buys Canto.
+
+I'm not asking you to do anything technical. Just: when that question comes up with a client, I'd love to be the name you have. There's a referral fee structure behind it that makes it worth your while.
+
+Up for a quick call?
+
+[Your name]
+Canto | Channel Partnerships</div>
+          <div class="touch-note">⚡ The "Drive link" line is specific and resonant — it's the exact thing their clients say. Don't generalize it.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker linkedin">2</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 4</span><span class="touch-channel linkedin">LinkedIn</span><span class="touch-goal">Goal: Connect and reinforce briefly</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">LinkedIn connection note</div>
+          <div class="touch-body">Hi [Name] — Adam from Canto. Sent you a note about CPG asset chaos and a referral structure for your clients. Barrel's vertical focus is exactly our ICP. Would love to connect.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker email">3</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 9</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Concrete proof + fee number</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: What Kinder's looked like before Canto</div>
+          <div class="touch-body">Hi [Name],
+
+Quick follow-up. Here's what a Canto customer looks like before they buy — see if it sounds familiar.
+
+Kinder's (CPG, 200+ SKUs, Walnut Creek CA) was managing everything with "print outs, spreadsheets, and three-ring binders." Their Creative Director built an internal deck showing one hour per day was being spent just finding files — at 50 employees, 52 weeks, $30/hr. Over $1M in estimated annual cost waste. They bought Canto.
+
+That's your clients. At the point in the retainer when the asset chaos surfaces, I want Canto to be a 10-second referral for you.
+
+Our Professional partner tier pays 10–20% commission on net new deals — typically $3,000–$6,000 per referred customer.
+
+Worth a quick call to set it up?
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker call">4</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 15</span><span class="touch-channel call">Call</span><span class="touch-goal">Goal: Get clarity on whether they hear this pain</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Call script</div>
+          <div class="touch-body">Open: "One question before I pitch anything — in your CPG retainers, are clients ever asking about how to manage assets beyond just Shopify? Like the retailer content packaging problem, or 'where's the approved version of this image?'"
+
+If yes: "That's exactly the problem Canto solves. Would it help to have a one-line answer to that question — and get paid a referral fee when they become a customer?"
+
+If no: "Interesting — is it because they're solving it another way, or because it hasn't hit critical mass yet?" (Useful intel either way.)</div>
+          <div class="touch-note">⚡ This call is diagnostic. The goal is to learn whether Barrel hears asset pain from their CPG retainer clients. If they don't, they're a lower priority. If they do, close on a partnership call.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker value">5</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 22</span><span class="touch-channel value">Value Drop</span><span class="touch-goal">Goal: Leave something useful</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Nalgene story — sporting goods, same pattern</div>
+          <div class="touch-body">Hi [Name],
+
+One more before I close the loop.
+
+Nalgene (iconic water bottle brand, Rochester NY) was on an FTP system — distributors calling to request assets, team spending hours tracking down files. Director of Marketing called it "a disaster." They came to Canto, and now distributors self-serve from the library: search "16 oz wide mouth," download, done.
+
+Barrel's clients in sporting goods and outdoor will eventually hit this same wall. Just want to be the name that comes to mind when they do.
+
+canto.com/customers/nalgene — full story if useful.
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker final">6</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 30</span><span class="touch-channel final">Final</span><span class="touch-goal">Goal: Clean close or pause</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Last one</div>
+          <div class="touch-body">Hi [Name],
+
+Last email from me on this thread.
+
+If Barrel ever wants a simple referral relationship — send us a warm intro when a client hits the asset chaos wall, get paid 10–20% when they sign — I'm easy to reach.
+
+If not the right time, I'll check back next quarter.
+
+[Your name]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NETALICO -->
+  <div class="seq-container" id="seq-netalico">
+    <div class="seq-overview">
+      <div class="seq-ov-left">
+        <div class="seq-ov-name">Netalico</div>
+        <div class="seq-ov-type">Agency · Shopify Premier · Food & Bev, CPG, Sports/Outdoors · 85% retainer retention</div>
+        <div class="seq-ov-strategy">Strategy: The retainer model is your entry point. Netalico stays with clients long-term, which means they hear problems that don't surface at launch. Lead with the retainer angle: "over time, not at launch, is when asset chaos shows up." Founded by a Wharton MBA — they're analytically driven. The math and the data will land. Keep it tight and respect their time.</div>
+      </div>
+      <div class="seq-ov-right">
+        <div class="seq-stat"><div class="seq-stat-val">26</div><div class="seq-stat-label">Score</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">30d</div><div class="seq-stat-label">Cadence</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">6</div><div class="seq-stat-label">Touches</div></div>
+      </div>
+    </div>
+    <div class="touch-timeline">
+
+      <div class="touch">
+        <div class="touch-marker email">1</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 1</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Recognition + curiosity</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Retainer clients + the problem that shows up at month 6</div>
+          <div class="touch-body">Hi [Name],
+
+I lead channel partnerships at Canto — DAM built for product brands.
+
+I specifically looked up Netalico because your vertical focus (food & bev, CPG, sports & outdoors) maps exactly to our customer base. And the retainer model is interesting to me — because asset chaos in CPG brands doesn't usually surface at launch. It shows up at month 6, when SKUs have multiplied and the retailer content requests are piling up.
+
+That's when clients ask: "how do we get the right image to the right channel without doing it manually every time?" And right now, whoever they're asking probably doesn't have a great answer.
+
+I'd like to be the answer you give. Simple referral structure, no exclusivity, 10–20% commission per deal.
+
+Worth a short call?
+
+[Your name]
+Canto | Channel Partnerships</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker linkedin">2</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 5</span><span class="touch-channel linkedin">LinkedIn</span><span class="touch-goal">Goal: Connect</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">LinkedIn note</div>
+          <div class="touch-body">Hi Mark — Adam from Canto. Sent an email about the asset problem that shows up in CPG retainers at month 6. Your vertical focus is spot-on for what we do. Would love to connect.</div>
+          <div class="touch-note">⚡ Address to Mark Lewis (founder) directly — he's the right contact at Netalico based on public info. Adjust if you find a BD/partnerships contact.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker email">3</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 9</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Specific proof point in their vertical</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: What Nalgene's Director of Marketing said</div>
+          <div class="touch-body">Hi [Name],
+
+One concrete example from your world.
+
+Nalgene — sports/outdoor brand, wide product range — was on an FTP system. Director of Marketing described it as "clunky, not easy to use, not easy to share assets." Distributors called to request files. Team hunted them down and emailed them.
+
+Now distributors search "16 oz wide mouth" and self-serve. The marketing team redirected those hours to product development and sustainable innovation.
+
+That's what we do for brands at the size Netalico works with. When it comes up in a retainer conversation, I'd like to be a 10-second referral — and pay you 10–20% when they sign.
+
+Still interested in a quick call?
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker call">4</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 15</span><span class="touch-channel call">Call</span><span class="touch-goal">Goal: Understand their client conversations</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Call approach</div>
+          <div class="touch-body">Open with: "I'll respect your time — two questions. In your CPG and outdoor retainers, are clients ever asking how to manage the assets that go to retailers and distributors? And if the answer is yes, would a named referral partner with a fee structure be something you'd actually use?"
+
+The goal is just those two answers. If both are yes, pivot to: "Let me send over how deal registration works and we can set up a 20-min partnership call with the right people."</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker value">5</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 22</span><span class="touch-channel value">Value Drop</span><span class="touch-goal">Goal: Stay in the frame</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: The Kinder's ROI number</div>
+          <div class="touch-body">Hi [Name],
+
+Last useful thing before I close the loop.
+
+Kinder's Creative Director did an internal ROI calc before buying Canto: 1 hour/day lost to finding files × 50 employees × 52 weeks × $30/hr average = $1M+ in estimated annual cost waste. That's what convinced their team.
+
+If you ever need to help a CPG client justify a DAM investment, that math works. Happy to share the full case study.
+
+canto.com/customers/kinders
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker final">6</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 30</span><span class="touch-channel final">Final</span><span class="touch-goal">Goal: Clean exit or warm pause</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Closing the loop — Netalico + Canto</div>
+          <div class="touch-body">Hi [Name],
+
+Closing this thread. If it's not the right timing, completely understood.
+
+If down the road a retainer client hits the asset wall and you want a referral partner with a real fee structure — I'm easy to find.
+
+[Your name]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AVEX -->
+  <div class="seq-container" id="seq-avex">
+    <div class="seq-overview">
+      <div class="seq-ov-left">
+        <div class="seq-ov-name">Avex Designs</div>
+        <div class="seq-ov-type">Agency · Shopify Plus · Fashion & Luxury · Hugo Boss, KITH, Simmons</div>
+        <div class="seq-ov-strategy">Strategy: Fashion is your highest asset-volume ICP. Every fashion SKU has 8–15 images, multiple colorways, studio and lifestyle cuts — and no governance. Lead with that specificity. Avex clients are premium — Hugo Boss, KITH — so the Canto pitch needs to feel like a premium solution, not a scrappy tool. Tone is peer-level and brand-aware, not vendor-salesy.</div>
+      </div>
+      <div class="seq-ov-right">
+        <div class="seq-stat"><div class="seq-stat-val">25</div><div class="seq-stat-label">Score</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">30d</div><div class="seq-stat-label">Cadence</div></div>
+        <div class="seq-stat"><div class="seq-stat-val">6</div><div class="seq-stat-label">Touches</div></div>
+      </div>
+    </div>
+    <div class="touch-timeline">
+
+      <div class="touch">
+        <div class="touch-marker email">1</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 1</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Show you know fashion brands specifically</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Fashion brands + the asset governance problem you've seen</div>
+          <div class="touch-body">Hi [Name],
+
+I lead partnerships at Canto. We're a DAM that fashion brands use to govern product assets — the images, colorways, studio and lifestyle cuts — before they hit Shopify and retail.
+
+I know Avex works with brands like Hugo Boss and KITH. Those are asset-intensive: a single SKU in 6 colorways with studio and lifestyle cuts is easily 80–100 images. Multiply that across a seasonal catalog and the governance problem is real. Someone is manually tracking which version is approved. Someone is emailing Drive links to retail partners.
+
+When that conversation comes up with your clients — and it does — I'd like to be the name you call.
+
+There's a referral fee structure behind it. Simple deal registration, 10–20% commission, no exclusivity.
+
+Worth a quick conversation?
+
+[Your name]
+Canto | Channel Partnerships</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker linkedin">2</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 5</span><span class="touch-channel linkedin">LinkedIn</span><span class="touch-goal">Goal: Connect, reinforce specificity</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">LinkedIn note</div>
+          <div class="touch-body">Hi [Name] — Adam from Canto. Sent a note about fashion brand asset governance and how we fit into Avex's client work. Hugo Boss and KITH are squarely in our ICP. Would love to connect.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker email">3</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 10</span><span class="touch-channel email">Email</span><span class="touch-goal">Goal: Ask the right diagnostic question</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: One question about your fashion clients</div>
+          <div class="touch-body">Hi [Name],
+
+One honest question — no pitch attached.
+
+For Avex's fashion clients: when they're building seasonal collections on Shopify, what are they using to govern the source images? Not what lives in Shopify — what they're managing upstream, before assets hit the store.
+
+I ask because 90% of the time the answer is "Google Drive" or "nothing formal." And that's the gap Canto fills.
+
+If it's already solved, I'd be curious how. If it's not — worth 20 minutes.
+
+[Your name]</div>
+          <div class="touch-note">⚡ This touch is diagnostic — the question invites a real reply. If they respond with "actually our clients use X," that's valuable competitive intel. If they say "honestly it's a mess," that's your opening.</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker call">4</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 16</span><span class="touch-channel call">Call</span><span class="touch-goal">Goal: Understand the Avex client workflow</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Call script</div>
+          <div class="touch-body">Open with: "Quick question before anything else — in your fashion client work, does asset governance upstream of Shopify ever come up? Like, how the brand manages approved images before they publish?"
+
+If yes: "That's exactly the problem Canto solves. For fashion brands specifically — colorways, seasonal campaigns, retail partner packaging — we're the governed library. I'd like to build a simple referral structure. Is there a partnerships contact on your side I should be looping in, or are you the right person?"
+
+If no/uncertain: "Interesting — is it because Shopify's native tools handle it, or because clients haven't raised it?" (Qualify whether to prioritize.)</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker value">5</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 23</span><span class="touch-channel value">Value Drop</span><span class="touch-goal">Goal: Fashion-specific content</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: How fashion brands use Canto — relevant to Avex</div>
+          <div class="touch-body">Hi [Name],
+
+One more before I close the loop.
+
+Fashion and apparel is our second-largest vertical after CPG. The use case is consistent: seasonal catalog management, colorway governance, retailer asset packaging (B2B portal delivery), and brand consistency across DTC + wholesale + retail.
+
+If you have a client who just ran a new season and is still emailing Drive links to their retail partners — that's the conversation I want to be in.
+
+10–20% referral fee, deal registration, no complexity on your end.
+
+[Your name]</div>
+        </div>
+      </div>
+
+      <div class="touch">
+        <div class="touch-marker final">6</div>
+        <div class="touch-card">
+          <div class="touch-meta"><span class="touch-day">Day 30</span><span class="touch-channel final">Final</span><span class="touch-goal">Goal: Door open</span><button class="copy-touch" onclick="copyTouch(this)">Copy</button></div>
+          <div class="touch-subject">Subject: Last note — Avex + Canto</div>
+          <div class="touch-body">Hi [Name],
+
+Last one from me.
+
+If a fashion client ever asks about governing assets upstream of Shopify — I'm one email away.
+
+[Your name]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div><!-- /tab-sequences -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-top">
+      <div><div class="modal-name" id="mName"></div><div class="modal-subtitle" id="mSub"></div></div>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+        <div><div class="modal-score-big" id="mScore"></div><div style="font-size:10px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:0.5px">/ 30</div></div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+const PARTNERS = [
+  {
+    id:1, name:"Sitation", type:"SI", sub:"Salsify Platinum · 200+ implementations · First Salsify Platinum ever",
+    priority:"Q2", verticals:["CPG","Food & Bev","Sporting Goods","Manufacturing"],
+    scores:{icp:10,conversations:9,willingness:8},
+    buyer:{title:"Creative Director or Marketing Director",stack:"Spreadsheets, shared drives, no DAM",trigger:"Post-Salsify launch — asset gap surfaces",sku:"200–2,000 SKUs"},
+    why:"Salsify's first Platinum partner. 200+ implementations means they've seen the asset gap on every single deployment. Clients ask 'where do the images come from?' after every rollout. That's Canto's opening. Mid-market CPG and food & bev clients in their portfolio can't afford Bynder — Canto is the right-priced answer for that tier.",
+    signals:["Client asks 'how do we get images into Salsify?' post-implementation","Mid-market CPG/food brands that got priced out of Bynder","Brands distributing to Home Depot, Walmart, Costco — retailer content packaging pain","Post-implementation support retainers — they stay close long-term"],
+    outreach:"Hi [Name] — I lead channel partnerships at Canto. Sitation kept coming up as I mapped Salsify SIs — you've seen this pattern: implementation goes well, then someone asks where the images actually come from. That's us. We're the DAM upstream of Salsify — assets + product data structured around SKUs, publishing to Shopify and retail channels. Kinder's (CPG, 200+ SKUs) and Nalgene (sporting goods) use us exactly this way. For your mid-market clients that can't justify Bynder — there's a co-sell motion worth building. Worth 20 minutes?",
+    actions:[{who:"Head of Partnerships or Practice Lead",where:"sitation.com/about or LinkedIn"},{text:"Ask: 'After Salsify goes live, how are clients managing the image and asset side?'"},{text:"Lead with the referral fee math: 2 deals/yr × $30K ACV × 15% = ~$9K commission"},{text:"Offer deal registration immediately — make it easy to start"}],
+    website:"sitation.com", linkedin:"Sitation Inc", seqKey:"sitation"
+  },
+  {
+    id:2, name:"Gournay Consulting", type:"SI", sub:"Salsify Premier · 8+ yrs · Builds Bynder integrations today",
+    priority:"Q2", verticals:["CPG","Food & Bev","Health & Beauty","Manufacturing"],
+    scores:{icp:10,conversations:10,willingness:8},
+    buyer:{title:"Marketing Director or Creative Director",stack:"Bynder (enterprise) or nothing — mid-market gap",trigger:"Salsify implementation + DAM RFP",sku:"200–5,000 SKUs"},
+    why:"Already does DAM integrations — with Bynder. That's your displacement opportunity. If they're building Bynder+Salsify stacks, they understand the value of DAM+PIM. The pitch is: there's a segment of your clients where Bynder doesn't fit on price. Canto is the right answer for that tier, and you keep the integration services revenue.",
+    signals:["Clients who got Salsify quotes but balked at adding Bynder on top","Food & bev CPG brands under $100M revenue — Bynder pricing stretches budgets","GDSN strategy work — retailer distribution = asset spec pain","HP Hood caliber clients validate enterprise deal size; mid-market below that is your lane"],
+    outreach:"Hi [Name] — I noticed Gournay builds DAM integrations alongside Salsify — currently with Bynder. I'm not here to pitch against Bynder. But I am curious whether you have clients where Bynder's price or complexity doesn't fit. Canto is what mid-market product brands — $20M–$100M, no prior DAM or PIM — actually buy. We have a native Salsify integration and pay 10–20% commission on referred deals. If there's a segment of your book where you're currently saying 'Bynder isn't right for you' with no alternative — that's the conversation. 20 minutes?",
+    actions:[{who:"Founder or Partner",where:"gournayconsulting.com or LinkedIn"},{text:"Lead with: 'I know you work with Bynder — I want to talk about the clients where it doesn't fit'"},{text:"Ask: 'What do you recommend when a client needs Salsify but can't budget Bynder?'"},{text:"If interested: offer to co-present to a live mid-market prospect"}],
+    website:"gournayconsulting.com", linkedin:"Gournay Consulting", seqKey:"gournay"
+  },
+  {
+    id:3, name:"Amplifi", type:"SI", sub:"Salsify Partner · Enterprise data consultancy · Fashion & CPG",
+    priority:"Q2", verticals:["Fashion","CPG","Manufacturing"],
+    scores:{icp:9,conversations:8,willingness:7},
+    buyer:{title:"VP E-Commerce or Head of Digital",stack:"Salsify + enterprise DAM — or DAM gap",trigger:"Multi-region rollout exposing asset inconsistency",sku:"1,000+ SKUs, multi-region"},
+    why:"Global fashion retailer and global cookware manufacturer case studies are exact Canto ICP. Data consultancy positioning means they think in full stacks. North America Salsify practice is your territory. Their enterprise clients may be too big for DAM for Products but mid-market clients in the same verticals are your target.",
+    signals:["North America Salsify deployments for fashion or CPG","Case studies mention cookware and fashion — both high-SKU, multi-channel","Global rollouts where regional teams have inconsistent asset libraries","Mentions DAM in their Salsify service description"],
+    outreach:"Hi [Name] — I lead partner development at Canto. Amplifi's Salsify work in fashion and CPG is exactly our sweet spot — the cookware manufacturer and fashion retailer case studies you have are the profile we target. We have a native Salsify integration and I'm curious whether your NA clients are asking about the DAM layer. Worth 20 minutes to explore if there's a referral motion?",
+    actions:[{who:"North America Alliance or Salsify Practice Lead",where:"LinkedIn — search Amplifi + Salsify"},{text:"Mention their specific case studies — shows you did your homework"},{text:"Ask about NA pipeline specifically — they're global, you want NA"},{text:"Offer to join a client discovery call as a DAM subject matter expert"}],
+    website:"goamplifi.com", linkedin:"Amplifi", seqKey:null
+  },
+  {
+    id:4, name:"Aleysian", type:"SI", sub:"Salsify + Salesforce Partner · Commerce specialists",
+    priority:"Q2", verticals:["CPG","Sporting Goods","B2B"],
+    scores:{icp:8,conversations:8,willingness:8},
+    buyer:{title:"VP E-Commerce or Marketing Ops",stack:"Salsify + Salesforce — DAM missing",trigger:"Dual Salsify+Salesforce rollout surfaces asset gap"},
+    why:"Dual Salsify + Salesforce practice means they sit across both PIM and CRM conversations. When a brand implements both, the DAM is almost always the missing layer. Canto integrates with both Salsify and Salesforce natively — which makes the co-sell story clean.",
+    signals:["Clients running both Salsify and Salesforce — complex stack = DAM need","B2B brands with distributor portals — Canto portal use case is strong","Commerce strategy work that includes asset management gaps"],
+    outreach:"Hi [Name] — Canto partnerships. I mapped Salsify SIs with Salesforce practices and Aleysian came up. When you're implementing both, asset management tends to come up at the product content layer. Canto integrates natively with both — curious if you've seen that gap and whether there's a co-sell angle.",
+    actions:[{who:"Partnerships or Business Development",where:"aleysian.com or LinkedIn"},{text:"Lead with dual Salsify + Salesforce angle — it's distinctive"},{text:"Ask: 'How often do clients ask how assets get into Salsify?'"},{text:"Position Canto as completing the commerce stack"}],
+    website:"aleysian.com", linkedin:"Aleysian", seqKey:null
+  },
+  {
+    id:5, name:"Intellias", type:"SI", sub:"Salsify Implementation Partner · Enterprise scale",
+    priority:"Q3", verticals:["CPG","Manufacturing","Retail"],
+    scores:{icp:7,conversations:7,willingness:6},
+    buyer:{title:"VP Technology or Head of Digital Commerce",stack:"Enterprise Salsify — DAM is a separate RFP",trigger:"Enterprise modernization or multi-region expansion"},
+    why:"Large-scale Salsify partner with enterprise deployments. Their Salsify page explicitly mentions DAM as something they handle alongside implementation. Long build to activate as a partner but enterprise deals they source would be higher ACV.",
+    signals:["Enterprise clients with millions of SKUs — complex asset governance needed","Mentions 'digital asset management' in Salsify service description","Global deployments where regional asset inconsistency is a real problem"],
+    outreach:"Hi [Name] — Canto channel partnerships. I saw Intellias handles DAM alongside Salsify implementations. For enterprise clients we're the governed DAM layer that feeds Salsify without requiring a separate heavy platform. Worth a call to explore overlap in your pipeline?",
+    actions:[{who:"Head of Alliances or Digital Commerce Practice Lead",where:"LinkedIn"},{text:"This is a longer build — aim for a discovery call, not a quick pitch"},{text:"Ask about their typical DAM recommendation alongside Salsify"},{text:"Offer to present to their practice team (30-min lunch & learn)"}],
+    website:"intellias.com", linkedin:"Intellias", seqKey:null
+  },
+  {
+    id:6, name:"Barrel", type:"Agency", sub:"Shopify Platinum · CPG & Food/Bev specialist · NYC",
+    priority:"Q2", verticals:["CPG","Food & Bev","Health & Beauty"],
+    scores:{icp:10,conversations:9,willingness:8},
+    buyer:{title:"Creative Director or Marketing Director",stack:"Google Drive, Dropbox — no DAM",trigger:"SKU count growth + retailer content packaging pain"},
+    why:"CPG and food & bev specialist with McCormick, Once Upon A Farm, Black+Decker in their portfolio. These are exactly the brands that need DAM at scale. Long-term retainer model means they're in the room when asset chaos surfaces months after launch. That's your referral trigger.",
+    signals:["Client mentions Google Drive or emailing assets to retailer partners","Brands scaling past 100 SKUs with new product launches","CPG subscription brands — high asset volume, seasonal campaigns","B2B + DTC managing wholesale portal content packaging"],
+    outreach:"Hi [Name] — I head partnerships at Canto, the DAM a lot of CPG brands use before assets hit Shopify. I know Barrel works with brands like McCormick and Once Upon A Farm — those are exactly our ICP. When the asset management question surfaces on a retainer, I want to be the person you call. There's a referral fee structure: 10–20% per deal, deal registration, no exclusivity. Worth a quick call to set it up?",
+    actions:[{who:"Head of Partnerships or Business Development",where:"barrel.nyc or LinkedIn"},{text:"Name-drop McCormick and Once Upon A Farm — shows you did research"},{text:"Ask: 'When a CPG client hits 200+ SKUs, what do they use for asset management?'"},{text:"Lead with retainer angle — that's where they hear the pain, not at launch"}],
+    website:"barrel.nyc", linkedin:"Barrel", seqKey:"barrel"
+  },
+  {
+    id:7, name:"Avex Designs", type:"Agency", sub:"Shopify Plus · Fashion & luxury · Hugo Boss, KITH, Simmons",
+    priority:"Q2", verticals:["Fashion","Health & Beauty","Luxury"],
+    scores:{icp:9,conversations:8,willingness:8},
+    buyer:{title:"Creative Director or Brand Manager",stack:"Google Drive or Dropbox — no formal asset governance",trigger:"Seasonal catalog launch exposing asset version chaos"},
+    why:"Fashion brands have the highest asset volume per SKU: every colorway, every angle, studio and lifestyle. Avex clients (Hugo Boss, KITH) have serious asset governance requirements. When a seasonal catalog goes live and the wrong image version is on the site, someone gets fired. That pain is real and Canto solves it.",
+    signals:["Fashion clients with 6+ colorways per SKU — 80-100 images per product minimum","Seasonal launches with large photography packages that need version control","Retail partner asset packaging — B2B portals for wholesale buyers","Brand governance requirements: luxury clients won't tolerate off-brand assets"],
+    outreach:"Hi [Name] — Canto partnerships. I know Avex works with Hugo Boss and KITH — brands with serious asset volumes. Every SKU in 6 colorways with studio and lifestyle cuts is 80–100 images. When version control and retailer packaging come up, I want Canto to be the name you have. Simple referral structure: 10–20% commission, deal registration. Worth a call?",
+    actions:[{who:"Head of Client Services or Business Development",where:"avexdesigns.com or LinkedIn"},{text:"Lead with fashion-specific detail: colorways, seasonal campaigns, retail packaging"},{text:"Mention Hugo Boss or KITH specifically — it signals you understand their market"},{text:"Ask: 'What do your fashion clients use for asset governance upstream of Shopify?'"}],
+    website:"avexdesigns.com", linkedin:"Avex Designs", seqKey:"avex"
+  },
+  {
+    id:8, name:"BlueSwitch", type:"Agency", sub:"Shopify Plus · Fashion & beauty · L'Oréal, Ted Baker, Perry Ellis",
+    priority:"Q2", verticals:["Fashion","Health & Beauty"],
+    scores:{icp:9,conversations:8,willingness:7},
+    buyer:{title:"Marketing Director or Head of E-Commerce",stack:"Legacy storage or enterprise DAM (L'Oréal tier) — mid-market has nothing",trigger:"B2B + DTC split — assets need to go to retail buyers AND to Shopify"},
+    why:"L'Oréal, Ted Baker, Perry Ellis, Mario Badescu — massive Canto ICP. Integration-focused positioning means they understand connected stacks. B2B fashion clients selling to retailers alongside DTC need governed asset distribution. That's Canto's exact use case.",
+    signals:["Fashion B2B + DTC clients — two different asset packaging needs","Integration-heavy projects that expose the asset source layer","Mid-market fashion clients without enterprise DAM budget"],
+    outreach:"Hi [Name] — Canto partnerships. The BlueSwitch portfolio — L'Oréal, Ted Baker, Mario Badescu — is squarely in our ICP. Fashion brands with B2B + DTC operations need governed asset distribution upstream. We integrate with Shopify natively. Given your integration focus, I suspect you've seen the gap. Worth exploring a referral structure?",
+    actions:[{who:"Partnerships or sales contact",where:"blueswitch.com or LinkedIn"},{text:"Lead with their enterprise fashion clients — shows you understand their market"},{text:"Ask about integration stack — position Canto as the asset source layer"},{text:"Offer to demo Canto for their solutions team"}],
+    website:"blueswitch.com", linkedin:"BlueSwitch", seqKey:null
+  },
+  {
+    id:9, name:"Netalico", type:"Agency", sub:"Shopify Premier · Food & Bev, CPG, Sports/Outdoors · 85% retainer retention",
+    priority:"Q2", verticals:["Food & Bev","CPG","Sporting Goods"],
+    scores:{icp:9,conversations:8,willingness:9},
+    buyer:{title:"Marketing Director or Creative Director",stack:"FTP, Google Drive — no formal DAM",trigger:"Distributor/retailer content requests overwhelming the team"},
+    why:"Food & bev, CPG, and sports & outdoors — three of your five strongest verticals in one agency. 85% retainer retention means they stay close to clients long-term and hear problems that don't surface at launch. Asset chaos in these brands shows up at month 6, not at launch. Founded by a Wharton MBA — analytically driven, the commission math will land.",
+    signals:["CPG retainer client asks about managing retailer content packaging","Sports/outdoor brands with seasonal SKU catalog complexity","Food & bev brands adding DTC alongside existing wholesale distribution","Client scaling past 100 SKUs without an asset governance system"],
+    outreach:"Hi [Name] — Canto partnerships. Your vertical focus — food & bev, CPG, sports & outdoors — maps exactly to our customer base. And the retainer model is interesting to me: asset chaos in CPG brands doesn't surface at launch. It shows up at month 6, when SKUs multiply and retailer requests pile up. I'd like to be the answer you give when clients hit that wall. 10–20% commission, deal registration. Short call?",
+    actions:[{who:"Mark Lewis (founder) or BD contact",where:"netalico.com or LinkedIn"},{text:"Emphasize retainer model — that's where they hear the pain, not at project launch"},{text:"Use the Nalgene case study — sports/outdoor, exact vertical match"},{text:"Ask: 'Do CPG clients on your retainers ever ask about managing retailer content?'"}],
+    website:"netalico.com", linkedin:"Netalico Commerce", seqKey:"netalico"
+  },
+  {
+    id:10, name:"Absolute Web", type:"Agency", sub:"Shopify Platinum · Full-service + ERP/PIM integrations · 20+ yrs",
+    priority:"Q2", verticals:["CPG","Fashion","B2B","Manufacturing"],
+    scores:{icp:8,conversations:9,willingness:7},
+    buyer:{title:"Marketing or Digital Commerce Director",stack:"ERP-connected, no DAM — assets in chaos alongside structured data"},
+    why:"Explicitly calls out ERP, PIM, and CRM integrations alongside Shopify. Brands doing those complex builds almost always have a DAM problem they're ignoring. DAM is the layer that connects structured ERP product data to visual assets — and Absolute Web is building everything else around it.",
+    signals:["ERP/PIM integration projects = complex product data = DAM gap","B2B clients with distributor portals — portal use case is strong","Founded 1999 — enterprise relationships with legacy asset chaos"],
+    outreach:"Hi [Name] — Canto partnerships. Absolute Web's ERP and PIM integration work is interesting — brands doing those builds almost always have a DAM problem they're ignoring. We integrate with the PIM and ERP systems you're connecting to. Worth exploring if there's a natural fit in the stacks you're building?",
+    actions:[{who:"Alliance or Partnership contact",where:"absoluteweb.com"},{text:"Lead with ERP/PIM integration angle — shows you understand their positioning"},{text:"Ask about typical client tech stack: 'What are clients using for asset management?'"},{text:"Offer to join a client discovery call as a DAM resource"}],
+    website:"absoluteweb.com", linkedin:"Absolute Web", seqKey:null
+  },
+  {
+    id:11, name:"DAM Consultants (Henry Stewart)", type:"Consultant", sub:"Independent DAM advisors · Vendor-agnostic · Conference circuit",
+    priority:"Q2", verticals:["CPG","Fashion","Manufacturing","All"],
+    scores:{icp:9,conversations:10,willingness:7},
+    buyer:{title:"Any product brand buyer — consultant pre-qualifies",stack:"Whatever the client has — consultant evaluates",trigger:"Client initiates DAM selection process"},
+    why:"When an independent consultant recommends Canto, the deal is effectively closed before your AE gets involved. Henry Stewart DAM conferences are the most concentrated pool of these consultants globally. Their close rate on referrals is the highest of any partner type — they only recommend what they believe in.",
+    signals:["Speaking at or attending Henry Stewart DAM NYC or London","LinkedIn posts about DAM governance, metadata strategy, content operations","Job title: 'content operations', 'digital asset', 'DAM strategist', 'DAM consultant'","Consulting profile mentions 'vendor selection' or 'DAM implementation'"],
+    outreach:"Hi [Name] — I lead partnerships at Canto. You clearly advise brands on DAM selection and governance. I'd love a direct conversation — not a pitch, but a genuine discussion about how Canto fits in your recommendations and whether there's a referral structure that makes it worth your while when we're the right fit.",
+    actions:[{who:"Individual consultants — target by name",where:"Henry Stewart conference speaker list + LinkedIn search: 'DAM consultant independent'"},{text:"Search LinkedIn: 'digital asset management consultant' + independent"},{text:"Attend Henry Stewart DAM NYC or London — best ROI on a single event"},{text:"Offer: 10–15% referral fee, no exclusivity, no volume requirement to get started"}],
+    website:"henrystewartconferences.com/dams", linkedin:"Search: DAM consultant independent", seqKey:null
+  },
+  {
+    id:12, name:"Strat7 / Rightpoint", type:"SI", sub:"Commerce transformation SI · Mid-to-enterprise",
+    priority:"Q3", verticals:["Fashion","CPG","Retail"],
+    scores:{icp:8,conversations:7,willingness:6},
+    buyer:{title:"VP Digital or CDO",stack:"Legacy commerce stack — replatforming to Shopify or Salesforce Commerce"},
+    why:"Commerce transformation SIs doing replatforming projects for mid-to-enterprise brands. Replatforming always surfaces legacy asset chaos. Longer build to activate as a partner but each deal they source should be higher ACV. Worth planting the seed in Q2 for Q3–Q4 pipeline.",
+    signals:["Commerce transformation projects for fashion or CPG","Magento or SAP Commerce replatforms expose asset governance gaps","Large brand clients where DAM is part of the transformation scope"],
+    outreach:"Hi [Name] — Canto partnerships. Rightpoint's commerce transformation work keeps coming up alongside our prospects. Replatforming always surfaces the asset management question. We integrate with the platforms you're deploying. Worth a discovery call to see if there's a referral motion worth building?",
+    actions:[{who:"Commerce Practice Lead or VP Alliances",where:"LinkedIn — find practice lead specifically"},{text:"Find the specific practice lead, not the firm-level contact"},{text:"Ask about standard tech stack recommendations for asset management"},{text:"Offer a 30-min lunch & learn for their practice team"}],
+    website:"rightpoint.com", linkedin:"Rightpoint", seqKey:null
+  },
+  {
+    id:13, name:"Anatta", type:"Agency", sub:"Shopify Platinum · Headless & ERP/PIM · Vuori, Grove Collaborative",
+    priority:"Q3", verticals:["Fashion","Sporting Goods","CPG"],
+    scores:{icp:8,conversations:7,willingness:7},
+    buyer:{title:"Head of E-Commerce or VP Digital",stack:"Headless Shopify + ERP — DAM is the missing source layer"},
+    why:"Vuori (outdoor/athletic apparel) and Grove Collaborative (CPG) as clients. Both have massive asset libraries. Headless architecture needs a strong DAM as the asset source — the content API pulls from somewhere, and ideally that somewhere is governed. ERP integration work also surfaces the structured product data gap that Canto DAM for Products solves.",
+    signals:["Vuori-type clients: outdoor, athletic, premium apparel — large SKU + colorway volumes","ERP integration projects expose structured product data need","Post-launch they often move to retained optimization — long-term relationship"],
+    outreach:"Hi [Name] — Canto partnerships. Anatta's work with Vuori and Grove Collaborative caught my attention — both are asset-intensive. Headless builds especially need a strong DAM on the asset source side. I'd love to explore whether Canto fits into the stacks Anatta is building for that caliber of client.",
+    actions:[{who:"Business Development or Head of Alliances",where:"anatta.io"},{text:"Mention Vuori specifically — sporting/outdoor apparel is your sweet spot"},{text:"Lead with headless architecture: DAM as the asset source layer"},{text:"Ask: 'How do your enterprise clients manage product assets today?'"}],
+    website:"anatta.io", linkedin:"Anatta", seqKey:null
+  }
+];
+
+let filters={type:'all',priority:'all',vertical:'all'};
+let currentView='grid', sortField='score', sortDir=-1, statuses={};
+
+function switchTab(id,el){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function switchSeq(id,el){
+  document.querySelectorAll('.seq-ptab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.seq-container').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('seq-'+id).classList.add('active');
+}
+
+function getScore(p){return p.scores.icp+p.scores.conversations+p.scores.willingness;}
+function scoreClass(s){if(s>=24)return 's-hot';if(s>=18)return 's-warm';return 's-cold';}
+
+function setFilter(key,val,el){
+  filters[key]=val;
+  el.closest('.filter-group').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setView(v){
+  currentView=v;
+  document.getElementById('gridView').style.display=v==='grid'?'grid':'none';
+  document.getElementById('tableView').style.display=v==='table'?'block':'none';
+  document.getElementById('gridBtn').classList.toggle('active',v==='grid');
+  document.getElementById('tableBtn').classList.toggle('active',v==='table');
+}
+
+function sortBy(field){
+  if(sortField===field)sortDir*=-1;
+  else{sortField=field;sortDir=field==='score'?-1:1;}
+  document.querySelectorAll('[id^="sort-"]').forEach(el=>el.textContent='');
+  document.getElementById('sort-'+field).textContent=sortDir===1?'↑':'↓';
+  render();
+}
+
+function getFiltered(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  return PARTNERS.filter(p=>{
+    if(filters.type!=='all'&&p.type!==filters.type)return false;
+    if(filters.priority!=='all'&&p.priority!==filters.priority)return false;
+    if(filters.vertical!=='all'&&!p.verticals.includes(filters.vertical))return false;
+    if(q&&![p.name,p.sub,p.type,...p.verticals].join(' ').toLowerCase().includes(q))return false;
+    return true;
+  }).sort((a,b)=>{
+    let av,bv;
+    if(sortField==='score'){av=getScore(a);bv=getScore(b);}
+    else if(sortField==='name'){av=a.name;bv=b.name;}
+    else if(sortField==='type'){av=a.type;bv=b.type;}
+    else if(sortField==='priority'){av=a.priority;bv=b.priority;}
+    else{av=getScore(a);bv=getScore(b);}
+    if(av<bv)return sortDir;if(av>bv)return -sortDir;return 0;
+  });
+}
+
+function typeColor(t){
+  if(t==='SI')return{bg:'var(--blue-dim)',color:'var(--blue)'};
+  if(t==='Agency')return{bg:'var(--purple-dim)',color:'var(--purple)'};
+  if(t==='Consultant')return{bg:'var(--green-dim)',color:'var(--green)'};
+  return{bg:'var(--orange-dim)',color:'var(--orange)'};
+}
+
+function priorityColor(p){
+  if(p==='Q2')return{bg:'var(--orange-dim)',color:'var(--orange)'};
+  return{bg:'rgba(255,255,255,0.05)',color:'var(--muted2)'};
+}
+
+function vertTag(v){
+  const map={'CPG':'var(--yellow)','Food & Bev':'var(--yellow)','Fashion':'var(--purple)','Health & Beauty':'var(--purple)','Sporting Goods':'var(--green)','B2B':'var(--blue)','Manufacturing':'var(--blue)','Luxury':'var(--purple)','Retail':'var(--muted2)','Tools':'var(--green)','All':'var(--muted2)'};
+  return map[v]||'var(--muted2)';
+}
+
+function render(){
+  const filtered=getFiltered();
+  const grid=document.getElementById('gridView');
+  const tbody=document.getElementById('tableBody');
+  const empty=document.getElementById('emptyState');
+  document.getElementById('statTotal').textContent=PARTNERS.length;
+  document.getElementById('statHot').textContent=PARTNERS.filter(p=>getScore(p)>=24).length;
+  document.getElementById('statQ2').textContent=PARTNERS.filter(p=>p.priority==='Q2').length;
+  if(filtered.length===0){grid.innerHTML='';tbody.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+
+  grid.innerHTML=filtered.map(p=>{
+    const score=getScore(p),sc=scoreClass(score),tc=typeColor(p.type),pc=priorityColor(p.priority);
+    const status=statuses[p.id]||'Not contacted';
+    const hasSeq=p.seqKey?`<span style="font-size:10px;background:var(--orange-dim);color:var(--orange);padding:2px 7px;border-radius:3px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase">SEQ</span>`:'';
+    return`<div class="card" onclick="openModal(${p.id})">
+      <div class="card-header">
+        <div><div class="card-name" style="display:flex;align-items:center;gap:8px">${p.name} ${hasSeq}</div><div class="card-type">${p.sub}</div></div>
+        <div class="card-score-wrap"><div class="score-badge ${sc}">${score}</div><div class="score-label">/ 30</div></div>
+      </div>
+      <div class="card-tags">
+        <span class="tag" style="background:${tc.bg};color:${tc.color}">${p.type}</span>
+        <span class="tag" style="background:${pc.bg};color:${pc.color}">${p.priority}</span>
+        ${p.verticals.slice(0,2).map(v=>`<span class="tag" style="background:rgba(255,255,255,0.05);color:${vertTag(v)}">${v}</span>`).join('')}
+      </div>
+      <div class="buyer-mini">
+        <div class="buyer-mini-item"><strong>Buyer:</strong> ${p.buyer&&p.buyer.title?p.buyer.title.split(' or ')[0]:'See details'}</div>
+        <div class="buyer-mini-item"><strong>Came from:</strong> ${p.buyer&&p.buyer.stack?p.buyer.stack.split('—')[0].trim():'See details'}</div>
+      </div>
+      <div class="card-why">${p.why.slice(0,115)}…</div>
+      <div class="card-signals">
+        <div class="signals-title">Referral Triggers</div>
+        ${p.signals.slice(0,2).map(s=>`<div class="signal-item"><div class="signal-dot"></div><span>${s}</span></div>`).join('')}
+      </div>
+      <div class="card-footer">
+        <div class="priority-indicator" style="color:${score>=24?'var(--orange)':score>=18?'var(--yellow)':'var(--muted2)'}">
+          ${score>=24?'🔥 Call this week':score>=18?'⚡ Q2 pipeline':'📋 Long game'}
+        </div>
+        <select class="status-select" onclick="event.stopPropagation()" onchange="setStatus(${p.id},this.value)">
+          ${['Not contacted','Researching','Outreach sent','In conversation','Meeting booked','Partner active','Passed'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}
+        </select>
+      </div>
+    </div>`;
+  }).join('');
+
+  tbody.innerHTML=filtered.map(p=>{
+    const score=getScore(p),sc=scoreClass(score),tc=typeColor(p.type);
+    const status=statuses[p.id]||'Not contacted';
+    return`<tr>
+      <td><div class="td-name" onclick="openModal(${p.id})">${p.name}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${p.sub.split('·')[0].trim()}</div></td>
+      <td><span class="tag" style="background:${tc.bg};color:${tc.color};font-size:11px">${p.type}</span></td>
+      <td><span class="td-score ${sc}">${score}</span></td>
+      <td style="font-size:12px;color:${p.priority==='Q2'?'var(--orange)':'var(--muted2)'};font-weight:600">${p.priority}</td>
+      <td>${p.verticals.slice(0,2).map(v=>`<span style="font-size:11px;color:${vertTag(v)}">${v}</span>`).join(', ')}</td>
+      <td class="td-why">${p.why.slice(0,80)}…</td>
+      <td><select class="status-select" onchange="setStatus(${p.id},this.value)">${['Not contacted','Researching','Outreach sent','In conversation','Meeting booked','Partner active','Passed'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}</select></td>
+    </tr>`;
+  }).join('');
+}
+
+function setStatus(id,val){statuses[id]=val;}
+
+function openModal(id){
+  const p=PARTNERS.find(x=>x.id===id);
+  if(!p)return;
+  const score=getScore(p),sc=scoreClass(score),tc=typeColor(p.type);
+  document.getElementById('mName').textContent=p.name;
+  document.getElementById('mSub').innerHTML=`<span style="background:${tc.bg};color:${tc.color};font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;text-transform:uppercase">${p.type}</span>&nbsp;&nbsp;${p.sub}`;
+  document.getElementById('mScore').textContent=score;
+  document.getElementById('mScore').className=`modal-score-big ${sc}`;
+  const statusVal=statuses[id]||'Not contacted';
+  const buyerHtml=p.buyer?`<div class="modal-section">
+    <div class="modal-section-title">Target Buyer Profile</div>
+    <div class="buyer-box">
+      <div class="buyer-field"><div class="buyer-field-label">Buyer Title</div><div class="buyer-field-val">${p.buyer.title||'—'}</div></div>
+      <div class="buyer-field"><div class="buyer-field-label">Prior Stack</div><div class="buyer-field-val">${p.buyer.stack||'—'}</div></div>
+      <div class="buyer-field"><div class="buyer-field-label">Trigger</div><div class="buyer-field-val">${p.buyer.trigger||'—'}</div></div>
+      <div class="buyer-field"><div class="buyer-field-label">SKU Profile</div><div class="buyer-field-val">${p.buyer.sku||'100–2,000 active SKUs'}</div></div>
+    </div>
+  </div>`:'';
+  const seqBtn=p.seqKey?`<button class="btn-secondary" onclick="closeModal();switchTab('sequences',document.querySelectorAll('.tab-btn')[1]);setTimeout(()=>{const el=document.querySelector('[onclick*=\\'${p.seqKey}\\']');if(el){el.click();}},50)">View Sequence →</button>`:'';
+  document.getElementById('mBody').innerHTML=`
+    <div class="score-breakdown">
+      <div class="score-item"><div class="score-item-val" style="color:var(--orange)">${p.scores.icp}</div><div class="score-item-label">ICP Overlap</div></div>
+      <div class="score-item"><div class="score-item-val" style="color:var(--blue)">${p.scores.conversations}</div><div class="score-item-label">Active Convos</div></div>
+      <div class="score-item"><div class="score-item-val" style="color:var(--green)">${p.scores.willingness}</div><div class="score-item-label">Ref. Willingness</div></div>
+    </div>
+    ${buyerHtml}
+    <div class="modal-section">
+      <div class="modal-section-title">Why They Source</div>
+      <div style="font-size:13.5px;color:var(--muted2);line-height:1.65">${p.why}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Referral Triggers</div>
+      ${p.signals.map(s=>`<div class="signal-item" style="padding:7px 0"><div class="signal-dot"></div><span style="font-size:13px">${s}</span></div>`).join('')}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Verticals</div>
+      <div class="modal-tags">${p.verticals.map(v=>`<span class="modal-tag" style="color:${vertTag(v)}">${v}</span>`).join('')}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Opening Message</div>
+      <div class="outreach-box">${p.outreach}</div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Action Steps</div>
+      <div>${p.actions.map((a,i)=>`<div class="action-step"><div class="step-num">${i+1}</div><div class="step-text">${a.who?`<strong>Contact:</strong> ${a.who} — <strong>Find via:</strong> ${a.where}`:a.text}</div></div>`).join('')}</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;padding:12px 0;border-top:1px solid var(--border);margin-bottom:-4px">
+      <div style="font-size:12px;color:var(--muted)">Status:</div>
+      <select class="status-select" id="modalStatus" style="font-size:12px" onchange="setStatus(${p.id},this.value)">
+        ${['Not contacted','Researching','Outreach sent','In conversation','Meeting booked','Partner active','Passed'].map(s=>`<option${s===statusVal?' selected':''}>${s}</option>`).join('')}
+      </select>
+      ${p.website?`<a href="https://${p.website}" target="_blank" style="font-size:12px;color:var(--orange);margin-left:auto;text-decoration:none">→ ${p.website}</a>`:''}
+    </div>
+    <div class="action-bar">
+      <button class="btn-primary" onclick="copyOutreachModal(${p.id})">Copy Opening Message</button>
+      ${seqBtn}
+      <button class="btn-secondary" onclick="closeModal()">Close</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function copyOutreachModal(id){
+  const p=PARTNERS.find(x=>x.id===id);
+  if(!p)return;
+  navigator.clipboard.writeText(p.outreach).then(()=>showToast('Opening message copied'));
+}
+
+function copyTouch(btn){
+  const card=btn.closest('.touch-card');
+  const body=card.querySelector('.touch-body');
+  const subj=card.querySelector('.touch-subject');
+  let text='';
+  if(subj)text+=subj.textContent.replace('Subject: ','')+'\n\n';
+  text+=body.textContent.trim();
+  navigator.clipboard.writeText(text).then(()=>showToast('Message copied'));
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function closeModalOutside(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+render();
+</script>
+</body>
+</html>

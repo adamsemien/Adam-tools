@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto Partner Targeting Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0C0F14;
+  --surface: #13181F;
+  --surface2: #1A2030;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --orange: #FF6B2B;
+  --orange-dim: rgba(255,107,43,0.15);
+  --orange-glow: rgba(255,107,43,0.08);
+  --text: #F0F2F5;
+  --muted: #6B7280;
+  --muted2: #9CA3AF;
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.12);
+  --yellow: #F59E0B;
+  --yellow-dim: rgba(245,158,11,0.12);
+  --red: #EF4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --purple: #A855F7;
+  --purple-dim: rgba(168,85,247,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+}
+
+/* HEADER */
+.header {
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-mark {
+  width: 34px; height: 34px;
+  background: var(--orange);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 14px; color: white;
+  letter-spacing: -0.5px;
+}
+.header-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 17px;
+  letter-spacing: -0.3px;
+}
+.header-sub { font-size: 12px; color: var(--muted2); margin-top: 1px; }
+.header-stats { display: flex; gap: 24px; }
+.hstat { text-align: right; }
+.hstat-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--orange); }
+.hstat-label { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* TOOLBAR */
+.toolbar {
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--surface);
+}
+.search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 320px; }
+.search-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 14px 9px 36px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.search-input:focus { border-color: var(--orange); }
+.search-input::placeholder { color: var(--muted); }
+.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+
+.filter-group { display: flex; gap: 4px; }
+.filter-btn {
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--orange); color: var(--orange); }
+.filter-btn.active { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); font-weight: 600; }
+
+.view-toggle { display: flex; gap: 2px; margin-left: auto; }
+.view-btn {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s;
+}
+.view-btn.active { background: var(--orange-dim); border-color: var(--orange); color: var(--orange); }
+
+/* MAIN */
+.main { padding: 24px 32px; }
+
+/* PRIORITY BANNER */
+.priority-banner {
+  background: linear-gradient(135deg, rgba(255,107,43,0.1) 0%, rgba(255,107,43,0.04) 100%);
+  border: 1px solid rgba(255,107,43,0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.priority-banner-icon { font-size: 24px; flex-shrink: 0; }
+.priority-banner-text { }
+.priority-banner-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--orange); margin-bottom: 3px; }
+.priority-banner-sub { font-size: 12px; color: var(--muted2); line-height: 1.5; }
+
+/* GRID VIEW */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.15s;
+}
+.card:hover { border-color: rgba(255,107,43,0.3); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+.card:hover::before { background: var(--orange); }
+
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.card-name-wrap { }
+.card-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.2px; }
+.card-type { font-size: 11px; color: var(--muted2); margin-top: 3px; }
+.card-score-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.score-badge {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 22px;
+  line-height: 1;
+}
+.score-label { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
+
+.card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.tag {
+  font-size: 10px; font-weight: 600;
+  padding: 3px 8px; border-radius: 4px;
+  letter-spacing: 0.3px; text-transform: uppercase;
+}
+
+.card-why { font-size: 12.5px; color: var(--muted2); line-height: 1.55; margin-bottom: 14px; }
+
+.card-signals { margin-bottom: 14px; }
+.signals-title { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.signal-item { font-size: 12px; color: var(--muted2); padding: 4px 0; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 8px; }
+.signal-item:last-child { border-bottom: none; }
+.signal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex-shrink: 0; margin-top: 5px; }
+
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
+.priority-indicator { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; }
+.status-select {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  color: var(--muted2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  outline: none;
+}
+.status-select:focus { border-color: var(--orange); }
+
+/* TABLE VIEW */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 11px; font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+th:hover { color: var(--orange); }
+th.sorted { color: var(--orange); }
+td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.td-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; cursor: pointer; }
+.td-name:hover { color: var(--orange); }
+.td-score { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; }
+.td-why { font-size: 12px; color: var(--muted2); max-width: 300px; }
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 200;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  width: 100%; max-width: 640px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+.modal-top {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky; top: 0;
+  background: var(--surface);
+  border-radius: 16px 16px 0 0;
+}
+.modal-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
+.modal-subtitle { font-size: 13px; color: var(--muted2); margin-top: 4px; }
+.modal-score-big {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 48px;
+  line-height: 1; letter-spacing: -2px;
+  color: var(--orange); flex-shrink: 0;
+}
+.modal-close {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 8px; width: 32px; height: 32px;
+  color: var(--muted); cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s; flex-shrink: 0;
+}
+.modal-close:hover { color: var(--text); }
+.modal-body { padding: 24px; }
+
+.score-breakdown {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 24px;
+}
+.score-item {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px;
+  text-align: center;
+}
+.score-item-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 24px; }
+.score-item-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+
+.modal-section { margin-bottom: 20px; }
+.modal-section-title {
+  font-size: 10px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.modal-section-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.outreach-box {
+  background: var(--bg); border: 1px solid var(--border2);
+  border-radius: 8px; padding: 16px;
+  font-size: 13px; color: var(--muted2); line-height: 1.65;
+  font-style: italic;
+}
+.outreach-box strong { color: var(--text); font-style: normal; }
+
+.action-steps { }
+.action-step {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.action-step:last-child { border-bottom: none; }
+.step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--orange-dim); border: 1px solid rgba(255,107,43,0.3);
+  color: var(--orange); font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-text { font-size: 13px; color: var(--muted2); line-height: 1.5; }
+.step-text strong { color: var(--text); }
+
+.modal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.modal-tag {
+  font-size: 11px; font-weight: 500;
+  padding: 4px 10px; border-radius: 5px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--muted2);
+}
+
+.action-bar {
+  display: flex; gap: 8px; padding-top: 20px; border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+.btn-primary {
+  flex: 1; padding: 10px; background: var(--orange);
+  color: white; border: none; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.12s;
+}
+.btn-primary:hover { background: #ff8c55; }
+.btn-secondary {
+  padding: 10px 16px; background: var(--surface2);
+  border: 1px solid var(--border2); color: var(--muted2);
+  border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.12s;
+}
+.btn-secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+/* SCORE COLORS */
+.s-hot { color: var(--orange); }
+.s-warm { color: var(--yellow); }
+.s-cold { color: var(--muted2); }
+
+/* EMPTY */
+.empty { text-align: center; padding: 80px 20px; color: var(--muted); }
+.empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.5; }
+
+/* COPY TOAST */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text); padding: 10px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  opacity: 0; transition: opacity 0.2s;
+  pointer-events: none; z-index: 999;
+}
+.toast.show { opacity: 1; }
+
+@media (max-width: 768px) {
+  .header { padding: 14px 16px; flex-wrap: wrap; gap: 12px; }
+  .toolbar { padding: 12px 16px; }
+  .main { padding: 16px; }
+  .grid { grid-template-columns: 1fr; }
+  .score-breakdown { grid-template-columns: repeat(3,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-mark">C</div>
+    <div>
+      <div class="header-title">Partner Targeting Tool</div>
+      <div class="header-sub">Agencies & SIs — Net New Sourced Revenue</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="hstat-num" id="statTotal">0</div>
+      <div class="hstat-label">Partners</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num" id="statHot">0</div>
+      <div class="hstat-label">Hot (8+)</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num" id="statQ2">0</div>
+      <div class="hstat-label">Q2 Priority</div>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <span class="search-icon">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </span>
+    <input class="search-input" id="searchInput" placeholder="Search partners…" oninput="render()">
+  </div>
+
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('type','all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('type','SI',this)">SIs</button>
+    <button class="filter-btn" onclick="setFilter('type','Agency',this)">Agencies</button>
+    <button class="filter-btn" onclick="setFilter('type','Consultant',this)">Consultants</button>
+  </div>
+
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('priority','all',this)">All Priority</button>
+    <button class="filter-btn" onclick="setFilter('priority','Q2',this)">Q2</button>
+    <button class="filter-btn" onclick="setFilter('priority','Q3',this)">Q3</button>
+  </div>
+
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('vertical','all',this)">All Verticals</button>
+    <button class="filter-btn" onclick="setFilter('vertical','CPG',this)">CPG</button>
+    <button class="filter-btn" onclick="setFilter('vertical','Fashion',this)">Fashion</button>
+    <button class="filter-btn" onclick="setFilter('vertical','Sporting Goods',this)">Sporting</button>
+  </div>
+
+  <div class="view-toggle">
+    <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid view">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/></svg>
+    </button>
+    <button class="view-btn" id="tableBtn" onclick="setView('table')" title="Table view">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M3 14h18M10 3v18"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="priority-banner">
+    <div class="priority-banner-icon">🎯</div>
+    <div class="priority-banner-text">
+      <div class="priority-banner-title">Your scoring logic: ICP Overlap (1–10) + Active DAM/PIM Conversations (1–10) + Referral Willingness (1–10) = max 30</div>
+      <div class="priority-banner-sub">Score 24+ = call this week &nbsp;|&nbsp; 18–23 = Q2 pipeline &nbsp;|&nbsp; Under 18 = long game. Click any card to see outreach script + action steps.</div>
+    </div>
+  </div>
+
+  <div id="gridView" class="grid"></div>
+  <div id="tableView" class="table-wrap" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('name')">Partner <span id="sort-name"></span></th>
+          <th onclick="sortBy('type')">Type <span id="sort-type"></span></th>
+          <th onclick="sortBy('score')">Score <span id="sort-score">↓</span></th>
+          <th onclick="sortBy('priority')">Priority <span id="sort-priority"></span></th>
+          <th>Verticals</th>
+          <th>Why They Source</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+  <div class="empty" id="emptyState" style="display:none">
+    <div class="empty-icon">🔍</div>
+    <div style="font-size:15px;color:var(--muted2)">No partners match your filters</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-top">
+      <div>
+        <div class="modal-name" id="mName"></div>
+        <div class="modal-subtitle" id="mSub"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+        <div>
+          <div class="modal-score-big" id="mScore"></div>
+          <div style="font-size:10px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:0.5px">/ 30</div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+const PARTNERS = [
+  // ── SYSTEM INTEGRATORS ─────────────────────────────────────────
+  {
+    id: 1,
+    name: "Sitation",
+    type: "SI",
+    sub: "Salsify Platinum Partner · 200+ implementations",
+    priority: "Q2",
+    verticals: ["CPG", "Food & Bev", "Sporting Goods", "Tools"],
+    scores: { icp: 10, conversations: 9, willingness: 9 },
+    why: "Salsify's first Platinum partner with 200+ implementations. They see the DAM gap on every single deployment — customers asking 'where do the images actually come from?' That's Canto's opening.",
+    signals: [
+      "Clients asking 'how do we get images into Salsify?'",
+      "Mid-market CPG brands (not enterprise — those get Bynder)",
+      "Brands selling into Home Depot, Target, Walmart",
+      "Post-implementation support retainers (they stay close to the customer)"
+    ],
+    outreach: "Hi [Name] — I lead channel partnerships at Canto, the DAM that sits upstream of Salsify deployments. I've been watching your implementation work and the pattern is consistent: after Salsify goes live, the asset governance question always comes up. We solve that layer, and at a price point that makes sense for the mid-market accounts you're deploying for. Worth 20 minutes to see if there's a co-sell motion here?",
+    actions: [
+      { who: "Head of Partnerships or Practice Lead", where: "LinkedIn or sitation.com/contact" },
+      { text: "Ask: 'How often do Salsify clients bring up asset management as a gap?'" },
+      { text: "Offer: referral fee + implementation services revenue on every Canto deal they source" },
+      { text: "Share a Canto + Salsify joint one-pager once you have one built" },
+      { text: "Target: first co-sell call within 30 days" }
+    ],
+    website: "sitation.com",
+    linkedin: "Sitation Inc"
+  },
+  {
+    id: 2,
+    name: "Gournay Consulting",
+    type: "SI",
+    sub: "Salsify Premier Partner · 8+ years · DAM integrations",
+    priority: "Q2",
+    verticals: ["CPG", "Food & Bev", "Health & Beauty", "Tools"],
+    scores: { icp: 10, conversations: 10, willingness: 8 },
+    why: "Explicitly builds DAM integrations alongside Salsify — their site mentions Bynder as the current DAM they integrate with. That's your displacement opportunity. If they're already doing DAM+PIM work, they understand the value. Pitch Canto as the right-priced alternative for mid-market.",
+    signals: [
+      "Mentions Bynder integrations — ask if clients are happy with the price",
+      "Food & Bev and CPG clients are core ICP",
+      "Does GDSN strategy — big retailer distribution = asset spec pain",
+      "Clients like HP Hood (mid-large enterprise) validate deal size potential"
+    ],
+    outreach: "Hi [Name] — Canto channel partnerships here. I noticed Gournay does DAM integrations alongside Salsify — currently with Bynder, based on what I've seen. I'd love to have a frank conversation about whether there's a segment of your client base where Canto is a better fit on price and simplicity. Mid-market brands ($20M–$80M) often get priced out of Bynder. We're the right answer for that tier, and we have a Salsify integration already built.",
+    actions: [
+      { who: "Founder or Partner", where: "LinkedIn: search 'Gournay Consulting'" },
+      { text: "Lead with: 'I know you work with Bynder — here's why Canto is better for your mid-market clients'" },
+      { text: "Ask for a 20-min call to explore if there's a deal-registration structure that works" },
+      { text: "If they're open, offer to co-present to a shared prospect" }
+    ],
+    website: "gurnayconsulting.com",
+    linkedin: "Gournay Consulting"
+  },
+  {
+    id: 3,
+    name: "Amplifi",
+    type: "SI",
+    sub: "Salsify Partner · Enterprise data consultancy",
+    priority: "Q2",
+    verticals: ["Fashion", "CPG", "Manufacturing"],
+    scores: { icp: 9, conversations: 8, willingness: 7 },
+    why: "Global cookware manufacturer and global fashion retailer case studies on their site are exact Canto ICP. They describe themselves as a 'data consultancy' which means they understand the full stack — they won't need hand-holding on the DAM value prop.",
+    signals: [
+      "Case studies mention Salsify for fashion and CPG globally",
+      "Enterprise size clients — watch for multi-region rollouts where asset governance is complex",
+      "North America Salsify practice specifically — US-based prospects you can work"
+    ],
+    outreach: "Hi [Name] — I lead partner development at Canto. Came across Amplifi's Salsify work — the fashion retailer and cookware manufacturer case studies are squarely in our sweet spot. We built a native Canto-Salsify integration and I'm curious whether your North America clients are asking about the DAM layer. Would love 20 minutes to explore if there's a referral motion worth building.",
+    actions: [
+      { who: "North America Alliance or Salsify Practice Lead", where: "LinkedIn" },
+      { text: "Mention specific case studies — shows you did your homework" },
+      { text: "Emphasize NA focus — they have a global practice but NA is your territory" },
+      { text: "Offer: joint customer session if they have a client evaluating DAM options" }
+    ],
+    website: "goamplifi.com",
+    linkedin: "Amplifi"
+  },
+  {
+    id: 4,
+    name: "Aleysian",
+    type: "SI",
+    sub: "Salsify & Salesforce Partner · Commerce specialists",
+    priority: "Q2",
+    verticals: ["CPG", "Sporting Goods", "B2B"],
+    scores: { icp: 8, conversations: 8, willingness: 8 },
+    why: "Dual Salsify + Salesforce practice means they're sitting across both the PIM conversation and the CRM conversation. When a brand is implementing both, the DAM is almost always the missing layer. Strong CPG and sporting goods client base.",
+    signals: [
+      "Clients running both Salsify and Salesforce — complex tech stacks = DAM need",
+      "B2B brands selling through distributors — portal use case is strong",
+      "Product content + commerce strategy work = they're in the right buying conversation"
+    ],
+    outreach: "Hi [Name] — Canto partnerships here. I'm mapping Salsify SIs with Salesforce practices and Aleysian came up consistently. When you're implementing both, the asset management question tends to come up at the product content layer. Canto integrates with both Salsify and Salesforce natively — curious if you've been seeing that gap and whether there's a co-sell angle worth exploring.",
+    actions: [
+      { who: "Partnership or Business Development contact", where: "aleysian.com or LinkedIn" },
+      { text: "Lead with the Salsify + Salesforce dual practice angle" },
+      { text: "Ask: 'How often do clients ask how assets get from their DAM into Salsify?'" },
+      { text: "Position Canto as completing the commerce stack" }
+    ],
+    website: "aleysian.com",
+    linkedin: "Aleysian"
+  },
+  {
+    id: 5,
+    name: "Intellias",
+    type: "SI",
+    sub: "Salsify Implementation Partner · Enterprise scale",
+    priority: "Q3",
+    verticals: ["CPG", "Manufacturing", "Retail"],
+    scores: { icp: 7, conversations: 7, willingness: 6 },
+    why: "Large-scale Salsify partner with enterprise deployments. They mention using DAM within Salsify or integrating third-party — that's the opening. Larger firm means longer sales cycle for the partnership itself, but enterprise deals they source would be higher ACV.",
+    signals: [
+      "Enterprise clients with millions of SKUs",
+      "Mentions 'digital asset management' in their Salsify page",
+      "Global deployments — brands with regional complexity need governed DAM"
+    ],
+    outreach: "Hi [Name] — I lead channel partnerships at Canto. I saw that Intellias handles DAM alongside Salsify implementations — either native or third-party. For enterprise clients, we're the governed DAM layer that feeds into Salsify without requiring a separate heavy enterprise DAM platform. Worth a call to see if there's an overlap in your pipeline?",
+    actions: [
+      { who: "Head of Alliances or Digital Commerce Practice Lead", where: "LinkedIn" },
+      { text: "This is a longer build — aim for a discovery call, not a quick pitch" },
+      { text: "Ask about their typical DAM recommendation for clients" },
+      { text: "Offer to join a client call as a DAM subject matter expert" }
+    ],
+    website: "intellias.com",
+    linkedin: "Intellias"
+  },
+
+  // ── SHOPIFY AGENCIES ────────────────────────────────────────────
+  {
+    id: 6,
+    name: "Barrel",
+    type: "Agency",
+    sub: "Shopify Platinum · CPG & Food/Bev specialist",
+    priority: "Q2",
+    verticals: ["CPG", "Food & Bev", "Health & Beauty"],
+    scores: { icp: 10, conversations: 9, willingness: 8 },
+    why: "CPG and food & bev specialist with brands like Black+Decker, Once Upon A Farm, McCormick. These are exactly the brands that need DAM at scale. Barrel manages long-term client retainers — meaning they're in the room when asset problems surface post-launch. That's your referral trigger.",
+    signals: [
+      "Client mentions asset chaos during a Shopify build or retainer",
+      "Brands launching new SKUs or variants frequently",
+      "Subscription CPG brands — high asset volume per product",
+      "B2B + DTC clients managing wholesale portals"
+    ],
+    outreach: "Hi [Name] — I head up partnerships at Canto, the DAM platform a lot of CPG brands use to govern their product assets before they hit Shopify. I know Barrel works with brands like McCormick and Once Upon A Farm — those are exactly our ICP. When the asset management question comes up with your clients, I'd love to be the person you call. Happy to build a simple referral structure that makes it easy to send deals our way.",
+    actions: [
+      { who: "Head of Partnerships or Business Development", where: "barrel.nyc or LinkedIn" },
+      { text: "Name-drop their clients in your vertical to show you've done your homework" },
+      { text: "Ask: 'When a client is scaling to 200+ SKUs, what do you recommend for asset management?'" },
+      { text: "Offer a referral fee — Barrel is commercial, they appreciate a clear payout" },
+      { text: "Ask to be added to their vendor shortlist for DAM questions" }
+    ],
+    website: "barrel.nyc",
+    linkedin: "Barrel"
+  },
+  {
+    id: 7,
+    name: "Avex Designs",
+    type: "Agency",
+    sub: "Shopify Plus · Fashion & luxury specialist",
+    priority: "Q2",
+    verticals: ["Fashion", "Health & Beauty", "Luxury"],
+    scores: { icp: 9, conversations: 8, willingness: 8 },
+    why: "Fashion and luxury Shopify Plus agency. Clients like Hugo Boss, KITH, Simmons — upper-mid to premium brands with large asset libraries. Fashion brands have the highest asset volume per SKU (every colorway, every angle, lifestyle shots) and the least governance. High-value DAM conversation.",
+    signals: [
+      "Fashion clients with multiple colorways per SKU",
+      "Seasonal launches with large photography packages",
+      "Brand teams asking 'where are the approved images?'",
+      "Luxury brands worried about off-brand assets appearing on site"
+    ],
+    outreach: "Hi [Name] — Canto partnerships here. I know Avex works with fashion and luxury brands — Hugo Boss, KITH, that caliber. Those brands are asset-intensive: every SKU has 8-15 images, multiple colorways, lifestyle and studio cuts. When asset governance comes up (and it does), I want Canto to be the name you have in your back pocket. Worth a quick call to see if we can build something around that?",
+    actions: [
+      { who: "Head of Client Services or Business Development", where: "avexdesigns.com or LinkedIn" },
+      { text: "Lead with fashion-specific asset volume — colorways, lifestyle shots, seasonal campaigns" },
+      { text: "Mention specific client names (Hugo Boss, KITH) to build credibility" },
+      { text: "Ask: 'What do your fashion clients use for asset governance today?'" },
+      { text: "Offer a joint pitch to a shared prospect or a Canto demo for their team" }
+    ],
+    website: "avexdesigns.com",
+    linkedin: "Avex Designs"
+  },
+  {
+    id: 8,
+    name: "BlueSwitch",
+    type: "Agency",
+    sub: "Shopify Plus · Fashion & beauty integrations expert",
+    priority: "Q2",
+    verticals: ["Fashion", "Health & Beauty"],
+    scores: { icp: 9, conversations: 8, willingness: 7 },
+    why: "Portfolio includes L'Oréal, Ted Baker, Perry Ellis, Mario Badescu — massive DAM ICP. Specifically called out for 'integration capabilities' which means their team thinks in connected systems. They'll immediately understand the DAM-to-Shopify value prop and why a referral structure makes sense.",
+    signals: [
+      "L'Oréal-tier clients have brand governance requirements — DAM is mandatory",
+      "Fashion clients managing B2B + DTC (Ted Baker, Perry Ellis) need portal and distribution governance",
+      "Integration-heavy projects often expose the asset management layer"
+    ],
+    outreach: "Hi [Name] — I lead partnerships at Canto. Saw the BlueSwitch portfolio — L'Oréal, Ted Baker, Mario Badescu. Those brands have serious asset governance requirements. We're the DAM platform that sits upstream of Shopify for brands at that scale. Given your integration focus, I suspect you've seen this gap before. Would love to explore whether there's a referral or co-sell angle here.",
+    actions: [
+      { who: "Partnerships or Sales contact", where: "blueswitch.com or LinkedIn" },
+      { text: "Lead with their enterprise fashion clients — shows you understand their market" },
+      { text: "Ask about their integration stack — position Canto as the asset source" },
+      { text: "Offer to demo Canto for their solutions team" }
+    ],
+    website: "blueswitch.com",
+    linkedin: "BlueSwitch"
+  },
+  {
+    id: 9,
+    name: "Netalico",
+    type: "Agency",
+    sub: "Shopify Premier · Food & Bev, CPG, Sports/Outdoors",
+    priority: "Q2",
+    verticals: ["Food & Bev", "CPG", "Sporting Goods"],
+    scores: { icp: 9, conversations: 8, willingness: 9 },
+    why: "Called out specifically for food & bev, CPG, and sports & outdoors — your three strongest Canto verticals. Engineering-first with 85% retention on monthly retainers means they stay close to clients. Long-term retainer model = they hear about asset problems over time, not just at launch.",
+    signals: [
+      "Client mentions image management pain during retainer",
+      "Brands expanding SKU count (scaling = more assets to manage)",
+      "Sports/outdoors brands with seasonal catalog complexity",
+      "CPG brands adding DTC alongside their retail channel"
+    ],
+    outreach: "Hi [Name] — Canto partnerships here. I specifically looked up Netalico because your vertical focus — food & bev, CPG, sports & outdoors — maps exactly to our ICP. Those brands deal with seasonal SKU complexity, multi-channel image specs, and no real governance on their assets. On your monthly retainers, when clients hit that wall, I want Canto to be a 10-second referral. Happy to keep it simple — just a referral structure with no strings. Interested?",
+    actions: [
+      { who: "Founder Mark Lewis or Business Development", where: "netalico.com or LinkedIn" },
+      { text: "Emphasize the retainer model — you want to be their go-to for DAM questions over time" },
+      { text: "Ask: 'Do your sports or food & bev clients have any structured way to manage their product images?'" },
+      { text: "Offer to send a one-pager they can share with clients when it comes up" }
+    ],
+    website: "netalico.com",
+    linkedin: "Netalico Commerce"
+  },
+  {
+    id: 10,
+    name: "Absolute Web",
+    type: "Agency",
+    sub: "Shopify Platinum · Full-service + ERP/PIM integrations",
+    priority: "Q2",
+    verticals: ["CPG", "Fashion", "B2B", "Manufacturing"],
+    scores: { icp: 8, conversations: 9, willingness: 7 },
+    why: "Explicitly calls out ERP, PIM, and CRM integrations alongside Shopify. That means they're building complete stacks — and DAM is the layer they're leaving out. Latin American market connection is interesting if Canto has any LATAM ambitions. B2B capabilities overlap with Canto's distributor portal use case.",
+    signals: [
+      "ERP/PIM integration projects = complex product data = DAM gap",
+      "B2B clients with distributor portals need asset governance",
+      "Founded 1999 — they have enterprise relationships with legacy asset chaos"
+    ],
+    outreach: "Hi [Name] — I lead channel partnerships at Canto. Absolute Web's ERP and PIM integration work is interesting to me — brands doing those complex builds almost always have a DAM problem they're ignoring until it becomes urgent. We integrate with the PIM and ERP systems you're already connecting to. Happy to explore whether there's a natural fit for Canto in the stacks you're building.",
+    actions: [
+      { who: "Alliance or Partnership contact", where: "absoluteweb.com" },
+      { text: "Lead with their ERP/PIM work — show you understand their technical positioning" },
+      { text: "Ask about their typical client tech stack" },
+      { text: "Offer to join a client discovery call as a DAM resource" }
+    ],
+    website: "absoluteweb.com",
+    linkedin: "Absolute Web"
+  },
+
+  // ── CONSULTANTS ─────────────────────────────────────────────────
+  {
+    id: 11,
+    name: "DAM Consultants (Henry Stewart Circuit)",
+    type: "Consultant",
+    sub: "Independent DAM advisors · Vendor-agnostic",
+    priority: "Q2",
+    verticals: ["Fashion", "CPG", "Manufacturing", "All"],
+    scores: { icp: 9, conversations: 10, willingness: 7 },
+    why: "Independent consultants who advise on DAM selection are your highest-close-rate referral source. When they recommend Canto, the deal is effectively closed before your AE gets involved. Henry Stewart DAM Conferences are the most concentrated pool — speakers and attendees are all in your world.",
+    signals: [
+      "Speaking at or attending Henry Stewart DAM conferences",
+      "LinkedIn posts about DAM governance, metadata strategy, content ops",
+      "Job title includes: 'content operations', 'digital asset', 'DAM strategist'",
+      "Consulting profile mentions 'vendor selection' or 'DAM implementation'"
+    ],
+    outreach: "Hi [Name] — I lead partnerships at Canto and I'm building out our consultant program. You clearly advise brands on DAM selection and governance. I'd love a direct conversation — not a pitch, but a genuine discussion about how Canto fits in your recommendations and whether there's a referral structure that makes it worth your while to include us when we're the right fit.",
+    actions: [
+      { who: "Individual consultants", where: "Henry Stewart DAM conference speaker list, LinkedIn" },
+      { text: "Search LinkedIn: 'digital asset management consultant' + 'independent'" },
+      { text: "Look for consultants who've published content about DAM selection criteria" },
+      { text: "Attend Henry Stewart DAM NYC or London — meet them in person" },
+      { text: "Offer: 10-15% referral fee, no exclusivity, no volume requirement" }
+    ],
+    website: "henrystewartconferences.com/dams",
+    linkedin: "Search: DAM consultant independent"
+  },
+  {
+    id: 12,
+    name: "Strat7 / Rightpoint",
+    type: "SI",
+    sub: "Commerce transformation SI · Mid-to-enterprise",
+    priority: "Q3",
+    verticals: ["Fashion", "CPG", "Retail"],
+    scores: { icp: 8, conversations: 7, willingness: 6 },
+    why: "Larger SIs doing commerce transformation work for mid-to-enterprise brands. Longer build to activate as partners but each deal they source is likely higher ACV. Worth planting the seed in Q2 for Q3-Q4 deals. Look for the specific practice leads, not the firm-wide partner contact.",
+    signals: [
+      "Commerce transformation projects for fashion or CPG brands",
+      "Replatforming projects (Magento → Shopify, SAP Commerce) expose asset chaos",
+      "Large brand clients where DAM is part of the transformation scope"
+    ],
+    outreach: "Hi [Name] — Canto partnerships. I'm building out our SI program and Rightpoint/Strat7 commerce work keeps coming up in the same conversations as our prospects. When you're doing commerce transformation work, the DAM layer is often left to the client to figure out. We integrate with the platforms you're deploying and have a referral structure for SIs. Worth a discovery call?",
+    actions: [
+      { who: "Commerce Practice Lead or VP of Alliances", where: "LinkedIn" },
+      { text: "Find the specific practice lead, not the firm-level contact" },
+      { text: "Ask about their standard tech stack recommendations for asset management" },
+      { text: "Offer to present Canto to their practice team (30-min lunch & learn)" }
+    ],
+    website: "rightpoint.com",
+    linkedin: "Rightpoint"
+  },
+  {
+    id: 13,
+    name: "Anatta",
+    type: "Agency",
+    sub: "Shopify Platinum · Enterprise headless & ERP/PIM",
+    priority: "Q3",
+    verticals: ["Fashion", "Sporting Goods", "CPG"],
+    scores: { icp: 8, conversations: 7, willingness: 7 },
+    why: "Handles Grove Collaborative, Vuori — enterprise DTC brands with complex asset needs. Headless architecture + ERP/PIM integrations = they build complete stacks where DAM is the missing layer. Vuori especially — outdoor/sporting apparel brand with large asset volumes. That's prime Canto ICP.",
+    signals: [
+      "Vuori-type clients: outdoor, athletic, premium apparel — massive SKU + colorway asset volume",
+      "ERP integration projects expose the structured product data need",
+      "Post-launch they often move to retained optimization — long-term client relationship"
+    ],
+    outreach: "Hi [Name] — Canto partnerships. Your work with Vuori and Grove Collaborative caught my attention — those are asset-intensive brands where governance becomes critical at scale. Headless builds especially need a strong DAM on the asset source side. I'd love to explore whether Canto fits into the stacks Anatta is building for that caliber of client.",
+    actions: [
+      { who: "Business Development or Head of Alliances", where: "anatta.io" },
+      { text: "Mention Vuori specifically — sporting/outdoor apparel is your sweet spot" },
+      { text: "Lead with the headless architecture angle — DAM as the asset source layer" },
+      { text: "Ask: 'How do your enterprise clients manage product assets today?'" }
+    ],
+    website: "anatta.io",
+    linkedin: "Anatta"
+  }
+];
+
+// STATE
+let filters = { type: 'all', priority: 'all', vertical: 'all' };
+let currentView = 'grid';
+let sortField = 'score';
+let sortDir = -1;
+let statuses = {};
+
+function getScore(p) {
+  return p.scores.icp + p.scores.conversations + p.scores.willingness;
+}
+
+function scoreClass(s) {
+  if (s >= 24) return 's-hot';
+  if (s >= 18) return 's-warm';
+  return 's-cold';
+}
+
+function setFilter(key, val, el) {
+  filters[key] = val;
+  el.closest('.filter-group').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('gridView').style.display = v === 'grid' ? 'grid' : 'none';
+  document.getElementById('tableView').style.display = v === 'table' ? 'block' : 'none';
+  document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+  document.getElementById('tableBtn').classList.toggle('active', v === 'table');
+}
+
+function sortBy(field) {
+  if (sortField === field) sortDir *= -1;
+  else { sortField = field; sortDir = field === 'score' ? -1 : 1; }
+  document.querySelectorAll('[id^="sort-"]').forEach(el => el.textContent = '');
+  document.getElementById('sort-' + field).textContent = sortDir === 1 ? '↑' : '↓';
+  document.querySelectorAll('th').forEach(el => el.classList.remove('sorted'));
+  render();
+}
+
+function getFiltered() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  return PARTNERS.filter(p => {
+    if (filters.type !== 'all' && p.type !== filters.type) return false;
+    if (filters.priority !== 'all' && p.priority !== filters.priority) return false;
+    if (filters.vertical !== 'all' && !p.verticals.includes(filters.vertical)) return false;
+    if (q && ![p.name, p.sub, p.type, ...p.verticals].join(' ').toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a, b) => {
+    let av, bv;
+    if (sortField === 'score') { av = getScore(a); bv = getScore(b); }
+    else if (sortField === 'name') { av = a.name; bv = b.name; }
+    else if (sortField === 'type') { av = a.type; bv = b.type; }
+    else if (sortField === 'priority') { av = a.priority; bv = b.priority; }
+    else { av = getScore(a); bv = getScore(b); }
+    if (av < bv) return sortDir;
+    if (av > bv) return -sortDir;
+    return 0;
+  });
+}
+
+function typeColor(t) {
+  if (t === 'SI') return { bg: 'var(--blue-dim)', color: 'var(--blue)' };
+  if (t === 'Agency') return { bg: 'var(--purple-dim)', color: 'var(--purple)' };
+  if (t === 'Consultant') return { bg: 'var(--green-dim)', color: 'var(--green)' };
+  return { bg: 'var(--orange-dim)', color: 'var(--orange)' };
+}
+
+function priorityColor(p) {
+  if (p === 'Q2') return { bg: 'var(--orange-dim)', color: 'var(--orange)' };
+  return { bg: 'rgba(255,255,255,0.05)', color: 'var(--muted2)' };
+}
+
+function vertTag(v) {
+  const map = {
+    'CPG': 'var(--yellow)', 'Food & Bev': 'var(--yellow)',
+    'Fashion': 'var(--purple)', 'Health & Beauty': 'var(--purple)',
+    'Sporting Goods': 'var(--green)', 'B2B': 'var(--blue)',
+    'Manufacturing': 'var(--blue)', 'Luxury': 'var(--purple)',
+    'Retail': 'var(--muted2)', 'Tools': 'var(--green)', 'All': 'var(--muted2)'
+  };
+  return map[v] || 'var(--muted2)';
+}
+
+function render() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('gridView');
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+
+  // Stats
+  const allScored = PARTNERS;
+  document.getElementById('statTotal').textContent = allScored.length;
+  document.getElementById('statHot').textContent = allScored.filter(p => getScore(p) >= 24).length;
+  document.getElementById('statQ2').textContent = allScored.filter(p => p.priority === 'Q2').length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = ''; tbody.innerHTML = '';
+    empty.style.display = 'block'; return;
+  }
+  empty.style.display = 'none';
+
+  // GRID
+  grid.innerHTML = filtered.map(p => {
+    const score = getScore(p);
+    const sc = scoreClass(score);
+    const tc = typeColor(p.type);
+    const pc = priorityColor(p.priority);
+    const status = statuses[p.id] || 'Not contacted';
+    return `<div class="card" onclick="openModal(${p.id})">
+      <div class="card-header">
+        <div class="card-name-wrap">
+          <div class="card-name">${p.name}</div>
+          <div class="card-type">${p.sub}</div>
+        </div>
+        <div class="card-score-wrap">
+          <div class="score-badge ${sc}">${score}</div>
+          <div class="score-label">/ 30</div>
+        </div>
+      </div>
+      <div class="card-tags">
+        <span class="tag" style="background:${tc.bg};color:${tc.color}">${p.type}</span>
+        <span class="tag" style="background:${pc.bg};color:${pc.color}">${p.priority}</span>
+        ${p.verticals.slice(0,2).map(v => `<span class="tag" style="background:rgba(255,255,255,0.05);color:${vertTag(v)}">${v}</span>`).join('')}
+      </div>
+      <div class="card-why">${p.why.slice(0, 120)}…</div>
+      <div class="card-signals">
+        <div class="signals-title">Referral Triggers</div>
+        ${p.signals.slice(0,2).map(s => `<div class="signal-item"><div class="signal-dot"></div><span>${s}</span></div>`).join('')}
+      </div>
+      <div class="card-footer">
+        <div class="priority-indicator" style="color:${score >= 24 ? 'var(--orange)' : score >= 18 ? 'var(--yellow)' : 'var(--muted2)'}">
+          ${score >= 24 ? '🔥 Call this week' : score >= 18 ? '⚡ Q2 pipeline' : '📋 Long game'}
+        </div>
+        <select class="status-select" onclick="event.stopPropagation()" onchange="setStatus(${p.id}, this.value)">
+          ${['Not contacted','Researching','Outreach sent','In conversation','Meeting booked','Partner active','Passed'].map(s => `<option${s === status ? ' selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </div>
+    </div>`;
+  }).join('');
+
+  // TABLE
+  tbody.innerHTML = filtered.map(p => {
+    const score = getScore(p);
+    const sc = scoreClass(score);
+    const tc = typeColor(p.type);
+    const status = statuses[p.id] || 'Not contacted';
+    return `<tr>
+      <td><div class="td-name" onclick="openModal(${p.id})">${p.name}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${p.sub.split('·')[0].trim()}</div></td>
+      <td><span class="tag" style="background:${tc.bg};color:${tc.color};font-size:11px">${p.type}</span></td>
+      <td><span class="td-score ${sc}">${score}</span></td>
+      <td style="font-size:12px;color:${p.priority === 'Q2' ? 'var(--orange)' : 'var(--muted2)'};font-weight:600">${p.priority}</td>
+      <td>${p.verticals.slice(0,2).map(v => `<span style="font-size:11px;color:${vertTag(v)}">${v}</span>`).join(', ')}</td>
+      <td class="td-why">${p.why.slice(0, 90)}…</td>
+      <td>
+        <select class="status-select" onchange="setStatus(${p.id}, this.value)">
+          ${['Not contacted','Researching','Outreach sent','In conversation','Meeting booked','Partner active','Passed'].map(s => `<option${s === status ? ' selected' : ''}>${s}</option>`).join('')}
+        </select>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function setStatus(id, val) {
+  statuses[id] = val;
+}
+
+function openModal(id) {
+  const p = PARTNERS.find(x => x.id === id);
+  if (!p) return;
+  const score = getScore(p);
+  const sc = scoreClass(score);
+  const tc = typeColor(p.type);
+
+  document.getElementById('mName').textContent = p.name;
+  document.getElementById('mSub').innerHTML = `<span style="background:${tc.bg};color:${tc.color};font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.3px">${p.type}</span>&nbsp;&nbsp;${p.sub}`;
+  document.getElementById('mScore').textContent = score;
+  document.getElementById('mScore').className = `modal-score-big ${sc}`;
+
+  const statusVal = statuses[id] || 'Not contacted';
+
+  document.getElementById('mBody').innerHTML = `
+    <div class="score-breakdown">
+      <div class="score-item">
+        <div class="score-item-val" style="color:var(--orange)">${p.scores.icp}</div>
+        <div class="score-item-label">ICP Overlap</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-val" style="color:var(--blue)">${p.scores.conversations}</div>
+        <div class="score-item-label">Active Convos</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-val" style="color:var(--green)">${p.scores.willingness}</div>
+        <div class="score-item-label">Ref. Willingness</div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Why They Source</div>
+      <div style="font-size:13.5px;color:var(--muted2);line-height:1.65">${p.why}</div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Referral Trigger Signals</div>
+      ${p.signals.map(s => `<div class="signal-item" style="padding:7px 0"><div class="signal-dot"></div><span style="font-size:13px">${s}</span></div>`).join('')}
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Verticals & Context</div>
+      <div class="modal-tags">${p.verticals.map(v => `<span class="modal-tag" style="color:${vertTag(v)}">${v}</span>`).join('')}</div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Opening Message</div>
+      <div class="outreach-box" id="outreachText">${p.outreach}</div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Action Steps</div>
+      <div class="action-steps">
+        ${p.actions.map((a, i) => `<div class="action-step">
+          <div class="step-num">${i+1}</div>
+          <div class="step-text">${a.who ? `<strong>Contact:</strong> ${a.who} — <strong>Find via:</strong> ${a.where}` : a.text}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center;padding:12px 0;border-top:1px solid var(--border);margin-bottom:-4px">
+      <div style="font-size:12px;color:var(--muted)">Status:</div>
+      <select class="status-select" id="modalStatus" style="font-size:12px" onchange="setStatus(${p.id}, this.value)">
+        ${['Not contacted','Researching','Outreach sent','In conversation','Meeting booked','Partner active','Passed'].map(s => `<option${s === statusVal ? ' selected' : ''}>${s}</option>`).join('')}
+      </select>
+      ${p.website ? `<a href="https://${p.website}" target="_blank" style="font-size:12px;color:var(--orange);margin-left:auto;text-decoration:none">→ ${p.website}</a>` : ''}
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-primary" onclick="copyOutreach(${p.id})">Copy Opening Message</button>
+      <button class="btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function copyOutreach(id) {
+  const p = PARTNERS.find(x => x.id === id);
+  if (!p) return;
+  navigator.clipboard.writeText(p.outreach).then(() => showToast('Opening message copied'));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+render();
+</script>
+</body>
+</html>

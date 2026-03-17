@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto Integration Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #D95A00;
+    --orange-light: #FF7A2E;
+    --orange-bg: #FFF3EC;
+    --navy: #0F1B2D;
+    --navy-mid: #1E3352;
+    --text: #1A1A1A;
+    --muted: #666;
+    --border: #E5E5E5;
+    --bg: #FAFAF8;
+    --white: #FFFFFF;
+    --sidebar-w: 220px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .header-logo { display: flex; align-items: center; gap: 10px; }
+  .header-logo-mark {
+    width: 28px; height: 28px;
+    background: var(--orange);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .header-logo-mark svg { width: 16px; height: 16px; fill: white; }
+  .logo-text { font-size: 15px; font-weight: 600; color: white; letter-spacing: -0.2px; }
+  .header-badge {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(217,90,0,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--orange-light);
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-size: 38px; font-weight: 700; color: white;
+    letter-spacing: -1px; line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .hero-sub {
+    font-size: 15px; color: rgba(255,255,255,0.55);
+    max-width: 520px; line-height: 1.6;
+    margin-bottom: 36px;
+  }
+  .hero-stats {
+    display: flex; gap: 40px;
+  }
+  .stat { }
+  .stat-num { font-size: 28px; font-weight: 700; color: white; letter-spacing: -0.5px; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+  /* SEARCH */
+  .search-bar {
+    margin: 28px 40px 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .search-wrap {
+    position: relative;
+    margin: 28px 40px 0;
+  }
+  .search-input {
+    width: 100%;
+    padding: 13px 20px 13px 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    background: white;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--orange); }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); pointer-events: none;
+  }
+
+  /* LAYOUT */
+  .layout {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 40px 60px;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    position: sticky;
+    top: 88px;
+  }
+  .sidebar-section { margin-bottom: 28px; }
+  .sidebar-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px; padding-left: 4px;
+  }
+  .cat-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; padding: 8px 10px;
+    background: none; border: none; cursor: pointer;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px; font-weight: 500;
+    color: var(--muted);
+    transition: all 0.12s;
+    text-align: left;
+    margin-bottom: 1px;
+  }
+  .cat-btn:hover { background: rgba(0,0,0,0.04); color: var(--text); }
+  .cat-btn.active { background: var(--orange-bg); color: var(--orange); font-weight: 600; }
+  .cat-count {
+    font-size: 11px; font-weight: 500;
+    background: rgba(0,0,0,0.06);
+    color: var(--muted);
+    padding: 1px 7px; border-radius: 10px;
+    min-width: 22px; text-align: center;
+  }
+  .cat-btn.active .cat-count { background: rgba(217,90,0,0.15); color: var(--orange); }
+
+  .sidebar-divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+  .pt-filter-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 8px; padding-left: 4px;
+  }
+  .pt-btn {
+    display: block; width: 100%;
+    padding: 7px 10px;
+    background: none; border: none; cursor: pointer;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--muted);
+    text-align: left;
+    transition: all 0.12s;
+    margin-bottom: 1px;
+  }
+  .pt-btn:hover { background: rgba(0,0,0,0.04); color: var(--text); }
+  .pt-btn.active { background: rgba(15,27,45,0.08); color: var(--navy); font-weight: 600; }
+
+  /* MAIN */
+  .main { flex: 1; min-width: 0; }
+
+  .results-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .results-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .results-count { font-size: 13px; color: var(--muted); }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: var(--orange);
+    box-shadow: 0 4px 20px rgba(217,90,0,0.08);
+    transform: translateY(-1px);
+  }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+  .card-logo {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .card-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .cat-pill {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+    padding: 3px 8px; border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .partner-pill {
+    font-size: 10px; font-weight: 500;
+    padding: 2px 7px; border-radius: 4px;
+    background: rgba(0,0,0,0.05); color: var(--muted);
+  }
+  .card-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: -0.2px; }
+  .card-tagline { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 12px; flex: 1; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
+  .partner-tag {
+    font-size: 11px; font-weight: 600;
+    padding: 3px 8px; border-radius: 4px;
+    color: white;
+  }
+  .complexity-tag {
+    font-size: 11px; color: var(--muted); font-weight: 500;
+  }
+
+  .card-icp {
+    font-size: 11px; color: var(--muted);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* TECH PARTNER SPECIAL CARD */
+  .card.tech-partner-card {
+    border-color: rgba(15,27,45,0.15);
+    background: linear-gradient(135deg, #F8FAFC 0%, white 100%);
+  }
+  .card.tech-partner-card:hover {
+    border-color: var(--navy);
+    box-shadow: 0 4px 20px rgba(15,27,45,0.10);
+  }
+
+  /* EMPTY */
+  .empty { text-align: center; padding: 80px 20px; color: var(--muted); }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-text { font-size: 15px; }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 16px;
+    width: 100%; max-width: 600px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  }
+  .modal-header {
+    padding: 24px 24px 20px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: white;
+    border-radius: 16px 16px 0 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-header-left { display: flex; align-items: center; gap: 14px; }
+  .modal-logo { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .modal-name { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .modal-cat { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .modal-close {
+    width: 32px; height: 32px;
+    background: rgba(0,0,0,0.06); border: none; border-radius: 8px;
+    cursor: pointer; font-size: 16px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.12s; flex-shrink: 0;
+  }
+  .modal-close:hover { background: rgba(0,0,0,0.10); color: var(--text); }
+  .modal-body { padding: 24px; }
+
+  .modal-icp-box {
+    background: #F0FDF4; border: 1px solid #BBF7D0;
+    border-radius: 8px; padding: 12px 14px;
+    margin-bottom: 20px;
+  }
+  .modal-icp-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #166534; margin-bottom: 4px; }
+  .modal-icp-text { font-size: 13px; color: #15803D; line-height: 1.5; }
+
+  .modal-tech-box {
+    background: #EFF6FF; border: 1px solid #BFDBFE;
+    border-radius: 8px; padding: 12px 14px;
+    margin-bottom: 20px;
+  }
+  .modal-tech-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #1E40AF; margin-bottom: 4px; }
+  .modal-tech-text { font-size: 13px; color: #1D4ED8; line-height: 1.5; }
+
+  .modal-section { margin-bottom: 20px; }
+  .modal-section-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .modal-section-text { font-size: 14px; line-height: 1.6; color: var(--text); }
+
+  .modal-caps { display: flex; flex-wrap: wrap; gap: 6px; }
+  .modal-cap {
+    font-size: 12px; background: var(--bg); border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 6px; color: var(--text); font-weight: 500;
+  }
+
+  .modal-partner-block {
+    background: var(--orange-bg); border: 1px solid rgba(217,90,0,0.2);
+    border-radius: 8px; padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+  .modal-partner-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+  .modal-partner-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .modal-partner-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  .modal-meta { display: flex; gap: 24px; }
+  .meta-item { }
+  .meta-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .meta-value { font-size: 13px; font-weight: 600; color: var(--text); }
+
+  .modal-recruit-box {
+    background: var(--navy); border-radius: 8px; padding: 16px;
+    margin-top: 20px;
+  }
+  .modal-recruit-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+  .modal-recruit-text { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+  @media (max-width: 768px) {
+    .layout { flex-direction: column; padding: 20px; }
+    .sidebar { width: 100%; position: static; }
+    .hero { padding: 36px 20px 32px; }
+    .hero-title { font-size: 28px; }
+    .search-wrap { margin: 20px 20px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <div class="header-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.5l7.5 3.75L12 12 4.5 8.25 12 4.5zM4 9.5l7 3.5v7.5L4 17V9.5zm9 11V13l7-3.5V17l-7 3.5z"/></svg>
+    </div>
+    <span class="logo-text">Canto</span>
+  </div>
+  <span class="header-badge">Integration Marketplace</span>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Partner Ecosystem</div>
+    <div class="hero-title">Connect Canto to<br>every tool in your stack</div>
+    <div class="hero-sub">Pre-built integrations, certified partners, and tech ecosystem connections that extend Canto's DAM + PIM across your entire workflow.</div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="statIntegrations">34</div><div class="stat-label">Integrations</div></div>
+      <div class="stat"><div class="stat-num" id="statCategories">11</div><div class="stat-label">Categories</div></div>
+      <div class="stat"><div class="stat-num">4,500+</div><div class="stat-label">Customers</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <span class="search-icon">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+  </span>
+  <input class="search-input" id="searchInput" placeholder="Search integrations, categories, or partners…" oninput="renderCards()">
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Categories</div>
+      <button class="cat-btn active" onclick="setCat('all',this)">All <span class="cat-count" id="cnt-all"></span></button>
+      <button class="cat-btn" onclick="setCat('tech',this)">Tech Partners <span class="cat-count" id="cnt-tech"></span></button>
+      <button class="cat-btn" onclick="setCat('creative',this)">Creative Workflow <span class="cat-count" id="cnt-creative"></span></button>
+      <button class="cat-btn" onclick="setCat('pim',this)">PIM <span class="cat-count" id="cnt-pim"></span></button>
+      <button class="cat-btn" onclick="setCat('cms',this)">CMS <span class="cat-count" id="cnt-cms"></span></button>
+      <button class="cat-btn" onclick="setCat('ecommerce',this)">E-Commerce <span class="cat-count" id="cnt-ecommerce"></span></button>
+      <button class="cat-btn" onclick="setCat('feed',this)">Feed Management <span class="cat-count" id="cnt-feed"></span></button>
+      <button class="cat-btn" onclick="setCat('esp',this)">Email & Marketing <span class="cat-count" id="cnt-esp"></span></button>
+      <button class="cat-btn" onclick="setCat('storage',this)">Cloud Storage <span class="cat-count" id="cnt-storage"></span></button>
+      <button class="cat-btn" onclick="setCat('social',this)">Social & Publishing <span class="cat-count" id="cnt-social"></span></button>
+      <button class="cat-btn" onclick="setCat('crm',this)">CRM <span class="cat-count" id="cnt-crm"></span></button>
+      <button class="cat-btn" onclick="setCat('erp',this)">ERP <span class="cat-count" id="cnt-erp"></span></button>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="pt-filter-label">Partner Type</div>
+      <button class="pt-btn active" onclick="setPT('all',this)">All partners</button>
+      <button class="pt-btn" onclick="setPT('canto',this)">Canto-built</button>
+      <button class="pt-btn" onclick="setPT('tech',this)">Tech partner</button>
+      <button class="pt-btn" onclick="setPT('si',this)">System integrator</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="results-header">
+      <div class="results-title" id="resultsTitle">All Integrations</div>
+      <div class="results-count" id="resultsCount"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="emptyState" style="display:none">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-text">No integrations match your search</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-logo" id="mLogo"></div>
+        <div>
+          <div class="modal-name" id="mName"></div>
+          <div class="modal-cat" id="mCat"></div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<script>
+const INTEGRATIONS = [
+
+  // ── TECH PARTNERS ──────────────────────────────────────────────────
+  { id:'salsify-tp', name:'Salsify', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🔄', partnerType:'tech',
+    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partnerDesc:'Salsify is a leading PIM platform for brands selling through retail channels. Active partnership program with co-sell, referral, and App Directory listing available.',
+    tagline:'Co-sell and referral motion with the leading PIM for retail brands.',
+    icp:'Mid-market brands ($20M+ revenue) in fashion, CPG, sporting goods, and food & bev already running Salsify PIM. DAM gap surfaces on every implementation.',
+    problem:'Salsify implementations consistently expose the asset governance gap. Product teams are pulling images from scattered sources — Dropbox, hard drives, email threads. Canto solves the input side of every Salsify deployment.',
+    capabilities:['Referral Program', 'Co-Sell Motion', 'Salsify App Directory Listing', 'Joint Use Cases', 'CS-to-CS Referral Track'],
+    timeline:'Q2 Activate', investment:'Partnership Agreement', complexity:'High Value',
+    recruit:'Connect via partner.salsify.com. Request co-sell agreement and Solutions Consultant alignment. Target: joint webinar to Salsify customer base in Q3.' },
+
+  { id:'akeneo-tp', name:'Akeneo', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'📋', partnerType:'tech',
+    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partnerDesc:'Akeneo is a leading open PIM platform with strong penetration in manufacturing, food & bev, and enterprise retail. Active Technology Partner Program with App Store listing.',
+    tagline:'Joint motion targeting manufacturing and CPG brands scaling product content.',
+    icp:'Mid-market to enterprise brands in manufacturing, food & bev, and multi-channel retail. Strong overlap in brands running Akeneo for product data governance.',
+    problem:'Akeneo customers managing thousands of SKUs have no governed DAM for the product images, videos, and documents that feed the PIM. Assets live in file servers and shared drives. Canto closes that gap at the source.',
+    capabilities:['Akeneo App Store Listing', 'Co-Sell Agreement', 'Solutions Engineer Alignment', 'Mutual Customer Case Study', 'Partner Events'],
+    timeline:'Q2 Activate', investment:'Partnership Agreement', complexity:'High Value',
+    recruit:'Apply to Akeneo Technology Partner Program. Connect with North America Alliance Manager via LinkedIn. Target mutual customer co-sell within 60 days of activation.' },
+
+  { id:'shopify-tp', name:'Shopify Plus', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🛍️', partnerType:'tech',
+    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partnerDesc:'Shopify Plus Agency Partners are among the most active referral sources in mid-market e-commerce. The Shopify App Store provides passive inbound lead generation at scale.',
+    tagline:'Activate Shopify Plus agency partners and app marketplace for DTC referrals.',
+    icp:'DTC and mid-market brands ($20M+ revenue) scaling on Shopify Plus in fashion, CPG, health & beauty, and sporting goods. Asset governance pain is universal at Plus tier.',
+    problem:'Shopify Plus brands managing hundreds of SKUs across multiple channels have zero governance on their product assets. Every campaign, every PDP update, every agency request involves pulling files from wherever. Canto is the source of truth they need.',
+    capabilities:['Shopify App Store Listing', 'Plus Agency Partner Network', 'Native Shopify Integration', 'Commerce Components Positioning', 'Co-marketing with Plus team'],
+    timeline:'Q2 Activate', investment:'App Store Listing + Partnership', complexity:'High Value',
+    recruit:'List in Shopify App Store under Digital Asset Management. Identify top 20 Plus agencies in your verticals and pitch direct. Build Shopify + Canto one-pager for agency decks.' },
+
+  { id:'klaviyo-tp', name:'Klaviyo', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'📧', partnerType:'tech',
+    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partnerDesc:'Klaviyo is the dominant ESP for DTC and e-commerce brands. Elite and Gold agency partners run email programs for exactly Canto\'s ICP. Active partner program with referral structure.',
+    tagline:'Referral motion through Klaviyo agency partners serving DTC and e-commerce brands.',
+    icp:'DTC brands in fashion, health & beauty, CPG running lifecycle email on Klaviyo. Email marketers are the most frequent off-brand asset users — pulling from wherever they can find images.',
+    problem:'Klaviyo agencies build email programs for brands whose assets are ungoverned. Marketers pull product images from Dropbox, outdated decks, or personal downloads. Campaigns go out with wrong dimensions, old logos, off-brand colors. Canto solves the source.',
+    capabilities:['Klaviyo Partner Program Listing', 'Agency Partner Co-sell', 'Integration: DAM-to-Klaviyo Media Library', 'Referral Fee Program', 'Joint Agency Enablement'],
+    timeline:'Q2–Q3', investment:'Partnership + Integration Build', complexity:'High Value',
+    recruit:'Apply to Klaviyo Partner Program at partners.klaviyo.com. Target Elite/Gold agencies serving fashion, CPG, and health & beauty. Offer referral fee for deal registration.' },
+
+  { id:'adobe-tp', name:'Adobe (Solution Partners)', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🎨', partnerType:'tech',
+    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partnerDesc:'Adobe Solution Partners implement Creative Cloud for enterprise clients across every Canto vertical. Partner program is structured and well-resourced with co-marketing budget available.',
+    tagline:'Co-sell with Adobe Solution Partners deploying Creative Cloud for enterprise brands.',
+    icp:'Enterprise and upper-mid-market brands deploying Adobe Creative Cloud across creative teams. Every Creative Cloud implementation leaves the DAM layer unsolved.',
+    problem:'Adobe Solution Partners install Creative Cloud — but Creative Cloud is not a DAM. Once a brand\'s creative team is producing at scale inside Adobe tools, the governance question hits immediately. Where do approved assets go? How do non-creatives access them? Canto answers both.',
+    capabilities:['Adobe Solution Partner Listing', 'Creative Cloud Connector (existing)', 'Co-sell with AE/SA teams', 'Partner Certification', 'Joint GTM for Enterprise'],
+    timeline:'Q3', investment:'Partner Program Application', complexity:'Strategic',
+    recruit:'Apply to Adobe Solution Partner Program. Target Gold/Platinum partners in retail, CPG, and manufacturing. Lead with: "You deploy CC — we govern what comes out of it."' },
+
+  { id:'mindcloud-tp', name:'MindCloud', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🔌', partnerType:'tech',
+    partner:'Existing Relationship', partnerBg:'#059669',
+    partnerDesc:'MindCloud is an iPaaS provider with experience in complex DAM-to-enterprise integrations. Active relationship from Freshpet/Esko scoping engagement.',
+    tagline:'Deepen the existing MindCloud relationship into a formalized referral and build track.',
+    icp:'Mid-market to enterprise brands requiring custom integrations between DAM and ERP, PIM, or legacy systems. MindCloud\'s customer base overlaps directly with Canto\'s ICP.',
+    problem:'Brands with complex integration needs — legacy ERP, custom PIM, or multi-system asset delivery — need an iPaaS layer. MindCloud customers asking "how do we connect our DAM to everything else" are already Canto-qualified.',
+    capabilities:['Existing Integration Expertise', 'Deal Referral Track', 'Joint Scoping Engagements', 'Co-sell on Complex Deployments', 'Freshpet Model Replication'],
+    timeline:'Q2 — Immediate', investment:'Formalize Existing Relationship', complexity:'Warm Start',
+    recruit:'Leverage existing Freshpet/Esko relationship. Formalize with a referral agreement. Build a repeatable playbook from that engagement. Target 2-3 similar co-sell deals in Q2-Q3.' },
+
+  { id:'workato-tp', name:'Workato', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'⚙️', partnerType:'tech',
+    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partnerDesc:'Workato is a leading enterprise automation platform with a structured Technology Partner Program and active app marketplace used by IT and ops buyers.',
+    tagline:'App marketplace listing and co-sell with enterprise automation buyers.',
+    icp:'Enterprise operations and IT buyers building automated workflows that touch asset management. Workato customers are systems thinkers who immediately understand the DAM integration value.',
+    problem:'Enterprise teams building Workato automation workflows for asset-heavy processes — product launches, campaign ops, content syndication — discover they need a governed DAM at the center. Workato customers who find Canto in the marketplace are self-qualified.',
+    capabilities:['Workato App Marketplace Listing', 'Technology Partner Program', 'Template Workflows (Canto + SFCC, Canto + HubSpot)', 'IT Buyer Positioning', 'Enterprise Co-sell'],
+    timeline:'Q3', investment:'Connector Build + Listing', complexity:'Medium',
+    recruit:'Apply to Workato Technology Partner Program. Build and publish Canto connector with template recipes. Passive lead gen through marketplace — low ongoing effort after initial build.' },
+
+  // ── PIM ────────────────────────────────────────────────────────────
+  { id:'salsify', name:'Salsify', cat:'pim', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🔄', partnerType:'tech',
+    partner:'Sudu', partnerBg:'#4F46E5',
+    partnerDesc:'Deep syndication expertise — built Riversand\'s syndication practice (acquired by Inriver), then ran Inriver\'s syndication practice. Named reference across multiple PIM deployments.',
+    tagline:'Sync approved Canto assets into Salsify product records automatically.',
+    icp:'Brands in fashion, CPG, sporting goods, and food & bev managing 500+ SKUs and selling through major retailers. Salsify is almost always already in stack.',
+    problem:'Product teams waste hours downloading assets from Canto and re-uploading them into Salsify. Approved images get missed, versions drift, and product launches get delayed.',
+    capabilities:['Automated Asset Sync','Metadata Mapping','Asset-to-Product Association','Selective Asset Sync','Push Triggers'],
+    timeline:'~2 weeks', investment:'Custom quote', complexity:'Mid' },
+
+  { id:'akeneo', name:'Akeneo PIM', cat:'pim', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'📦', partnerType:'canto',
+    partner:'Canto', partnerBg:'#00B09B',
+    partnerDesc:'Built and maintained by Canto. Native integration with full support.',
+    tagline:'Connect Canto to Akeneo and enrich product records with approved DAM assets at scale.',
+    icp:'Mid-market to enterprise brands in manufacturing, food & bev, and complex retail catalogs using Akeneo as their product data backbone.',
+    problem:'Akeneo customers managing complex product catalogs need a governed source for every asset attached to a product record. Without Canto, assets come from wherever — slowing enrichment and creating compliance risk.',
+    capabilities:['Native Canto Integration','Asset-to-Product Linking','Bulk Sync','Metadata Passthrough','Approval Status Enforcement'],
+    timeline:'~1 week', investment:'Included in Canto plan', complexity:'Low' },
+
+  { id:'inriver', name:'inriver PIM', cat:'pim', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🌊', partnerType:'si',
+    partner:'Partner SI', partnerBg:'#6366F1',
+    partnerDesc:'inriver SI partner network includes certified implementers with DAM+PIM practice experience. Contact us to connect with a certified inriver+Canto implementer.',
+    tagline:'Govern product assets flowing into inriver from a single DAM source of truth.',
+    icp:'Mid-market to enterprise manufacturers and distributors managing complex product hierarchies in inriver. Strong in industrial goods, tools, and sporting goods.',
+    problem:'inriver deployments in complex manufacturing environments often expose the asset chaos upstream — hundreds of product images living in file servers or SharePoint, unmapped to product records.',
+    capabilities:['Asset-to-Product Mapping','Version Governance','Metadata Sync','Approval Gating','Mass Asset Operations'],
+    timeline:'3–4 weeks', investment:'Contact us', complexity:'Mid' },
+
+  // ── CREATIVE WORKFLOW ─────────────────────────────────────────────
+  { id:'adobe-cc', name:'Adobe Creative Cloud', cat:'creative', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎨', partnerType:'canto',
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Access and place Canto assets directly inside Photoshop, Illustrator, InDesign, and Premiere.',
+    tagline:'Access, place, and upload Canto assets without leaving Adobe Creative Cloud.',
+    icp:'In-house creative teams and agencies managing brand assets at volume. Any organization running Adobe CC is a Canto integration conversation.',
+    problem:'Creative teams switch between Canto and Adobe apps constantly — downloading files, making changes, re-uploading. Every switch is friction. Final approved versions often get lost before they make it back to the DAM.',
+    capabilities:['In-App Asset Browser','Direct Upload to Canto','Version Control Sync','Metadata Preservation','Photoshop + Illustrator + InDesign + Premiere'],
+    timeline:'Included', investment:'Included in plan', complexity:'Low' },
+
+  { id:'figma', name:'Figma', cat:'creative', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🖌️', partnerType:'tech',
+    partner:'TBD', partnerBg:'#F24E1E',
+    partnerDesc:'Figma integration partner in evaluation. DAM-to-Figma asset library sync is a high-demand workflow for product and brand design teams.',
+    tagline:'Surface approved Canto assets inside Figma projects without manual downloads.',
+    icp:'Product design teams, brand design teams, and UX-forward organizations where Figma is the primary design tool. Strong in SaaS, DTC, and digital-first brands.',
+    problem:'Figma users pull assets from wherever they can find them — screenshots, old files, personal drives. Approved brand assets in Canto never make it into Figma automatically. Every design review risks off-brand elements.',
+    capabilities:['Asset Library Sync','Brand Asset Panel in Figma','Approved-Only Mode','Direct Link to Canto Source','Version Alerts'],
+    timeline:'TBD', investment:'Contact us', complexity:'Mid' },
+
+  // ── CMS ────────────────────────────────────────────────────────────
+  { id:'contentful', name:'Contentful', cat:'cms', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📰', partnerType:'canto',
+    partner:'Canto', partnerBg:'#FFD940',
+    partnerDesc:'Built and maintained by Canto. Assets linked from Canto appear in Contentful with live sync — update the asset in Canto and it updates everywhere.',
+    tagline:'Reference Canto assets in Contentful content models with live sync.',
+    icp:'Enterprise and upper-mid-market brands running headless or hybrid CMS on Contentful. Common in SaaS, financial services, and digitally mature consumer brands.',
+    problem:'Content teams in Contentful are constantly tracking down approved images from brand teams. Assets get copied into Contentful\'s media library and diverge from the Canto master. One update in Canto should cascade everywhere.',
+    capabilities:['Native Asset Reference','Live Sync on Update','Metadata Passthrough','Role-Based Access Enforcement','Multi-environment Support'],
+    timeline:'~1 week', investment:'Included', complexity:'Low' },
+
+  { id:'wordpress', name:'WordPress', cat:'cms', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'🌐', partnerType:'canto',
+    partner:'Canto', partnerBg:'#21759B',
+    partnerDesc:'Built and maintained by Canto. Available for all customers.',
+    tagline:'Insert Canto-approved media directly into WordPress from the media library.',
+    icp:'Any organization running WordPress (43% of the web). Strong fit for mid-market brands maintaining a primary brand or product site on WordPress.',
+    problem:'WordPress editors pull images from whatever they can find — Google Drive, local folders, email attachments. Brand teams lose control of what appears on the website. Canto integration makes the DAM the only source for approved web images.',
+    capabilities:['Media Library Integration','In-Editor Asset Browser','Approved Asset Enforcement','Metadata Sync','Multi-site Support'],
+    timeline:'~1 week', investment:'Included', complexity:'Low' },
+
+  { id:'drupal', name:'Drupal', cat:'cms', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'💧', partnerType:'si',
+    partner:'Partner SI', partnerBg:'#0077C0',
+    partnerDesc:'Drupal integration delivered via certified SI partner. Recommended for enterprise deployments with custom Drupal builds.',
+    tagline:'Govern enterprise web assets by connecting Canto to Drupal media management.',
+    icp:'Enterprise organizations (higher ed, government, large B2B) running complex Drupal deployments with large media libraries.',
+    problem:'Large Drupal sites accumulate assets in Drupal\'s media module without governance or lifecycle management. Connecting to Canto establishes the DAM as the source of truth for all media referenced in the CMS.',
+    capabilities:['Media Module Integration','Asset Governance','Metadata Mapping','Bulk Import/Sync','Role-Based Access'],
+    timeline:'3–4 weeks', investment:'Contact us', complexity:'High' },
+
+  // ── E-COMMERCE ────────────────────────────────────────────────────
+  { id:'shopify', name:'Shopify', cat:'ecommerce', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🛒', partnerType:'canto',
+    partner:'Canto', partnerBg:'#96BF48',
+    partnerDesc:'Built and maintained by Canto. Native integration available to all customers.',
+    tagline:'Push approved Canto product images to Shopify storefronts automatically.',
+    icp:'DTC and mid-market brands on Shopify managing 100+ SKUs. Universal pain point — every Shopify brand with a real catalog has this problem.',
+    problem:'Shopify merchants download product images from Canto and re-upload them to Shopify manually. Images fall out of sync the moment a new version is approved in the DAM. Product pages go live with outdated assets.',
+    capabilities:['Product Image Sync','Auto-update on DAM Change','Multi-channel Asset Delivery','Variant-Level Image Mapping','Metadata Passthrough'],
+    timeline:'~1 week', investment:'Included', complexity:'Low' },
+
+  { id:'bigcommerce', name:'BigCommerce', cat:'ecommerce', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🏪', partnerType:'tech',
+    partner:'TBD', partnerBg:'#34313F',
+    partnerDesc:'BigCommerce Technology Partner Program integration in evaluation. Strong mid-market e-commerce platform with API-first architecture.',
+    tagline:'Sync Canto product assets to BigCommerce catalogs across multi-channel selling.',
+    icp:'Mid-market brands ($20M–$200M) on BigCommerce, particularly in consumer goods, B2B wholesale, and multi-channel retail. Often running alongside Amazon and Walmart marketplace selling.',
+    problem:'BigCommerce merchants managing large catalogs across multiple sales channels — storefront, Amazon, Walmart, Google Shopping — have no single source of truth for product images. Canto governs the master; the integration delivers to every channel.',
+    capabilities:['Product Catalog Sync','Multi-channel Asset Delivery','Variant Mapping','Format Conversion','Channel-Specific Image Rules'],
+    timeline:'TBD', investment:'Contact us', complexity:'Mid' },
+
+  // ── FEED MANAGEMENT ───────────────────────────────────────────────
+  { id:'feedonomics', name:'Feedonomics', cat:'feed', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'📡', partnerType:'tech',
+    partner:'Feedonomics', partnerBg:'#6366F1',
+    partnerDesc:'Feedonomics is the leading omnichannel product data platform. Built and maintained by Feedonomics with deep channel syndication expertise across 1,000+ retail endpoints.',
+    tagline:'Distribute Canto product assets across 1,000+ retail channels including Home Depot, Amazon, and Walmart.',
+    icp:'Brands in tools, sporting goods, CPG, and consumer goods distributing products across major retail channels. If they sell at Home Depot, Target, or Walmart, this integration matters.',
+    problem:'Brands distributing across dozens of retail channels spend enormous time formatting and resizing assets to meet retailer spec. There\'s no direct path from Canto\'s approved library to the syndication layer.',
+    capabilities:['1,000+ Channel Connections','Format & Spec Automation','Asset Sync Triggers','Channel-Specific Metadata','Home Depot / Walmart / Amazon Delivery'],
+    timeline:'3–4 weeks', investment:'Contact us', complexity:'Mid' },
+
+  { id:'channable', name:'Channable', cat:'feed', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'🔀', partnerType:'tech',
+    partner:'TBD', partnerBg:'#FF5C00',
+    partnerDesc:'Channable is a leading feed management and PPC automation platform with strong penetration in mid-market e-commerce and retail.',
+    tagline:'Connect Canto-approved assets to Channable for automated feed creation and channel distribution.',
+    icp:'Mid-market brands ($20M+) running Google Shopping, Meta, Amazon, and comparison shopping engines. Strong in fashion, health & beauty, and specialty retail.',
+    problem:'Channable users manually source product images from wherever they can find them before building feeds. Brand assets in Canto never flow automatically into feed management, creating inconsistency across every channel where the brand appears.',
+    capabilities:['Canto Asset Source for Feeds','Image Rules per Channel','Auto-format on Export','Metadata Mapping','Multi-channel Delivery'],
+    timeline:'TBD', investment:'Contact us', complexity:'Mid' },
+
+  // ── EMAIL & MARKETING ─────────────────────────────────────────────
+  { id:'hubspot-mktg', name:'HubSpot', cat:'esp', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🟠', partnerType:'canto',
+    partner:'Canto', partnerBg:'#FF7A59',
+    partnerDesc:'Built and maintained by Canto. Access and insert Canto-approved assets directly from HubSpot marketing workflows.',
+    tagline:'Insert Canto-approved assets into HubSpot emails and landing pages without leaving the editor.',
+    icp:'Mid-market B2B and DTC brands running marketing programs on HubSpot. The dominant platform in Canto\'s SMB/mid-market ICP.',
+    problem:'Marketing teams building HubSpot campaigns download assets from Canto, re-upload to HubSpot\'s file manager, and create a second asset library that goes stale immediately. Brand compliance breaks down at the email layer.',
+    capabilities:['In-Editor Asset Browser','File Manager Sync','Approved-Only Mode','Landing Page Asset Insert','Campaign Asset Tracking'],
+    timeline:'Included', investment:'Included in plan', complexity:'Low' },
+
+  { id:'klaviyo', name:'Klaviyo', cat:'esp', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'💌', partnerType:'tech',
+    partner:'TBD', partnerBg:'#1A1A1A',
+    partnerDesc:'Klaviyo integration partner in active sourcing. Klaviyo is the #1 priority ESP integration for Canto\'s DTC and e-commerce ICP. Submit to be prioritized.',
+    tagline:'Pull approved Canto assets into Klaviyo email campaigns without leaving the editor.',
+    icp:'DTC and e-commerce brands in fashion, health & beauty, CPG running lifecycle email on Klaviyo. Highest priority ESP integration for Canto\'s retail pipeline.',
+    problem:'Klaviyo users building email flows pull product images manually — downloading from Canto, uploading to Klaviyo, creating duplicate image libraries that diverge from the approved DAM versions within weeks.',
+    capabilities:['In-Editor Asset Browser','DAM-to-Email Direct Insert','Approved-Only Asset Mode','Product Image Sync','Usage Rights Enforcement'],
+    timeline:'TBD — High Priority', investment:'Contact us', complexity:'Mid' },
+
+  // ── CLOUD STORAGE ─────────────────────────────────────────────────
+  { id:'sharepoint', name:'SharePoint / OneDrive', cat:'storage', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🏢', partnerType:'canto',
+    partner:'Canto', partnerBg:'#0078D4',
+    partnerDesc:'Built and maintained by Canto. Enterprise-grade sync supporting Microsoft 365 environments.',
+    tagline:'Migrate and bridge SharePoint asset libraries into Canto as the governed DAM.',
+    icp:'Enterprise and mid-market organizations running Microsoft 365. Near-universal install base — if they have more than 200 employees, they have SharePoint.',
+    problem:'Most Canto prospects stored assets in SharePoint before adopting a DAM. The integration bridges ongoing file creation and migrates historical libraries into the governed DAM.',
+    capabilities:['Migration Support','Folder-to-Album Mapping','Ongoing Sync Rules','OneDrive Individual Sync','Permission Mapping','Metadata Preservation'],
+    timeline:'~1 week', investment:'Included', complexity:'Low' },
+
+  { id:'gdrive', name:'Google Drive', cat:'storage', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'📁', partnerType:'tech',
+    partner:'New Edge', partnerBg:'#4285F4',
+    partnerDesc:'New Edge delivers the Canto-Google Drive two-way sync. Certified Canto partner with active implementations.',
+    tagline:'Two-way sync between Canto and Google Drive for teams bridging both environments.',
+    icp:'SMB and mid-market organizations (startups, agencies, DTC brands) where Google Workspace is the productivity standard. Two-way sync is the key differentiator vs. SharePoint\'s one-directional migration flow.',
+    problem:'Google Drive teams want approved assets to flow back out to Drive for stakeholders who never adopted the DAM. Two-way sync makes Canto the master without forcing a hard migration.',
+    capabilities:['Two-Way Sync','Folder-to-Album Mapping','Shared Drive Support','Approval-Triggered Push','Metadata Property Mapping'],
+    timeline:'~2 weeks', investment:'Contact us', complexity:'Low–Mid' },
+
+  // ── SOCIAL & PUBLISHING ───────────────────────────────────────────
+  { id:'sprout', name:'Sprout Social', cat:'social', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🌿', partnerType:'tech',
+    partner:'Sprout Social', partnerBg:'#59CB59',
+    partnerDesc:'Sprout Social is an active Canto technology partner. 850+ customers use both platforms — significant existing base to activate.',
+    tagline:'Connect the Canto DAM to Sprout Social for brand-governed social publishing.',
+    icp:'Mid-market and enterprise brands with dedicated social teams managing multi-channel publishing. 850+ Canto/Sprout overlap is a co-marketing asset.',
+    problem:'Social teams publish dozens of assets per week. Without a DAM integration, every post involves finding the asset, downloading, and re-uploading to Sprout. Brand governance breaks down at the most visible touchpoint.',
+    capabilities:['Asset Library Sync','In-Publisher Asset Browser','Approval Status Enforcement','Multi-platform Image Sizing','Usage Rights Gating'],
+    timeline:'~2 weeks', investment:'Contact us', complexity:'Low–Mid' },
+
+  { id:'hootsuite', name:'Hootsuite', cat:'social', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🦉', partnerType:'tech',
+    partner:'TBD', partnerBg:'#1F2D3D',
+    partnerDesc:'Hootsuite integration partner in evaluation. High install base in mid-market makes this a meaningful pipeline opportunity.',
+    tagline:'Surface Canto-approved assets inside Hootsuite for compliant social publishing.',
+    icp:'Mid-market brands running social programs across multiple platforms and regions. Strong fit where social compliance and brand consistency are managed centrally.',
+    problem:'Hootsuite users pull images from shared folders, Dropbox, or personal drives. Approved assets in the DAM never make it to social without a manual download step. Brand drift happens in real time.',
+    capabilities:['DAM Asset Browser in Hootsuite','Approved Asset Mode','Multi-region Support','Format Auto-resize','Publishing Audit Trail'],
+    timeline:'TBD', investment:'Contact us', complexity:'Mid' },
+
+  // ── CRM ────────────────────────────────────────────────────────────
+  { id:'salesforce', name:'Salesforce CRM', cat:'crm', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'☁️', partnerType:'canto',
+    partner:'Canto', partnerBg:'#00A1E0',
+    partnerDesc:'Built and maintained by Canto. Included in all plans.',
+    tagline:'Surface approved Canto assets inside Salesforce for sales and brand teams.',
+    icp:'Enterprise and mid-market organizations running Salesforce CRM. Sales-led organizations where reps need governed access to brand, product, and sales assets.',
+    problem:'Sales reps pull pitch materials, product images, and brand assets from wherever they can find them — creating brand inconsistency in every customer-facing touchpoint. Canto inside Salesforce makes the DAM the single source for every asset a rep touches.',
+    capabilities:['Asset Panel in Salesforce','Sales Enablement Asset Access','Opportunity-Level Asset Tagging','Approval Status Visibility','Lightning Web Component'],
+    timeline:'Included', investment:'Included', complexity:'Low' },
+
+  // ── ERP ────────────────────────────────────────────────────────────
+  { id:'sap', name:'SAP S/4HANA', cat:'erp', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🏭', partnerType:'si',
+    partner:'Partner SI', partnerBg:'#007DB8',
+    partnerDesc:'SAP integration delivered via certified SI partner. Recommended for enterprise manufacturers and distributors with full SAP stack.',
+    tagline:'Connect SAP product master data with Canto-governed digital assets for enterprise brands.',
+    icp:'Enterprise manufacturers, distributors, and CPG brands running SAP S/4HANA. Asset governance tied to SAP product master is a compliance requirement in many industries.',
+    problem:'SAP customers manage complex product hierarchies with critical asset governance requirements — technical drawings, compliance documents, and product images all need to be tied to the SAP product record with version control.',
+    capabilities:['Product Master Integration','Asset-to-Material Mapping','Compliance Document Governance','Version Traceability','SAP Fiori Panel'],
+    timeline:'8–12 weeks', investment:'Contact us', complexity:'High' },
+
+  { id:'netsuite', name:'NetSuite', cat:'erp', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🔢', partnerType:'si',
+    partner:'Partner SI', partnerBg:'#009EDB',
+    partnerDesc:'NetSuite integration via SI partner network. Strong fit for mid-market manufacturers and distributors running NetSuite as their system of record.',
+    tagline:'Bridge Canto product assets to NetSuite item records for mid-market manufacturers.',
+    icp:'Mid-market manufacturers, distributors, and e-commerce brands running NetSuite. Common in sporting goods, tools, and industrial goods verticals.',
+    problem:'NetSuite customers managing product catalogs have no native DAM capability. Product images, spec sheets, and compliance documents live outside the ERP with no governance or versioning.',
+    capabilities:['Item Record Asset Linking','Product Image Sync','Spec Sheet Governance','Version Control','SuiteApp Compatible'],
+    timeline:'4–6 weeks', investment:'Contact us', complexity:'Mid–High' },
+];
+
+let activeCat = 'all';
+let activePT = 'all';
+
+const CAT_LABELS = {
+  all: 'All Integrations', tech: 'Tech Partners', creative: 'Creative Workflow',
+  pim: 'PIM', cms: 'CMS', ecommerce: 'E-Commerce', feed: 'Feed Management',
+  esp: 'Email & Marketing', storage: 'Cloud Storage', social: 'Social & Publishing',
+  crm: 'CRM', erp: 'ERP'
+};
+
+function setCat(cat, el) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderCards();
+}
+
+function setPT(pt, el) {
+  activePT = pt;
+  document.querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderCards();
+}
+
+function renderCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+
+  // Update all counts
+  const cats = ['all','tech','creative','pim','cms','ecommerce','feed','esp','storage','social','crm','erp'];
+  cats.forEach(cat => {
+    const count = INTEGRATIONS.filter(i => (cat === 'all' || i.cat === cat)).length;
+    const el = document.getElementById('cnt-' + cat);
+    if (el) el.textContent = count;
+  });
+
+  let filtered = INTEGRATIONS.filter(i => {
+    const matchCat = activeCat === 'all' || i.cat === activeCat;
+    const matchPT = activePT === 'all' || i.partnerType === activePT;
+    const matchQ = !q || [i.name, i.tagline, i.catLabel, i.partner, i.icp||''].join(' ').toLowerCase().includes(q);
+    return matchCat && matchPT && matchQ;
+  });
+
+  document.getElementById('resultsTitle').textContent = CAT_LABELS[activeCat] || 'All Integrations';
+  document.getElementById('resultsCount').textContent = filtered.length + ' integration' + (filtered.length !== 1 ? 's' : '');
+
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('emptyState');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  grid.innerHTML = filtered.map(i => {
+    const isTechCat = i.cat === 'tech';
+    return `<div class="card${isTechCat ? ' tech-partner-card' : ''}" onclick="openModal('${i.id}')">
+      <div class="card-top">
+        <div class="card-logo" style="background:${i.catBg}">${i.emoji}</div>
+        <div class="card-badges">
+          <span class="cat-pill" style="background:${i.catBg};color:${i.catColor}">${i.catLabel}</span>
+        </div>
+      </div>
+      <div class="card-name">${i.name}</div>
+      ${i.icp ? `<div class="card-icp">🎯 ${i.icp}</div>` : ''}
+      <div class="card-tagline">${i.tagline}</div>
+      <div class="card-footer">
+        <span class="partner-tag" style="background:${i.partnerBg}">${i.partner}</span>
+        <span class="complexity-tag">${i.complexity || ''}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openModal(id) {
+  const i = INTEGRATIONS.find(x => x.id === id);
+  if (!i) return;
+
+  document.getElementById('mLogo').innerHTML = `<div style="width:52px;height:52px;border-radius:12px;background:${i.catBg};display:flex;align-items:center;justify-content:center;font-size:26px">${i.emoji}</div>`;
+  document.getElementById('mName').textContent = i.name;
+  document.getElementById('mCat').textContent = i.catLabel;
+
+  let html = '';
+
+  if (i.icp) {
+    html += `<div class="modal-icp-box"><div class="modal-icp-label">Who This Is For</div><div class="modal-icp-text">${i.icp}</div></div>`;
+  }
+
+  if (i.cat === 'tech' && i.recruit) {
+    html += `<div class="modal-tech-box"><div class="modal-tech-label">Recruitment Strategy</div><div class="modal-tech-text">${i.recruit}</div></div>`;
+  }
+
+  html += `<div class="modal-section"><div class="modal-section-title">The Problem</div><div class="modal-section-text">${i.problem}</div></div>`;
+
+  html += `<div class="modal-section"><div class="modal-section-title">Capabilities</div><div class="modal-caps">${i.capabilities.map(c => `<span class="modal-cap">${c}</span>`).join('')}</div></div>`;
+
+  html += `<div class="modal-partner-block"><div class="modal-partner-label">Partner</div><div class="modal-partner-name">${i.partner}</div><div class="modal-partner-desc">${i.partnerDesc}</div></div>`;
+
+  html += `<div class="modal-meta"><div class="meta-item"><div class="meta-label">Timeline</div><div class="meta-value">${i.timeline}</div></div><div class="meta-item"><div class="meta-label">Investment</div><div class="meta-value">${i.investment}</div></div><div class="meta-item"><div class="meta-label">Complexity</div><div class="meta-value">${i.complexity}</div></div></div>`;
+
+  document.getElementById('mBody').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+renderCards();
+</script>
+</body>
+</html>

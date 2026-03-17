@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto · Monday.com Event Intake 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange:    #D95A00;
+  --orange-lt: #FF7A2E;
+  --orange-bg: #FFF3EC;
+  --orange-bd: #FCCFB3;
+  --navy:      #0F1B2D;
+  --navy-mid:  #1E3352;
+  --teal:      #00B09B;
+  --teal-bg:   #E6FAF7;
+  --teal-bd:   #9FE1CB;
+  --cream:     #FAFAF8;
+  --warm:      #F0EDE8;
+  --border:    #E0DBD4;
+  --white:     #FFFFFF;
+  --muted:     #6B7080;
+  --text:      #1A1714;
+  --blue:      #1D4ED8;
+  --blue-bg:   #EFF6FF;
+  --blue-bd:   #BFDBFE;
+  --green:     #166534;
+  --green-bg:  #F0FAF4;
+  --green-bd:  #BBF7D0;
+  --purple:    #6D28D9;
+  --purple-bg: #F5F3FF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
+
+.header{background:var(--navy);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--orange);}
+.header-brand{display:flex;align-items:center;gap:16px;}
+.logo-text{font-family:'Outfit',sans-serif;font-weight:800;font-size:21px;letter-spacing:-0.5px;color:var(--orange);letter-spacing:-1px;}
+.header-divider{width:1px;height:28px;background:rgba(255,255,255,0.15);}
+.header-title{font-size:14px;color:rgba(255,255,255,0.8);font-weight:400;}
+.header-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;}
+.header-pill{background:rgba(217,90,0,0.2);border:1px solid rgba(217,90,0,0.4);color:var(--orange-lt);font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;}
+
+.main{max-width:1100px;margin:0 auto;padding:36px 40px;}
+
+.banner{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:28px;}
+.banner p{font-size:13px;color:var(--muted);line-height:1.7;}
+.banner strong{color:var(--text);}
+
+.summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+.stat-val{font-family:'Outfit',sans-serif;font-weight:700;font-size:26px;color:var(--orange);}
+.stat-label{font-size:12px;color:var(--muted);margin-top:3px;}
+
+.controls{display:flex;gap:8px;margin-bottom:20px;}
+.btn{font-size:12px;font-weight:500;padding:8px 16px;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;}
+.btn-outline{background:var(--white);color:var(--navy);}
+.btn-outline:hover{background:var(--warm);}
+.btn-dark{background:var(--navy);color:white;border-color:var(--navy);}
+.btn-dark:hover{background:var(--navy-mid);}
+
+.event-card{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden;transition:box-shadow 0.15s;}
+.event-card:hover{box-shadow:0 2px 16px rgba(15,27,45,0.08);}
+
+.card-header{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;gap:16px;}
+.card-header:hover{background:#FAFAF8;}
+.card-left{display:flex;align-items:flex-start;gap:14px;flex:1;}
+.card-num{width:28px;height:28px;border-radius:50%;background:var(--orange-bg);color:var(--orange);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.card-info{flex:1;}
+.card-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:16px;color:var(--navy);line-height:1.25;}
+.card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+
+.pill{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;letter-spacing:0.2px;}
+.pill-orange{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bd);}
+.pill-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);}
+.pill-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bd);}
+.pill-muted{background:var(--warm);color:var(--muted);border:1px solid var(--border);}
+
+.card-budget{text-align:right;flex-shrink:0;}
+.budget-amount{font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;color:var(--orange);}
+.budget-label{font-size:11px;color:var(--muted);margin-top:1px;}
+.card-chevron{color:var(--muted);font-size:11px;transition:transform 0.2s;flex-shrink:0;margin-left:8px;}
+.card-chevron.open{transform:rotate(180deg);}
+
+.card-body{display:none;padding:0 22px 22px;}
+.card-body.open{display:block;}
+.progress-bar{height:3px;background:var(--orange);margin:0 -22px 22px;opacity:0.35;}
+
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field-full{grid-column:1/-1;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.monday-col{font-size:9px;background:var(--navy);color:rgba(255,255,255,0.5);padding:2px 6px;border-radius:3px;letter-spacing:0.2px;text-transform:none;font-weight:400;}
+
+.field-val{font-size:13px;color:var(--text);line-height:1.65;background:var(--cream);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;position:relative;transition:all 0.15s;}
+.field-val:hover{background:var(--warm);border-color:var(--orange-bd);}
+.field-val::after{content:'Click to copy';position:absolute;top:6px;right:10px;font-size:9px;color:var(--teal);opacity:0;transition:opacity 0.15s;font-weight:600;letter-spacing:0.3px;text-transform:uppercase;}
+.field-val:hover::after{opacity:1;}
+.field-val.copied{background:var(--green-bg);border-color:var(--green-bd);}
+.field-val.copied::after{content:'Copied ✓';color:var(--green);opacity:1;}
+
+.copy-all{width:100%;margin-top:16px;padding:11px;background:var(--navy);color:white;border:none;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;transition:background 0.15s;}
+.copy-all:hover{background:var(--navy-mid);}
+.copy-all.done{background:var(--teal);}
+
+@media(max-width:680px){.main{padding:20px;}.fields-grid,.summary-row{grid-template-columns:1fr;}.field-full{grid-column:1;}.card-budget{display:none;}.header{padding:0 20px;}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <div class="logo-text">Canto</div>
+    <div class="header-divider"></div>
+    <div>
+      <div class="header-title">Monday.com Event Intake — 2026</div>
+      <div class="header-sub">Pre-filled · Adam, Channel Partnerships</div>
+    </div>
+  </div>
+  <div class="header-pill">9 events ready</div>
+</header>
+
+<main class="main">
+
+  <div class="banner">
+    <p><strong>How to use:</strong> Each card is one row in the Monday Event Requests board. Click any field to copy it — paste directly into the board. The dark label shows the exact Monday column name. "Copy all fields" at the bottom gives you the full event formatted as text.</p>
+  </div>
+
+  <div class="summary-row">
+    <div class="stat"><div class="stat-val">9</div><div class="stat-label">Events to submit</div></div>
+    <div class="stat"><div class="stat-val">$27K</div><div class="stat-label">Total est. budget</div></div>
+    <div class="stat"><div class="stat-val">NATAM</div><div class="stat-label">All regions</div></div>
+    <div class="stat"><div class="stat-val">In Review</div><div class="stat-label">Default status</div></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-outline" onclick="collapseAll()">Collapse all</button>
+    <button class="btn btn-outline" onclick="expandAll()">Expand all</button>
+    <button class="btn btn-dark" onclick="copyMaster()">Copy master list</button>
+  </div>
+
+  <div id="cards"></div>
+</main>
+
+<script>
+const events = [
+  {
+    name:"GROW LA — DTC Brand Summit",tier:"must",score:7,budget:"$1,200",
+    dates:"Apr 23, 2026",location:"West Hollywood, CA",region:"NATAM",
+    purpose:"Lead generation",website:"https://growcommerce.io",
+    sponsorship:"N/A — attending as guest with agency partner (Avex Designs or BlueSwitch). No booth or exhibit.",
+    outcomes:"15+ brand-side floor conversations initiated · 8–10 CPG / fashion / health & beauty Marketing Directors or Creative Directors added to CRM · 4–5 follow-up meetings booked within 2 weeks · Agency relationship deepened with Avex Designs and/or BlueSwitch",
+    demographics:"800+ DTC brand operators and senior ecommerce leaders. Verticals: fashion, CPG, health & beauty, sporting goods. Titles: VP Ecommerce, Creative Director, Marketing Director, Head of DTC. Revenue: $20M–$200M. Strong Shopify Plus merchant presence.",
+    notes:"Partner-anchor strategy — attending as guest with Avex Designs or BlueSwitch (LA-based agencies). No exhibit. Pre-identify 5–6 target brand contacts from attendee list before arrival. Built-in all-day happy hour means no separate dinner required. Low cost Q2 opener with strong ICP density. AUS → LAX, 2-night trip."
+  },
+  {
+    name:"Salsify Digital Shelf Summit — Partner Dinner",tier:"must",score:8,budget:"$4,500",
+    dates:"May 4–6, 2026",location:"Atlanta, GA",region:"NATAM",
+    purpose:"Lead generation and partner acquisition",website:"https://www.salsify.com/resources/event/2026-digital-shelf-summit",
+    sponsorship:"Investigating late sponsor options — contact: partnerships@salsify.com. If unavailable: attending + hosting curated partner dinner night 2 (May 5).",
+    outcomes:"Sitation + Gournay dinner attendance confirmed · 10–15 CPG / food & bev brand Marketing Directors or Creative Directors in CRM · 2+ co-sell opportunities identified with SI partners · $120–150K in pipeline attributed within 90 days · 60%+ of dinner guests request follow-up",
+    demographics:"Mid-market and enterprise CPG, food & bev, manufacturing, and retail brands evaluating or actively using Salsify PXM/PIM. Titles: VP Ecommerce, Digital Shelf Manager, Director of Product Content, Marketing Operations. Revenue: $20M–$500M. Salsify SIs also present (Sitation and Gournay Consulting are key targets).",
+    notes:"Highest ICP concentration of any vertical event on the 2026 calendar. Canto + Salsify is complementary — Canto solves the DAM-side gap for brands already invested in Salsify. Hosting curated dinner night 2 — 8–10 guests, private room, facilitated peer conversation, no Canto pitch. Leave-behind: Kinder's and Nalgene case studies. Canto not yet official Salsify partner — fast-tracking that in March. Note: investigating sponsorship urgently this week."
+  },
+  {
+    name:"AVP + Tech Partner Ecosystem Dinner (Minneapolis eCommerce Summit)",tier:"must",score:5,budget:"$2,500",
+    dates:"May 14, 2026",location:"Minneapolis, MN",region:"NATAM",
+    purpose:"Lead generation and partner acquisition",website:"https://retailsummits.com/events/minneapolis-ecom-summit/",
+    sponsorship:"N/A — corp team at event booth; AVP hosting independent evening dinner activation.",
+    outcomes:"8–12 Midwest CPG / food & bev / sporting goods brand operators in CRM · 5+ dinner attendees request follow-up within 2 weeks · 2–3 warm Midwest brand leads passed to Netalico Commerce · 1–2 brands enter active Canto pipeline within 60 days",
+    demographics:"85% brand-side operators (vendor tickets capped at 15%). Midwest CPG, food & bev, sporting goods. Titles: Director Ecommerce, VP Marketing, Creative Director. Revenue: $10M–$150M.",
+    notes:"Corp team confirmed at event. Partner activation is evening dinner (May 14). Work roundtables during day to identify best conversations, invite 6–8 brand contacts to dinner. 24hr follow-up to all dinner guests. Warm Midwest leads passed to Netalico with specific intro. Confirm Midwest food & bev vertical density with organizer before booking — call in March."
+  },
+  {
+    name:"CommerceNext Growth Show — Partner Dinner",tier:"must",score:8,budget:"$5,500",
+    dates:"Jun 23–24, 2026",location:"New York, NY",region:"NATAM",
+    purpose:"Lead generation and partner acquisition",website:"https://growthshow.commercenext.com/",
+    sponsorship:"Applying for hosted meetings program (free ticket + $2K travel credit if approved). Contact: growthshow.commercenext.com",
+    outcomes:"6–10 hosted 1:1 brand meetings via hosted program · 12–18 CPG / fashion / health & beauty Creative Directors or Marketing Directors in pipeline · Evening dinner June 23: 8–10 guests, 60%+ follow-up rate · Stacked with Fancy Food Show same NYC trip — combined pipeline target $300–380K",
+    demographics:"2,700+ retail and DTC brand leaders. Past speaker brands: Ulta, Vuori, Foot Locker, Coach, Sephora, J.Crew. Titles: CMO, VP Ecommerce, Head of Digital, Creative Director. Revenue: $25M–$2B. 70%+ brand-side ratio.",
+    notes:"Stacking with Summer Fancy Food Show (June 28–30) in one NYC trip — fly June 21, depart July 1. Apply for hosted meetings program first — if approved, registration may be free. Attending with Barrel agency partner. Hosting dinner June 23 evening in private room."
+  },
+  {
+    name:"Summer Fancy Food Show — Partner Dinner Activation",tier:"corp",score:9,budget:"$3,500",
+    dates:"Jun 28–30, 2026",location:"New York, NY",region:"NATAM",
+    purpose:"Lead generation and partner acquisition",website:"https://www.specialtyfood.com/fancy-food-shows/summer/",
+    sponsorship:"N/A — corp team at booth. AVP activation is independent floor strategy and post-show dinner.",
+    outcomes:"15–20 food & bev brand Marketing Directors and Creative Directors captured via partner introductions · Post-show dinner June 29: 8 guests, 60%+ follow-up rate · Warm leads passed to Barrel and Netalico · Kinder's and Lake Champlain case studies distributed",
+    demographics:"30,000+ food & bev trade professionals. 2,400+ exhibiting brands. Titles: Founder, Creative Director, Marketing Director, VP Sales, Brand Manager. Revenue: $1M–$500M.",
+    notes:"Corp team at booth — AVP activation is independent. Walking floor with Barrel and/or Netalico as their guest. Natural introductions to Creative Directors at client booths. Do NOT exhibit separately. Post-show dinner evening June 29: agency partner + best brand conversations. Agency picks restaurant. Canto covers the check. Stacked with CommerceNext — combined flight cost split across both events."
+  },
+  {
+    name:"Camp Commerce — Hamptons Retreat",tier:"must",score:7,budget:"$1,500",
+    dates:"Summer 2026 TBD",location:"Hamptons, NY",region:"NATAM",
+    purpose:"Lead generation and partner acquisition",website:"https://www.campcommerce.nyc/",
+    sponsorship:"Applying for sponsor activation (morning coffee or branded gift) — via campcommerce.nyc application form.",
+    outcomes:"15–20 senior DTC brand operator relationships initiated · 5–8 post-event discovery conversations booked · Sponsor activation: Canto brand visible to all 150 attendees · Canto customer attending (Kinder's or Nalgene): 3–5 peer referrals expected",
+    demographics:"150 senior ecommerce and DTC executives, strictly invite-only. 70% brand operators. $25M–$500M+ DTC brands. Titles: Founder, CEO, CMO, VP Ecommerce. Mid-market and high-growth DTC focus.",
+    notes:"Private invite-only retreat at Hamptons compound (Billions filming location). 150 attendees max. Apply immediately at campcommerce.nyc. If sponsor activation slot available, take it. No pitching on-site. Bring Canto customer if possible. AUS → JFK, 1–2 night trip."
+  },
+  {
+    name:"Shoptalk Fall — Partner Dinner Activation",tier:"must",score:7,budget:"$4,000",
+    dates:"Sep 29 – Oct 1, 2026",location:"Nashville, TN",region:"NATAM",
+    purpose:"Lead generation",website:"https://fall.shoptalk.com/",
+    sponsorship:"N/A — attending as partner guest with agency anchor. No booth or exhibit.",
+    outcomes:"10–15 C-suite and Director-level brand contacts in CRM · Nashville dinner: 8–10 guests, 60%+ follow-up rate · Co-sell opportunities advanced with agency partner clients · $100–140K in pipeline attributed within 90 days",
+    demographics:"Thousands of retail and ecommerce leaders. 1-in-3 C-suite. Fashion, CPG, beauty, sporting goods. Titles: CEO, CMO, VP Ecommerce, Creative Director. Revenue $25M–$5B. Q4 timing = buyers in budget planning mode.",
+    notes:"No booth. Partner-anchor strategy — attending with Barrel or most active agency partner by September. Nashville more intimate than Shoptalk Spring Vegas. Hosting dinner Sept 30 evening — private room, 10 guests, agency + brand relationships cultivated all year. Oct 1 follow-ups before flying to Denver for Content Marketing World."
+  },
+  {
+    name:"Partner Event at Content Marketing World",tier:"corp",score:9,budget:"$2,000",
+    dates:"Oct 5–6, 2026",location:"Denver, CO",region:"NATAM",
+    purpose:"Lead generation",website:"https://www.contentmarketingworld.com/",
+    sponsorship:"N/A — corp team present. Partner activation is a hosted dinner layered on top of corp presence.",
+    outcomes:"10–15 Creative Director / Marketing Director leads captured · Evening dinner Oct 5: 8 guests, 60%+ follow-up rate · CMWorld 2027 speaker proposal submitted on-site · Canto brand exposure to 3,400+ content marketing professionals via corp team",
+    demographics:"3,400+ marketing professionals globally. Titles: Content Strategist, Creative Director, VP Marketing, CMO, Head of Content. Industries: CPG, retail, B2B tech, media. Audience thinking about content operations = directly adjacent to DAM for Products use cases.",
+    notes:"Corp team confirmed. AVP incremental cost: flights + hotel + dinner (~$2K). Hosting dinner Oct 5 evening — 8 guests, conference contacts from the day + agency partner if attending. CMWorld audience is the Canto buyer pre-pain — ideal for seed planting. Submitting 2027 speaker proposal on-site: 'How mid-market product brands built a content ops system that works' with Kinder's or Nalgene case study."
+  },
+  {
+    name:"Glossy Beauty × Wellness Summit — Partner Activation",tier:"cond",score:6,budget:"$2,500",
+    dates:"November 2026 (TBD)",location:"Newport Beach, CA",region:"NATAM",
+    purpose:"Lead generation",website:"https://glossy.co/events/",
+    sponsorship:"N/A — attending as guest with BlueSwitch or Avex Designs if confirmed. Conditional on agency partner attendance by Oct 1.",
+    outcomes:"15–20 health & beauty brand Marketing Directors and Creative Directors in CRM · Agency partner introductions to clients attending · 3–5 post-event discovery conversations booked · Pipeline identification for Canto DAM for Products in health & beauty vertical",
+    demographics:"Curated retreat-style event from Glossy / Digiday. Indie beauty and wellness brand founders, DTC operators, retail partners. Titles: Founder, CMO, Creative Director, VP Marketing. Revenue: $5M–$100M. High SKU count brands with complex variant management and retailer compliance requirements — strong Canto DAM for Products fit.",
+    notes:"CONDITIONAL: Only attend if BlueSwitch or Avex Designs confirms attendance by October 1. Without a partner anchor this score drops significantly. If BlueSwitch attends (L'Oréal, Mario Badescu, Ted Baker client base), this is an 8/10 event. If neither confirms by Oct 1, skip and redirect budget to year-end partner dinner. Health & beauty is a strong Canto ICP vertical — complex colorway SKUs and strict retailer asset compliance. AUS → SNA or LAX, 2–3 night trip."
+  }
+];
+
+const tierLabel = { must:"Must-Attend", corp:"Corp Team Present", cond:"Conditional" };
+const tierPill  = { must:"pill-orange",  corp:"pill-blue",        cond:"pill-muted"  };
+
+const fieldDefs = [
+  {label:"Item",                  col:"Item",                                              key:"name",        full:false},
+  {label:"Status",                col:"Status",                                            val:"In Review",   full:false},
+  {label:"Event Budget",          col:"Event Budget",                                      key:"budget",      full:false},
+  {label:"Event Dates",           col:"Event Dates",                                       key:"dates",       full:false},
+  {label:"Event Location",        col:"Event Location",                                    key:"location",    full:false},
+  {label:"Event Region",          col:"Event Region",                                      key:"region",      full:false},
+  {label:"Event Purpose",         col:"Event Purpose",                                     key:"purpose",     full:false},
+  {label:"Event Website",         col:"Event website",                                     key:"website",     full:true },
+  {label:"Sponsorship Packet",    col:"Sponsorship packet",                                key:"sponsorship", full:true },
+  {label:"Expected Outcomes",     col:"What are the expected outcomes for t…",             key:"outcomes",    full:true },
+  {label:"Audience Demographics", col:"What are the audience demographics for t…",        key:"demographics",full:true },
+  {label:"Notes",                 col:"Any other notes / things to share about the…",     key:"notes",       full:true },
+  {label:"90 Day Outcomes",       col:"90 Day Outcomes and Progress - Post Event",         val:"To be completed post-event", full:true},
+  {label:"Salesforce Campaign",   col:"Salesforce Campaign",                               val:"To be linked by marketing ops", full:false},
+];
+
+function copy(text, el) {
+  navigator.clipboard.writeText(text).then(() => {
+    el.classList.add('copied');
+    setTimeout(() => el.classList.remove('copied'), 1800);
+  });
+}
+function toggle(i) {
+  document.getElementById('b'+i).classList.toggle('open');
+  document.getElementById('c'+i).classList.toggle('open');
+}
+function expandAll()   { events.forEach((_,i) => { document.getElementById('b'+i).classList.add('open');    document.getElementById('c'+i).classList.add('open');    }); }
+function collapseAll() { events.forEach((_,i) => { document.getElementById('b'+i).classList.remove('open'); document.getElementById('c'+i).classList.remove('open'); }); }
+
+function copyAll(i) {
+  const ev = events[i];
+  const text = fieldDefs.map(f => `${f.label.toUpperCase()}: ${f.val || ev[f.key] || ''}`).join('\n\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('ca'+i);
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'Copy all fields for this event'; btn.classList.remove('done'); }, 2000);
+  });
+}
+
+function copyMaster() {
+  const lines = events.map((ev,i) => `${i+1}. ${ev.name} · ${ev.dates} · ${ev.location} · Budget: ${ev.budget} · Score: ${ev.score}/10`).join('\n');
+  navigator.clipboard.writeText('CANTO 2026 EVENT REQUESTS\n\n' + lines).then(() => alert('Master list copied!'));
+}
+
+const container = document.getElementById('cards');
+events.forEach((ev, i) => {
+  const fieldsHTML = fieldDefs.map(f => {
+    const v = f.val || ev[f.key] || '';
+    return `<div class="${f.full?'field-full':''} field">
+      <div class="field-label">${f.label} <span class="monday-col">${f.col}</span></div>
+      <div class="field-val" onclick="copy(${JSON.stringify(v)},this)">${v}</div>
+    </div>`;
+  }).join('');
+
+  container.innerHTML += `
+  <div class="event-card">
+    <div class="card-header" onclick="toggle(${i})">
+      <div class="card-left">
+        <div class="card-num">${i+1}</div>
+        <div class="card-info">
+          <div class="card-name">${ev.name}</div>
+          <div class="card-meta">
+            <span class="pill ${tierPill[ev.tier]}">${tierLabel[ev.tier]}</span>
+            <span class="pill pill-muted">${ev.dates}</span>
+            <span class="pill pill-muted">${ev.location}</span>
+            <span class="pill pill-teal">Score ${ev.score}/10</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-budget"><div class="budget-amount">${ev.budget}</div><div class="budget-label">est. budget</div></div>
+      <div class="card-chevron" id="c${i}">▼</div>
+    </div>
+    <div class="card-body" id="b${i}">
+      <div class="progress-bar"></div>
+      <div class="fields-grid">${fieldsHTML}</div>
+      <button class="copy-all" id="ca${i}" onclick="copyAll(${i})">Copy all fields for this event</button>
+    </div>
+  </div>`;
+});
+</script>
+</body>
+</html>
