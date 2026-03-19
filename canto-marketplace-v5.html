@@ -694,6 +694,37 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .edit-check { margin-bottom: 14px; }
 .edit-check label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--navy); cursor: pointer; font-weight: 500; }
 .edit-check input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--orange); cursor: pointer; }
+
+/* ─── MODAL TWO-COLUMN ───────────────────────────────────────── */
+.modal-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 8px; }
+@media (max-width: 640px) { .modal-cols { grid-template-columns: 1fr; } }
+.modal-col-left, .modal-col-right { display: flex; flex-direction: column; gap: 20px; }
+.modal-section { display: flex; flex-direction: column; gap: 10px; }
+.caps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cap-item { display: flex; align-items: flex-start; gap: 7px; font-size: 12px; color: var(--text-2); line-height: 1.4; }
+.cap-icon { color: #059669; font-size: 11px; margin-top: 1px; flex-shrink: 0; }
+.deal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.deal-tag { font-size: 11px; font-weight: 500; color: var(--text-2); background: var(--bg-2); border: 1px solid var(--border-2); border-radius: 20px; padding: 3px 10px; }
+.deal-details .msection-title { margin-bottom: 2px; }
+.modal-partner-footer { display: flex; align-items: flex-start; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-2); }
+.mpf-name { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.mpf-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.modal-section .msection-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
+.modal-section .msection-text { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+.modal-body { padding: 24px; display: flex; flex-direction: column; gap: 0; }
+
+/* ─── CAT PILLS ROW ─────────────────────────────────────────── */
+.cat-pills-row { display: flex; gap: 6px; overflow-x: auto; padding: 0 0 4px; scrollbar-width: none; flex-wrap: nowrap; }
+.cat-pills-row::-webkit-scrollbar { display: none; }
+.cat-pill { flex-shrink: 0; background: white; border: 1.5px solid var(--border); color: var(--text-2); font-size: 12px; font-weight: 600; border-radius: 20px; padding: 5px 13px; cursor: pointer; transition: all 0.15s ease; font-family: inherit; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+.cat-pill:hover { background: var(--bg-2); border-color: var(--text-2); }
+.cat-pill.active { background: var(--navy); color: white; border-color: var(--navy); }
+.cat-pill-count { font-size: 10px; opacity: 0.7; }
+
+/* ─── FULL WIDTH MAIN ────────────────────────────────────────── */
+.main.full-width { max-width: 100%; padding: 28px 32px; }
+@media (max-width: 768px) { .main.full-width { padding: 16px; } }
+.grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 </style>
 </head>
 <body>
@@ -768,42 +799,27 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <button class="qf-btn" id="qf-included"       onclick="toggleQF('included',this)">Included in Plan</button>
       <button class="qf-btn" id="qf-featured"       onclick="toggleQF('featured',this)">★ Top Picks</button>
     </div>
+    <div class="cat-pills-row" id="catPillsRow">
+      <button class="cat-pill active" onclick="setCat('all',this)">All <span class="cat-pill-count" id="pc-all"></span></button>
+      <button class="cat-pill" onclick="setCat('creative',this)">Creative <span class="cat-pill-count" id="pc-creative"></span></button>
+      <button class="cat-pill" onclick="setCat('pim',this)">PIM <span class="cat-pill-count" id="pc-pim"></span></button>
+      <button class="cat-pill" onclick="setCat('cms',this)">CMS <span class="cat-pill-count" id="pc-cms"></span></button>
+      <button class="cat-pill" onclick="setCat('ecommerce',this)">E-Commerce <span class="cat-pill-count" id="pc-ecommerce"></span></button>
+      <button class="cat-pill" onclick="setCat('feed',this)">Feed Mgmt <span class="cat-pill-count" id="pc-feed"></span></button>
+      <button class="cat-pill" onclick="setCat('esp',this)">Email &amp; Mktg <span class="cat-pill-count" id="pc-esp"></span></button>
+      <button class="cat-pill" onclick="setCat('storage',this)">Cloud Storage <span class="cat-pill-count" id="pc-storage"></span></button>
+      <button class="cat-pill" onclick="setCat('social',this)">Social <span class="cat-pill-count" id="pc-social"></span></button>
+      <button class="cat-pill" onclick="setCat('crm',this)">CRM <span class="cat-pill-count" id="pc-crm"></span></button>
+      <button class="cat-pill" onclick="setCat('erp',this)">ERP <span class="cat-pill-count" id="pc-erp"></span></button>
+    </div>
   </div>
 </div>
 
 <!-- LAYOUT -->
 <div class="layout">
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Category</div>
-      <button class="cat-btn active" onclick="setCat('all',this)"><div class="cat-btn-left"><span class="cat-icon">🏠</span> All</div><span class="cat-count" id="cnt-all"></span></button>
-      <button class="cat-btn" onclick="setCat('creative',this)"><div class="cat-btn-left"><span class="cat-icon">🎨</span> Creative Workflow</div><span class="cat-count" id="cnt-creative"></span></button>
-      <button class="cat-btn" onclick="setCat('pim',this)"><div class="cat-btn-left"><span class="cat-icon">📦</span> PIM</div><span class="cat-count" id="cnt-pim"></span></button>
-      <button class="cat-btn" onclick="setCat('cms',this)"><div class="cat-btn-left"><span class="cat-icon">🌐</span> CMS</div><span class="cat-count" id="cnt-cms"></span></button>
-      <button class="cat-btn" onclick="setCat('ecommerce',this)"><div class="cat-btn-left"><span class="cat-icon">🛒</span> E-Commerce</div><span class="cat-count" id="cnt-ecommerce"></span></button>
-      <button class="cat-btn" onclick="setCat('feed',this)"><div class="cat-btn-left"><span class="cat-icon">📡</span> Feed Management</div><span class="cat-count" id="cnt-feed"></span></button>
-      <button class="cat-btn" onclick="setCat('esp',this)"><div class="cat-btn-left"><span class="cat-icon">💌</span> Email & Marketing</div><span class="cat-count" id="cnt-esp"></span></button>
-      <button class="cat-btn" onclick="setCat('storage',this)"><div class="cat-btn-left"><span class="cat-icon">💾</span> Cloud Storage</div><span class="cat-count" id="cnt-storage"></span></button>
-      <button class="cat-btn" onclick="setCat('social',this)"><div class="cat-btn-left"><span class="cat-icon">📲</span> Social & Publishing</div><span class="cat-count" id="cnt-social"></span></button>
-      <button class="cat-btn" onclick="setCat('crm',this)"><div class="cat-btn-left"><span class="cat-icon">☁️</span> CRM</div><span class="cat-count" id="cnt-crm"></span></button>
-      <button class="cat-btn" onclick="setCat('erp',this)"><div class="cat-btn-left"><span class="cat-icon">🏭</span> ERP</div><span class="cat-count" id="cnt-erp"></span></button>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-label">Built By</div>
-      <button class="pt-btn active" onclick="setPT('all',this)"><span class="pt-dot" style="background:var(--muted)"></span> All</button>
-      <button class="pt-btn" onclick="setPT('canto',this)"><span class="pt-dot" style="background:var(--orange)"></span> Canto</button>
-      <button class="pt-btn" onclick="setPT('tech',this)"><span class="pt-dot" style="background:var(--blue)"></span> Tech Partners</button>
-      <button class="pt-btn" onclick="setPT('si',this)"><span class="pt-dot" style="background:var(--purple)"></span> SI Partners</button>
-    </div>
-  </div>
-
   <!-- MAIN -->
-  <div class="main">
+  <div class="main full-width">
     <div id="featuredSection" style="display:none">
       <div class="featured-section-hdr">
         <div>
@@ -1042,7 +1058,7 @@ const INTEGRATIONS = [
     recruit:'Apply to Workato Technology Partner Program. Build and publish Canto connector with template recipes.' },
 
   // ── PIM ────────────────────────────────────────────────────────────
-  { id:'salsify', name:'Salsify', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🔄',
+  { id:'salsify', logo:'https://www.salsify.com/hubfs/Flower-Blue.ico', name:'Salsify', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🔄',
     partnerType:'tech', availability:'live', featured:true,
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
     partner:'Mirichi Labs', partnerBg:'#4F46E5',
@@ -1070,7 +1086,7 @@ const INTEGRATIONS = [
     timeline:'~1 week', investment:'Included in Canto plan',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/akeneo.svg', installCount:'310+', lastUpdated:'Mar 2026', prereq:'Requires Akeneo license' },
 
-  { id:'inriver', name:'inriver', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🌊',
+  { id:'inriver', logo:'https://www.inriver.com/wp-content/themes/inriver/assets/images/favicons/favicon-96x96.png', name:'inriver', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🌊',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
     partner:'MindCloud', partnerBg:'#6366F1',
@@ -1113,7 +1129,7 @@ const INTEGRATIONS = [
     timeline:'TBD', investment:'Contact us' },
 
   // ── CMS ────────────────────────────────────────────────────────────
-  { id:'contentful', name:'Contentful', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📰',
+  { id:'contentful', logo:'https://images.ctfassets.net/jtqsy5pye0zd/6wNuQ2xMvbw134rccObi0q/bf61badc6d6d9780609e541713f0bba6/Contentful_Logo_2.5_Dark.svg', name:'Contentful', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📰',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#FFD940',
@@ -1156,7 +1172,7 @@ const INTEGRATIONS = [
     costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/drupal.svg', installCount:'220+', lastUpdated:'Dec 2025', prereq:'Requires Drupal · MindCloud' },
 
   // ── E-COMMERCE ────────────────────────────────────────────────────
-  { id:'shopify', name:'Shopify', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🛒',
+  { id:'shopify', logo:'https://cdn.shopify.com/b/shopify-brochure2-assets/d9340911ca8c679b148dd4a205ad2ffa.svg', name:'Shopify', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🛒',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'Canto', partnerBg:'#96BF48',
@@ -1184,7 +1200,7 @@ const INTEGRATIONS = [
     timeline:'TBD', investment:'Contact us' },
 
   // ── FEED MANAGEMENT ───────────────────────────────────────────────
-  { id:'feedonomics', name:'Feedonomics', cat:'feed', type:'For Products', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'📡',
+  { id:'feedonomics', logo:'https://feedonomics.com/wp-content/uploads/2025/02/feedonomics-logo.svg', name:'Feedonomics', cat:'feed', type:'For Products', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'📡',
     partnerType:'tech', availability:'live',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
     partner:'Feedonomics', partnerBg:'#6366F1',
@@ -1212,7 +1228,7 @@ const INTEGRATIONS = [
     timeline:'TBD', investment:'Contact us' },
 
   // ── EMAIL & MARKETING ─────────────────────────────────────────────
-  { id:'hubspot-mktg', name:'HubSpot', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🟠',
+  { id:'hubspot-mktg', logo:'https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png', name:'HubSpot', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🟠',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'Canto', partnerBg:'#FF7A59',
@@ -1240,7 +1256,7 @@ const INTEGRATIONS = [
     timeline:'TBD — High Priority', investment:'Contact us' },
 
   // ── CLOUD STORAGE ─────────────────────────────────────────────────
-  { id:'sharepoint', name:'SharePoint / OneDrive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🏢',
+  { id:'sharepoint', logo:'https://res.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/sharepoint_48x1.svg', name:'SharePoint / OneDrive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🏢',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#0078D4',
@@ -1254,7 +1270,7 @@ const INTEGRATIONS = [
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sharepoint.svg', installCount:'2,900+', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365' },
 
-  { id:'gdrive', name:'Google Drive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'📁',
+  { id:'gdrive', logo:'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png', name:'Google Drive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'📁',
     partnerType:'tech', availability:'live',
     soldBy:'partner', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'New Edge', partnerBg:'#4285F4',
@@ -1269,7 +1285,7 @@ const INTEGRATIONS = [
     costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/gdrive.svg', installCount:'1,200+', lastUpdated:'Feb 2026', prereq:'Requires Google Workspace' },
 
   // ── SOCIAL & PUBLISHING ───────────────────────────────────────────
-  { id:'sprout', name:'Sprout Social', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🌿',
+  { id:'sprout', logo:'https://brandfolder.sproutsocial.com/VXTUTVL1/at/8vwz9b7w83rhgfc8xvm8t8/lgo_sprout_lockup.png?auto=webp&format=png', name:'Sprout Social', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🌿',
     partnerType:'tech', availability:'live',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'Sprout Social', partnerBg:'#59CB59',
@@ -1297,7 +1313,7 @@ const INTEGRATIONS = [
     timeline:'TBD', investment:'Contact us' },
 
   // ── CRM ────────────────────────────────────────────────────────────
-  { id:'salesforce', name:'Salesforce CRM', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'☁️',
+  { id:'salesforce', logo:'https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-with-type-logo.svg', name:'Salesforce CRM', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'☁️',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#00A1E0',
@@ -1312,7 +1328,7 @@ const INTEGRATIONS = [
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/salesforce.svg', installCount:'3,100+', lastUpdated:'Mar 2026', prereq:'Requires Salesforce CRM' },
 
   // ── ERP ────────────────────────────────────────────────────────────
-  { id:'sap', name:'SAP S/4HANA', cat:'erp', type:'For Products', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🏭',
+  { id:'sap', logo:'https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg/sap-logo-svg.svg', name:'SAP S/4HANA', cat:'erp', type:'For Products', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🏭',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
     partner:'MindCloud', partnerBg:'#007DB8',
@@ -1502,9 +1518,9 @@ function dataFlowLabel(i) {
 
 function typeBadgeHTML(i) {
   const t = i.type || (i.cantoProduct === 'products' ? 'For Products' : 'DAM');
-  if (t === 'For Products') return '<span class="type-badge type-products">PRODUCT CONTENT</span>';
-  if (t === 'Unified')      return '<span class="type-badge type-unified">BRAND + PRODUCT</span>';
-  return '<span class="type-badge type-dam">BRAND ASSETS</span>';
+  if (t === 'For Products') return '<span class="type-badge type-products">Canto for Products</span>';
+  if (t === 'Unified')      return '<span class="type-badge type-unified">Canto Unified</span>';
+  return '<span class="type-badge type-dam">Canto DAM</span>';
 }
 
 function soldByBadgeHTML(soldBy) {
@@ -1541,22 +1557,26 @@ function difficultyPillHTML(diff, timeline) {
 
 function logoHTML(i) {
   const cdnUrl = 'https://d2zjq3qbslq56w.cloudfront.net/integrations/' + i.id + '.svg';
+  const altUrl = i.logo ? i.logo.replace(/'/g, "\\'") : '';
   const fallbackStyle = 'background:' + i.catBg + ';color:' + i.catColor;
+  const onerror = altUrl
+    ? 'if(!this.dataset.alt){this.dataset.alt=1;this.src=\'' + altUrl + '\';}else{this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';}'
+    : 'this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';';
   return '<div class="logo-wrap">' +
-    '<img class="logo-img" src="' + cdnUrl + '" ' +
-    'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" ' +
-    'alt="' + i.name + '">' +
+    '<img class="logo-img" src="' + cdnUrl + '" onerror="' + onerror + '" alt="' + i.name + '">' +
     '<div class="logo-fallback" style="' + fallbackStyle + ';display:none">' + i.name.charAt(0) + '</div>' +
     '</div>';
 }
 
 function modalLogoHTML(i) {
   const cdnUrl = 'https://d2zjq3qbslq56w.cloudfront.net/integrations/' + i.id + '.svg';
+  const altUrl = i.logo ? i.logo.replace(/'/g, "\\'") : '';
   const fallbackStyle = 'width:50px;height:50px;border-radius:12px;background:' + i.catBg + ';color:' + i.catColor + ';display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;font-family:DM Sans,sans-serif;flex-shrink:0';
+  const onerror = altUrl
+    ? 'if(!this.dataset.alt){this.dataset.alt=1;this.src=\'' + altUrl + '\';}else{this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';}'
+    : 'this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';';
   return '<div class="modal-logo-wrap">' +
-    '<img class="modal-logo-img" src="' + cdnUrl + '" ' +
-    'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'" ' +
-    'alt="' + i.name + '">' +
+    '<img class="modal-logo-img" src="' + cdnUrl + '" onerror="' + onerror + '" alt="' + i.name + '">' +
     '<div style="' + fallbackStyle + ';display:none">' + i.name.charAt(0) + '</div>' +
     '</div>';
 }
@@ -1602,8 +1622,8 @@ function getVisualHTML(i) {
 // ─── FILTER LOGIC ─────────────────────────────────────────────────────
 function setCat(cat, el) {
   activeCat = cat;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
+  document.querySelectorAll('.cat-btn, .cat-pill').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
   renderCards();
 }
 function setPT(pt, el) {
@@ -1631,8 +1651,11 @@ function clearAllFilters() {
   activeCat = 'all';
   activePT  = 'all';
   activeQF  = new Set();
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.cat-btn').classList.add('active');
+  document.querySelectorAll('.cat-btn, .cat-pill').forEach(b => b.classList.remove('active'));
+  const firstBtn = document.querySelector('.cat-btn');
+  if (firstBtn) firstBtn.classList.add('active');
+  const firstPill = document.querySelector('.cat-pill');
+  if (firstPill) firstPill.classList.add('active');
   document.querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('.pt-btn').classList.add('active');
   document.querySelectorAll('.qf-btn').forEach(b => b.classList.remove('active'));
@@ -1655,6 +1678,8 @@ function renderCards() {
     const count = INTEGRATIONS.filter(i => (cat === 'all' || i.cat === cat) && i.availability === 'live').length;
     const el = document.getElementById('cnt-' + cat);
     if (el) el.textContent = count;
+    const pc = document.getElementById('pc-' + cat);
+    if (pc) pc.textContent = count ? count : '';
   });
 
   // Filter
@@ -1814,8 +1839,11 @@ function openModal(id) {
   document.getElementById('mBadges').innerHTML = statusBadgeHTML(i.availability) + ' ' + soldByBadgeHTML(i.soldBy);
 
   let html = getVisualHTML(i);
+  html += '<div class="modal-cols">';
 
-  // ICP / Who it's for
+  // LEFT column
+  html += '<div class="modal-col-left">';
+
   if (i.icp) {
     html += '<div class="mbox mbox-green">' +
       '<div class="mbox-label">\u2713 Best For</div>' +
@@ -1823,61 +1851,57 @@ function openModal(id) {
     '</div>';
   }
 
-  // Deal Signals
-  if (i.signals && i.signals.length) {
+  const desc = (i.problem || i.tagline || '').replace(/<[^>]*>/g, '').slice(0, 160);
+  if (desc) {
     html += '<div class="modal-section">' +
-      '<div class="msection-title">\uD83D\uDD14 Listen for these phrases</div>' +
-      '<div class="signals-list">' + i.signals.map(s => '<span class="modal-signal">\uD83D\uDCAC "' + s + '"</span>').join('') + '</div>' +
+      '<div class="msection-title">About this Integration</div>' +
+      '<div class="msection-text">' + desc + '</div>' +
     '</div>';
   }
 
-  // Talk Track
-  if (i.talktrack) {
-    html += '<div class="talktrack-box">' +
-      '<div class="talktrack-header">' +
-        '<div class="talktrack-label">\uD83D\uDCAC Talk Track</div>' +
-        '<button class="copy-btn" onclick="copyTalkTrack(event, this, \'' + id + '\')">' +
-          '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' +
-          ' Copy' +
-        '</button>' +
-      '</div>' +
-      '<div class="talktrack-text">' + i.talktrack + '</div>' +
-    '</div>';
-  }
+  html += '</div>'; // end left col
 
-  // The Problem
-  if (i.problem) {
-    html += '<div class="modal-section">' +
-      '<div class="msection-title">The Problem It Solves</div>' +
-      '<div class="msection-text">' + i.problem + '</div>' +
-    '</div>';
-  }
+  // RIGHT column
+  html += '<div class="modal-col-right">';
 
-  // Capabilities
   if (i.capabilities && i.capabilities.length) {
     html += '<div class="modal-section">' +
       '<div class="msection-title">Capabilities</div>' +
-      '<div class="caps-list">' + i.capabilities.map(c => '<span class="cap-chip">' + c + '</span>').join('') + '</div>' +
+      '<div class="caps-grid">' + i.capabilities.map(c =>
+        '<div class="cap-item"><span class="cap-icon">\u2713</span><span>' + c + '</span></div>'
+      ).join('') + '</div>' +
     '</div>';
   }
 
-  // Partner
-  html += '<div class="partner-block">' +
-    '<div class="partner-block-label">Partner</div>' +
-    '<div class="partner-block-name">' + i.partner + '</div>' +
-    '<div class="partner-block-desc">' + i.partnerDesc + '</div>' +
+  // Deal Details (compact meta)
+  const diffLabel = i.difficulty ? i.difficulty.charAt(0).toUpperCase() + i.difficulty.slice(1) : null;
+  const diffMap = { easy:'#059669', medium:'#D97706', difficult:'#DC2626' };
+  const diffColor = diffMap[i.difficulty] || '#6B7280';
+  html += '<div class="modal-section deal-details">' +
+    '<div class="msection-title">Deal Details</div>' +
+    '<div class="deal-tags">' +
+      (i.partner ? '<span class="deal-tag">Built by ' + i.partner + '</span>' : '') +
+      (diffLabel ? '<span class="deal-tag" style="color:' + diffColor + ';background:' + diffColor + '18">' + diffLabel + ' setup</span>' : '') +
+      (i.timeline ? '<span class="deal-tag">\u23F1 ' + i.timeline + '</span>' : '') +
+      (i.investment ? '<span class="deal-tag">\u0024 ' + i.investment + '</span>' : '') +
+      (i.authType && i.authType !== 'TBD' ? '<span class="deal-tag">\uD83D\uDD11 ' + i.authType + '</span>' : '') +
+      (dataFlowLabel(i) ? '<span class="deal-tag">' + dataFlowLabel(i) + '</span>' : '') +
+    '</div>' +
   '</div>';
 
-  // Deal Details (6-field)
-  const authDisplay = (!i.authType || i.authType === 'TBD') ? '\u2014' : i.authType;
-  html += '<div class="modal-meta">' +
-    '<div class="meta-item"><div class="meta-label">Built by</div><div class="meta-value">' + i.partner + '</div></div>' +
-    '<div class="meta-item"><div class="meta-label">Difficulty</div><div class="meta-value">' + difficultyPillHTML(i.difficulty, '') + '</div></div>' +
-    '<div class="meta-item"><div class="meta-label">Timeline</div><div class="meta-value">' + i.timeline + '</div></div>' +
-    '<div class="meta-item"><div class="meta-label">Investment</div><div class="meta-value">' + i.investment + '</div></div>' +
-    '<div class="meta-item"><div class="meta-label">Auth</div><div class="meta-value">' + authDisplay + '</div></div>' +
-    '<div class="meta-item"><div class="meta-label">Data Flow</div><div class="meta-value">' + dataFlowLabel(i) + '</div></div>' +
-  '</div>';
+  html += '</div>'; // end right col
+  html += '</div>'; // end modal-cols
+
+  // Partner footer (slim)
+  if (i.partnerDesc) {
+    html += '<div class="modal-partner-footer">' +
+      modalLogoHTML(i) +
+      '<div>' +
+        '<div class="mpf-name">' + i.partner + '</div>' +
+        '<div class="mpf-desc">' + i.partnerDesc + '</div>' +
+      '</div>' +
+    '</div>';
+  }
 
   document.getElementById('mBody').innerHTML = html;
   document.getElementById('modalOverlay').classList.add('open');
