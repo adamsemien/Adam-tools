@@ -341,6 +341,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 /* ─── FEATURED RIBBON ────────────────────────────────────────── */
 .featured-ribbon { position: absolute; top: 0; right: 16px; background: var(--orange); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px 4px; letter-spacing: 1px; text-transform: uppercase; border-radius: 0 0 6px 6px; z-index: 1; }
 
+.card.is-featured .card-top-right { padding-top: 22px; }
+
 /* Featured card treatment */
 .card.is-featured {
   border-color: rgba(217,90,0,0.2);
@@ -660,6 +662,18 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .partner-logo-sm { width: 14px; height: 14px; object-fit: contain; border-radius: 3px; flex-shrink: 0; }
 .meta-stats { font-size: 10px; color: var(--muted); margin-left: auto; white-space: nowrap; }
 
+/* ─── FEATURED SECTION ───────────────────────────────────────── */
+.featured-section-hdr { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+.featured-sec-title { font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: -0.3px; }
+.featured-sec-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.sponsored-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: #92400E; background: #FFFBEB; border: 1px solid #FDE68A; padding: 3px 10px; border-radius: 20px; white-space: nowrap; margin-top: 2px; flex-shrink: 0; }
+.featured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+@media (max-width: 900px) { .featured-grid { grid-template-columns: 1fr; } }
+.featured-section-divider { height: 1px; background: var(--border-2); margin: 20px 0 28px; }
+.featured-card .card-name { font-size: 16px; }
+.featured-card .card-tagline { font-size: 13px; -webkit-line-clamp: 2; line-clamp: 2; }
+.featured-card { min-height: 190px; }
+
 /* ─── ADMIN EDIT ─────────────────────────────────────────────── */
 .card-edit-btn { position: absolute; top: 8px; left: 8px; z-index: 10; background: #3B82F6; color: white; border: none; border-radius: 5px; padding: 3px 8px; font-size: 10px; font-weight: 700; cursor: pointer; opacity: 0; transition: opacity 0.15s ease; }
 .card:hover .card-edit-btn { opacity: 1; }
@@ -675,6 +689,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .edit-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
 .edit-save-btn { background: var(--orange); color: white; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
 .edit-cancel-btn { background: var(--bg-2); color: var(--text-2); border: 1.5px solid var(--border); border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.add-integration-btn { background: #059669 !important; margin-right: 6px; }
+.edit-check { margin-bottom: 14px; }
+.edit-check label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--navy); cursor: pointer; font-weight: 500; }
+.edit-check input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--orange); cursor: pointer; }
 </style>
 </head>
 <body>
@@ -692,6 +710,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <a href="index.html" style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.45);text-decoration:none;letter-spacing:0.2px;transition:color 0.15s;white-space:nowrap" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">← Dashboard</a>
   </div>
   <div class="header-right">
+    <button class="export-btn add-integration-btn" onclick="openAddModal()">+ Add Integration</button>
     <button class="export-btn" onclick="exportJSON()">⬇ Export JSON</button>
     <button class="cheatsheet-btn" onclick="openCheatSheet()">⚡ Sales Cheat Sheet</button>
     <span class="header-pill">Sales Rep Guide</span>
@@ -760,7 +779,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="sidebar-section">
       <div class="sidebar-label">Category</div>
       <button class="cat-btn active" onclick="setCat('all',this)"><div class="cat-btn-left"><span class="cat-icon">🏠</span> All</div><span class="cat-count" id="cnt-all"></span></button>
-      <button class="cat-btn" onclick="setCat('tech',this)"><div class="cat-btn-left"><span class="cat-icon">🤝</span> Partner Programs</div><span class="cat-count" id="cnt-tech"></span></button>
       <button class="cat-btn" onclick="setCat('creative',this)"><div class="cat-btn-left"><span class="cat-icon">🎨</span> Creative Workflow</div><span class="cat-count" id="cnt-creative"></span></button>
       <button class="cat-btn" onclick="setCat('pim',this)"><div class="cat-btn-left"><span class="cat-icon">📦</span> PIM</div><span class="cat-count" id="cnt-pim"></span></button>
       <button class="cat-btn" onclick="setCat('cms',this)"><div class="cat-btn-left"><span class="cat-icon">🌐</span> CMS</div><span class="cat-count" id="cnt-cms"></span></button>
@@ -786,6 +804,17 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 
   <!-- MAIN -->
   <div class="main">
+    <div id="featuredSection" style="display:none">
+      <div class="featured-section-hdr">
+        <div>
+          <div class="featured-sec-title">⭐ Featured Integrations</div>
+          <div class="featured-sec-sub">Highlighted picks for your deals</div>
+        </div>
+        <span class="sponsored-tag">Sponsored Slots Available</span>
+      </div>
+      <div class="featured-grid" id="featuredGrid"></div>
+      <div class="featured-section-divider"></div>
+    </div>
     <div class="results-header">
       <div class="results-title" id="resultsTitle">All Integrations</div>
       <div class="results-count" id="resultsCount"></div>
@@ -856,6 +885,21 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="edit-field"><label>Name</label><input type="text" id="editName"></div>
     <div class="edit-field"><label>Partner / Built By</label><input type="text" id="editPartner"></div>
     <div class="edit-field">
+      <label>Category</label>
+      <select id="editCat">
+        <option value="creative">Creative Workflow</option>
+        <option value="pim">PIM</option>
+        <option value="cms">CMS</option>
+        <option value="ecommerce">E-Commerce</option>
+        <option value="feed">Feed Management</option>
+        <option value="esp">Email &amp; Marketing</option>
+        <option value="storage">Cloud Storage</option>
+        <option value="social">Social &amp; Publishing</option>
+        <option value="crm">CRM</option>
+        <option value="erp">ERP</option>
+      </select>
+    </div>
+    <div class="edit-field">
       <label>Cost Status</label>
       <select id="editCostStatus">
         <option value="Included">Included</option>
@@ -864,9 +908,60 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </div>
     <div class="edit-field"><label>Install Count (e.g. 680+)</label><input type="text" id="editInstallCount"></div>
     <div class="edit-field"><label>Last Updated (e.g. Mar 2026)</label><input type="text" id="editLastUpdated"></div>
+    <div class="edit-check">
+      <label><input type="checkbox" id="editFeatured"> ⭐ Top Pick / Featured (appears in Featured section)</label>
+    </div>
     <div class="edit-actions">
       <button class="edit-cancel-btn" onclick="closeEditModal()">Cancel</button>
-      <button class="edit-save-btn" onclick="saveEdit()">Save</button>
+      <button class="edit-save-btn" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Add Modal -->
+<div class="edit-overlay" id="addOverlay" onclick="if(event.target===this)closeAddModal()">
+  <div class="edit-modal">
+    <h3>+ Add Integration</h3>
+    <div class="edit-field"><label>ID / Slug (lowercase, e.g. my-tool)</label><input type="text" id="addId"></div>
+    <div class="edit-field"><label>Name</label><input type="text" id="addName"></div>
+    <div class="edit-field">
+      <label>Category</label>
+      <select id="addCat">
+        <option value="creative">Creative Workflow</option>
+        <option value="pim">PIM</option>
+        <option value="cms">CMS</option>
+        <option value="ecommerce">E-Commerce</option>
+        <option value="feed">Feed Management</option>
+        <option value="esp">Email &amp; Marketing</option>
+        <option value="storage">Cloud Storage</option>
+        <option value="social">Social &amp; Publishing</option>
+        <option value="crm">CRM</option>
+        <option value="erp">ERP</option>
+      </select>
+    </div>
+    <div class="edit-field"><label>Partner / Built By</label><input type="text" id="addPartner"></div>
+    <div class="edit-field"><label>Tagline (one sentence)</label><input type="text" id="addTagline"></div>
+    <div class="edit-field">
+      <label>Sold By</label>
+      <select id="addSoldBy">
+        <option value="canto">✦ Sold by Canto</option>
+        <option value="partner">◈ Partner-Led</option>
+        <option value="si">◎ SI Engagement</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>Cost Status</label>
+      <select id="addCostStatus">
+        <option value="Additional Cost">Additional Cost</option>
+        <option value="Included">Included</option>
+      </select>
+    </div>
+    <div class="edit-check">
+      <label><input type="checkbox" id="addFeatured"> ⭐ Top Pick / Featured</label>
+    </div>
+    <div class="edit-actions">
+      <button class="edit-cancel-btn" onclick="closeAddModal()">Cancel</button>
+      <button class="edit-save-btn" onclick="saveAdd()">Add Integration</button>
     </div>
   </div>
 </div>
@@ -1297,9 +1392,11 @@ function openEditModal(id, e) {
   document.getElementById('editId').value = id;
   document.getElementById('editName').value = i.name || '';
   document.getElementById('editPartner').value = i.partner || '';
+  document.getElementById('editCat').value = i.cat || 'cms';
   document.getElementById('editCostStatus').value = i.costStatus || 'Additional Cost';
   document.getElementById('editInstallCount').value = i.installCount || '';
   document.getElementById('editLastUpdated').value = i.lastUpdated || '';
+  document.getElementById('editFeatured').checked = !!i.featured;
   document.getElementById('editOverlay').style.display = 'flex';
 }
 
@@ -1307,17 +1404,70 @@ function saveEdit() {
   const id = document.getElementById('editId').value;
   const i = INTEGRATIONS.find(x => x.id === id);
   if (!i) return;
+  const newCat = document.getElementById('editCat').value;
   i.name    = document.getElementById('editName').value;
   i.partner = document.getElementById('editPartner').value;
+  i.cat     = newCat;
+  i.catLabel = CAT_LABELS[newCat] || newCat;
   i.costStatus   = document.getElementById('editCostStatus').value;
   i.installCount = document.getElementById('editInstallCount').value;
   i.lastUpdated  = document.getElementById('editLastUpdated').value;
+  i.featured = document.getElementById('editFeatured').checked;
   closeEditModal();
   renderCards();
 }
 
 function closeEditModal() {
   document.getElementById('editOverlay').style.display = 'none';
+}
+
+function openAddModal() {
+  ['addId','addName','addPartner','addTagline'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('addCat').value = 'cms';
+  document.getElementById('addSoldBy').value = 'canto';
+  document.getElementById('addCostStatus').value = 'Additional Cost';
+  document.getElementById('addFeatured').checked = false;
+  document.getElementById('addOverlay').style.display = 'flex';
+}
+
+function closeAddModal() {
+  document.getElementById('addOverlay').style.display = 'none';
+}
+
+function saveAdd() {
+  const id = document.getElementById('addId').value.trim().toLowerCase().replace(/\s+/g, '-');
+  const name = document.getElementById('addName').value.trim();
+  if (!id || !name) { alert('ID and Name are required.'); return; }
+  const cat = document.getElementById('addCat').value;
+  const CAT_BG_MAP = { creative:'#FFF0EB', pim:'#EEF2FF', cms:'#EBF5FF', ecommerce:'#E6F5F0', feed:'#F5F3FF', esp:'#FFFBEB', storage:'#EBF4FF', social:'#E8F5E9', crm:'#E8F2FA', erp:'#E5F2FB' };
+  const CAT_COLOR_MAP = { creative:'#E34400', pim:'#4F46E5', cms:'#0070C0', ecommerce:'#008060', feed:'#6D28D9', esp:'#B45309', storage:'#0078D4', social:'#2E7D32', crm:'#005B99', erp:'#007DB8' };
+  const TYPE_MAP = { pim:'For Products', feed:'For Products', erp:'For Products', ecommerce:'Unified' };
+  const newEntry = {
+    id, name, cat,
+    type: TYPE_MAP[cat] || 'DAM',
+    catLabel: CAT_LABELS[cat] || cat,
+    catColor: CAT_COLOR_MAP[cat] || '#374151',
+    catBg: CAT_BG_MAP[cat] || '#F3F4F6',
+    emoji: '🔌',
+    partnerType: document.getElementById('addSoldBy').value === 'canto' ? 'canto' : 'tech',
+    availability: 'live',
+    featured: document.getElementById('addFeatured').checked,
+    soldBy: document.getElementById('addSoldBy').value,
+    dataFlow: 'canto-to-platform',
+    authType: 'API Key',
+    difficulty: 'medium',
+    includedInPlan: document.getElementById('addCostStatus').value === 'Included',
+    partner: document.getElementById('addPartner').value.trim() || 'TBD',
+    tagline: document.getElementById('addTagline').value.trim() || name + ' integration.',
+    costStatus: document.getElementById('addCostStatus').value,
+    installCount: '', lastUpdated: '', prereq: '',
+    icp:'', signals:[], problem:'', talktrack:'', capabilities:[],
+    partnerDesc: '', investment: document.getElementById('addCostStatus').value === 'Included' ? 'Included' : 'Contact us',
+    timeline: 'TBD',
+  };
+  INTEGRATIONS.push(newEntry);
+  closeAddModal();
+  renderCards();
 }
 
 function exportJSON() {
@@ -1500,7 +1650,7 @@ function renderCards() {
   document.getElementById('statCategories').textContent = new Set(liveOnly.map(i => i.cat)).size;
 
   // Update sidebar counts (only count live)
-  const cats = ['all','tech','creative','pim','cms','ecommerce','feed','esp','storage','social','crm','erp'];
+  const cats = ['all','creative','pim','cms','ecommerce','feed','esp','storage','social','crm','erp'];
   cats.forEach(cat => {
     const count = INTEGRATIONS.filter(i => (cat === 'all' || i.cat === cat) && i.availability === 'live').length;
     const el = document.getElementById('cnt-' + cat);
@@ -1509,6 +1659,7 @@ function renderCards() {
 
   // Filter
   let filtered = INTEGRATIONS.filter(i => {
+    if (i.cat === 'tech') return false;
     if (i.availability === 'track' || i.availability === 'soon') return false;
     if (activeCat !== 'all' && i.cat !== activeCat) return false;
     if (activePT  !== 'all' && i.partnerType !== activePT) return false;
@@ -1534,11 +1685,73 @@ function renderCards() {
 
   const grid  = document.getElementById('grid');
   const empty = document.getElementById('emptyState');
+  const featuredSection = document.getElementById('featuredSection');
+  const featuredGrid    = document.getElementById('featuredGrid');
 
-  if (filtered.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    featuredSection.style.display = 'none';
+    featuredGrid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
   empty.style.display = 'none';
 
-  grid.innerHTML = filtered.map((i, idx) => {
+  // Split into featured and regular
+  const featuredItems = filtered.filter(i => i.featured);
+  const regularItems  = filtered.filter(i => !i.featured);
+
+  // Featured section
+  if (featuredItems.length > 0) {
+    featuredSection.style.display = 'block';
+    featuredGrid.innerHTML = featuredItems.map(i => {
+      const partnerLogoHTML = i.partnerLogo
+        ? '<img class="partner-logo-sm" src="' + i.partnerLogo + '" alt="" onerror="this.style.display=\'none\'">'
+        : '';
+      const costPillHTML = i.costStatus
+        ? '<span class="cost-pill ' + (i.costStatus === 'Included' ? 'cost-included' : 'cost-extra') + '">' + i.costStatus + '</span>'
+        : '';
+      const prereqHTML = i.prereq
+        ? '<div class="card-prereq">\u25CB\u00A0' + i.prereq + '</div>'
+        : '';
+      const metaHTML = '<div class="card-meta">' +
+          partnerLogoHTML +
+          '<span class="built-by">Built by ' + i.partner + '</span>' +
+          ((i.installCount || i.lastUpdated)
+            ? '<span class="meta-stats">' + (i.installCount ? i.installCount + ' installs' : '') + (i.installCount && i.lastUpdated ? ' \u00B7 ' : '') + (i.lastUpdated || '') + '</span>'
+            : '') +
+        '</div>';
+      const editBtnHTML = isEditMode
+        ? '<button class="card-edit-btn" onclick="openEditModal(\'' + i.id + '\',event)">\u270E Edit</button>'
+        : '';
+      return '<div class="card featured-card is-featured" onclick="openModal(\'' + i.id + '\')">' +
+        editBtnHTML +
+        '<div class="featured-ribbon">TOP PICK</div>' +
+        '<div class="card-top">' +
+          logoHTML(i) +
+          '<div class="card-top-right">' +
+            statusBadgeHTML(i.availability) +
+          '</div>' +
+        '</div>' +
+        '<div class="card-name">' + i.name + '</div>' +
+        '<div class="card-cat-label">' + i.catLabel + typeBadgeHTML(i) + '</div>' +
+        '<div class="card-tagline">' + i.tagline + '</div>' +
+        prereqHTML +
+        '<div class="card-footer">' +
+          soldByBadgeHTML(i.soldBy) +
+          costPillHTML +
+          '<span class="card-arrow">\u2192</span>' +
+        '</div>' +
+        metaHTML +
+      '</div>';
+    }).join('');
+  } else {
+    featuredSection.style.display = 'none';
+    featuredGrid.innerHTML = '';
+  }
+
+  // Regular grid
+  grid.innerHTML = regularItems.map((i, idx) => {
     const partnerLogoHTML = i.partnerLogo
       ? '<img class="partner-logo-sm" src="' + i.partnerLogo + '" alt="" onerror="this.style.display=\'none\'">'
       : '';
