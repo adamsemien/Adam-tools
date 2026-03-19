@@ -37,7 +37,7 @@
   --red-border: #FECACA;
   --purple: #7C3AED;
   --purple-bg: #F5F3FF;
-  --radius: 12px;
+  --radius: 14px;
   --radius-sm: 8px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
@@ -339,7 +339,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .logo-fallback { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; font-family: 'DM Sans', sans-serif; flex-shrink: 0; }
 
 /* ─── FEATURED RIBBON ────────────────────────────────────────── */
-.featured-ribbon { position: absolute; top: 0; right: 16px; background: var(--orange); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px 4px; letter-spacing: 0.5px; text-transform: uppercase; border-radius: 0 0 6px 6px; z-index: 1; }
+.featured-ribbon { position: absolute; top: 0; right: 16px; background: var(--orange); color: white; font-size: 9px; font-weight: 800; padding: 3px 8px 4px; letter-spacing: 1px; text-transform: uppercase; border-radius: 0 0 6px 6px; z-index: 1; }
 
 /* Featured card treatment */
 .card.is-featured {
@@ -355,9 +355,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .card.is-soon:hover { opacity: 1; }
 
 /* ─── CARD CONTENT ELEMENTS ──────────────────────────────────── */
-.card-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; margin-bottom: 3px; }
+.card-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.4px; margin-bottom: 3px; }
 .card-cat-label { font-size: 11px; color: var(--muted); font-weight: 500; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-.card-tagline { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; flex: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card-tagline { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; flex: 1; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; min-height: 19px; }
 .card-flow-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
 .flow-label { font-size: 12px; color: var(--text-2); font-weight: 500; }
 .timeline-text { font-size: 11px; color: var(--muted); }
@@ -367,7 +367,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   margin-top: auto; padding-top: 11px;
   border-top: 1px solid var(--border-2);
 }
-.built-by { font-size: 11px; color: var(--muted); flex: 1; text-align: right; }
+.built-by { font-size: 11px; color: var(--text-2); font-weight: 600; flex: 1; text-align: right; }
 .card-arrow { color: var(--muted-2); font-size: 14px; transition: transform 0.15s ease, color 0.15s ease; }
 .card:hover .card-arrow { transform: translateX(3px); color: var(--orange); }
 
@@ -669,8 +669,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">Partner Ecosystem</div>
-    <div class="hero-title">Connect Canto to<br><span>every tool in your deal</span></div>
-    <div class="hero-sub">The integration story closes deals. Find the right integration for your prospect, get the talk track, and know exactly what to say.</div>
+    <div class="hero-title">Connect Canto to<br><span>every tool in your stack</span></div>
+    <div class="hero-sub">34 integrations. Built by Canto, certified partners, and the world's best SIs.</div>
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num" id="statTotal">—</div>
@@ -681,7 +681,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <div class="stat-label">Included in Plan</div>
       </div>
       <div class="stat">
-        <div class="stat-num">4,500+</div>
+        <div class="stat-num">30,000+</div>
         <div class="stat-label">Customers</div>
       </div>
       <div class="stat">
@@ -710,11 +710,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="quick-filters">
       <span class="qf-label">Quick filters:</span>
       <button class="qf-btn" id="qf-canto-sold"    onclick="toggleQF('canto-sold',this)">✦ Sold by Canto</button>
-      <button class="qf-btn" id="qf-live"           onclick="toggleQF('live',this)">● Live</button>
-      <button class="qf-btn" id="qf-bidirectional"  onclick="toggleQF('bidirectional',this)">⇄ Bidirectional</button>
-      <button class="qf-btn" id="qf-easy"           onclick="toggleQF('easy',this)">Easy</button>
+      <button class="qf-btn" id="qf-live"           onclick="toggleQF('live',this)">● Live Only</button>
+      <button class="qf-btn" id="qf-bidirectional"  onclick="toggleQF('bidirectional',this)">⇄ Bidirectional Sync</button>
+      <button class="qf-btn" id="qf-easy"           onclick="toggleQF('easy',this)">Easy Setup</button>
       <button class="qf-btn" id="qf-included"       onclick="toggleQF('included',this)">Included in Plan</button>
-      <button class="qf-btn" id="qf-featured"       onclick="toggleQF('featured',this)">⭐ Top Picks</button>
+      <button class="qf-btn" id="qf-featured"       onclick="toggleQF('featured',this)">★ Top Picks</button>
     </div>
   </div>
 </div>
@@ -745,9 +745,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <div class="sidebar-section">
       <div class="sidebar-label">Built By</div>
       <button class="pt-btn active" onclick="setPT('all',this)"><span class="pt-dot" style="background:var(--muted)"></span> All</button>
-      <button class="pt-btn" onclick="setPT('canto',this)"><span class="pt-dot" style="background:var(--orange)"></span> Canto-built</button>
-      <button class="pt-btn" onclick="setPT('tech',this)"><span class="pt-dot" style="background:var(--blue)"></span> Tech partner</button>
-      <button class="pt-btn" onclick="setPT('si',this)"><span class="pt-dot" style="background:var(--purple)"></span> System integrator</button>
+      <button class="pt-btn" onclick="setPT('canto',this)"><span class="pt-dot" style="background:var(--orange)"></span> Canto</button>
+      <button class="pt-btn" onclick="setPT('tech',this)"><span class="pt-dot" style="background:var(--blue)"></span> Tech Partners</button>
+      <button class="pt-btn" onclick="setPT('si',this)"><span class="pt-dot" style="background:var(--purple)"></span> SI Partners</button>
     </div>
   </div>
 
@@ -803,6 +803,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <th>Integration</th>
         <th>Category</th>
         <th>What It Does</th>
+        <th>Built By</th>
         <th>Data Flow</th>
         <th>Sold by Canto</th>
         <th>Difficulty</th>
@@ -821,9 +822,9 @@ const INTEGRATIONS = [
   { id:'salsify-tp', name:'Salsify', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🔄',
     partnerType:'tech', availability:'track', featured:true,
     soldBy:'partner', dataFlow:'bidirectional', authType:'TBD', difficulty:'medium', includedInPlan:false,
-    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partner:'Mirichi Labs', partnerBg:'#1E40AF',
     partnerDesc:'Salsify is a leading PIM platform for brands selling through retail channels. Active partnership program with co-sell, referral, and App Directory listing available.',
-    tagline:'Co-sell and referral motion with the leading PIM for retail brands.',
+    tagline:'Joint motion with the leading PIM for retail brands.',
     icp:'Mid-market brands ($20M+ revenue) in fashion, CPG, sporting goods, and food & bev already running Salsify PIM.',
     signals:['We use Salsify', 'We have a PIM', 'We sell to retailers', 'We manage product data'],
     problem:'Salsify implementations consistently expose the asset governance gap. Product teams are pulling images from scattered sources — Dropbox, hard drives, email threads. Canto solves the input side of every Salsify deployment.',
@@ -835,9 +836,9 @@ const INTEGRATIONS = [
   { id:'akeneo-tp', name:'Akeneo', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'📋',
     partnerType:'tech', availability:'track', featured:true,
     soldBy:'partner', dataFlow:'bidirectional', authType:'TBD', difficulty:'medium', includedInPlan:false,
-    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partner:'MindCloud', partnerBg:'#1E40AF',
     partnerDesc:'Akeneo is a leading open PIM platform with strong penetration in manufacturing, food & bev, and enterprise retail. Active Technology Partner Program with App Store listing.',
-    tagline:'Joint motion targeting manufacturing and CPG brands scaling product content.',
+    tagline:'Co-sell motion for manufacturing and CPG brands on Akeneo.',
     icp:'Mid-market to enterprise brands in manufacturing, food & bev, and multi-channel retail using Akeneo for product data governance.',
     signals:['We use Akeneo', 'We have thousands of SKUs', 'We manage product catalog'],
     problem:'Akeneo customers managing thousands of SKUs have no governed DAM for the product images, videos, and documents that feed the PIM. Assets live in file servers and shared drives. Canto closes that gap at the source.',
@@ -849,9 +850,9 @@ const INTEGRATIONS = [
   { id:'shopify-tp', name:'Shopify Plus', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🛍️',
     partnerType:'tech', availability:'track', featured:true,
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'TBD', difficulty:'medium', includedInPlan:false,
-    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partner:'Canto Partner Team', partnerBg:'#1E40AF',
     partnerDesc:'Shopify Plus Agency Partners are among the most active referral sources in mid-market e-commerce. The Shopify App Store provides passive inbound lead generation at scale.',
-    tagline:'Activate Shopify Plus agency partners and app marketplace for DTC referrals.',
+    tagline:'Activate Shopify Plus agency partners for DAM referrals.',
     icp:'DTC and mid-market brands ($20M+ revenue) scaling on Shopify Plus in fashion, CPG, health & beauty, and sporting goods.',
     signals:['We\'re on Shopify Plus', 'We have a DTC store', 'We work with a Shopify agency'],
     problem:'Shopify Plus brands managing hundreds of SKUs across multiple channels have zero governance on their product assets. Every campaign, every PDP update, every agency request involves pulling files from wherever.',
@@ -863,9 +864,9 @@ const INTEGRATIONS = [
   { id:'klaviyo-tp', name:'Klaviyo', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'📧',
     partnerType:'tech', availability:'track',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'TBD', difficulty:'medium', includedInPlan:false,
-    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partner:'Canto Partner Team', partnerBg:'#1E40AF',
     partnerDesc:'Klaviyo is the dominant ESP for DTC and e-commerce brands. Elite and Gold agency partners run email programs for exactly Canto\'s ICP.',
-    tagline:'Referral motion through Klaviyo agency partners serving DTC and e-commerce brands.',
+    tagline:'Referral motion through Klaviyo agency partners.',
     icp:'DTC brands in fashion, health & beauty, CPG running lifecycle email on Klaviyo.',
     signals:['We use Klaviyo', 'We do email marketing', 'Our agency manages our email'],
     problem:'Klaviyo agencies build email programs for brands whose assets are ungoverned. Marketers pull product images from Dropbox, outdated decks, or personal downloads. Campaigns go out with wrong dimensions, old logos, off-brand colors.',
@@ -877,9 +878,9 @@ const INTEGRATIONS = [
   { id:'adobe-tp', name:'Adobe (Solution Partners)', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🎨',
     partnerType:'tech', availability:'track',
     soldBy:'partner', dataFlow:'bidirectional', authType:'TBD', difficulty:'medium', includedInPlan:false,
-    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partner:'Canto Partner Team', partnerBg:'#1E40AF',
     partnerDesc:'Adobe Solution Partners implement Creative Cloud for enterprise clients across every Canto vertical. Partner program is structured and well-resourced.',
-    tagline:'Co-sell with Adobe Solution Partners deploying Creative Cloud for enterprise brands.',
+    tagline:'Co-sell with Adobe Solution Partners deploying Creative Cloud.',
     icp:'Enterprise and upper-mid-market brands deploying Adobe Creative Cloud across creative teams.',
     signals:['We use Adobe Creative Cloud', 'We have Creative Cloud licenses', 'We work with an Adobe partner'],
     problem:'Adobe Solution Partners install Creative Cloud — but Creative Cloud is not a DAM. Once a brand\'s creative team is producing at scale inside Adobe tools, the governance question hits immediately.',
@@ -891,9 +892,9 @@ const INTEGRATIONS = [
   { id:'mindcloud-tp', name:'MindCloud', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🔌',
     partnerType:'tech', availability:'live',
     soldBy:'partner', dataFlow:'bidirectional', authType:'API Key', difficulty:'easy', includedInPlan:false,
-    partner:'Existing Relationship', partnerBg:'#059669',
+    partner:'MindCloud', partnerBg:'#059669',
     partnerDesc:'MindCloud is an iPaaS provider with experience in complex DAM-to-enterprise integrations. Active relationship from Freshpet/Esko scoping engagement.',
-    tagline:'Deepen the existing MindCloud relationship into a formalized referral and build track.',
+    tagline:'Custom enterprise integrations via the MindCloud iPaaS platform.',
     icp:'Mid-market to enterprise brands requiring custom integrations between DAM and ERP, PIM, or legacy systems.',
     signals:['We have complex integrations', 'We use legacy systems', 'We need custom integration work'],
     problem:'Brands with complex integration needs — legacy ERP, custom PIM, or multi-system asset delivery — need an iPaaS layer. MindCloud customers asking about DAM connections are already Canto-qualified.',
@@ -905,9 +906,9 @@ const INTEGRATIONS = [
   { id:'workato-tp', name:'Workato', cat:'tech', catLabel:'Tech Partner', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'⚙️',
     partnerType:'tech', availability:'track',
     soldBy:'partner', dataFlow:'bidirectional', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'Partnership Track', partnerBg:'#1E40AF',
+    partner:'Canto Partner Team', partnerBg:'#1E40AF',
     partnerDesc:'Workato is a leading enterprise automation platform with a structured Technology Partner Program and active app marketplace used by IT and ops buyers.',
-    tagline:'App marketplace listing and co-sell with enterprise automation buyers.',
+    tagline:'Automate asset workflows across any enterprise system.',
     icp:'Enterprise operations and IT buyers building automated workflows that touch asset management.',
     signals:['We use Workato', 'We\'re building automation workflows', 'We want to automate asset delivery'],
     problem:'Enterprise teams building Workato automation for asset-heavy processes discover they need a governed DAM at the center. Workato customers who find Canto in the marketplace are self-qualified.',
@@ -920,9 +921,9 @@ const INTEGRATIONS = [
   { id:'salsify', name:'Salsify PIM', cat:'pim', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🔄',
     partnerType:'tech', availability:'live', featured:true,
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'Sudu', partnerBg:'#4F46E5',
+    partner:'Mirichi Labs', partnerBg:'#4F46E5',
     partnerDesc:'Deep syndication expertise — built Riversand\'s syndication practice, then ran Inriver\'s. Named reference across multiple PIM deployments.',
-    tagline:'Sync approved Canto assets into Salsify product records automatically.',
+    tagline:'Sync governed product media from Canto into Salsify PIM.',
     icp:'Brands in fashion, CPG, sporting goods, and food & bev managing 500+ SKUs and selling through major retailers.',
     signals:['We use Salsify', 'Product images are out of sync', 'We sell through retail channels'],
     problem:'Product teams waste hours downloading assets from Canto and re-uploading them into Salsify. Approved images get missed, versions drift, and product launches get delayed.',
@@ -935,7 +936,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#00B09B',
     partnerDesc:'Built and maintained by Canto. Native integration with full support.',
-    tagline:'Connect Canto to Akeneo and enrich product records with approved DAM assets at scale.',
+    tagline:'Keep Canto product assets and Akeneo product records in sync.',
     icp:'Mid-market to enterprise brands in manufacturing, food & bev, and complex retail catalogs using Akeneo.',
     signals:['We use Akeneo', 'Product enrichment is slow', 'Assets aren\'t linked to product records'],
     problem:'Akeneo customers managing complex product catalogs need a governed source for every asset attached to a product record. Without Canto, assets come from wherever — slowing enrichment and creating compliance risk.',
@@ -946,9 +947,9 @@ const INTEGRATIONS = [
   { id:'inriver', name:'inriver PIM', cat:'pim', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🌊',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'Partner SI', partnerBg:'#6366F1',
+    partner:'MindCloud', partnerBg:'#6366F1',
     partnerDesc:'inriver SI partner network includes certified implementers with DAM+PIM practice experience.',
-    tagline:'Govern product assets flowing into inriver from a single DAM source of truth.',
+    tagline:'Link Canto product media directly to inriver PIM records.',
     icp:'Mid-market to enterprise manufacturers and distributors managing complex product hierarchies in inriver.',
     signals:['We use inriver', 'We\'re in manufacturing', 'Product data governance is a priority'],
     problem:'inriver deployments in complex manufacturing environments often expose the asset chaos upstream — hundreds of product images living in file servers or SharePoint, unmapped to product records.',
@@ -962,7 +963,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#FF0000',
     partnerDesc:'Built and maintained by Canto. Access and place Canto assets directly inside Photoshop, Illustrator, InDesign, and Premiere.',
-    tagline:'Find, place, and upload Canto assets without leaving Adobe apps.',
+    tagline:'Access your entire Canto library from inside Adobe Creative Cloud.',
     icp:'In-house creative teams and agencies managing brand assets at volume. Any organization running Adobe CC is a Canto integration conversation.',
     signals:['Our designers use Photoshop', 'We use InDesign', 'We have an in-house creative team', 'We use Premiere'],
     problem:'Creative teams switch between Canto and Adobe apps constantly — downloading files, making changes, re-uploading. Every switch is friction. Final approved versions often get lost before they make it back to the DAM.',
@@ -973,9 +974,9 @@ const INTEGRATIONS = [
   { id:'figma', name:'Figma', cat:'creative', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🖌️',
     partnerType:'tech', availability:'soon',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'medium', includedInPlan:false,
-    partner:'TBD', partnerBg:'#F24E1E',
+    partner:'Figma', partnerBg:'#F24E1E',
     partnerDesc:'Figma integration partner in evaluation. DAM-to-Figma asset library sync is a high-demand workflow for product and brand design teams.',
-    tagline:'Surface approved Canto assets inside Figma projects without manual downloads.',
+    tagline:'Surface approved Canto assets inside every Figma project.',
     icp:'Product design teams, brand design teams, and UX-forward organizations where Figma is the primary design tool.',
     signals:['Our designers use Figma', 'We design in Figma', 'We have a product design team'],
     problem:'Figma users pull assets from wherever they can find them — screenshots, old files, personal drives. Approved brand assets in Canto never make it into Figma automatically. Every design review risks off-brand elements.',
@@ -989,7 +990,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#FFD940',
     partnerDesc:'Built and maintained by Canto. Assets linked from Canto appear in Contentful with live sync.',
-    tagline:'Reference Canto assets in Contentful content models with live sync.',
+    tagline:'Reference Canto assets in Contentful with live sync — update once, reflect everywhere.',
     icp:'Enterprise and upper-mid-market brands running headless or hybrid CMS on Contentful.',
     signals:['We use Contentful', 'We have a headless CMS', 'Content teams manage our website assets'],
     problem:'Content teams in Contentful are constantly tracking down approved images from brand teams. Assets get copied into Contentful\'s media library and diverge from the Canto master. One update in Canto should cascade everywhere.',
@@ -1002,7 +1003,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#21759B',
     partnerDesc:'Built and maintained by Canto. Available for all customers.',
-    tagline:'Insert Canto-approved media directly into WordPress from the media library.',
+    tagline:'Insert Canto-approved media directly into WordPress from the editor.',
     icp:'Any organization running WordPress for their primary brand or product site.',
     signals:['Our website is on WordPress', 'We use WordPress', 'Marketing manages the website'],
     problem:'WordPress editors pull images from whatever they can find — Google Drive, local folders, email attachments. Brand teams lose control of what appears on the website.',
@@ -1013,9 +1014,9 @@ const INTEGRATIONS = [
   { id:'drupal', name:'Drupal', cat:'cms', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'💧',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
-    partner:'Partner SI', partnerBg:'#0077C0',
+    partner:'MindCloud', partnerBg:'#0077C0',
     partnerDesc:'Drupal integration delivered via certified SI partner. Recommended for enterprise deployments with custom Drupal builds.',
-    tagline:'Govern enterprise web assets by connecting Canto to Drupal media management.',
+    tagline:'Govern enterprise web assets by connecting Canto to Drupal.',
     icp:'Enterprise organizations (higher ed, government, large B2B) running complex Drupal deployments.',
     signals:['We use Drupal', 'We have a large website with lots of media', 'We\'re a university or government org'],
     problem:'Large Drupal sites accumulate assets in Drupal\'s media module without governance or lifecycle management. Connecting to Canto establishes the DAM as the source of truth for all media referenced in the CMS.',
@@ -1029,7 +1030,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#96BF48',
     partnerDesc:'Built and maintained by Canto. Native integration available to all customers.',
-    tagline:'Push approved product images to Shopify storefronts automatically.',
+    tagline:'Push approved product images from Canto to Shopify automatically.',
     icp:'DTC and mid-market brands on Shopify managing 100+ SKUs.',
     signals:['We sell on Shopify', 'We have a Shopify store', 'Product images are updated frequently'],
     problem:'Shopify merchants download product images from Canto and re-upload them to Shopify manually. Images fall out of sync the moment a new version is approved in the DAM. Product pages go live with outdated assets.',
@@ -1038,11 +1039,11 @@ const INTEGRATIONS = [
     timeline:'~1 week', investment:'Included' },
 
   { id:'bigcommerce', name:'BigCommerce', cat:'ecommerce', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🏪',
-    partnerType:'tech', availability:'soon',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'TBD', partnerBg:'#34313F',
+    partnerType:'canto', availability:'soon',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Canto', partnerBg:'#34313F',
     partnerDesc:'BigCommerce Technology Partner Program integration in evaluation. Strong mid-market e-commerce platform with API-first architecture.',
-    tagline:'Sync Canto product assets to BigCommerce catalogs across multi-channel selling.',
+    tagline:'Sync approved Canto assets to BigCommerce product listings.',
     icp:'Mid-market brands ($20M–$200M) on BigCommerce, particularly in consumer goods, B2B wholesale, and multi-channel retail.',
     signals:['We use BigCommerce', 'We sell on multiple channels', 'We sell on Amazon and Walmart'],
     problem:'BigCommerce merchants managing large catalogs across multiple sales channels have no single source of truth for product images. Canto governs the master; the integration delivers to every channel.',
@@ -1056,7 +1057,7 @@ const INTEGRATIONS = [
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
     partner:'Feedonomics', partnerBg:'#6366F1',
     partnerDesc:'Feedonomics is the leading omnichannel product data platform. Built and maintained by Feedonomics with deep channel syndication expertise across 1,000+ retail endpoints.',
-    tagline:'Distribute Canto product assets across 1,000+ retail channels including Home Depot, Amazon, and Walmart.',
+    tagline:'Distribute Canto product images across 1,000+ retail channels via Feedonomics.',
     icp:'Brands in tools, sporting goods, CPG, and consumer goods distributing products across major retail channels.',
     signals:['We sell at Home Depot', 'We sell at Walmart or Amazon', 'We distribute to retail channels', 'We use Feedonomics'],
     problem:'Brands distributing across dozens of retail channels spend enormous time formatting and resizing assets to meet retailer spec. There\'s no direct path from Canto\'s approved library to the syndication layer.',
@@ -1067,9 +1068,9 @@ const INTEGRATIONS = [
   { id:'channable', name:'Channable', cat:'feed', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'🔀',
     partnerType:'tech', availability:'soon',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'TBD', partnerBg:'#FF5C00',
+    partner:'Channable', partnerBg:'#FF5C00',
     partnerDesc:'Channable is a leading feed management and PPC automation platform with strong penetration in mid-market e-commerce and retail.',
-    tagline:'Connect Canto-approved assets to Channable for automated feed creation and channel distribution.',
+    tagline:'Flow Canto product images through Channable to every marketplace.',
     icp:'Mid-market brands ($20M+) running Google Shopping, Meta, Amazon, and comparison shopping engines.',
     signals:['We use Channable', 'We run Google Shopping', 'We advertise on Meta and Amazon'],
     problem:'Channable users manually source product images from wherever they can find them before building feeds. Brand assets in Canto never flow automatically into feed management.',
@@ -1083,7 +1084,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#FF7A59',
     partnerDesc:'Built and maintained by Canto. Access and insert Canto-approved assets directly from HubSpot marketing workflows.',
-    tagline:'Insert Canto-approved assets into HubSpot emails and landing pages without leaving the editor.',
+    tagline:'Insert approved Canto assets directly into HubSpot campaigns.',
     icp:'Mid-market B2B and DTC brands running marketing programs on HubSpot.',
     signals:['We use HubSpot', 'Our marketing team is in HubSpot', 'We send email campaigns from HubSpot'],
     problem:'Marketing teams building HubSpot campaigns download assets from Canto, re-upload to HubSpot\'s file manager, and create a second asset library that goes stale immediately.',
@@ -1094,9 +1095,9 @@ const INTEGRATIONS = [
   { id:'klaviyo', name:'Klaviyo', cat:'esp', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'💌',
     partnerType:'tech', availability:'soon',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'TBD', partnerBg:'#1A1A1A',
+    partner:'Klaviyo', partnerBg:'#1A1A1A',
     partnerDesc:'Klaviyo integration partner in active sourcing. Klaviyo is the #1 priority ESP integration for Canto\'s DTC and e-commerce ICP.',
-    tagline:'Pull approved Canto assets into Klaviyo email campaigns without leaving the editor.',
+    tagline:'Use Canto-approved images in Klaviyo emails without downloading files.',
     icp:'DTC and e-commerce brands in fashion, health & beauty, CPG running lifecycle email on Klaviyo.',
     signals:['We use Klaviyo', 'We send automated email flows', 'Our email team is always asking for assets'],
     problem:'Klaviyo users building email flows pull product images manually — downloading from Canto, uploading to Klaviyo, creating duplicate image libraries that diverge from the approved DAM versions within weeks.',
@@ -1110,7 +1111,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#0078D4',
     partnerDesc:'Built and maintained by Canto. Enterprise-grade sync supporting Microsoft 365 environments.',
-    tagline:'Migrate SharePoint asset libraries into Canto as the governed DAM.',
+    tagline:'Governed Canto assets available across your Microsoft 365 ecosystem.',
     icp:'Enterprise and mid-market organizations running Microsoft 365. Near-universal in companies 200+ employees.',
     signals:['We use SharePoint', 'Files are in SharePoint or OneDrive', 'We use Microsoft 365', 'Assets live in SharePoint'],
     problem:'Most Canto prospects stored assets in SharePoint before adopting a DAM. The integration bridges ongoing file creation and migrates historical libraries into the governed DAM.',
@@ -1123,7 +1124,7 @@ const INTEGRATIONS = [
     soldBy:'partner', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'New Edge', partnerBg:'#4285F4',
     partnerDesc:'New Edge delivers the Canto-Google Drive two-way sync. Certified Canto partner with active implementations.',
-    tagline:'Two-way sync between Canto and Google Drive for teams bridging both environments.',
+    tagline:'Sync approved Canto assets to Google Drive for team access.',
     icp:'SMB and mid-market organizations where Google Workspace is the productivity standard.',
     signals:['Files are in Google Drive', 'We use Google Workspace', 'Teams share assets via Drive'],
     problem:'Google Drive teams want approved assets to flow back out to Drive for stakeholders who never adopted the DAM. Two-way sync makes Canto the master without forcing a hard migration.',
@@ -1137,7 +1138,7 @@ const INTEGRATIONS = [
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'Sprout Social', partnerBg:'#59CB59',
     partnerDesc:'Sprout Social is an active Canto technology partner. 850+ customers use both platforms — significant existing base to activate.',
-    tagline:'Connect the Canto DAM to Sprout Social for brand-governed social publishing.',
+    tagline:'Schedule brand-approved Canto content directly in Sprout Social.',
     icp:'Mid-market and enterprise brands with dedicated social teams managing multi-channel publishing.',
     signals:['We use Sprout Social', 'We have a social media team', 'Social managers publish frequently'],
     problem:'Social teams publish dozens of assets per week. Without a DAM integration, every post involves finding the asset, downloading, and re-uploading to Sprout. Brand governance breaks down at the most visible touchpoint.',
@@ -1148,9 +1149,9 @@ const INTEGRATIONS = [
   { id:'hootsuite', name:'Hootsuite', cat:'social', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🦉',
     partnerType:'tech', availability:'soon',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'medium', includedInPlan:false,
-    partner:'TBD', partnerBg:'#1F2D3D',
+    partner:'Hootsuite', partnerBg:'#1F2D3D',
     partnerDesc:'Hootsuite integration partner in evaluation. High install base in mid-market makes this a meaningful pipeline opportunity.',
-    tagline:'Surface Canto-approved assets inside Hootsuite for compliant social publishing.',
+    tagline:'Publish approved Canto assets to social channels via Hootsuite.',
     icp:'Mid-market brands running social programs across multiple platforms and regions.',
     signals:['We use Hootsuite', 'Social compliance is important', 'We manage social across regions'],
     problem:'Hootsuite users pull images from shared folders, Dropbox, or personal drives. Approved assets in the DAM never make it to social without a manual download step.',
@@ -1164,7 +1165,7 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#00A1E0',
     partnerDesc:'Built and maintained by Canto. Included in all plans.',
-    tagline:'Surface approved Canto assets inside Salesforce for sales and brand teams.',
+    tagline:'Surface approved brand assets inside every Salesforce record.',
     icp:'Enterprise and mid-market organizations running Salesforce CRM where sales reps need governed access to brand and product assets.',
     signals:['We use Salesforce', 'Sales reps need brand assets', 'We manage collateral for the sales team'],
     problem:'Sales reps pull pitch materials, product images, and brand assets from wherever they can find them — creating brand inconsistency in every customer-facing touchpoint.',
@@ -1176,9 +1177,9 @@ const INTEGRATIONS = [
   { id:'sap', name:'SAP S/4HANA', cat:'erp', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🏭',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
-    partner:'Partner SI', partnerBg:'#007DB8',
+    partner:'MindCloud', partnerBg:'#007DB8',
     partnerDesc:'SAP integration delivered via certified SI partner. Recommended for enterprise manufacturers and distributors with full SAP stack.',
-    tagline:'Connect SAP product master data with Canto-governed digital assets.',
+    tagline:'Link governed product assets from Canto to SAP product master records.',
     icp:'Enterprise manufacturers, distributors, and CPG brands running SAP S/4HANA.',
     signals:['We run SAP', 'We use SAP S/4HANA', 'Compliance and version control are critical', 'We\'re in manufacturing'],
     problem:'SAP customers manage complex product hierarchies with critical asset governance requirements — technical drawings, compliance documents, and product images all need to be tied to the SAP product record with version control.',
@@ -1189,9 +1190,9 @@ const INTEGRATIONS = [
   { id:'netsuite', name:'NetSuite', cat:'erp', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🔢',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
-    partner:'Partner SI', partnerBg:'#009EDB',
+    partner:'MindCloud', partnerBg:'#009EDB',
     partnerDesc:'NetSuite integration via SI partner network. Strong fit for mid-market manufacturers and distributors running NetSuite as their system of record.',
-    tagline:'Bridge Canto product assets to NetSuite item records for mid-market manufacturers.',
+    tagline:'Connect Canto product assets directly to NetSuite item records.',
     icp:'Mid-market manufacturers, distributors, and e-commerce brands running NetSuite.',
     signals:['We run NetSuite', 'We use NetSuite ERP', 'We\'re a distributor or manufacturer'],
     problem:'NetSuite customers managing product catalogs have no native DAM capability. Product images, spec sheets, and compliance documents live outside the ERP with no governance or versioning.',
@@ -1438,7 +1439,7 @@ function renderCards() {
     return '<div class="card' + (i.featured ? ' is-featured' : '') + (i.availability === 'soon' ? ' is-soon' : '') + '" ' +
       'style="animation-delay:' + Math.min(idx * 40, 300) + 'ms" ' +
       'onclick="openModal(\'' + i.id + '\')">' +
-      (i.featured ? '<div class="featured-ribbon">\u2B50 Top Pick</div>' : '') +
+      (i.featured ? '<div class="featured-ribbon">TOP PICK</div>' : '') +
       '<div class="card-top">' +
         logoHTML(i) +
         '<div class="card-top-right">' +
@@ -1448,10 +1449,6 @@ function renderCards() {
       '<div class="card-name">' + i.name + '</div>' +
       '<div class="card-cat-label">' + i.catLabel + '</div>' +
       '<div class="card-tagline">' + i.tagline + '</div>' +
-      '<div class="card-flow-row">' +
-        '<span class="flow-label">' + dataFlowLabel(i) + '</span>' +
-        difficultyPillHTML(i.difficulty, i.timeline) +
-      '</div>' +
       '<div class="card-footer">' +
         soldByBadgeHTML(i.soldBy) +
         '<span class="built-by">Built by ' + i.partner + '</span>' +
@@ -1586,6 +1583,7 @@ function openCheatSheet() {
     '<td>' + i.name + '</td>' +
     '<td>' + i.catLabel + '</td>' +
     '<td style="max-width:180px">' + i.tagline + '</td>' +
+    '<td>' + i.partner + '</td>' +
     '<td>' + dataFlowLabel(i) + '</td>' +
     '<td>' + (i.soldBy === 'canto' ? '\u2746 Yes' : '\u2014') + '</td>' +
     '<td>' + (i.difficulty || '\u2014') + '</td>' +
