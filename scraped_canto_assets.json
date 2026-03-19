@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "scraped_at": "2026-03-19",
+    "source": "Firecrawl scrape of canto.com + canto.com/integrations/",
+    "notes": "logo null from branding format (cto-logo is a web component); extracted directly from rawHtml. CDN integration logos tested with HEAD requests — only slugs returning 200 are listed as confirmed."
+  },
+  "branding": {
+    "logo": "https://www.canto.com/images/logo.png",
+    "logo_white_filter": "filter: brightness(0) invert(1)",
+    "favicon": "https://www.canto.com/assets/static/favicon.ce0531f.c55c9aee44892bfbd533cdd7da6a9a45.png",
+    "favicon_alt": "https://www.canto.com/assets/static/favicon.ac8d93a.c55c9aee44892bfbd533cdd7da6a9a45.png",
+    "og_image": "https://www.canto.com/images/og/og-home.jpg",
+    "color_primary": "#006482",
+    "color_accent": "#9C1844",
+    "color_background": "#FFFFFF",
+    "color_text": "#161616",
+    "font_family": "Nunito Sans",
+    "border_radius": "10px"
+  },
+  "integration_logos": {
+    "cdn_base": "https://d2zjq3qbslq56w.cloudfront.net/integrations/",
+    "confirmed_slugs": [
+      "akeneo",
+      "figma",
+      "hootsuite",
+      "wordpress",
+      "drupal",
+      "photoshop",
+      "slack",
+      "outlook",
+      "teams",
+      "box",
+      "chrome",
+      "powerpoint"
+    ],
+    "unresolved_slugs": [
+      "shopify",
+      "hubspot-mktg",
+      "salesforce",
+      "contentful",
+      "salsify",
+      "inriver",
+      "feedonomics",
+      "sprout",
+      "sharepoint",
+      "gdrive",
+      "sap",
+      "netsuite"
+    ],
+    "notes": "Unresolved slugs return 403 — no CDN asset exists for these. Cards fall back to styled initial letters using catBg/catColor. The marketplace already handles this via onerror fallback."
+  }
+}
