@@ -757,6 +757,155 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .main.full-width { max-width: 100%; padding: 28px 32px; }
 @media (max-width: 768px) { .main.full-width { padding: 16px; } }
 .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+/* ─── ADMIN COMMAND CENTER ──────────────────────────────────────── */
+
+/* Featured card premium glow */
+.card.is-featured {
+  box-shadow: 0 0 0 1.5px rgba(217,90,0,0.35), 0 8px 32px rgba(217,90,0,0.15), 0 2px 8px rgba(0,0,0,0.06) !important;
+  border-color: rgba(217,90,0,0.45) !important;
+  background: linear-gradient(145deg, #fff 65%, rgba(255,243,236,0.9) 100%) !important;
+}
+.featured-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: linear-gradient(135deg, #D95A00, #FF7A2E);
+  color: white; border-radius: 20px; font-size: 9px; font-weight: 800;
+  padding: 3px 10px; letter-spacing: 0.8px; text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(217,90,0,0.35);
+}
+/* Remove old ribbon clearance */
+.card.is-featured .card-top-right { padding-top: 0 !important; }
+
+/* Health status dot */
+.health-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  display: inline-block; vertical-align: middle; margin-left: 5px;
+  box-shadow: 0 0 0 2px white;
+}
+.health-dot-green  { background: #059669; box-shadow: 0 0 0 2px white, 0 0 5px rgba(5,150,105,0.5); }
+.health-dot-yellow { background: #D97706; box-shadow: 0 0 0 2px white, 0 0 5px rgba(217,119,6,0.4); }
+.health-dot-red    { background: #DC2626; box-shadow: 0 0 0 2px white, 0 0 5px rgba(220,38,38,0.4); }
+
+/* Admin manage button */
+.card-manage-btn {
+  position: absolute; top: 8px; left: 64px; z-index: 11;
+  background: #059669; color: white; border: none; border-radius: 6px;
+  padding: 4px 9px; font-size: 10px; font-weight: 700;
+  cursor: pointer; opacity: 0; transition: opacity 0.15s ease;
+  font-family: inherit; white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.card:hover .card-manage-btn { opacity: 1; }
+/* shift edit btn right when in edit mode to make room for checkbox */
+.edit-mode-active .card-edit-btn { left: 32px !important; }
+
+/* Bulk select checkbox */
+.card-select-cb {
+  position: absolute; top: 10px; left: 10px; z-index: 15;
+  display: none;
+  width: 17px; height: 17px;
+  accent-color: var(--orange); cursor: pointer;
+}
+.edit-mode-active .card-select-cb { display: block; }
+
+/* Floating bulk action bar */
+.bulk-bar {
+  display: none;
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: var(--navy); color: white;
+  padding: 11px 18px; border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32);
+  align-items: center; gap: 10px; z-index: 5000;
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.bulk-bar.visible { display: flex; }
+.bulk-bar-count { color: rgba(255,255,255,0.65); font-size: 12px; padding-right: 4px; border-right: 1px solid rgba(255,255,255,0.12); }
+.bulk-bar-btn {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14);
+  color: white; border-radius: 8px; padding: 6px 12px;
+  font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background 0.12s;
+}
+.bulk-bar-btn:hover { background: rgba(255,255,255,0.2); }
+.bulk-status-select {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14);
+  color: white; border-radius: 8px; padding: 6px 10px;
+  font-size: 12px; font-family: inherit; cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+}
+.bulk-status-select option { background: #1e293b; color: white; }
+.bulk-deselect { background: rgba(220,38,38,0.22) !important; border-color: rgba(220,38,38,0.3) !important; }
+
+/* SOW import button */
+.sow-import-btn { background: #6D28D9 !important; }
+
+/* ─── WORLD-CLASS PUBLIC VIEW ───────────────────────────────── */
+
+/* Improved card hover: lift + deeper shadow */
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.06) !important;
+  border-color: rgba(0,0,0,0.1) !important;
+}
+.card { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+
+/* Logo zoom on hover */
+.logo-wrap { overflow: hidden; }
+.logo-wrap img, .logo-wrap .logo-img { transition: transform 0.25s ease; }
+.card:hover .logo-wrap img,
+.card:hover .logo-wrap .logo-img { transform: scale(1.08); }
+
+/* Richer card background for DAM type */
+.card[data-type="DAM"] { background: linear-gradient(160deg, #fff 75%, rgba(239,246,255,0.6) 100%); }
+.card[data-type="For Products"] { background: linear-gradient(160deg, #fff 75%, rgba(238,242,255,0.6) 100%); }
+.card[data-type="Unified"] { background: linear-gradient(160deg, #fff 75%, rgba(230,245,240,0.6) 100%); }
+
+/* Search section polish */
+.search-section {
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.97) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Hero stats bar upgrade */
+.stat-card {
+  background: linear-gradient(135deg, #fff 60%, rgba(248,250,252,0.8) 100%);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-1px); }
+
+/* Cat pills upgrade */
+.cat-pill { transition: all 0.15s cubic-bezier(0.34,1.56,0.64,1); }
+.cat-pill:hover { transform: translateY(-1px); }
+.cat-pill.active { box-shadow: 0 2px 8px rgba(16,30,54,0.25); }
+
+/* Featured section header upgrade */
+.featured-sec-title { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; }
+.featured-section-hdr { background: linear-gradient(90deg, rgba(255,243,236,0.6) 0%, transparent 100%); border-radius: 10px; padding: 12px 16px; }
+
+/* Type badge upgrade */
+.type-badge {
+  letter-spacing: 0.4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* Card name upgrade */
+.card-name { letter-spacing: -0.3px; }
+
+/* Smooth empty state */
+.empty { animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Grid entrance animation */
+.card { animation: cardIn 0.22s ease both; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Filter toggle btn upgrade */
+.filter-toggle-btn { transition: all 0.15s ease; }
+.filter-toggle-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+/* Search input upgrade */
+.search-input:focus { box-shadow: 0 0 0 3px rgba(29,78,216,0.12); border-color: #1D4ED8 !important; }
 </style>
 </head>
 <body>
@@ -836,6 +985,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
           <button class="filter-panel-item" id="fpi-easy"           onclick="toggleQF('easy',this)"><span class="fpi-check"></span>Easy Setup</button>
           <button class="filter-panel-item" id="fpi-included"       onclick="toggleQF('included',this)"><span class="fpi-check"></span>Included in Plan</button>
           <button class="filter-panel-item" id="fpi-featured"       onclick="toggleQF('featured',this)"><span class="fpi-check"></span>★ Top Picks</button>
+          <div class="filter-panel-divider"></div>
+          <button class="filter-panel-item" id="fpi-canto-built"  onclick="toggleQF('canto-built',this)"><span class="fpi-check"></span>◈ Canto-Built Only</button>
+          <button class="filter-panel-item" id="fpi-third-party"  onclick="toggleQF('third-party',this)"><span class="fpi-check"></span>◎ 3rd-Party Only</button>
+          <button class="filter-panel-item" id="fpi-recent"       onclick="toggleQF('recent',this)"><span class="fpi-check"></span>🕐 Recently Updated</button>
         </div>
       </div>
       <div class="results-meta" id="resultsMeta"></div>
@@ -904,6 +1057,19 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </div>
 
+<!-- BULK ACTION BAR -->
+<div class="bulk-bar" id="bulkBar">
+  <span class="bulk-bar-count" id="bulkCount">0 selected</span>
+  <button class="bulk-bar-btn" onclick="bulkToggleFeatured()">★ Toggle Featured</button>
+  <select class="bulk-status-select" id="bulkStatusSelect" onchange="bulkChangeStatus(this.value)">
+    <option value="">Change Status…</option>
+    <option value="live">→ Live</option>
+    <option value="soon">→ Coming Soon</option>
+  </select>
+  <button class="bulk-bar-btn" onclick="bulkExport()">⬇ Export Selected</button>
+  <button class="bulk-bar-btn bulk-deselect" onclick="bulkDeselect()">✕ Deselect All</button>
+</div>
+
 <!-- TOAST (appended to body by JS) -->
 <div class="toast" id="toast"></div>
 
@@ -961,6 +1127,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <select id="editCostStatus">
         <option value="Included">Included</option>
         <option value="Additional Cost">Additional Cost</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>Availability</label>
+      <select id="editAvailability">
+        <option value="live">Live</option>
+        <option value="soon">Coming Soon</option>
+        <option value="track">Partnership Track</option>
       </select>
     </div>
     <div class="edit-field"><label>Install Count (e.g. 680+)</label><input type="text" id="editInstallCount"></div>
@@ -1464,6 +1638,8 @@ const VISUALS = {
 let activeCat = 'all';
 let activePT  = 'all';
 let activeQF  = new Set();
+let selectedCards = new Set();
+let _sowExtras = {};
 
 // ─── ADMIN EDIT MODE ──────────────────────────────────────────
 const isEditMode = new URLSearchParams(window.location.search).get('edit') === 'true';
@@ -1480,6 +1656,7 @@ function openEditModal(id, e) {
   document.getElementById('editCostStatus').value = i.costStatus || 'Additional Cost';
   document.getElementById('editInstallCount').value = i.installCount || '';
   document.getElementById('editLastUpdated').value = i.lastUpdated || '';
+  document.getElementById('editAvailability').value = i.availability || 'live';
   document.getElementById('editFeatured').checked = !!i.featured;
   document.getElementById('editOverlay').style.display = 'flex';
 }
@@ -1489,6 +1666,12 @@ function saveEdit() {
   const i = INTEGRATIONS.find(x => x.id === id);
   if (!i) return;
   const newCat = document.getElementById('editCat').value;
+  const newAvailability = document.getElementById('editAvailability').value;
+  if (i.availability === 'live' && newAvailability !== 'live') {
+    const ok = window.confirm('Warning: Changing "' + i.name + '" from Live to ' + newAvailability + ' will hide it from the main grid. Continue?');
+    if (!ok) return;
+  }
+  i.availability = newAvailability;
   i.name    = document.getElementById('editName').value;
   i.partner = document.getElementById('editPartner').value;
   i.cat     = newCat;
@@ -1542,20 +1725,21 @@ function saveAdd() {
     availability: 'live',
     featured: document.getElementById('addFeatured').checked,
     soldBy: document.getElementById('addSoldBy').value,
-    dataFlow: 'canto-to-platform',
-    authType: 'API Key',
+    dataFlow: _sowExtras.dataFlow || 'canto-to-platform',
+    authType: _sowExtras.authType || 'API Key',
     difficulty: 'medium',
     includedInPlan: document.getElementById('addCostStatus').value === 'Included',
     partner: document.getElementById('addPartner').value.trim() || 'TBD',
     tagline: document.getElementById('addTagline').value.trim() || name + ' integration.',
     description: document.getElementById('addTagline').dataset.sowDescription || '',
     costStatus: document.getElementById('addCostStatus').value,
-    installCount: '', lastUpdated: '', prereq: '',
-    icp:'', capabilities:[],
+    installCount: '', lastUpdated: '', prereq: _sowExtras.prereq || '',
+    icp:'', capabilities: _sowExtras.capabilities || [],
     partnerDesc: '', investment: document.getElementById('addCostStatus').value === 'Included' ? 'Included' : 'Contact us',
     timeline: 'TBD',
   };
   INTEGRATIONS.push(newEntry);
+  _sowExtras = {};
   closeAddModal();
   renderCards();
 }
@@ -1567,6 +1751,53 @@ function openSowModal() {
 }
 function closeSowModal() {
   document.getElementById('sowOverlay').style.display = 'none';
+}
+
+function openManagePanel(id, e) {
+  e.stopPropagation();
+  showToast('Manage panel coming soon for: ' + id);
+}
+
+function toggleCardSelect(id, e) {
+  e.stopPropagation();
+  if (selectedCards.has(id)) selectedCards.delete(id);
+  else selectedCards.add(id);
+  updateBulkBar();
+}
+function updateBulkBar() {
+  const bar   = document.getElementById('bulkBar');
+  const count = document.getElementById('bulkCount');
+  if (!bar) return;
+  const n = selectedCards.size;
+  bar.classList.toggle('visible', n > 0);
+  if (count) count.textContent = n + (n === 1 ? ' selected' : ' selected');
+}
+function bulkToggleFeatured() {
+  selectedCards.forEach(id => {
+    const item = INTEGRATIONS.find(x => x.id === id);
+    if (item) item.featured = !item.featured;
+  });
+  renderCards(); updateBulkBar();
+}
+function bulkChangeStatus(val) {
+  if (!val) return;
+  selectedCards.forEach(id => {
+    const item = INTEGRATIONS.find(x => x.id === id);
+    if (item) item.availability = val;
+  });
+  const sel = document.getElementById('bulkStatusSelect');
+  if (sel) sel.value = '';
+  renderCards(); updateBulkBar();
+}
+function bulkExport() {
+  const items = INTEGRATIONS.filter(x => selectedCards.has(x.id));
+  const json = JSON.stringify(items, null, 2);
+  navigator.clipboard.writeText(json).then(() => showToast(items.length + ' items copied to clipboard'));
+}
+function bulkDeselect() {
+  selectedCards.clear();
+  updateBulkBar();
+  renderCards();
 }
 function parseSow() {
   const text = document.getElementById('sowText').value;
@@ -1630,25 +1861,70 @@ function parseSow() {
   // Store description for saveAdd to pick up (attach to element as data attr)
   document.getElementById('addTagline').dataset.sowDescription = description;
 
+  // Extract capabilities from bullet/numbered list items
+  const capLines = text.match(/^[\s\t]*[-•*\u2022\d]+[.)]\s*(.+)$/gm) || [];
+  const sowCaps = capLines.map(l => l.replace(/^[\s\t\-•*\d.)]+/, '').trim()).filter(l => l.length > 4).slice(0, 8);
+
+  // Extract prereq
+  let sowPrereq = '';
+  const prereqMatch = text.match(/requires?\s+([^\n.]{5,60})/i);
+  if (prereqMatch) sowPrereq = prereqMatch[1].trim();
+
+  // Extract auth type
+  let sowAuth = 'API Key';
+  if (/oauth/i.test(text)) sowAuth = 'OAuth 2.0';
+  else if (/native\s+connector/i.test(text)) sowAuth = 'Native Connector';
+  else if (/saml/i.test(text)) sowAuth = 'SAML';
+
+  // Extract data flow
+  let sowFlow = 'canto-to-platform';
+  if (/bidirectional|two.way|bi.directional/i.test(text)) sowFlow = 'bidirectional';
+  else if (/from\s+(?:the\s+)?(?:platform|tool|vendor)\s+(?:to|into)\s+canto/i.test(text)) sowFlow = 'platform-to-canto';
+
+  _sowExtras = { capabilities: sowCaps, prereq: sowPrereq, authType: sowAuth, dataFlow: sowFlow };
+
   document.getElementById('addOverlay').style.display = 'flex';
   // Show a hint that fields were pre-filled
   const h3 = document.querySelector('#addOverlay h3');
   if (h3) h3.textContent = '+ Add Integration (Pre-filled from SOW)';
 }
 
-function exportJSON() {
-  const json = JSON.stringify(INTEGRATIONS, null, 2);
-  navigator.clipboard.writeText(json).then(() => {
-    showToast('JSON copied to clipboard');
-  }).catch(() => {
-    const el = document.createElement('textarea');
-    el.value = json;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-    showToast('JSON copied to clipboard');
+function getFilteredIntegrations() {
+  const q = (document.getElementById('searchInput') ? document.getElementById('searchInput').value.toLowerCase() : '');
+  return INTEGRATIONS.filter(i => {
+    if (i.availability === 'track' || i.availability === 'soon') return false;
+    if (i.cat === 'tech') return false;
+    if (activeCat !== 'all' && i.cat !== activeCat) return false;
+    if (q && !i.name.toLowerCase().includes(q) && !i.tagline?.toLowerCase().includes(q) && !(i.catLabel || '').toLowerCase().includes(q) && !(i.description || '').toLowerCase().includes(q)) return false;
+    if (activeQF.has('canto-sold')    && i.soldBy !== 'canto') return false;
+    if (activeQF.has('live')          && i.availability !== 'live') return false;
+    if (activeQF.has('bidirectional') && i.dataFlow !== 'bidirectional') return false;
+    if (activeQF.has('easy')          && i.difficulty !== 'easy') return false;
+    if (activeQF.has('included')      && !i.includedInPlan) return false;
+    if (activeQF.has('featured')      && !i.featured) return false;
+    if (activeQF.has('canto-built')   && i.partnerType !== 'canto') return false;
+    if (activeQF.has('third-party')   && i.partnerType === 'canto') return false;
+    if (activeQF.has('recent')) {
+      if (!i.lastUpdated) return false;
+      const d = new Date(i.lastUpdated);
+      const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 90);
+      if (isNaN(d.getTime()) || d < cutoff) return false;
+    }
+    return true;
   });
+}
+
+function exportJSON() {
+  const items = getFilteredIntegrations();
+  const json = JSON.stringify(items, null, 2);
+  navigator.clipboard.writeText(json)
+    .then(() => showToast(items.length + ' integration' + (items.length !== 1 ? 's' : '') + ' exported to clipboard'))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = json; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast(items.length + ' integrations exported');
+    });
 }
 
 const CAT_LABELS = {
@@ -1691,6 +1967,18 @@ function statusBadgeHTML(av) {
   };
   const [cls, label] = map[av] || map.live;
   return '<span class="' + cls + '"><span class="dot"></span>' + label + '</span>';
+}
+
+function healthDotHTML(i) {
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setFullYear(twelveMonthsAgo.getFullYear() - 1);
+  let cls = 'health-dot-red';
+  if (i.availability === 'live') {
+    const d = i.lastUpdated ? new Date(i.lastUpdated) : null;
+    cls = (d && !isNaN(d.getTime()) && d >= twelveMonthsAgo) ? 'health-dot-green' : 'health-dot-yellow';
+  }
+  const label = cls.replace('health-dot-','');
+  return '<span class="health-dot ' + cls + '" title="API Health: ' + label + '"></span>';
 }
 
 function difficultyPillHTML(diff, timeline) {
@@ -1870,6 +2158,14 @@ function renderCards() {
     if (activeQF.has('easy')          && i.difficulty !== 'easy') return false;
     if (activeQF.has('included')      && !i.includedInPlan) return false;
     if (activeQF.has('featured')      && !i.featured) return false;
+    if (activeQF.has('canto-built')   && i.partnerType !== 'canto') return false;
+    if (activeQF.has('third-party')   && i.partnerType === 'canto') return false;
+    if (activeQF.has('recent')) {
+      if (!i.lastUpdated) return false;
+      const d = new Date(i.lastUpdated);
+      const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 90);
+      if (isNaN(d.getTime()) || d < cutoff) return false;
+    }
     if (q) {
       const hay = [i.name, i.tagline, i.catLabel, i.partner, i.icp||'', (i.signals||[]).join(' ')].join(' ').toLowerCase();
       if (!hay.includes(q)) return false;
@@ -1925,13 +2221,20 @@ function renderCards() {
       const editBtnHTML = isEditMode
         ? '<button class="card-edit-btn" onclick="openEditModal(\'' + i.id + '\',event)">\u270E Edit</button>'
         : '';
-      return '<div class="card featured-card is-featured" onclick="openModal(\'' + i.id + '\')">' +
+      const checkboxHTML = isEditMode
+        ? '<input type="checkbox" class="card-select-cb" data-id="' + i.id + '"' + (selectedCards.has(i.id) ? ' checked' : '') + ' onclick="toggleCardSelect(\'' + i.id + '\',event)">'
+        : '';
+      const manageHTML = isEditMode
+        ? '<button class="card-manage-btn" onclick="openManagePanel(\'' + i.id + '\',event)">Manage \u2192</button>'
+        : '';
+      return '<div class="card featured-card is-featured" data-type="' + (i.type || 'DAM') + '" onclick="openModal(\'' + i.id + '\')">' +
+        checkboxHTML +
         editBtnHTML +
-        '<div class="featured-ribbon">TOP PICK</div>' +
+        manageHTML +
         '<div class="card-top">' +
           logoHTML(i) +
           '<div class="card-top-right">' +
-            statusBadgeHTML(i.availability) +
+            (i.featured ? '<span class="featured-badge">\u2605 Top Pick</span>' : '') + statusBadgeHTML(i.availability) + healthDotHTML(i) +
           '</div>' +
         '</div>' +
         '<div class="card-name">' + i.name + '</div>' +
@@ -1976,16 +2279,24 @@ function renderCards() {
     const editBtnHTML = isEditMode
       ? '<button class="card-edit-btn" onclick="openEditModal(\'' + i.id + '\',event)">\u270E Edit</button>'
       : '';
+    const checkboxHTML = isEditMode
+      ? '<input type="checkbox" class="card-select-cb" data-id="' + i.id + '"' + (selectedCards.has(i.id) ? ' checked' : '') + ' onclick="toggleCardSelect(\'' + i.id + '\',event)">'
+      : '';
+    const manageHTML = isEditMode
+      ? '<button class="card-manage-btn" onclick="openManagePanel(\'' + i.id + '\',event)">Manage \u2192</button>'
+      : '';
 
     return '<div class="card' + (i.featured ? ' is-featured' : '') + '" ' +
+      'data-type="' + (i.type || 'DAM') + '" ' +
       'style="animation-delay:' + Math.min(idx * 40, 300) + 'ms" ' +
       'onclick="openModal(\'' + i.id + '\')">' +
+      checkboxHTML +
       editBtnHTML +
-      (i.featured ? '<div class="featured-ribbon">TOP PICK</div>' : '') +
+      manageHTML +
       '<div class="card-top">' +
         logoHTML(i) +
         '<div class="card-top-right">' +
-          statusBadgeHTML(i.availability) +
+          (i.featured ? '<span class="featured-badge">\u2605 Top Pick</span>' : '') + statusBadgeHTML(i.availability) + healthDotHTML(i) +
         '</div>' +
       '</div>' +
       '<div class="card-name">' + i.name + '</div>' +
