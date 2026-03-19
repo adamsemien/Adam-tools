@@ -722,6 +722,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .edit-save-btn { background: var(--orange); color: white; border: none; border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; }
 .edit-cancel-btn { background: var(--bg-2); color: var(--text-2); border: 1.5px solid var(--border); border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .add-integration-btn { background: #059669 !important; margin-right: 6px; }
+.sow-import-btn { background: #6D28D9 !important; }
 .edit-check { margin-bottom: 14px; }
 .edit-check label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--navy); cursor: pointer; font-weight: 500; }
 .edit-check input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--orange); cursor: pointer; }
@@ -764,8 +765,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <div class="header">
   <div class="header-left">
     <div class="logo-mark">
-      <img src="https://www.canto.com/images/logo.png" alt="Canto" style="height:26px;width:auto;display:block;filter:brightness(0) invert(1)">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.85 0 3.58-.51 5.06-1.39l-1.56-2.7A6.959 6.959 0 0 1 12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c1.62 0 3.11.55 4.29 1.47l1.65-2.64A9.947 9.947 0 0 0 12 2z"/></svg>
     </div>
+    <span class="logo-text">Canto</span>
     <div class="logo-sep"></div>
     <span class="header-subtitle">Integration Marketplace</span>
     <div class="logo-sep"></div>
@@ -773,6 +775,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
   <div class="header-right">
     <button class="export-btn add-integration-btn" onclick="openAddModal()">+ Add Integration</button>
+    <button class="export-btn sow-import-btn" onclick="openSowModal()">📄 Import SOW</button>
     <button class="export-btn" onclick="exportJSON()">⬇ Export JSON</button>
     <button class="cheatsheet-btn" onclick="openCheatSheet()">⚡ Sales Cheat Sheet</button>
     <span class="header-pill">Sales Rep Guide</span>
@@ -1020,6 +1023,22 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </div>
 
+<!-- SOW IMPORT MODAL -->
+<div class="edit-overlay" id="sowOverlay" onclick="if(event.target===this)closeSowModal()">
+  <div class="edit-modal" style="max-width:600px">
+    <h3>📄 Import from SOW / Scope Doc</h3>
+    <p style="font-size:13px;color:var(--muted);margin:0 0 12px">Paste the SOW, scope document, or integration brief below. The tool will extract key fields and pre-fill a new integration card.</p>
+    <div class="edit-field">
+      <label>Paste SOW / Scope Text</label>
+      <textarea id="sowText" rows="10" style="width:100%;font-family:inherit;font-size:13px;padding:10px;border:1.5px solid var(--border);border-radius:8px;resize:vertical;line-height:1.5" placeholder="Paste your Statement of Work, scoping notes, or integration brief here…"></textarea>
+    </div>
+    <div class="edit-actions">
+      <button class="edit-cancel-btn" onclick="closeSowModal()">Cancel</button>
+      <button class="edit-save-btn" onclick="parseSow()">Parse &amp; Open Card →</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const INTEGRATIONS = [
 
@@ -1253,17 +1272,28 @@ const INTEGRATIONS = [
     costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/feedonomics.svg', installCount:'240+', lastUpdated:'Jan 2026', prereq:'Requires Feedonomics account' },
 
   { id:'channable', name:'Channable', cat:'feed', type:'For Products', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'🔀',
-    partnerType:'tech', availability:'soon',
+    partnerType:'partner', availability:'live',
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
     partner:'Channable', partnerBg:'#FF5C00',
     partnerDesc:'Channable is a leading feed management and PPC automation platform with strong penetration in mid-market e-commerce and retail.',
     tagline:'Flow Canto product images through Channable to every marketplace.',
+    description:'Push approved Canto assets directly into Channable feed rules — no more manually sourcing images for Google Shopping, Meta, and Amazon campaigns.',
     icp:'Mid-market brands ($20M+) running Google Shopping, Meta, Amazon, and comparison shopping engines.',
-    signals:['We use Channable', 'We run Google Shopping', 'We advertise on Meta and Amazon'],
-    problem:'Channable users manually source product images from wherever they can find them before building feeds. Brand assets in Canto never flow automatically into feed management.',
-    talktrack: '"Channable is coming — note interest in the deal. If they\'re running Google Shopping or Meta ads at volume, the story is: Canto governs the master asset, Channable distributes the right version to every ad channel. No manual sourcing."',
     capabilities:['Canto Asset Source for Feeds','Image Rules per Channel','Auto-format on Export','Metadata Mapping','Multi-channel Delivery'],
-    timeline:'TBD', investment:'Contact us' },
+    timeline:'2–4 weeks', investment:'Partner-Led',
+    costStatus:'Additional Cost', installCount:'80+', lastUpdated:'Feb 2026', prereq:'Requires Channable account' },
+
+  { id:'channel-engine', name:'ChannelEngine', cat:'feed', type:'For Products', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'🛒',
+    partnerType:'partner', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'ChannelEngine', partnerBg:'#0070E0',
+    partnerDesc:'ChannelEngine is a marketplace integration platform that helps brands and retailers manage product listings and fulfillment across 950+ global marketplaces.',
+    tagline:'Sync Canto product visuals to 950+ marketplaces via ChannelEngine.',
+    description:'Connect Canto to ChannelEngine so approved product images and media automatically populate marketplace listings across Amazon, bol, Zalando, and more.',
+    icp:'Brands and retailers selling on multiple marketplaces who need consistent, approved imagery across every channel.',
+    capabilities:['Canto Asset Source','Per-Marketplace Image Rules','Bulk Asset Sync','Metadata Mapping','Multi-Marketplace Delivery'],
+    timeline:'2–4 weeks', investment:'Partner-Led',
+    costStatus:'Additional Cost', installCount:'50+', lastUpdated:'Mar 2026', prereq:'Requires ChannelEngine account' },
 
   // ── EMAIL & MARKETING ─────────────────────────────────────────────
   { id:'hubspot-mktg', logo:'https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png', name:'HubSpot', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🟠',
@@ -1486,6 +1516,11 @@ function openAddModal() {
 
 function closeAddModal() {
   document.getElementById('addOverlay').style.display = 'none';
+  // reset h3 in case it was changed by SOW import
+  const h3 = document.querySelector('#addOverlay h3');
+  if (h3) h3.textContent = '+ Add Integration';
+  const tl = document.getElementById('addTagline');
+  if (tl) delete tl.dataset.sowDescription;
 }
 
 function saveAdd() {
@@ -1513,15 +1548,92 @@ function saveAdd() {
     includedInPlan: document.getElementById('addCostStatus').value === 'Included',
     partner: document.getElementById('addPartner').value.trim() || 'TBD',
     tagline: document.getElementById('addTagline').value.trim() || name + ' integration.',
+    description: document.getElementById('addTagline').dataset.sowDescription || '',
     costStatus: document.getElementById('addCostStatus').value,
     installCount: '', lastUpdated: '', prereq: '',
-    icp:'', signals:[], problem:'', talktrack:'', capabilities:[],
+    icp:'', capabilities:[],
     partnerDesc: '', investment: document.getElementById('addCostStatus').value === 'Included' ? 'Included' : 'Contact us',
     timeline: 'TBD',
   };
   INTEGRATIONS.push(newEntry);
   closeAddModal();
   renderCards();
+}
+
+// ── SOW IMPORT ────────────────────────────────────────────────
+function openSowModal() {
+  document.getElementById('sowText').value = '';
+  document.getElementById('sowOverlay').style.display = 'flex';
+}
+function closeSowModal() {
+  document.getElementById('sowOverlay').style.display = 'none';
+}
+function parseSow() {
+  const text = document.getElementById('sowText').value;
+  if (!text.trim()) return;
+
+  // Extract integration/tool name — look for "Integration:", "Tool:", "Platform:", or common patterns
+  let name = '';
+  const nameMatch = text.match(/(?:integration|tool|platform|solution|system|product)\s*[:\-–]\s*([A-Z][^\n,.(]{1,40})/i)
+    || text.match(/integrating\s+(?:with\s+)?([A-Z][A-Za-z0-9\s\-]{1,30})/i)
+    || text.match(/([A-Z][A-Za-z0-9\s]{1,20})\s+(?:Integration|Connector|API)/);
+  if (nameMatch) name = nameMatch[1].trim().replace(/\s+/g, ' ');
+
+  // Guess category from keywords
+  let cat = 'creative';
+  const lower = text.toLowerCase();
+  if (/pim|product\s+information|akeneo|salsify|inriver/.test(lower)) cat = 'pim';
+  else if (/feed|channable|channelengine|google shopping|marketplace listing/.test(lower)) cat = 'feed';
+  else if (/shopify|magento|ecommerce|e-commerce|woocommerce/.test(lower)) cat = 'ecommerce';
+  else if (/cms|contentful|wordpress|sitecore/.test(lower)) cat = 'cms';
+  else if (/hubspot|klaviyo|email|marketing automation/.test(lower)) cat = 'esp';
+  else if (/salesforce|crm/.test(lower)) cat = 'crm';
+  else if (/sap|erp|netsuite/.test(lower)) cat = 'erp';
+  else if (/slack|teams|outlook|storage|sharepoint|google drive|box/.test(lower)) cat = 'storage';
+  else if (/social|instagram|linkedin|hootsuite|sprout/.test(lower)) cat = 'social';
+
+  // Extract partner/company
+  let partner = name;
+  const partnerMatch = text.match(/(?:partner|vendor|client|company|built by)\s*[:\-–]\s*([A-Z][^\n,.(]{1,30})/i);
+  if (partnerMatch) partner = partnerMatch[1].trim();
+
+  // Extract timeline
+  let timeline = 'TBD';
+  const timeMatch = text.match(/(\d+[-–]\d+\s*(?:week|month|day)s?|\d+\s*(?:week|month|day)s?)/i);
+  if (timeMatch) timeline = timeMatch[0];
+
+  // Extract tagline / one-sentence summary
+  let tagline = '';
+  const sentences = text.match(/[A-Z][^.!?\n]{20,100}[.!?]/g) || [];
+  if (sentences.length > 0) tagline = sentences[0].trim();
+
+  // Extract description (first meaningful paragraph)
+  const paras = text.split(/\n\s*\n/).map(p => p.trim()).filter(p => p.length > 40);
+  const description = paras[0] ? paras[0].replace(/\n/g, ' ').substring(0, 160) : '';
+
+  // Determine sold by
+  let soldBy = 'si';
+  if (/sold by canto|canto sells|canto paper/.test(lower)) soldBy = 'canto';
+  else if (/partner.led|built by partner|managed by partner/.test(lower)) soldBy = 'partner';
+
+  // Pre-fill and open the Add Integration modal
+  closeSowModal();
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'custom-integration';
+  document.getElementById('addId').value = slug;
+  document.getElementById('addName').value = name;
+  document.getElementById('addPartner').value = partner;
+  document.getElementById('addTagline').value = tagline.substring(0, 120);
+  document.getElementById('addCat').value = cat;
+  document.getElementById('addSoldBy').value = soldBy;
+  document.getElementById('addCostStatus').value = 'Additional Cost';
+
+  // Store description for saveAdd to pick up (attach to element as data attr)
+  document.getElementById('addTagline').dataset.sowDescription = description;
+
+  document.getElementById('addOverlay').style.display = 'flex';
+  // Show a hint that fields were pre-filled
+  const h3 = document.querySelector('#addOverlay h3');
+  if (h3) h3.textContent = '+ Add Integration (Pre-filled from SOW)';
 }
 
 function exportJSON() {
