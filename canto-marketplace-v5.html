@@ -2624,11 +2624,7 @@ document.addEventListener('keydown', e => {
   if (e.key === '?' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) {
     openCheatSheet();
   }
-  // Secret admin shortcut: Ctrl+Shift+A (or Cmd+Shift+A on Mac)
-  if (e.key === 'A' && e.shiftKey && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault();
-    if (isEditMode) lockAdmin(); else unlockAdmin();
-  }
+  // No keyboard shortcut — use logo triple-click instead (see logo-link listener below)
 });
 
 // ─── BACK TO TOP ──────────────────────────────────────────────────────
@@ -2659,6 +2655,23 @@ function updateBreadcrumb(cat) {
   if (bc) bc.textContent = name;
   document.title = (cat === 'all' ? 'Integration Marketplace' : name + ' Integrations') + ' | Canto';
 }
+
+// ─── LOGO TRIPLE-CLICK → ADMIN UNLOCK ─────────────────────────────────
+(function() {
+  let clicks = 0, timer;
+  document.addEventListener('click', function(e) {
+    const logo = e.target.closest('.logo-link');
+    if (!logo) return;
+    clicks++;
+    clearTimeout(timer);
+    timer = setTimeout(() => { clicks = 0; }, 600);
+    if (clicks >= 3) {
+      clicks = 0;
+      e.preventDefault(); // stop navigation on the triggering click
+      if (isEditMode) lockAdmin(); else unlockAdmin();
+    }
+  }, true); // capture phase so we can preventDefault before the link fires
+})();
 
 // ─── INIT ─────────────────────────────────────────────────────────────
 renderCards();
