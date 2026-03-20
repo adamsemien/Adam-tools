@@ -725,6 +725,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .edit-cancel-btn { background: var(--bg-2); color: var(--text-2); border: 1.5px solid var(--border); border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .add-integration-btn { background: #059669 !important; margin-right: 6px; }
 .sow-import-btn { background: #6D28D9 !important; }
+.lock-admin-btn { background: rgba(220,38,38,0.75) !important; }
 .edit-check { margin-bottom: 14px; }
 .edit-check label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--navy); cursor: pointer; font-weight: 500; }
 .edit-check input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--orange); cursor: pointer; }
@@ -1039,6 +1040,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </nav>
   </div>
   <div class="header-right">
+    <button class="export-btn lock-admin-btn" onclick="lockAdmin()" aria-label="Exit admin mode" title="Exit admin mode (Ctrl+Shift+A)">🔒 Exit Admin</button>
     <button class="export-btn add-integration-btn" onclick="openAddModal()" aria-label="Add new integration">+ Add Integration</button>
     <button class="export-btn sow-import-btn" onclick="openSowModal()" aria-label="Import from SOW document">📄 Import SOW</button>
     <button class="export-btn" onclick="exportJSON()" aria-label="Export filtered integrations as JSON">⬇ Export JSON</button>
@@ -1763,9 +1765,38 @@ let activeQF  = new Set();
 let selectedCards = new Set();
 let _sowExtras = {};
 
-// ─── ADMIN EDIT MODE ──────────────────────────────────────────
-const isEditMode = new URLSearchParams(window.location.search).get('edit') === 'true';
+// ─── ADMIN EDIT MODE (PIN-gated, no URL trick) ────────────────
+// Change ADMIN_PIN below to whatever you want. The URL param no longer works.
+const ADMIN_PIN = 'canto2026';
+
+let isEditMode = sessionStorage.getItem('canto_admin') === '1';
 if (isEditMode) document.documentElement.classList.add('edit-mode-active');
+
+function unlockAdmin() {
+  // Already unlocked this session
+  if (isEditMode) { showToast('Admin mode already active'); return; }
+  const pin = prompt('Admin PIN:');
+  if (pin === null) return; // cancelled
+  if (pin === ADMIN_PIN) {
+    isEditMode = true;
+    document.documentElement.classList.add('edit-mode-active');
+    sessionStorage.setItem('canto_admin', '1');
+    renderCards();
+    showToast('Admin mode enabled');
+  } else {
+    alert('Incorrect PIN.');
+  }
+}
+
+function lockAdmin() {
+  isEditMode = false;
+  document.documentElement.classList.remove('edit-mode-active');
+  sessionStorage.removeItem('canto_admin');
+  selectedCards.clear();
+  updateBulkBar();
+  renderCards();
+  showToast('Admin mode disabled');
+}
 
 function openEditModal(id, e) {
   e.stopPropagation();
@@ -2592,6 +2623,11 @@ document.addEventListener('keydown', e => {
   }
   if (e.key === '?' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) {
     openCheatSheet();
+  }
+  // Secret admin shortcut: Ctrl+Shift+A (or Cmd+Shift+A on Mac)
+  if (e.key === 'A' && e.shiftKey && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    if (isEditMode) lockAdmin(); else unlockAdmin();
   }
 });
 
