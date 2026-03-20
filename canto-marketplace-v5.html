@@ -1017,6 +1017,96 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 
 /* Page title update visible in tab — no CSS needed, handled in JS */
+
+/* ─── WIP DRAFT PIPELINE ─────────────────────────────────────── */
+.wip-section {
+  display: none; /* shown only in edit mode */
+  max-width: 100%; padding: 28px 32px 8px;
+}
+.edit-mode-active .wip-section { display: block; }
+.wip-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px; gap: 12px;
+}
+.wip-title-row { display: flex; align-items: center; gap: 10px; }
+.wip-title {
+  font-size: 15px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px;
+}
+.wip-count-badge {
+  background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border);
+  border-radius: 20px; font-size: 11px; font-weight: 700; padding: 2px 9px;
+}
+.wip-toggle-btn {
+  background: none; border: none; cursor: pointer; font-size: 13px;
+  color: var(--muted); padding: 2px 6px; font-family: inherit; font-weight: 600;
+  transition: color 0.15s;
+}
+.wip-toggle-btn:hover { color: var(--navy); }
+.wip-add-btn {
+  background: var(--navy); color: white; border: none; border-radius: 8px;
+  padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer;
+  font-family: inherit; display: flex; align-items: center; gap: 6px;
+  transition: background 0.15s;
+}
+.wip-add-btn:hover { background: #1a2d48; }
+.wip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.wip-grid.collapsed { display: none; }
+.wip-card {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative; transition: box-shadow 0.18s;
+}
+.wip-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.wip-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.wip-card-title { font-size: 14px; font-weight: 800; color: var(--navy); letter-spacing: -0.2px; }
+.wip-card-partner { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.wip-card-body { font-size: 12px; color: var(--text-2); line-height: 1.55; }
+.wip-card-notes {
+  font-size: 11.5px; color: var(--muted); line-height: 1.5;
+  background: var(--bg-2); border-radius: 6px; padding: 8px 10px;
+  border-left: 2px solid var(--border-2);
+}
+.wip-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; }
+.wip-stage-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 3px 9px; border-radius: 20px;
+}
+.wip-stage-scoped     { background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
+.wip-stage-in-progress { background: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+.wip-stage-ready      { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+.wip-card-actions { display: flex; align-items: center; gap: 6px; }
+.wip-push-btn {
+  background: #059669; color: white; border: none; border-radius: 6px;
+  padding: 4px 10px; font-size: 11px; font-weight: 700; cursor: pointer;
+  font-family: inherit; white-space: nowrap;
+}
+.wip-push-btn:hover { background: #047857; }
+.wip-edit-draft-btn {
+  background: var(--bg-2); color: var(--text-2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+}
+.wip-delete-btn {
+  background: none; border: none; cursor: pointer; color: var(--muted);
+  font-size: 14px; padding: 2px 4px; line-height: 1;
+  transition: color 0.12s;
+}
+.wip-delete-btn:hover { color: #DC2626; }
+.wip-si-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 600; color: var(--muted);
+  background: var(--bg-2); border-radius: 20px; padding: 2px 8px;
+}
+.wip-divider {
+  height: 1px; background: var(--border); margin: 8px 0 24px;
+  max-width: 100%;
+}
 </style>
 </head>
 <body>
@@ -1722,6 +1812,21 @@ const INTEGRATIONS = [
     capabilities:['Item Record Asset Linking','Product Image Sync','Spec Sheet Governance','Version Control','SuiteApp Compatible'],
     timeline:'4–6 weeks', investment:'Contact us',
     costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/netsuite.svg', installCount:'140+', lastUpdated:'Jan 2026', prereq:'Requires NetSuite · MindCloud' },
+
+  // ── WIP DRAFTS ────────────────────────────────────────────────────────
+  { id:'express-doc', name:'Express Doc', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📄',
+    partnerType:'partner', availability:'draft',
+    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'New Edge', partnerBg:'#1E3A5F',
+    si:'MindCloud',
+    partnerDesc:'Express Doc integration scoped by New Edge and built via MindCloud.',
+    tagline:'Automate document creation from Canto assets via Express Doc.',
+    description:'Scoped integration that pulls approved Canto assets into Adobe Express Doc templates for automated document generation and brand-consistent output.',
+    capabilities:['Asset Pull from Canto','Template Mapping','Automated Doc Generation','Brand Compliance'],
+    timeline:'TBD', investment:'TBD',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'',
+    draftStatus:'scoped',
+    draftNotes:'Scoped with New Edge + MindCloud. New Edge leading the build. Next step: technical discovery call.' },
 ];
 
 // ─── VISUAL MEDIA MAP ─────────────────────────────────────────────────
@@ -1905,6 +2010,172 @@ function openSowModal() {
 }
 function closeSowModal() {
   document.getElementById('sowOverlay').style.display = 'none';
+}
+
+// ─── WIP DRAFT PIPELINE ───────────────────────────────────────
+let _wipCollapsed = false;
+
+function renderWipCards() {
+  const drafts = INTEGRATIONS.filter(i => i.availability === 'draft');
+  const grid = document.getElementById('wipGrid');
+  const badge = document.getElementById('wipCount');
+  if (!grid) return;
+  if (badge) badge.textContent = drafts.length;
+
+  if (drafts.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:24px 0;text-align:center;color:var(--muted);font-size:13px">No drafts yet — click <strong>+ Add Draft</strong> to start tracking an integration.</div>';
+    return;
+  }
+
+  const stageLabel = { scoped: 'Scoped', 'in-progress': 'In Progress', ready: 'Ready to Launch' };
+  const stageClass = { scoped: 'wip-stage-scoped', 'in-progress': 'wip-stage-in-progress', ready: 'wip-stage-ready' };
+
+  grid.innerHTML = drafts.map(i => {
+    const stage = i.draftStatus || 'scoped';
+    const siTag = i.si ? '<span class="wip-si-tag">via ' + i.si + '</span>' : '';
+    const notes = i.draftNotes ? '<div class="wip-card-notes">' + i.draftNotes + '</div>' : '';
+    return '<div class="wip-card">' +
+      '<div class="wip-card-header">' +
+        '<div>' +
+          '<div class="wip-card-title">' + i.emoji + ' ' + i.name + '</div>' +
+          '<div class="wip-card-partner">by ' + (i.partner || 'TBD') + ' ' + siTag + '</div>' +
+        '</div>' +
+        '<button class="wip-delete-btn" onclick="deleteDraft(\'' + i.id + '\')" title="Remove from pipeline">✕</button>' +
+      '</div>' +
+      '<div class="wip-card-body">' + (i.description || i.tagline || '') + '</div>' +
+      notes +
+      '<div class="wip-card-footer">' +
+        '<span class="wip-stage-badge ' + (stageClass[stage] || 'wip-stage-scoped') + '">' + (stageLabel[stage] || stage) + '</span>' +
+        '<div class="wip-card-actions">' +
+          '<button class="wip-edit-draft-btn" onclick="openEditDraftModal(\'' + i.id + '\')">Edit</button>' +
+          '<button class="wip-push-btn" onclick="pushDraftLive(\'' + i.id + '\')">Push Live →</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function toggleWipGrid() {
+  _wipCollapsed = !_wipCollapsed;
+  const grid = document.getElementById('wipGrid');
+  const btn   = document.getElementById('wipToggleBtn');
+  if (grid) grid.classList.toggle('collapsed', _wipCollapsed);
+  if (btn)  btn.textContent = _wipCollapsed ? '▸ Show' : '▾ Hide';
+}
+
+function openAddDraftModal() {
+  document.getElementById('draftModalTitle').textContent = '+ Add to Pipeline';
+  document.getElementById('draftEditId').value = '';
+  document.getElementById('draftName').value = '';
+  document.getElementById('draftPartner').value = '';
+  document.getElementById('draftSI').value = '';
+  document.getElementById('draftCat').value = 'creative';
+  document.getElementById('draftStatus').value = 'scoped';
+  document.getElementById('draftDescription').value = '';
+  document.getElementById('draftNotes').value = '';
+  document.getElementById('draftOverlay').style.display = 'flex';
+}
+
+function openEditDraftModal(id) {
+  const i = INTEGRATIONS.find(x => x.id === id);
+  if (!i) return;
+  document.getElementById('draftModalTitle').textContent = 'Edit Draft: ' + i.name;
+  document.getElementById('draftEditId').value = id;
+  document.getElementById('draftName').value = i.name || '';
+  document.getElementById('draftPartner').value = i.partner || '';
+  document.getElementById('draftSI').value = i.si || '';
+  document.getElementById('draftCat').value = i.cat || 'creative';
+  document.getElementById('draftStatus').value = i.draftStatus || 'scoped';
+  document.getElementById('draftDescription').value = i.description || i.tagline || '';
+  document.getElementById('draftNotes').value = i.draftNotes || '';
+  document.getElementById('draftOverlay').style.display = 'flex';
+}
+
+function closeAddDraftModal() {
+  document.getElementById('draftOverlay').style.display = 'none';
+}
+
+function saveDraft() {
+  const name = document.getElementById('draftName').value.trim();
+  if (!name) { alert('Name is required.'); return; }
+  const editId = document.getElementById('draftEditId').value;
+  const cat = document.getElementById('draftCat').value;
+  const CAT_BG_MAP    = { creative:'#FFF0EB', pim:'#EEF2FF', cms:'#EBF5FF', ecommerce:'#E6F5F0', feed:'#F5F3FF', esp:'#FFFBEB', storage:'#EBF4FF', social:'#E8F5E9', crm:'#E8F2FA', erp:'#E5F2FB' };
+  const CAT_COLOR_MAP = { creative:'#E34400', pim:'#4F46E5', cms:'#0070C0', ecommerce:'#008060', feed:'#6D28D9', esp:'#B45309', storage:'#0078D4', social:'#2E7D32', crm:'#005B99', erp:'#007DB8' };
+  const TYPE_MAP      = { pim:'For Products', feed:'For Products', erp:'For Products', ecommerce:'Unified' };
+
+  if (editId) {
+    // Update existing draft
+    const i = INTEGRATIONS.find(x => x.id === editId);
+    if (i) {
+      i.name = name;
+      i.partner = document.getElementById('draftPartner').value.trim() || 'TBD';
+      i.si = document.getElementById('draftSI').value.trim();
+      i.cat = cat;
+      i.catLabel = CAT_LABELS[cat] || cat;
+      i.catColor = CAT_COLOR_MAP[cat] || '#374151';
+      i.catBg = CAT_BG_MAP[cat] || '#F3F4F6';
+      i.draftStatus = document.getElementById('draftStatus').value;
+      i.description = document.getElementById('draftDescription').value.trim();
+      i.draftNotes = document.getElementById('draftNotes').value.trim();
+    }
+  } else {
+    // New draft
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const id = INTEGRATIONS.find(x => x.id === slug) ? slug + '-' + Date.now() : slug;
+    const catLabelMap = { creative:'Creative Workflow', pim:'PIM', cms:'CMS', ecommerce:'E-Commerce', feed:'Feed Management', esp:'Email & Marketing', storage:'Cloud Storage', social:'Social & Publishing', crm:'CRM', erp:'ERP' };
+    INTEGRATIONS.push({
+      id, name, cat,
+      type: TYPE_MAP[cat] || 'DAM',
+      catLabel: catLabelMap[cat] || cat,
+      catColor: CAT_COLOR_MAP[cat] || '#374151',
+      catBg: CAT_BG_MAP[cat] || '#F3F4F6',
+      emoji: '🔌',
+      partnerType: 'partner',
+      availability: 'draft',
+      soldBy: 'si',
+      dataFlow: 'canto-to-platform',
+      authType: 'API Key',
+      difficulty: 'medium',
+      includedInPlan: false,
+      partner: document.getElementById('draftPartner').value.trim() || 'TBD',
+      si: document.getElementById('draftSI').value.trim(),
+      tagline: name + ' integration.',
+      description: document.getElementById('draftDescription').value.trim(),
+      draftStatus: document.getElementById('draftStatus').value,
+      draftNotes: document.getElementById('draftNotes').value.trim(),
+      capabilities: [],
+      costStatus: 'Additional Cost',
+      installCount: '', lastUpdated: new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'}),
+      prereq: '', timeline: 'TBD', investment: 'TBD',
+      partnerDesc: '',
+    });
+  }
+  closeAddDraftModal();
+  renderWipCards();
+  showToast(editId ? 'Draft updated' : name + ' added to pipeline');
+}
+
+function deleteDraft(id) {
+  const i = INTEGRATIONS.find(x => x.id === id);
+  if (!i) return;
+  if (!window.confirm('Remove "' + i.name + '" from the pipeline?')) return;
+  const idx = INTEGRATIONS.indexOf(i);
+  if (idx > -1) INTEGRATIONS.splice(idx, 1);
+  renderWipCards();
+  showToast('Removed from pipeline');
+}
+
+function pushDraftLive(id) {
+  const i = INTEGRATIONS.find(x => x.id === id);
+  if (!i) return;
+  if (!window.confirm('Push "' + i.name + '" live? It will appear in the main marketplace for all users.')) return;
+  i.availability = 'live';
+  delete i.draftStatus;
+  delete i.draftNotes;
+  renderCards();
+  renderWipCards();
+  showToast(i.name + ' is now live 🎉');
 }
 
 function openManagePanel(id, e) {
@@ -2468,6 +2739,9 @@ function renderCards() {
       metaHTML +
     '</div>';
   }).join('');
+
+  // Keep WIP section in sync
+  if (typeof renderWipCards === 'function') renderWipCards();
 }
 
 // ─── MODAL ────────────────────────────────────────────────────────────
@@ -2676,6 +2950,60 @@ function updateBreadcrumb(cat) {
 // ─── INIT ─────────────────────────────────────────────────────────────
 renderCards();
 </script>
+
+<!-- WIP DRAFT PIPELINE (admin only) -->
+<div class="wip-section" id="wipSection">
+  <div class="wip-divider"></div>
+  <div class="wip-header">
+    <div class="wip-title-row">
+      <span class="wip-title">🗂 Integration Pipeline</span>
+      <span class="wip-count-badge" id="wipCount">0</span>
+      <button class="wip-toggle-btn" id="wipToggleBtn" onclick="toggleWipGrid()">▾ Hide</button>
+    </div>
+    <button class="wip-add-btn" onclick="openAddDraftModal()">+ Add Draft</button>
+  </div>
+  <div class="wip-grid" id="wipGrid"></div>
+</div>
+
+<!-- ADD DRAFT MODAL -->
+<div class="edit-overlay" id="draftOverlay" onclick="if(event.target===this)closeAddDraftModal()">
+  <div class="edit-modal" style="max-width:540px">
+    <h3 id="draftModalTitle">+ Add to Pipeline</h3>
+    <input type="hidden" id="draftEditId">
+    <div class="edit-field"><label>Integration Name</label><input type="text" id="draftName" placeholder="e.g. Express Doc"></div>
+    <div class="edit-field"><label>Partner / Builder</label><input type="text" id="draftPartner" placeholder="e.g. New Edge"></div>
+    <div class="edit-field"><label>SI / Middleware (if any)</label><input type="text" id="draftSI" placeholder="e.g. MindCloud"></div>
+    <div class="edit-field">
+      <label>Category</label>
+      <select id="draftCat">
+        <option value="creative">Creative Workflow</option>
+        <option value="pim">PIM</option>
+        <option value="cms">CMS</option>
+        <option value="ecommerce">E-Commerce</option>
+        <option value="feed">Feed Management</option>
+        <option value="esp">Email &amp; Marketing</option>
+        <option value="storage">Cloud Storage</option>
+        <option value="social">Social &amp; Publishing</option>
+        <option value="crm">CRM</option>
+        <option value="erp">ERP</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>Pipeline Stage</label>
+      <select id="draftStatus">
+        <option value="scoped">Scoped</option>
+        <option value="in-progress">In Progress</option>
+        <option value="ready">Ready to Launch</option>
+      </select>
+    </div>
+    <div class="edit-field"><label>Description (what it does)</label><textarea id="draftDescription" rows="3" style="width:100%;font-family:inherit;font-size:13px;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;resize:vertical;line-height:1.5" placeholder="Brief description of the integration…"></textarea></div>
+    <div class="edit-field"><label>Internal Notes</label><textarea id="draftNotes" rows="3" style="width:100%;font-family:inherit;font-size:13px;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;resize:vertical;line-height:1.5" placeholder="Next steps, open questions, contacts…"></textarea></div>
+    <div class="edit-actions">
+      <button class="edit-cancel-btn" onclick="closeAddDraftModal()">Cancel</button>
+      <button class="edit-save-btn" onclick="saveDraft()">Save to Pipeline</button>
+    </div>
+  </div>
+</div>
 
 <!-- BACK TO TOP -->
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
