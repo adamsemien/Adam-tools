@@ -81,6 +81,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   font-size: 11px; font-weight: 600;
   padding: 4px 10px; border-radius: 20px;
   letter-spacing: 0.4px; text-transform: uppercase;
+  cursor: default; user-select: none;
 }
 .cheatsheet-btn {
   background: rgba(217,90,0,0.15);
@@ -2656,21 +2657,20 @@ function updateBreadcrumb(cat) {
   document.title = (cat === 'all' ? 'Integration Marketplace' : name + ' Integrations') + ' | Canto';
 }
 
-// ─── LOGO TRIPLE-CLICK → ADMIN UNLOCK ─────────────────────────────────
+// ─── "SALES REP GUIDE" PILL TRIPLE-CLICK → ADMIN UNLOCK ──────────────
+// Triple-click the "Sales Rep Guide" pill in the top-right header to open admin
 (function() {
   let clicks = 0, timer;
   document.addEventListener('click', function(e) {
-    const logo = e.target.closest('.logo-link');
-    if (!logo) return;
+    if (!e.target.closest('.header-pill')) return;
     clicks++;
     clearTimeout(timer);
     timer = setTimeout(() => { clicks = 0; }, 600);
     if (clicks >= 3) {
       clicks = 0;
-      e.preventDefault(); // stop navigation on the triggering click
       if (isEditMode) lockAdmin(); else unlockAdmin();
     }
-  }, true); // capture phase so we can preventDefault before the link fires
+  });
 })();
 
 // ─── INIT ─────────────────────────────────────────────────────────────
