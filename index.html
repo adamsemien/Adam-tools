@@ -3,469 +3,314 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Canto · AI Tools Dashboard</title>
+<title>Adam's Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --orange:    #D95A00;
+  --orange: #D95A00;
   --orange-lt: #FF7A2E;
   --orange-bg: #FFF3EC;
   --orange-bd: #FCCFB3;
-  --navy:      #0F1B2D;
-  --navy-mid:  #1E3352;
-  --navy-lt:   #2A4A70;
-  --teal:      #00B09B;
-  --teal-bg:   #E6FAF7;
-  --teal-bd:   #9FE1CB;
-  --cream:     #FAFAF8;
-  --warm:      #F0EDE8;
-  --border:    #E0DBD4;
-  --white:     #FFFFFF;
-  --muted:     #6B7080;
-  --text:      #1A1714;
-  --green:     #166534;
-  --green-bg:  #F0FAF4;
+  --navy: #0F1B2D;
+  --navy-mid: #1E3352;
+  --teal: #00B09B;
+  --teal-bg: #E6FAF7;
+  --teal-bd: #9FE1CB;
+  --cream: #FAFAF8;
+  --warm: #F0EDE8;
+  --border: #E0DBD4;
+  --white: #FFFFFF;
+  --muted: #6B7080;
+  --text: #1A1714;
+  --blue: #1E40AF;
+  --blue-bg: #EFF6FF;
+  --blue-bd: #BFDBFE;
+  --purple: #6D28D9;
+  --purple-bg: #F5F3FF;
+  --purple-bd: #DDD6FE;
+  --green: #166534;
+  --green-bg: #F0FAF4;
+  --green-bd: #BBF7D0;
+  --pink: #9D174D;
+  --pink-bg: #FDF2F8;
+  --pink-bd: #FBCFE8;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;background:var(--navy);color:var(--text);}
 
-/* ── LAYOUT ── */
-.shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
+.shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh;}
 
-/* ── SIDEBAR ── */
+/* SIDEBAR */
 .sidebar{
   background:var(--navy);
   border-right:1px solid rgba(255,255,255,0.07);
-  padding:28px 20px;
-  display:flex;
-  flex-direction:column;
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow-y:auto;
+  padding:24px 16px;
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
 }
-.brand{display:flex;align-items:center;gap:10px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.08);}
-.brand-dot{width:32px;height:32px;background:var(--orange);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.brand-dot svg{width:18px;height:18px;fill:white;}
-.brand-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:16px;color:var(--white);letter-spacing:-0.3px;line-height:1.1;}
-.brand-sub{font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.brand-icon{width:34px;height:34px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.brand-name{font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;color:var(--white);letter-spacing:-0.3px;line-height:1.1;}
+.brand-sub{font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px;}
 
-.nav-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.25);margin:0 0 8px 8px;}
-.nav-link{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 10px;border-radius:8px;
-  text-decoration:none;color:rgba(255,255,255,0.55);
-  font-size:13px;font-weight:400;
-  transition:all 0.15s;
-  margin-bottom:2px;
-  cursor:pointer;
-}
-.nav-link:hover,.nav-link.active{background:rgba(255,255,255,0.07);color:var(--white);}
-.nav-link.active{background:rgba(217,90,0,0.15);color:var(--orange-lt);}
-.nav-icon{width:16px;height:16px;opacity:0.6;flex-shrink:0;}
-.nav-link.active .nav-icon,.nav-link:hover .nav-icon{opacity:1;}
+.nav-section{margin-bottom:20px;}
+.nav-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.4px;color:rgba(255,255,255,0.2);margin:0 0 6px 8px;}
+.nav-link{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;text-decoration:none;color:rgba(255,255,255,0.5);font-size:12px;font-weight:400;transition:all 0.15s;margin-bottom:1px;cursor:pointer;}
+.nav-link:hover{background:rgba(255,255,255,0.07);color:var(--white);}
+.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dot-orange{background:var(--orange);}
+.dot-teal{background:var(--teal);}
+.dot-blue{background:#60A5FA;}
+.dot-pink{background:#F472B6;}
+.dot-muted{background:rgba(255,255,255,0.2);}
 
-.nav-section{margin-bottom:24px;}
+.sidebar-footer{margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);font-size:11px;color:rgba(255,255,255,0.2);line-height:1.6;}
 
-.sidebar-footer{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.07);}
-.sidebar-footer p{font-size:11px;color:rgba(255,255,255,0.25);line-height:1.6;}
-.sidebar-footer a{color:var(--teal);text-decoration:none;}
-.sidebar-footer a:hover{text-decoration:underline;}
-
-/* ── MAIN ── */
+/* MAIN */
 .main{background:var(--cream);overflow-y:auto;}
 
-.topbar{
-  background:var(--white);
-  border-bottom:1px solid var(--border);
-  padding:18px 36px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:10;
-}
-.topbar-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;color:var(--navy);letter-spacing:-0.3px;}
-.topbar-sub{font-size:13px;color:var(--muted);margin-top:1px;}
-.new-badge{background:var(--orange-bg);border:1px solid var(--orange-bd);color:var(--orange);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;font-family:'Outfit',sans-serif;}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+.topbar-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;color:var(--navy);letter-spacing:-0.3px;}
+.topbar-sub{font-size:12px;color:var(--muted);margin-top:1px;}
+.last-updated{font-size:11px;color:var(--muted);background:var(--warm);padding:4px 10px;border-radius:6px;}
 
-.content{padding:32px 36px;}
+.content{padding:28px 32px;}
 
-/* ── HERO STATS ── */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
-.stat{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:20px;
-}
-.stat-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:28px;color:var(--orange);line-height:1;}
-.stat-label{font-size:12px;color:var(--muted);margin-top:5px;}
+/* PROJECT SECTIONS */
+.project-section{margin-bottom:40px;}
+.project-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border);}
+.project-badge{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.pb-orange{background:var(--orange-bg);}
+.pb-teal{background:var(--teal-bg);}
+.pb-blue{background:var(--blue-bg);}
+.pb-pink{background:var(--pink-bg);}
+.pb-muted{background:var(--warm);}
+.project-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;color:var(--navy);letter-spacing:-0.2px;}
+.project-desc{font-size:12px;color:var(--muted);margin-top:1px;}
+.project-count{margin-left:auto;font-size:11px;color:var(--muted);background:var(--warm);padding:3px 9px;border-radius:6px;}
 
-/* ── SECTION HEADER ── */
-.section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.section-hd h2{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;color:var(--navy);letter-spacing:-0.2px;}
-.section-hd span{font-size:12px;color:var(--muted);}
+/* TOOL GRID */
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.tools-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 
-/* ── APP CARDS ── */
-.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+/* TOOL CARD */
+.tool-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px;text-decoration:none;color:inherit;display:block;transition:all 0.15s;position:relative;overflow:hidden;}
+.tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border);transition:background 0.15s;}
+.tool-card:hover{box-shadow:0 4px 20px rgba(15,27,45,0.09);transform:translateY(-1px);}
+.tool-card:hover::before{background:var(--orange);}
+.tool-card.teal:hover::before{background:var(--teal);}
+.tool-card.blue:hover::before{background:var(--blue);}
+.tool-card.pink:hover::before{background:var(--pink);}
 
-.app-card{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:22px;
-  text-decoration:none;
-  color:inherit;
-  display:block;
-  transition:all 0.15s;
-  position:relative;
-  overflow:hidden;
-}
-.app-card::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--border);
-  transition:background 0.15s;
-}
-.app-card:hover{box-shadow:0 4px 24px rgba(15,27,45,0.1);transform:translateY(-1px);}
-.app-card:hover::before{background:var(--orange);}
-.app-card.teal::before{background:var(--teal);}
-.app-card.teal:hover::before{background:var(--teal);}
-.app-card.navy::before{background:var(--navy);}
-.app-card.navy:hover::before{background:var(--navy);}
+.card-icon{font-size:22px;margin-bottom:10px;display:block;}
+.card-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;color:var(--navy);margin-bottom:4px;letter-spacing:-0.1px;line-height:1.3;}
+.card-desc{font-size:11px;color:var(--muted);line-height:1.55;margin-bottom:10px;}
+.card-tags{display:flex;gap:4px;flex-wrap:wrap;}
+.ctag{font-size:9px;font-weight:500;padding:2px 7px;border-radius:5px;letter-spacing:0.2px;}
+.ct-orange{background:var(--orange-bg);color:var(--orange);}
+.ct-teal{background:var(--teal-bg);color:var(--teal);}
+.ct-blue{background:var(--blue-bg);color:var(--blue);}
+.ct-pink{background:var(--pink-bg);color:var(--pink);}
+.ct-muted{background:var(--warm);color:var(--muted);}
+.ct-new{background:#FEF9C3;color:#854D0E;}
 
-.app-icon{
-  width:44px;height:44px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:14px;font-size:20px;
-}
-.ic-orange{background:var(--orange-bg);}
-.ic-teal{background:var(--teal-bg);}
-.ic-navy{background:#EEF2FF;}
-.ic-warm{background:var(--warm);}
+.card-arrow{position:absolute;top:14px;right:14px;font-size:11px;color:var(--muted);transition:all 0.15s;}
+.tool-card:hover .card-arrow{color:var(--orange);}
 
-.app-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;color:var(--navy);margin-bottom:5px;letter-spacing:-0.2px;}
-.app-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
-.app-tags{display:flex;gap:6px;flex-wrap:wrap;}
-.tag{font-size:10px;font-weight:500;padding:3px 8px;border-radius:6px;letter-spacing:0.2px;}
-.tag-orange{background:var(--orange-bg);color:var(--orange);}
-.tag-teal{background:var(--teal-bg);color:var(--teal);}
-.tag-navy{background:#EEF2FF;color:var(--navy-mid);}
-.tag-muted{background:var(--warm);color:var(--muted);}
-.tag-new{background:#FEF9C3;color:#854D0E;border:1px solid #FEF08A;}
-
-.app-arrow{
-  position:absolute;top:20px;right:20px;
-  width:28px;height:28px;border-radius:50%;
-  background:var(--cream);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;color:var(--muted);
-  transition:all 0.15s;
-}
-.app-card:hover .app-arrow{background:var(--orange);color:white;}
-
-/* ── DOC CARDS (horizontal) ── */
-.docs-list{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
-.doc-card{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:16px 20px;
-  display:flex;align-items:center;gap:16px;
-  text-decoration:none;color:inherit;
-  transition:all 0.15s;
-}
-.doc-card:hover{box-shadow:0 2px 16px rgba(15,27,45,0.08);border-color:var(--orange-bd);}
-.doc-icon{font-size:22px;flex-shrink:0;width:40px;text-align:center;}
+/* DOC ROW */
+.doc-row{display:flex;flex-direction:column;gap:8px;}
+.doc-card{background:var(--white);border:1px solid var(--border);border-radius:9px;padding:13px 16px;display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;transition:all 0.15s;}
+.doc-card:hover{border-color:var(--orange-bd);box-shadow:0 2px 12px rgba(15,27,45,0.07);}
+.doc-icon{font-size:18px;flex-shrink:0;}
 .doc-info{flex:1;}
-.doc-name{font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;color:var(--navy);margin-bottom:2px;}
-.doc-desc{font-size:12px;color:var(--muted);}
-.doc-type{font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;background:var(--warm);color:var(--muted);flex-shrink:0;}
+.doc-name{font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;color:var(--navy);margin-bottom:1px;}
+.doc-desc{font-size:11px;color:var(--muted);}
+.doc-ext{font-size:10px;font-weight:500;padding:3px 8px;border-radius:5px;background:var(--warm);color:var(--muted);flex-shrink:0;}
 
-/* ── HOSTING CALLOUT ── */
-.hosting-box{
-  background:var(--navy);
-  border-radius:14px;
-  padding:24px 28px;
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:20px;
-  align-items:center;
-  margin-bottom:32px;
-}
-.hosting-box h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;color:var(--white);margin-bottom:6px;}
-.hosting-box p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;}
-.hosting-box a{color:var(--teal);}
-.hosting-steps{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;}
-.step{background:rgba(255,255,255,0.07);border-radius:8px;padding:8px 14px;font-size:12px;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:8px;}
-.step-num{width:20px;height:20px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;font-family:'Outfit',sans-serif;}
-.hosting-btn{background:var(--orange);color:white;padding:12px 22px;border-radius:10px;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;font-family:'Outfit',sans-serif;transition:background 0.15s;}
-.hosting-btn:hover{background:#C04F00;}
+/* COMING SOON CARD */
+.coming-card{background:var(--white);border:1px dashed var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:14px;opacity:0.6;}
+.coming-icon{font-size:22px;flex-shrink:0;}
+.coming-name{font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;color:var(--navy);margin-bottom:2px;}
+.coming-desc{font-size:11px;color:var(--muted);}
+.coming-badge{margin-left:auto;font-size:10px;background:var(--warm);color:var(--muted);padding:3px 8px;border-radius:5px;white-space:nowrap;font-weight:500;}
 
-/* ── HOW TO USE ── */
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;}
-.how-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center;}
-.how-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:24px;color:var(--orange);margin-bottom:8px;}
-.how-title{font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;color:var(--navy);margin-bottom:4px;}
-.how-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+.stat-val{font-family:'Outfit',sans-serif;font-weight:800;font-size:24px;color:var(--orange);line-height:1;}
+.stat-label{font-size:11px;color:var(--muted);margin-top:4px;}
 
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .shell{grid-template-columns:1fr;}
-  .sidebar{display:none;}
-  .apps-grid{grid-template-columns:1fr 1fr;}
-  .stats-row{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:600px){
-  .content{padding:20px;}
-  .topbar{padding:16px 20px;}
-  .apps-grid,.how-grid{grid-template-columns:1fr;}
-  .stats-row{grid-template-columns:1fr 1fr;}
-}
+@media(max-width:900px){.shell{grid-template-columns:1fr;}.sidebar{display:none;}.tools-grid,.tools-grid-2{grid-template-columns:1fr 1fr;}.stats-row{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.content{padding:20px;}.tools-grid,.tools-grid-2{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-
 <div class="shell">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="brand-dot">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-      </div>
+      <div class="brand-icon">⚡</div>
       <div>
-        <div class="brand-name">Canto Partner</div>
-        <div class="brand-sub">AI Tools · Adam</div>
+        <div class="brand-name">Adam's Tools</div>
+        <div class="brand-sub">Built with Claude · 2026</div>
       </div>
     </div>
 
     <div class="nav-section">
-      <div class="nav-label">Tools</div>
-      <a class="nav-link active" onclick="scrollTo(0,0)">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        All tools
-      </a>
-      <a class="nav-link" href="canto-monthly-plan-2026.html" target="_blank">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Month-by-Month Plan
-      </a>
-      <a class="nav-link" href="canto-partner-plan-2026.html" target="_blank">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Full Partner Plan
-      </a>
-      <a class="nav-link" href="partner-tool-v2.html" target="_blank">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Partner Eval Tool
-      </a>
-      <a class="nav-link" href="canto-marketplace-v5.html" target="_blank">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        Integration Marketplace
-      </a>
-      <a class="nav-link" href="canto-monday-intake-v3.html" target="_blank">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Monday.com Intake
-      </a>
+      <div class="nav-label">Canto</div>
+      <a class="nav-link" href="canto-monthly-plan-2026.html"><div class="nav-dot dot-orange"></div>Month-by-Month Plan</a>
+      <a class="nav-link" href="canto-partner-plan-2026.html"><div class="nav-dot dot-orange"></div>Full Partner Plan</a>
+      <a class="nav-link" href="canto-monday-intake-v3.html"><div class="nav-dot dot-orange"></div>Monday.com Intake</a>
+      <a class="nav-link" href="partner-tool-v2.html"><div class="nav-dot dot-orange"></div>Partner Eval Tool</a>
+      <a class="nav-link" href="canto-marketplace-v5.html"><div class="nav-dot dot-orange"></div>Integration Marketplace</a>
+      <a class="nav-link" href="canto-integration-survey.html"><div class="nav-dot dot-orange"></div>Integration Survey</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">No Bad Company</div>
+      <a class="nav-link" href="#nbc"><div class="nav-dot dot-pink"></div>Newsletter App</a>
     </div>
 
     <div class="nav-section">
       <div class="nav-label">Docs</div>
-      <a class="nav-link" href="canto-partner-marketing-plan-2026.docx" download>
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Marketing Plan (.docx)
-      </a>
-      <a class="nav-link" href="canto-partner-strategy-fY2026.docx" download>
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Partner Strategy (.docx)
-      </a>
+      <a class="nav-link" href="canto-partner-marketing-plan-2026.docx" download><div class="nav-dot dot-muted"></div>Marketing Plan</a>
+      <a class="nav-link" href="canto-partner-strategy-fY2026.docx" download><div class="nav-dot dot-muted"></div>Partner Strategy</a>
     </div>
 
-    <div class="sidebar-footer">
-      <p>Keep all files in one folder.<br>Open this file locally or host on <a href="https://netlify.com/drop" target="_blank">Netlify Drop</a> for a live URL.</p>
-    </div>
+    <div class="sidebar-footer">adam-tools.netlify.app<br>Auto-deploys from GitHub</div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <div class="main">
-
     <div class="topbar">
       <div>
-        <div class="topbar-title">AI Tools Dashboard</div>
-        <div class="topbar-sub">Canto Channel Partnerships · FY2026</div>
+        <div class="topbar-title">Adam's Tools</div>
+        <div class="topbar-sub">All AI-built apps in one place</div>
       </div>
-      <div class="new-badge">8 tools built</div>
+      <div class="last-updated">Last updated March 2026</div>
     </div>
 
     <div class="content">
 
-      <!-- STATS -->
       <div class="stats-row">
-        <div class="stat">
-          <div class="stat-num">8</div>
-          <div class="stat-label">Tools & docs built</div>
+        <div class="stat"><div class="stat-val">9</div><div class="stat-label">Tools built</div></div>
+        <div class="stat"><div class="stat-val">2</div><div class="stat-label">Projects</div></div>
+        <div class="stat"><div class="stat-val">$1M+</div><div class="stat-label">Pipeline target</div></div>
+        <div class="stat"><div class="stat-val">$250K</div><div class="stat-label">Closed won goal</div></div>
+      </div>
+
+      <!-- CANTO -->
+      <div class="project-section">
+        <div class="project-header">
+          <div class="project-badge pb-orange">🎯</div>
+          <div>
+            <div class="project-name">Canto — Channel Partnerships</div>
+            <div class="project-desc">Partner marketing, event planning, integration strategy · FY2026</div>
+          </div>
+          <div class="project-count">6 tools · 2 docs</div>
         </div>
-        <div class="stat">
-          <div class="stat-num">9</div>
-          <div class="stat-label">Events in intake queue</div>
+
+        <div class="tools-grid" style="margin-bottom:10px;">
+          <a class="tool-card" href="canto-monthly-plan-2026.html">
+            <span class="card-arrow">↗</span>
+            <span class="card-icon">📅</span>
+            <div class="card-name">Month-by-Month Plan</div>
+            <div class="card-desc">Q2–Q4 calendar with events, dinners, roundtables, weekly priorities, and pipeline targets per month.</div>
+            <div class="card-tags"><span class="ctag ct-orange">Most used</span><span class="ctag ct-muted">Mar–Dec</span><span class="ctag ct-muted">10 tabs</span></div>
+          </a>
+          <a class="tool-card" href="canto-partner-plan-2026.html">
+            <span class="card-arrow">↗</span>
+            <span class="card-icon">🗺️</span>
+            <div class="card-name">Full Partner Plan</div>
+            <div class="card-desc">Complete strategic plan — Q2/Q3/Q4 breakdown, travel from AUS, creative activations, partner matrix, checklist, budget.</div>
+            <div class="card-tags"><span class="ctag ct-orange">Strategic</span><span class="ctag ct-muted">8 tabs</span><span class="ctag ct-muted">$1M pipeline</span></div>
+          </a>
+          <a class="tool-card" href="canto-monday-intake-v3.html">
+            <span class="card-arrow">↗</span>
+            <span class="card-icon">📋</span>
+            <div class="card-name">Monday.com Intake</div>
+            <div class="card-desc">Pre-filled event request forms for all 9 events. Click any field to copy and paste directly into your Monday board.</div>
+            <div class="card-tags"><span class="ctag ct-new">New</span><span class="ctag ct-orange">9 events</span><span class="ctag ct-muted">Copy & paste</span></div>
+          </a>
+          <a class="tool-card" href="partner-tool-v2.html">
+            <span class="card-arrow">↗</span>
+            <span class="card-icon">🤝</span>
+            <div class="card-name">Partner Eval Tool</div>
+            <div class="card-desc">13 agencies and SIs scored on ICP overlap, DAM/PIM conversations, referral willingness. Full outreach sequences for top 5.</div>
+            <div class="card-tags"><span class="ctag ct-orange">13 partners</span><span class="ctag ct-muted">Scored</span><span class="ctag ct-muted">Sequences</span></div>
+          </a>
+          <a class="tool-card" href="canto-marketplace-v5.html">
+            <span class="card-arrow">↗</span>
+            <span class="card-icon">🛒</span>
+            <div class="card-name">Integration Marketplace</div>
+            <div class="card-desc">36+ integration cards across E-Commerce, CMS, PIM, Social, and ERP. ICP context per card, partner program tab.</div>
+            <div class="card-tags"><span class="ctag ct-teal">36+ integrations</span><span class="ctag ct-muted">5 categories</span></div>
+          </a>
+          <a class="tool-card teal" href="canto-integration-survey.html">
+            <span class="card-arrow">↗</span>
+            <span class="card-icon">📊</span>
+            <div class="card-name">Integration Survey</div>
+            <div class="card-desc">Internal rep survey to prioritize integration development, recruit partners, and build an internal business case.</div>
+            <div class="card-tags"><span class="ctag ct-teal">Internal</span><span class="ctag ct-muted">Reps only</span></div>
+          </a>
         </div>
-        <div class="stat">
-          <div class="stat-num">$1M+</div>
-          <div class="stat-label">Pipeline target</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">$250K</div>
-          <div class="stat-label">Closed won goal</div>
+
+        <div class="doc-row">
+          <a class="doc-card" href="canto-partner-marketing-plan-2026.docx" download>
+            <div class="doc-icon">📄</div>
+            <div class="doc-info">
+              <div class="doc-name">Partner Marketing Plan 2026</div>
+              <div class="doc-desc">Events, experience playbook, co-marketing channels, budget framework. Shareable with Alan or leadership.</div>
+            </div>
+            <div class="doc-ext">.docx ↓</div>
+          </a>
+          <a class="doc-card" href="canto-partner-strategy-fY2026.docx" download>
+            <div class="doc-icon">📄</div>
+            <div class="doc-info">
+              <div class="doc-name">Partner Sourcing Strategy FY2026</div>
+              <div class="doc-desc">ICP profiles, partner tiers, commission math, quarterly roadmap. Good for exec alignment and onboarding.</div>
+            </div>
+            <div class="doc-ext">.docx ↓</div>
+          </a>
         </div>
       </div>
 
-      <!-- HOW IT WORKS -->
-      <div class="section-hd"><h2>How to use this dashboard</h2></div>
-      <div class="how-grid" style="margin-bottom:32px;">
-        <div class="how-card">
-          <div class="how-num">1</div>
-          <div class="how-title">Keep files together</div>
-          <div class="how-desc">Download all files to one folder on your computer, Dropbox, or Google Drive. Everything links relatively so they'll always find each other.</div>
+      <!-- NO BAD COMPANY -->
+      <div class="project-section" id="nbc">
+        <div class="project-header">
+          <div class="project-badge pb-pink">✉️</div>
+          <div>
+            <div class="project-name">No Bad Company</div>
+            <div class="project-desc">Newsletter and content tools</div>
+          </div>
+          <div class="project-count">Coming soon</div>
         </div>
-        <div class="how-card">
-          <div class="how-num">2</div>
-          <div class="how-title">Bookmark this file</div>
-          <div class="how-desc">Open this dashboard in Chrome or Safari and bookmark it (⌘D). One click from your bookmarks bar gets you back here from anywhere.</div>
-        </div>
-        <div class="how-card">
-          <div class="how-num">3</div>
-          <div class="how-title">Or host it online</div>
-          <div class="how-desc">Drag the whole folder to <a href="https://netlify.com/drop" target="_blank" style="color:var(--teal);">netlify.com/drop</a> and get a live shareable URL in 30 seconds. Free forever on the free tier.</div>
-        </div>
-      </div>
 
-      <!-- INTERACTIVE TOOLS -->
-      <div class="section-hd">
-        <h2>Interactive Tools</h2>
-        <span>Click to open</span>
-      </div>
-      <div class="apps-grid">
-
-        <a class="app-card" href="canto-monthly-plan-2026.html" target="_blank">
-          <div class="app-arrow">↗</div>
-          <div class="app-icon ic-orange">📅</div>
-          <div class="app-name">Month-by-Month Plan</div>
-          <div class="app-desc">Full Q2–Q4 calendar with events, experience formats (dinners, roundtables, happy hours), weekly priorities, and pipeline targets per month.</div>
-          <div class="app-tags">
-            <span class="tag tag-orange">Most used</span>
-            <span class="tag tag-muted">10 tabs</span>
-            <span class="tag tag-muted">Mar–Dec</span>
+        <div class="tools-grid-2">
+          <div class="coming-card">
+            <div class="coming-icon">📰</div>
+            <div>
+              <div class="coming-name">Newsletter App</div>
+              <div class="coming-desc">Upload the file to GitHub and it'll appear here automatically.</div>
+            </div>
+            <div class="coming-badge">Add to GitHub →</div>
           </div>
-        </a>
-
-        <a class="app-card teal" href="canto-partner-plan-2026.html" target="_blank">
-          <div class="app-arrow">↗</div>
-          <div class="app-icon ic-teal">🎯</div>
-          <div class="app-name">Full Partner Plan</div>
-          <div class="app-desc">Complete strategic plan with Q2/Q3/Q4 breakdowns, travel schedule from AUS, creative activations, partner × event matrix, checklist, and budget.</div>
-          <div class="app-tags">
-            <span class="tag tag-teal">Strategic</span>
-            <span class="tag tag-muted">8 tabs</span>
-            <span class="tag tag-muted">$1M pipeline</span>
-          </div>
-        </a>
-
-        <a class="app-card" href="canto-monday-intake-v3.html" target="_blank">
-          <div class="app-arrow">↗</div>
-          <div class="app-icon ic-orange">📋</div>
-          <div class="app-name">Monday.com Intake</div>
-          <div class="app-desc">Pre-filled event request forms for all 9 events. Click any field to copy it, paste directly into your Monday board. Includes Glossy Beauty Summit.</div>
-          <div class="app-tags">
-            <span class="tag tag-new">New</span>
-            <span class="tag tag-orange">9 events</span>
-            <span class="tag tag-muted">Copy & paste</span>
-          </div>
-        </a>
-
-        <a class="app-card navy" href="partner-tool-v2.html" target="_blank">
-          <div class="app-arrow">↗</div>
-          <div class="app-icon ic-navy">🤝</div>
-          <div class="app-name">Partner Eval Tool</div>
-          <div class="app-desc">13 agencies and SIs scored on ICP overlap, DAM/PIM conversations, and referral willingness. Outreach sequences for top 5. Filter, sort, track status.</div>
-          <div class="app-tags">
-            <span class="tag tag-navy">13 partners</span>
-            <span class="tag tag-muted">Scored</span>
-            <span class="tag tag-muted">Sequences</span>
-          </div>
-        </a>
-
-        <a class="app-card teal" href="canto-marketplace-v5.html" target="_blank">
-          <div class="app-arrow">↗</div>
-          <div class="app-icon ic-teal">🛒</div>
-          <div class="app-name">Integration Marketplace</div>
-          <div class="app-desc">36+ integration cards across E-Commerce, CMS, PIM, Social, and ERP categories. ICP context per card, partner program tab, and integration request modal.</div>
-          <div class="app-tags">
-            <span class="tag tag-teal">36+ integrations</span>
-            <span class="tag tag-muted">5 categories</span>
-          </div>
-        </a>
-
-        <a class="app-card" href="partner-eval-tool.html" target="_blank">
-          <div class="app-arrow">↗</div>
-          <div class="app-icon ic-warm">📊</div>
-          <div class="app-name">Partner Eval Tool v1</div>
-          <div class="app-desc">Earlier version of the partner scoring tool. Kept for reference — v2 (above) is the active version with full outreach sequences.</div>
-          <div class="app-tags">
-            <span class="tag tag-muted">Archive</span>
-            <span class="tag tag-muted">v1</span>
-          </div>
-        </a>
-
-      </div>
-
-      <!-- DOCS -->
-      <div class="section-hd">
-        <h2>Documents</h2>
-        <span>Click to download</span>
-      </div>
-      <div class="docs-list">
-
-        <a class="doc-card" href="canto-partner-marketing-plan-2026.docx" download>
-          <div class="doc-icon">📄</div>
-          <div class="doc-info">
-            <div class="doc-name">Partner Marketing Plan 2026</div>
-            <div class="doc-desc">Full formatted Word doc — events, experience playbook, co-marketing channels, budget framework. Shareable with Alan or the broader team.</div>
-          </div>
-          <div class="doc-type">.docx</div>
-        </a>
-
-        <a class="doc-card" href="canto-partner-strategy-fY2026.docx" download>
-          <div class="doc-icon">📄</div>
-          <div class="doc-info">
-            <div class="doc-name">Partner Sourcing Strategy FY2026</div>
-            <div class="doc-desc">Full partner program strategy — ICP profiles, partner tiers, commission math, quarterly roadmap. Good for onboarding or exec alignment.</div>
-          </div>
-          <div class="doc-type">.docx</div>
-        </a>
-
-      </div>
-
-      <!-- HOSTING -->
-      <div class="section-hd"><h2>Host these tools online</h2></div>
-      <div class="hosting-box">
-        <div>
-          <h3>Get a live URL in 30 seconds — free</h3>
-          <p>Right now these tools only work when you open the files locally. To access them from any device, share with a colleague, or open on your phone — drop the folder onto Netlify Drop. No account needed, no code, no cost on the free tier.</p>
-          <div class="hosting-steps">
-            <div class="step"><span class="step-num">1</span> Put all files in one folder</div>
-            <div class="step"><span class="step-num">2</span> Go to <a href="https://netlify.com/drop" target="_blank" style="color:var(--teal);">netlify.com/drop</a></div>
-            <div class="step"><span class="step-num">3</span> Drag the folder onto the page</div>
-            <div class="step"><span class="step-num">4</span> Get your live URL — done</div>
+          <div class="coming-card">
+            <div class="coming-icon">➕</div>
+            <div>
+              <div class="coming-name">Add a tool</div>
+              <div class="coming-desc">Drop any new HTML file into the GitHub repo and update this dashboard.</div>
+            </div>
+            <div class="coming-badge">github.com/adamsemien</div>
           </div>
         </div>
-        <a class="hosting-btn" href="https://netlify.com/drop" target="_blank">Open Netlify Drop ↗</a>
       </div>
 
-      <!-- FOOTER -->
-      <div style="text-align:center;padding:20px 0 8px;font-size:12px;color:var(--muted);">
-        Built with Claude · Canto Channel Partnerships · FY2026 · Last updated March 2026
+      <div style="text-align:center;padding:12px 0 4px;font-size:11px;color:var(--muted);">
+        Built with Claude · adam-tools.netlify.app · Auto-deploys from GitHub on every commit
       </div>
 
     </div>
   </div>
 </div>
-
 </body>
 </html>
