@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto Partner Portal — Screen Walkthrough</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700&family=DM+Sans:wght@0,300;0,400;0,500;0,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0F1F3D;
+  --orange: #D95A00;
+  --orange-bg: #FEF0E7;
+  --teal: #006482;
+  --teal-bg: #E6F4F7;
+  --green: #059669;
+  --green-bg: #ECFDF5;
+  --off: #F7F8FA;
+  --g50: #F4F5F7;
+  --g100: #EAECF0;
+  --g200: #D5D9E0;
+  --g400: #8B929E;
+  --g600: #4B5563;
+  --g800: #1F2937;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #E8EBF0;
+  color: var(--g800);
+  -webkit-font-smoothing: antialiased;
+  padding: 48px 24px 80px;
+}
+
+/* ── DOC HEADER ── */
+.doc-header {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.doc-logo { display: flex; align-items: center; gap: 10px; }
+.doc-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--orange);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 700; color: white;
+}
+.doc-logo-text { font-size: 18px; font-weight: 600; color: var(--navy); }
+.doc-meta { text-align: right; }
+.doc-meta h1 { font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy); font-weight: 600; }
+.doc-meta p { font-size: 13px; color: var(--g400); margin-top: 3px; }
+
+/* ── TOC ── */
+.toc {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  background: white;
+  border-radius: 14px;
+  padding: 24px 28px;
+  border: 1px solid var(--g100);
+}
+.toc h2 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--g400); margin-bottom: 14px; }
+.toc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.toc-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  background: var(--off); border: 1px solid var(--g100);
+  text-decoration: none;
+}
+.toc-num {
+  width: 22px; height: 22px;
+  background: var(--navy); border-radius: 50%;
+  font-size: 11px; font-weight: 700; color: white;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.toc-num.orange { background: var(--orange); }
+.toc-num.green { background: var(--green); }
+.toc-label { font-size: 12px; font-weight: 600; color: var(--g600); }
+
+/* ── SCREEN WRAPPER ── */
+.screen-wrap {
+  max-width: 900px;
+  margin: 0 auto 56px;
+}
+.screen-label {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.screen-num {
+  width: 28px; height: 28px;
+  background: var(--navy); border-radius: 50%;
+  font-size: 12px; font-weight: 700; color: white;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.screen-num.orange { background: var(--orange); }
+.screen-num.green { background: var(--green); }
+.screen-title { font-size: 16px; font-weight: 700; color: var(--navy); }
+.screen-sub { font-size: 13px; color: var(--g400); margin-top: 1px; }
+.screen-badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px;
+  margin-left: auto;
+}
+.screen-badge.vendor { background: var(--orange-bg); color: var(--orange); }
+.screen-badge.internal { background: var(--navy); color: #D95A00; }
+.screen-badge.both { background: var(--green-bg); color: var(--green); }
+
+/* ── SCREEN FRAME ── */
+.screen-frame {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(15,31,61,0.12), 0 2px 8px rgba(15,31,61,0.06);
+  border: 1px solid var(--g200);
+}
+
+/* ── MOCK NAV ── */
+.mock-nav {
+  background: var(--navy);
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px;
+}
+.mock-nav-logo { display: flex; align-items: center; gap: 8px; }
+.mock-logo-mark {
+  width: 26px; height: 26px;
+  background: var(--orange);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-size: 14px; font-weight: 700; color: white;
+}
+.mock-logo-text { font-size: 14px; font-weight: 600; color: white; }
+.mock-nav-center { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 0.5px; text-transform: uppercase; }
+.mock-nav-tabs { display: flex; gap: 6px; }
+.mock-tab {
+  font-size: 11px; font-weight: 500;
+  padding: 5px 12px; border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.45);
+}
+.mock-tab.active { background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.2); }
+
+/* ── MOCK BODY ── */
+.mock-body { padding: 28px 32px 32px; background: var(--off); }
+
+/* ── HERO ── */
+.mock-hero { text-align: center; margin-bottom: 28px; }
+.mock-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--orange-bg); color: var(--orange);
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 20px; margin-bottom: 12px;
+}
+.mock-h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 26px; font-weight: 600; color: var(--navy);
+  line-height: 1.2; margin-bottom: 8px;
+}
+.mock-sub { font-size: 13px; color: var(--g400); max-width: 420px; margin: 0 auto; line-height: 1.5; }
+
+/* ── TIER CARDS ── */
+.mock-tier-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.mock-tier-card {
+  background: white; border: 2px solid var(--g100);
+  border-radius: 12px; padding: 16px;
+}
+.mock-tier-card.featured { border-color: var(--orange); }
+.mock-tier-badge {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 4px; margin-bottom: 8px;
+}
+.mock-tier-badge.listed { background: var(--g50); color: var(--g400); }
+.mock-tier-badge.cert { background: var(--orange-bg); color: var(--orange); }
+.mock-tier-card h3 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.mock-tier-card p { font-size: 11px; color: var(--g400); line-height: 1.4; margin-bottom: 8px; }
+.mock-tier-card ul { list-style: none; }
+.mock-tier-card ul li { font-size: 10.5px; color: var(--g600); padding: 2px 0; display: flex; gap: 5px; }
+.mock-tier-card ul li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+
+/* ── PROGRESS ── */
+.mock-progress {
+  background: white; border: 1px solid var(--g100); border-radius: 10px;
+  padding: 14px 20px; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 0;
+}
+.mock-prog-step { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.mock-prog-dot {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  background: var(--g50); color: var(--g400); border: 2px solid var(--g100);
+}
+.mock-prog-dot.active { background: var(--orange); border-color: var(--orange); color: white; }
+.mock-prog-dot.done { background: var(--green); border-color: var(--green); color: white; }
+.mock-prog-label { font-size: 9px; color: var(--g400); font-weight: 500; white-space: nowrap; }
+.mock-prog-label.active { color: var(--orange); font-weight: 600; }
+.mock-prog-line { height: 2px; background: var(--g100); flex: 1; margin-bottom: 14px; position: relative; top: -7px; }
+.mock-prog-line.done { background: var(--green); }
+
+/* ── FORM CARD ── */
+.mock-form-card {
+  background: white; border: 1px solid var(--g100);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 2px 10px rgba(15,31,61,0.05);
+}
+.mock-card-header { background: var(--navy); padding: 16px 22px; }
+.mock-step-label { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--orange); margin-bottom: 3px; }
+.mock-card-h2 { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; color: white; }
+.mock-card-p { font-size: 11.5px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+.mock-card-body { padding: 20px 22px; }
+
+/* ── FIELDS ── */
+.mock-field { margin-bottom: 14px; }
+.mock-field:last-child { margin-bottom: 0; }
+.mock-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mock-label { font-size: 11px; font-weight: 600; color: var(--g600); margin-bottom: 5px; display: block; }
+.mock-input {
+  width: 100%; background: var(--off); border: 1.5px solid var(--g100);
+  border-radius: 7px; padding: 8px 11px;
+  font-size: 12px; color: var(--g400); font-family: 'DM Sans', sans-serif;
+}
+.mock-input.active { border-color: var(--orange); background: white; color: var(--g800); }
+.mock-select {
+  width: 100%; background: var(--off); border: 1.5px solid var(--g100);
+  border-radius: 7px; padding: 8px 11px;
+  font-size: 12px; color: var(--g400); font-family: 'DM Sans', sans-serif;
+}
+.mock-textarea {
+  width: 100%; background: var(--off); border: 1.5px solid var(--g100);
+  border-radius: 7px; padding: 8px 11px; min-height: 64px;
+  font-size: 12px; color: var(--g400); font-family: 'DM Sans', sans-serif;
+  resize: none; line-height: 1.4;
+}
+
+/* ── CHECK ITEMS ── */
+.mock-check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
+.mock-check-grid.single { grid-template-columns: 1fr; }
+.mock-check-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: 7px;
+  border: 1.5px solid var(--g100); background: var(--off);
+}
+.mock-check-item.checked { border-color: var(--orange); background: var(--orange-bg); }
+.mock-check-box {
+  width: 13px; height: 13px; border-radius: 3px;
+  border: 1.5px solid var(--g200); background: white; flex-shrink: 0;
+}
+.mock-check-box.checked { background: var(--orange); border-color: var(--orange); }
+.mock-radio-box {
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 1.5px solid var(--g200); background: white; flex-shrink: 0;
+}
+.mock-radio-box.checked { border: 4px solid var(--orange); }
+.mock-check-label { font-size: 11px; font-weight: 500; color: var(--g600); }
+.mock-check-label.checked { color: var(--orange); }
+
+/* ── CARD FOOTER ── */
+.mock-card-footer {
+  padding: 14px 22px; border-top: 1px solid var(--g100);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mock-counter { font-size: 11px; color: var(--g400); }
+.mock-footer-btns { display: flex; gap: 8px; }
+.mock-btn-back {
+  font-size: 12px; font-weight: 500; color: var(--g400);
+  background: none; border: 1.5px solid var(--g100);
+  padding: 7px 16px; border-radius: 7px;
+}
+.mock-btn-next {
+  font-size: 12px; font-weight: 600; color: white;
+  background: var(--orange); border: none;
+  padding: 7px 18px; border-radius: 7px;
+}
+
+/* ── UPLOAD ZONE ── */
+.mock-upload {
+  border: 2px dashed var(--g200); border-radius: 7px;
+  padding: 16px; text-align: center; background: var(--off);
+}
+.mock-upload-icon { font-size: 20px; margin-bottom: 4px; }
+.mock-upload-label { font-size: 12px; font-weight: 600; color: var(--g600); }
+.mock-upload-sub { font-size: 10px; color: var(--g400); margin-top: 2px; }
+
+/* ── CERT NOTICE ── */
+.mock-cert-notice {
+  background: var(--orange-bg); border: 1px solid rgba(217,90,0,0.2);
+  border-radius: 7px; padding: 12px 14px; margin-bottom: 12px;
+}
+.mock-cert-notice-title { font-size: 12px; font-weight: 600; color: var(--orange); margin-bottom: 3px; }
+.mock-cert-notice-body { font-size: 11px; color: var(--g600); line-height: 1.5; }
+
+/* ── AGREE BLOCK ── */
+.mock-agree {
+  background: var(--g50); border: 1px solid var(--g100);
+  border-radius: 7px; padding: 10px 12px;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.mock-agree-box {
+  width: 13px; height: 13px; border-radius: 3px;
+  border: 1.5px solid var(--g200); background: white; flex-shrink: 0; margin-top: 1px;
+}
+.mock-agree-text { font-size: 11px; color: var(--g600); line-height: 1.5; }
+.mock-agree-text a { color: var(--teal); text-decoration: none; }
+
+/* ── TIER SELECT ── */
+.mock-tier-select-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.mock-tier-sel {
+  border: 2px solid var(--g100); border-radius: 10px; padding: 14px;
+  background: var(--off);
+}
+.mock-tier-sel.selected { border-color: var(--orange); background: var(--orange-bg); }
+.mock-tier-sel-badge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 6px; }
+.mock-tier-sel-name { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.mock-tier-sel-desc { font-size: 11px; color: var(--g400); line-height: 1.4; }
+
+/* ── THANK YOU ── */
+.mock-thankyou { text-align: center; padding: 40px 24px; }
+.mock-ty-icon { width: 52px; height: 52px; background: var(--green-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px; }
+.mock-ty-token { display: inline-block; background: var(--navy); color: var(--orange); font-family: monospace; font-size: 12px; padding: 6px 14px; border-radius: 5px; letter-spacing: 1px; margin: 8px 0 14px; }
+.mock-ty-h2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+.mock-ty-p { font-size: 13px; color: var(--g400); line-height: 1.5; max-width: 340px; margin: 0 auto; }
+.mock-ty-btns { margin-top: 20px; display: flex; gap: 8px; justify-content: center; }
+
+/* ── STATUS VIEW ── */
+.mock-status-lookup {
+  background: white; border: 1px solid var(--g100); border-radius: 14px; padding: 28px;
+  text-align: center; box-shadow: 0 2px 10px rgba(15,31,61,0.05);
+  margin-bottom: 16px;
+}
+.mock-status-h2 { font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy); margin-bottom: 6px; }
+.mock-status-p { font-size: 13px; color: var(--g400); margin-bottom: 18px; }
+.mock-lookup-row { display: flex; gap: 8px; max-width: 380px; margin: 0 auto; }
+.mock-lookup-input { flex: 1; border: 1.5px solid var(--g100); border-radius: 7px; padding: 8px 12px; font-size: 13px; color: var(--g400); font-family: 'DM Sans', sans-serif; background: var(--off); }
+.mock-lookup-btn { background: var(--teal); color: white; border: none; border-radius: 7px; padding: 8px 16px; font-size: 13px; font-weight: 600; font-family: 'DM Sans', sans-serif; }
+
+.mock-status-card { background: white; border: 1px solid var(--g100); border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(15,31,61,0.05); }
+.mock-status-card-header { padding: 16px 20px; border-bottom: 1px solid var(--g100); display: flex; align-items: center; justify-content: space-between; }
+.mock-status-card-header h3 { font-size: 15px; font-weight: 700; color: var(--navy); }
+.mock-status-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px;
+}
+.mock-status-pill.pending { background: #FFFBEB; color: #F59E0B; }
+.mock-status-pill.review { background: var(--teal-bg); color: var(--teal); }
+.mock-status-pill.approved { background: var(--green-bg); color: var(--green); }
+.mock-timeline { padding: 16px 20px; }
+.mock-tl-item { display: flex; gap: 12px; margin-bottom: 14px; }
+.mock-tl-item:last-child { margin-bottom: 0; }
+.mock-tl-dot { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+.mock-tl-dot.done { background: var(--green-bg); color: var(--green); }
+.mock-tl-dot.active { background: var(--orange-bg); color: var(--orange); }
+.mock-tl-dot.wait { background: var(--g50); color: var(--g400); }
+.mock-tl-info h4 { font-size: 12px; font-weight: 600; color: var(--g800); }
+.mock-tl-info p { font-size: 11px; color: var(--g400); margin-top: 1px; }
+
+/* ── ADMIN VIEW ── */
+.mock-admin-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.mock-admin-h2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; color: var(--navy); }
+.mock-admin-p { font-size: 12px; color: var(--g400); margin-top: 3px; }
+.mock-export-btn { background: var(--teal); color: white; border: none; border-radius: 7px; padding: 8px 16px; font-size: 12px; font-weight: 600; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 5px; }
+
+.mock-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
+.mock-stat { background: white; border: 1px solid var(--g100); border-radius: 10px; padding: 14px 16px; }
+.mock-stat-val { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: var(--navy); }
+.mock-stat-key { font-size: 10px; color: var(--g400); margin-top: 2px; }
+
+.mock-kanban { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.mock-kanban-col { background: var(--g50); border-radius: 10px; padding: 12px; min-height: 220px; }
+.mock-kanban-col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.mock-kanban-col-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--g400); }
+.mock-kanban-count { background: var(--g100); color: var(--g400); font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; }
+
+.mock-kanban-card { background: white; border: 1px solid var(--g100); border-radius: 7px; padding: 10px 12px; margin-bottom: 8px; }
+.mock-kc-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.mock-kc-name { font-size: 11px; font-weight: 700; color: var(--navy); }
+.mock-kc-tier { font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 1px 5px; border-radius: 3px; }
+.mock-kc-tier.listed { background: var(--g50); color: var(--g400); }
+.mock-kc-tier.cert { background: var(--orange-bg); color: var(--orange); }
+.mock-kc-company { font-size: 10px; color: var(--g400); margin-bottom: 4px; }
+.mock-kc-cat { font-size: 9px; background: var(--g50); color: var(--g600); padding: 1px 5px; border-radius: 3px; display: inline-block; }
+.mock-kc-date { font-size: 9px; color: var(--g400); margin-top: 4px; }
+
+/* ── MODAL ── */
+.mock-modal-overlay { background: rgba(10,18,35,0.5); border-radius: 14px; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 420px; }
+.mock-modal { background: white; border-radius: 14px; width: 100%; max-width: 560px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+.mock-modal-header { background: var(--navy); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.mock-modal-header h3 { font-family: 'Fraunces', serif; font-size: 16px; color: white; }
+.mock-modal-header p { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.mock-modal-close { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 16px; }
+.mock-modal-body { padding: 20px; }
+.mock-modal-section { margin-bottom: 18px; }
+.mock-modal-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--g400); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--g100); }
+.mock-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mock-field-item .fi-label { font-size: 10px; color: var(--g400); margin-bottom: 1px; }
+.mock-field-item .fi-value { font-size: 12px; color: var(--g800); font-weight: 500; }
+.mock-action-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.mock-action-select { font-size: 12px; border: 1.5px solid var(--g100); border-radius: 6px; padding: 7px 10px; background: var(--off); font-family: 'DM Sans', sans-serif; }
+.mock-action-btn { font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 7px; border: none; }
+.mock-action-btn.approve { background: var(--green-bg); color: var(--green); }
+.mock-note-area { width: 100%; border: 1.5px solid var(--g100); border-radius: 7px; padding: 8px 10px; min-height: 56px; resize: none; font-size: 12px; color: var(--g400); font-family: 'DM Sans', sans-serif; margin-top: 8px; }
+
+/* ── DIVIDER ── */
+.section-divider {
+  max-width: 900px; margin: 0 auto 48px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-divider-line { flex: 1; height: 1px; background: var(--g200); }
+.section-divider-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--g400); white-space: nowrap; }
+
+/* Print */
+@media print {
+  body { background: white; padding: 0; }
+  .screen-wrap { page-break-inside: avoid; margin-bottom: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- DOC HEADER -->
+<div class="doc-header">
+  <div class="doc-logo">
+    <div class="doc-logo-mark">C</div>
+    <span class="doc-logo-text">Canto</span>
+  </div>
+  <div class="doc-meta">
+    <h1>Integration Partner Portal</h1>
+    <p>Screen Walkthrough · All Views · Internal Review</p>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h2>All Screens</h2>
+  <div class="toc-grid">
+    <div class="toc-item"><div class="toc-num">1</div><div><div class="toc-label">Landing & Tier Overview</div></div></div>
+    <div class="toc-item"><div class="toc-num">2</div><div><div class="toc-label">Step 1 — Company & Contact</div></div></div>
+    <div class="toc-item"><div class="toc-num">3</div><div><div class="toc-label">Step 2 — Integration Basics</div></div></div>
+    <div class="toc-item"><div class="toc-num">4</div><div><div class="toc-label">Step 3 — Technical Details</div></div></div>
+    <div class="toc-item"><div class="toc-num">5</div><div><div class="toc-label">Step 4 — Business Case</div></div></div>
+    <div class="toc-item"><div class="toc-num">6</div><div><div class="toc-label">Step 5 — Docs & Compliance</div></div></div>
+    <div class="toc-item"><div class="toc-num">7</div><div><div class="toc-label">Step 6 — Tier Selection</div></div></div>
+    <div class="toc-item"><div class="toc-num orange">8</div><div><div class="toc-label">Confirmation & Token</div></div></div>
+    <div class="toc-item"><div class="toc-num orange">9</div><div><div class="toc-label">Vendor Status Page</div></div></div>
+    <div class="toc-item"><div class="toc-num" style="background:#4B5563">10</div><div><div class="toc-label">Admin — Review Queue</div></div></div>
+    <div class="toc-item"><div class="toc-num" style="background:#4B5563">11</div><div><div class="toc-label">Admin — Submission Detail</div></div></div>
+    <div class="toc-item"><div class="toc-num green">12</div><div><div class="toc-label">Export to CSV</div></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 1 — LANDING
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">1</div>
+    <div><div class="screen-title">Landing — Tier Overview</div><div class="screen-sub">First thing a vendor sees. Sets context before the form begins.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-hero">
+        <div class="mock-badge">🔌 Partner Program</div>
+        <div class="mock-h1">List your integration<br>in the Canto Marketplace</div>
+        <div class="mock-sub">Join 50+ tech partners connecting their platforms to 30,000+ Canto customers across retail, CPG, fashion, and beyond.</div>
+      </div>
+      <div class="mock-tier-row">
+        <div class="mock-tier-card">
+          <div class="mock-tier-badge listed">Listed</div>
+          <h3>Marketplace Listed</h3>
+          <p>Get discovered. Your integration appears in the marketplace as a verified partner.</p>
+          <ul>
+            <li>Company and integration profile</li>
+            <li>Technical spec on file</li>
+            <li>Coming Soon or Live status</li>
+            <li>Partner support designation</li>
+          </ul>
+        </div>
+        <div class="mock-tier-card featured">
+          <div class="mock-tier-badge cert">Certified</div>
+          <h3>Canto Certified</h3>
+          <p>Full verification. Certified badge, co-marketing eligibility, and featured placement.</p>
+          <ul>
+            <li>Everything in Listed</li>
+            <li>Security & compliance review</li>
+            <li>Signed partner agreement</li>
+            <li>Working demo or sandbox</li>
+            <li>Co-marketing & deal support</li>
+            <li>Featured marketplace placement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 2 — STEP 1
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">2</div>
+    <div><div class="screen-title">Step 1 — Company & Contact</div><div class="screen-sub">Who is submitting and on whose behalf.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-progress">
+        <div class="mock-prog-step"><div class="mock-prog-dot active">1</div><div class="mock-prog-label active">Company</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">2</div><div class="mock-prog-label">Integration</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">3</div><div class="mock-prog-label">Technical</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">4</div><div class="mock-prog-label">Business</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">5</div><div class="mock-prog-label">Docs & Legal</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">6</div><div class="mock-prog-label">Tier</div></div>
+      </div>
+      <div class="mock-form-card">
+        <div class="mock-card-header">
+          <div class="mock-step-label">Step 1 of 6</div>
+          <div class="mock-card-h2">Company & contact</div>
+          <div class="mock-card-p">Tell us about the company behind the integration.</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-field mock-field-row">
+            <div><div class="mock-label">Company name <span style="color:var(--orange)">*</span></div><div class="mock-input active">Acme Technologies Inc.</div></div>
+            <div><div class="mock-label">Website <span style="color:var(--orange)">*</span></div><div class="mock-input">https://acme.com</div></div>
+          </div>
+          <div class="mock-field mock-field-row" style="margin-top:12px">
+            <div><div class="mock-label">Contact name <span style="color:var(--orange)">*</span></div><div class="mock-input">Jane Smith</div></div>
+            <div><div class="mock-label">Contact email <span style="color:var(--orange)">*</span></div><div class="mock-input">jane@acme.com</div></div>
+          </div>
+          <div class="mock-field mock-field-row" style="margin-top:12px">
+            <div><div class="mock-label">Contact title</div><div class="mock-input">Head of Partnerships</div></div>
+            <div><div class="mock-label">Company HQ location</div><div class="mock-input">Austin, TX</div></div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Are you submitting on behalf of this company?</div>
+            <div class="mock-select">I work at this company</div>
+          </div>
+        </div>
+        <div class="mock-card-footer">
+          <span class="mock-counter">1 of 6</span>
+          <div class="mock-footer-btns"><div class="mock-btn-next">Continue →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 3 — STEP 2
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">3</div>
+    <div><div class="screen-title">Step 2 — Integration Basics</div><div class="screen-sub">What the integration does, which Canto product, and data flow direction.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-progress">
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Company</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot active">2</div><div class="mock-prog-label active">Integration</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">3</div><div class="mock-prog-label">Technical</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">4</div><div class="mock-prog-label">Business</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">5</div><div class="mock-prog-label">Docs & Legal</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">6</div><div class="mock-prog-label">Tier</div></div>
+      </div>
+      <div class="mock-form-card">
+        <div class="mock-card-header">
+          <div class="mock-step-label">Step 2 of 6</div>
+          <div class="mock-card-h2">Integration basics</div>
+          <div class="mock-card-p">Describe what the integration does and how it connects to Canto.</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-field mock-field-row">
+            <div><div class="mock-label">Integration name <span style="color:var(--orange)">*</span></div><div class="mock-input">Acme PIM Connector</div></div>
+            <div><div class="mock-label">Category <span style="color:var(--orange)">*</span></div><div class="mock-select">PIM</div></div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">One-line description <span style="color:var(--orange)">*</span></div>
+            <div class="mock-input">Sync approved Canto assets into Acme product records automatically.</div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Which Canto product does this connect to? <span style="color:var(--orange)">*</span></div>
+            <div class="mock-check-grid">
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">Canto DAM</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Canto for Products</div></div>
+            </div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Data flow direction <span style="color:var(--orange)">*</span></div>
+            <div class="mock-check-grid single">
+              <div class="mock-check-item checked"><div class="mock-radio-box checked"></div><div class="mock-check-label checked">Canto → Your Platform (Canto pushes to you)</div></div>
+              <div class="mock-check-item"><div class="mock-radio-box"></div><div class="mock-check-label">Your Platform → Canto (you push to Canto)</div></div>
+              <div class="mock-check-item"><div class="mock-radio-box"></div><div class="mock-check-label">Bidirectional (data flows both ways)</div></div>
+            </div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">What problem does this integration solve? <span style="color:var(--orange)">*</span></div>
+            <div class="mock-textarea">Without this integration, customers manually download assets from Canto and re-upload them into Acme — creating version drift and slowing product launches...</div>
+          </div>
+        </div>
+        <div class="mock-card-footer">
+          <span class="mock-counter">2 of 6</span>
+          <div class="mock-footer-btns"><div class="mock-btn-back">← Back</div><div class="mock-btn-next">Continue →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 4 — STEP 3
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">4</div>
+    <div><div class="screen-title">Step 3 — Technical Details</div><div class="screen-sub">API type, auth method, data types, setup complexity, sandbox and demo links.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-progress">
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Company</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Integration</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot active">3</div><div class="mock-prog-label active">Technical</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">4</div><div class="mock-prog-label">Business</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">5</div><div class="mock-prog-label">Docs & Legal</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">6</div><div class="mock-prog-label">Tier</div></div>
+      </div>
+      <div class="mock-form-card">
+        <div class="mock-card-header">
+          <div class="mock-step-label">Step 3 of 6</div>
+          <div class="mock-card-h2">Technical details</div>
+          <div class="mock-card-p">How is the integration built? What does a customer need to set it up?</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-field mock-field-row">
+            <div><div class="mock-label">Integration type <span style="color:var(--orange)">*</span></div><div class="mock-select">Canto API-based</div></div>
+            <div><div class="mock-label">Authentication method <span style="color:var(--orange)">*</span></div><div class="mock-select">OAuth 2.0</div></div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">What data does this integration sync? <span style="color:var(--orange)">*</span></div>
+            <div class="mock-check-grid">
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">Images & video</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">Metadata & attributes</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Documents & PDFs</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Product data (SKUs, specs)</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Approval & workflow status</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Usage rights & expiration</div></div>
+            </div>
+          </div>
+          <div class="mock-field mock-field-row" style="margin-top:12px">
+            <div><div class="mock-label">Typical setup time</div><div class="mock-select">1–2 weeks</div></div>
+            <div><div class="mock-label">Setup complexity</div><div class="mock-select">Some configuration required</div></div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Demo video URL <span style="color:var(--g400);font-size:10px;font-weight:400">(Loom, YouTube, Vimeo — strongly recommended for Certified)</span></div>
+            <div class="mock-input">https://loom.com/share/abc123...</div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Sandbox or test environment URL <span style="color:var(--g400);font-size:10px;font-weight:400">(required for Certified)</span></div>
+            <div class="mock-input">https://sandbox.acme.com</div>
+          </div>
+        </div>
+        <div class="mock-card-footer">
+          <span class="mock-counter">3 of 6</span>
+          <div class="mock-footer-btns"><div class="mock-btn-back">← Back</div><div class="mock-btn-next">Continue →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 5 — STEP 4
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">5</div>
+    <div><div class="screen-title">Step 4 — Business Case</div><div class="screen-sub">ICP, verticals, pricing model, mutual customers, pipeline context.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-progress">
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Company</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Integration</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Technical</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot active">4</div><div class="mock-prog-label active">Business</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">5</div><div class="mock-prog-label">Docs & Legal</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">6</div><div class="mock-prog-label">Tier</div></div>
+      </div>
+      <div class="mock-form-card">
+        <div class="mock-card-header">
+          <div class="mock-step-label">Step 4 of 6</div>
+          <div class="mock-card-h2">Business case</div>
+          <div class="mock-card-p">Help us understand the commercial fit and who this is for.</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-field">
+            <div class="mock-label">Who is this integration for? <span style="color:var(--orange)">*</span></div>
+            <div class="mock-textarea">Mid-market to enterprise brands ($20M+ revenue) selling physical products through major retailers. Strongest fit in CPG, fashion, and sporting goods...</div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Which verticals is this most relevant for?</div>
+            <div class="mock-check-grid">
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">CPG / Food & Beverage</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">Fashion & Apparel</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">Sporting Goods</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Health & Beauty</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Manufacturing</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">Retail / E-Commerce</div></div>
+            </div>
+          </div>
+          <div class="mock-field mock-field-row" style="margin-top:12px">
+            <div><div class="mock-label">Pricing model</div><div class="mock-select">Monthly / annual add-on fee</div></div>
+            <div><div class="mock-label">Pricing range <span style="color:var(--g400);font-size:10px;font-weight:400">(internal only)</span></div><div class="mock-input">$1,500/yr</div></div>
+          </div>
+          <div class="mock-field mock-field-row" style="margin-top:12px">
+            <div><div class="mock-label">Existing mutual customers</div><div class="mock-input">3 shared customers</div></div>
+            <div><div class="mock-label">Install count / MAU</div><div class="mock-input">200+ active installs</div></div>
+          </div>
+        </div>
+        <div class="mock-card-footer">
+          <span class="mock-counter">4 of 6</span>
+          <div class="mock-footer-btns"><div class="mock-btn-back">← Back</div><div class="mock-btn-next">Continue →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 6 — STEP 5
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">6</div>
+    <div><div class="screen-title">Step 5 — Documentation & Compliance</div><div class="screen-sub">Spec sheet, security certifications, and additional context for the Canto team.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-progress">
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Company</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Integration</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Technical</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Business</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot active">5</div><div class="mock-prog-label active">Docs & Legal</div></div>
+        <div class="mock-prog-line"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot">6</div><div class="mock-prog-label">Tier</div></div>
+      </div>
+      <div class="mock-form-card">
+        <div class="mock-card-header">
+          <div class="mock-step-label">Step 5 of 6</div>
+          <div class="mock-card-h2">Documentation & compliance</div>
+          <div class="mock-card-p">Required for listing. Security review and partner agreement required for Certified tier.</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-field">
+            <div class="mock-label">Integration spec sheet or technical brief <span style="color:var(--orange)">*</span></div>
+            <div class="mock-upload">
+              <div class="mock-upload-icon">📄</div>
+              <div class="mock-upload-label">✓ Acme-Canto-Integration-Spec.pdf</div>
+              <div class="mock-upload-sub">PDF or Word doc · Or provide a URL below</div>
+            </div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Spec sheet URL <span style="color:var(--g400);font-size:10px;font-weight:400">(if hosted online)</span></div>
+            <div class="mock-input">https://docs.acme.com/canto-spec</div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Security & compliance certifications <span style="color:var(--g400);font-size:10px;font-weight:400">(required for Certified tier)</span></div>
+            <div class="mock-check-grid">
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">SOC 2 Type II</div></div>
+              <div class="mock-check-item checked"><div class="mock-check-box checked"></div><div class="mock-check-label checked">GDPR compliant</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">ISO 27001</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">CCPA compliant</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">HIPAA compliant</div></div>
+              <div class="mock-check-item"><div class="mock-check-box"></div><div class="mock-check-label">PCI DSS</div></div>
+            </div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Security documentation URL</div>
+            <div class="mock-input">https://trust.acme.com</div>
+          </div>
+          <div class="mock-field" style="margin-top:12px">
+            <div class="mock-label">Additional notes for the Canto team</div>
+            <div class="mock-textarea">We have 3 existing mutual customers who've requested this integration. Happy to provide references.</div>
+          </div>
+        </div>
+        <div class="mock-card-footer">
+          <span class="mock-counter">5 of 6</span>
+          <div class="mock-footer-btns"><div class="mock-btn-back">← Back</div><div class="mock-btn-next">Continue →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 7 — STEP 6 TIER
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num">7</div>
+    <div><div class="screen-title">Step 6 — Tier Selection</div><div class="screen-sub">Listed vs. Certified. Certified triggers the additional requirements callout and terms agreement.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-progress">
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Company</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Integration</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Technical</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Business</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot done">✓</div><div class="mock-prog-label">Docs & Legal</div></div>
+        <div class="mock-prog-line done"></div>
+        <div class="mock-prog-step"><div class="mock-prog-dot active">6</div><div class="mock-prog-label active">Tier</div></div>
+      </div>
+      <div class="mock-form-card">
+        <div class="mock-card-header">
+          <div class="mock-step-label">Step 6 of 6</div>
+          <div class="mock-card-h2">Choose your tier</div>
+          <div class="mock-card-p">You can start as Listed and upgrade to Certified at any time.</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-tier-select-grid">
+            <div class="mock-tier-sel">
+              <div class="mock-tier-sel-badge" style="background:var(--g50);color:var(--g400)">Listed</div>
+              <div class="mock-tier-sel-name">Marketplace Listed</div>
+              <div class="mock-tier-sel-desc">Get listed in the Canto integration marketplace. No security review required.</div>
+            </div>
+            <div class="mock-tier-sel selected">
+              <div class="mock-tier-sel-badge" style="background:var(--orange-bg);color:var(--orange)">Certified</div>
+              <div class="mock-tier-sel-name">Canto Certified ✓</div>
+              <div class="mock-tier-sel-desc">Full certification. Security review, signed partner agreement, co-marketing eligibility.</div>
+            </div>
+          </div>
+          <div class="mock-cert-notice">
+            <div class="mock-cert-notice-title">Certified tier requirements</div>
+            <div class="mock-cert-notice-body">Canto will reach out to schedule a technical review and send a partner agreement for signature. You'll need a working sandbox or demo video on file. The review typically takes 2–3 weeks.</div>
+          </div>
+          <div class="mock-agree" style="margin-bottom:10px">
+            <div class="mock-agree-box"></div>
+            <div class="mock-agree-text">I understand that Certified status requires a security review, a signed Canto Partner Agreement, and a working demo or sandbox environment. I'm prepared to provide these.</div>
+          </div>
+          <div class="mock-agree">
+            <div class="mock-agree-box"></div>
+            <div class="mock-agree-text">I confirm the information submitted is accurate and I am authorized to submit on behalf of my company. I agree to Canto's <a href="#">Partner Program terms</a>.</div>
+          </div>
+        </div>
+        <div class="mock-card-footer">
+          <span class="mock-counter">6 of 6</span>
+          <div class="mock-footer-btns"><div class="mock-btn-back">← Back</div><div class="mock-btn-next">Submit Application →</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 8 — CONFIRMATION
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num orange">8</div>
+    <div><div class="screen-title">Confirmation & Submission Token</div><div class="screen-sub">Vendor gets a unique token to track their submission status. Stored in the admin queue immediately.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab active">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-form-card">
+        <div class="mock-thankyou">
+          <div class="mock-ty-icon">🎉</div>
+          <div class="mock-ty-h2">Application received.</div>
+          <div class="mock-ty-token">CPT-X4K9QR</div>
+          <div class="mock-ty-p">Save this token — you can use it to check your submission status. The Canto partner team will be in touch within 5 business days.</div>
+          <div class="mock-ty-btns">
+            <div class="mock-btn-next">Check status</div>
+            <div class="mock-btn-back">Submit another</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">Vendor Status View</div><div class="section-divider-line"></div></div>
+
+<!-- ══════════════════════════════════
+     SCREEN 9 — STATUS
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num orange">9</div>
+    <div><div class="screen-title">Vendor Status Page</div><div class="screen-sub">Vendor enters their email or token. Sees a timeline of exactly where their submission stands. Admin notes are visible here.</div></div>
+    <span class="screen-badge vendor">Vendor-facing</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab">Submit Integration</div><div class="mock-tab active">Check Status</div><div class="mock-tab">Admin</div></div>
+    </div>
+    <div class="mock-body" style="max-width:560px;margin:0 auto;">
+      <div class="mock-status-lookup">
+        <div class="mock-status-h2">Check your submission status</div>
+        <div class="mock-status-p">Enter the email address you used when submitting, or your submission token.</div>
+        <div class="mock-lookup-row">
+          <div class="mock-lookup-input">CPT-X4K9QR</div>
+          <div class="mock-lookup-btn">Look up</div>
+        </div>
+      </div>
+      <div class="mock-status-card">
+        <div class="mock-status-card-header">
+          <div>
+            <h3>Acme PIM Connector</h3>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Acme Technologies Inc.</div>
+          </div>
+          <span class="mock-status-pill review">⬤ In Review</span>
+        </div>
+        <div class="mock-timeline">
+          <div class="mock-tl-item">
+            <div class="mock-tl-dot done">✓</div>
+            <div class="mock-tl-info"><h4>Submission received</h4><p>Mar 28, 2026, 2:14 PM</p></div>
+          </div>
+          <div class="mock-tl-item">
+            <div class="mock-tl-dot active">●</div>
+            <div class="mock-tl-info"><h4>Initial review</h4><p>Canto partner team reviews your submission</p></div>
+          </div>
+          <div class="mock-tl-item">
+            <div class="mock-tl-dot wait">○</div>
+            <div class="mock-tl-info"><h4>Technical validation</h4><p>API, data flow, and spec sheet review</p></div>
+          </div>
+          <div class="mock-tl-item">
+            <div class="mock-tl-dot wait">○</div>
+            <div class="mock-tl-info"><h4>Security & legal review</h4><p>SOC 2, partner agreement, sandbox review</p></div>
+          </div>
+          <div class="mock-tl-item">
+            <div class="mock-tl-dot wait">○</div>
+            <div class="mock-tl-info"><h4>Certified ✓</h4><p>Featured placement, co-marketing eligible</p></div>
+          </div>
+        </div>
+        <div style="padding:14px 20px;background:var(--off);border-top:1px solid var(--g100);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:5px;">Notes from Canto</div>
+          <div style="font-size:12px;color:var(--g600);line-height:1.5;">We've received your submission and started our initial review. We'll need your SOC 2 report to proceed with the Certified review — please send it to partners@canto.com when ready.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">Internal Admin Views</div><div class="section-divider-line"></div></div>
+
+<!-- ══════════════════════════════════
+     SCREEN 10 — ADMIN QUEUE
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num" style="background:#4B5563">10</div>
+    <div><div class="screen-title">Admin — Review Queue</div><div class="screen-sub">Kanban across 5 stages. Stats at a glance. Click any card to open the full submission detail.</div></div>
+    <span class="screen-badge internal">Internal only</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab active">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-admin-header">
+        <div>
+          <div class="mock-admin-h2">Integration Submissions</div>
+          <div class="mock-admin-p">Partner Portal · Internal Review Queue</div>
+        </div>
+        <div class="mock-export-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </div>
+      </div>
+      <div class="mock-stats">
+        <div class="mock-stat"><div class="mock-stat-val">7</div><div class="mock-stat-key">Total submissions</div></div>
+        <div class="mock-stat"><div class="mock-stat-val">3</div><div class="mock-stat-key">Awaiting review</div></div>
+        <div class="mock-stat"><div class="mock-stat-val">2</div><div class="mock-stat-key">Approved / live</div></div>
+        <div class="mock-stat"><div class="mock-stat-val">4</div><div class="mock-stat-key">Certified applicants</div></div>
+        <div class="mock-stat"><div class="mock-stat-val">1</div><div class="mock-stat-key">Needs changes</div></div>
+      </div>
+      <div class="mock-kanban">
+        <div class="mock-kanban-col">
+          <div class="mock-kanban-col-header"><span class="mock-kanban-col-title">New Submissions</span><span class="mock-kanban-count">3</span></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">Acme PIM Connector</span><span class="mock-kc-tier cert">Cert</span></div><div class="mock-kc-company">Acme Technologies</div><span class="mock-kc-cat">PIM</span><div class="mock-kc-date">Apr 3, 2026</div></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">RetailSync</span><span class="mock-kc-tier listed">List</span></div><div class="mock-kc-company">RetailSync Inc.</div><span class="mock-kc-cat">Feed Mgmt</span><div class="mock-kc-date">Apr 2, 2026</div></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">ERP Bridge</span><span class="mock-kc-tier listed">List</span></div><div class="mock-kc-company">BridgeTech</div><span class="mock-kc-cat">ERP</span><div class="mock-kc-date">Apr 1, 2026</div></div>
+        </div>
+        <div class="mock-kanban-col">
+          <div class="mock-kanban-col-header"><span class="mock-kanban-col-title">In Review</span><span class="mock-kanban-count">1</span></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">Klaviyo Sync</span><span class="mock-kc-tier cert">Cert</span></div><div class="mock-kc-company">Klaviyo</div><span class="mock-kc-cat">Email & Mktg</span><div class="mock-kc-date">Mar 28, 2026</div></div>
+        </div>
+        <div class="mock-kanban-col">
+          <div class="mock-kanban-col-header"><span class="mock-kanban-col-title">Approved</span><span class="mock-kanban-count">2</span></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">Shopify Assets</span><span class="mock-kc-tier listed">List</span></div><div class="mock-kc-company">Shopify</div><span class="mock-kc-cat">E-Commerce</span><div class="mock-kc-date">Mar 20, 2026</div></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">NetSuite Link</span><span class="mock-kc-tier cert">Cert</span></div><div class="mock-kc-company">MindCloud</div><span class="mock-kc-cat">ERP</span><div class="mock-kc-date">Mar 15, 2026</div></div>
+        </div>
+        <div class="mock-kanban-col">
+          <div class="mock-kanban-col-header"><span class="mock-kanban-col-title">Changes Needed</span><span class="mock-kanban-count">1</span></div>
+          <div class="mock-kanban-card"><div class="mock-kc-top"><span class="mock-kc-name">Stibo MDM Bridge</span><span class="mock-kc-tier cert">Cert</span></div><div class="mock-kc-company">Stibo Systems</div><span class="mock-kc-cat">PIM</span><div class="mock-kc-date">Mar 10, 2026</div></div>
+        </div>
+        <div class="mock-kanban-col">
+          <div class="mock-kanban-col-header"><span class="mock-kanban-col-title">Certified</span><span class="mock-kanban-count">0</span></div>
+          <div style="padding:12px;text-align:center;font-size:11px;color:var(--g400);">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 11 — ADMIN DETAIL MODAL
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num" style="background:#4B5563">11</div>
+    <div><div class="screen-title">Admin — Submission Detail Modal</div><div class="screen-sub">Click any kanban card to see full submission. Move between stages, leave notes visible to the vendor.</div></div>
+    <span class="screen-badge internal">Internal only</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab active">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div class="mock-modal-overlay">
+        <div class="mock-modal">
+          <div class="mock-modal-header">
+            <div>
+              <h3>Acme PIM Connector</h3>
+              <p>Acme Technologies · Apr 3, 2026, 2:14 PM</p>
+            </div>
+            <div class="mock-modal-close">✕</div>
+          </div>
+          <div class="mock-modal-body">
+            <div class="mock-modal-section">
+              <div class="mock-modal-section-title">Submission Details</div>
+              <div class="mock-field-grid">
+                <div class="mock-field-item"><div class="fi-label">Company</div><div class="fi-value">Acme Technologies Inc.</div></div>
+                <div class="mock-field-item"><div class="fi-label">Website</div><div class="fi-value">acme.com</div></div>
+                <div class="mock-field-item"><div class="fi-label">Contact</div><div class="fi-value">Jane Smith · jane@acme.com</div></div>
+                <div class="mock-field-item"><div class="fi-label">Category</div><div class="fi-value">PIM</div></div>
+                <div class="mock-field-item"><div class="fi-label">Canto Product</div><div class="fi-value">Canto DAM</div></div>
+                <div class="mock-field-item"><div class="fi-label">Direction</div><div class="fi-value">Canto → Acme</div></div>
+                <div class="mock-field-item"><div class="fi-label">Integration Type</div><div class="fi-value">Canto API-based</div></div>
+                <div class="mock-field-item"><div class="fi-label">Auth Method</div><div class="fi-value">OAuth 2.0</div></div>
+                <div class="mock-field-item"><div class="fi-label">Mutual Customers</div><div class="fi-value">3 shared customers</div></div>
+                <div class="mock-field-item"><div class="fi-label">Tier Applied</div><div class="fi-value">Certified</div></div>
+              </div>
+            </div>
+            <div class="mock-modal-section">
+              <div class="mock-modal-section-title">Review Actions</div>
+              <div style="margin-bottom:12px;">
+                <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px">Move to stage</div>
+                <div class="mock-action-row">
+                  <select class="mock-action-select"><option>In Review</option></select>
+                  <div class="mock-action-btn approve">Update Status</div>
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:4px">Notes to vendor <span style="font-weight:400">(visible on their status page)</span></div>
+                <div class="mock-note-area">We've received your submission. Please send your SOC 2 report to partners@canto.com to proceed with Certified review.</div>
+                <div class="mock-action-btn approve" style="margin-top:8px;display:inline-block">Save Note</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 12 — CSV EXPORT
+══════════════════════════════════ -->
+<div class="screen-wrap">
+  <div class="screen-label">
+    <div class="screen-num green">12</div>
+    <div><div class="screen-title">Export to CSV</div><div class="screen-sub">One click from the admin view downloads all submissions with every field mapped — opens cleanly in Excel.</div></div>
+    <span class="screen-badge internal">Internal only</span>
+  </div>
+  <div class="screen-frame">
+    <div class="mock-nav">
+      <div class="mock-nav-logo"><div class="mock-logo-mark">C</div><span class="mock-logo-text">Canto</span></div>
+      <span class="mock-nav-center">Integration Partner Portal</span>
+      <div class="mock-nav-tabs"><div class="mock-tab">Submit Integration</div><div class="mock-tab">Check Status</div><div class="mock-tab active">Admin</div></div>
+    </div>
+    <div class="mock-body">
+      <div style="background:white;border:1px solid var(--g100);border-radius:14px;padding:32px;text-align:center;box-shadow:0 2px 10px rgba(15,31,61,0.05);">
+        <div style="font-size:36px;margin-bottom:16px;">📊</div>
+        <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--navy);margin-bottom:8px;">CSV Export — All Submissions</div>
+        <div style="font-size:13px;color:var(--g400);line-height:1.6;max-width:480px;margin:0 auto 24px;">One click from the Admin panel downloads a <strong style="color:var(--g600)">canto-partner-submissions-[date].csv</strong> file with all submissions. Opens directly in Excel with columns pre-mapped.</div>
+        <div style="background:var(--g50);border:1px solid var(--g100);border-radius:10px;padding:16px;text-align:left;max-width:540px;margin:0 auto;font-size:11px;color:var(--g600);line-height:1.8;">
+          <strong style="color:var(--navy)">Columns exported:</strong> Token · Submitted Date · Status · Tier · Company · Website · Contact Name · Email · Integration Name · Category · Canto Product · Direction · Integration Type · Auth Method · Data Types · Setup Time · Complexity · Demo URL · Sandbox URL · API Docs URL · Spec URL · Security URL · Certifications · Pricing Model · Pricing Range · Verticals · Mutual Customers · Install Count · Problem Statement · ICP · Vendor Notes · Admin Notes
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="max-width:900px;margin:0 auto;text-align:center;padding-top:24px;border-top:1px solid var(--g200);">
+  <div style="font-size:12px;color:var(--g400);">Canto Integration Partner Portal · Screen Walkthrough · Internal Review Document · April 2026</div>
+</div>
+
+</body>
+</html>
