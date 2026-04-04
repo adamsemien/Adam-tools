@@ -142,6 +142,39 @@ html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;background:var(
 
 @media(max-width:900px){.shell{grid-template-columns:1fr;}.sidebar{display:none;}.tools-grid,.tools-grid-2{grid-template-columns:1fr 1fr;}.stats-row{grid-template-columns:1fr 1fr;}}
 @media(max-width:560px){.content{padding:20px;}.tools-grid,.tools-grid-2{grid-template-columns:1fr;}}
+
+/* ── FILE MANAGER ───────────────────────────────────────── */
+.fm-token-bar{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:13px 16px;margin-bottom:14px;}
+.fm-token-bar label{font-size:11px;font-weight:600;color:var(--navy);white-space:nowrap;min-width:88px;}
+.fm-token-input{flex:1;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--navy);background:var(--cream);outline:none;letter-spacing:0.04em;}
+.fm-token-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(217,90,0,0.08);}
+.fm-token-btn{font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;background:var(--orange);color:#fff;border:none;border-radius:6px;padding:7px 14px;cursor:pointer;white-space:nowrap;transition:opacity 0.15s;}
+.fm-token-btn:hover{opacity:0.88;}
+.fm-token-ok{font-size:11px;color:#16A34A;font-weight:600;}
+.fm-token-clear{font-size:11px;color:var(--muted);text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;}
+.fm-drop{border:2px dashed var(--orange-bd);border-radius:12px;background:var(--orange-bg);padding:40px 24px;text-align:center;transition:all 0.15s;cursor:pointer;margin-bottom:14px;position:relative;}
+.fm-drop.drag-over{border-color:var(--orange);background:#FEE8D8;box-shadow:0 0 0 4px rgba(217,90,0,0.12);}
+.fm-drop-icon{font-size:32px;margin-bottom:10px;display:block;}
+.fm-drop-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;color:var(--navy);margin-bottom:4px;}
+.fm-drop-sub{font-size:11px;color:var(--muted);}
+.fm-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.fm-list{display:flex;flex-direction:column;gap:8px;}
+.fm-file-row{background:var(--white);border:1px solid var(--border);border-radius:9px;padding:12px 14px;display:flex;align-items:center;gap:12px;}
+.fm-file-icon{font-size:20px;flex-shrink:0;}
+.fm-file-info{flex:1;min-width:0;}
+.fm-file-name{font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fm-file-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.fm-file-actions{display:flex;gap:6px;flex-shrink:0;}
+.fm-btn{font-size:10px;font-weight:600;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--white);color:var(--navy);cursor:pointer;transition:all 0.12s;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-family:'Plus Jakarta Sans',sans-serif;}
+.fm-btn:hover{border-color:var(--orange-bd);color:var(--orange);}
+.fm-btn.primary{background:var(--orange);color:#fff;border-color:var(--orange);}
+.fm-btn.primary:hover{opacity:0.88;color:#fff;}
+.fm-status{font-size:10px;font-weight:600;padding:3px 9px;border-radius:5px;white-space:nowrap;}
+.fm-status.deploying{background:#FEF9C3;color:#854D0E;}
+.fm-status.live{background:#F0FAF4;color:#166534;}
+.fm-status.error{background:#FEF2F2;color:#991B1B;}
+.fm-empty{text-align:center;padding:28px 20px;font-size:12px;color:var(--muted);background:var(--white);border:1px dashed var(--border);border-radius:9px;}
+.fm-no-token{background:#FFF3EC;border:1px solid var(--orange-bd);border-radius:9px;padding:13px 16px;font-size:12px;color:var(--orange);font-weight:500;margin-bottom:14px;display:none;}
 </style>
 </head>
 <body>
@@ -169,6 +202,11 @@ html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;background:var(
     <div class="nav-section">
       <div class="nav-label">No Bad Company</div>
       <a class="nav-link" href="#nbc"><div class="nav-dot dot-pink"></div>Newsletter App</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">File Manager</div>
+      <a class="nav-link" href="#file-manager"><div class="nav-dot dot-teal"></div>Deploy HTML Files</a>
     </div>
 
     <div class="nav-section">
@@ -305,6 +343,40 @@ html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;background:var(
         </div>
       </div>
 
+      <!-- FILE MANAGER -->
+      <div class="project-section" id="file-manager">
+        <div class="project-header">
+          <div class="project-badge pb-teal">📁</div>
+          <div>
+            <div class="project-name">File Manager</div>
+            <div class="project-desc">Drop any HTML file — it commits to GitHub and goes live at adam-tools.netlify.app/filename within ~30s</div>
+          </div>
+          <div class="project-count" id="fm-count">0 files</div>
+        </div>
+
+        <!-- Token bar -->
+        <div class="fm-no-token" id="fm-no-token">⚠ Paste your GitHub personal access token below before dropping files. Token needs <strong>repo</strong> scope.</div>
+        <div class="fm-token-bar">
+          <label>GitHub Token</label>
+          <input class="fm-token-input" id="fm-token-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false" />
+          <button class="fm-token-btn" id="fm-token-save">Save</button>
+          <span id="fm-token-status"></span>
+        </div>
+
+        <!-- Drop zone -->
+        <div class="fm-drop" id="fm-drop">
+          <input type="file" id="fm-file-input" accept=".html,.htm" multiple />
+          <span class="fm-drop-icon">📂</span>
+          <div class="fm-drop-title">Drop HTML files here</div>
+          <div class="fm-drop-sub">or click to browse · files go live at adam-tools.netlify.app/filename.html</div>
+        </div>
+
+        <!-- File list -->
+        <div class="fm-list" id="fm-list">
+          <div class="fm-empty" id="fm-empty">No files uploaded yet. Drop an HTML file above to deploy it.</div>
+        </div>
+      </div>
+
       <div style="text-align:center;padding:12px 0 4px;font-size:11px;color:var(--muted);">
         Built with Claude · adam-tools.netlify.app · Auto-deploys from GitHub on every commit
       </div>
@@ -312,5 +384,242 @@ html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;background:var(
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  const REPO = 'adamsemien/Adam-tools';
+  const BRANCH = 'main';
+  const BASE_URL = 'https://adam-tools.netlify.app/';
+  const STORAGE_TOKEN = 'fm_gh_token';
+  const STORAGE_FILES = 'fm_files';
+
+  // ── State ──────────────────────────────────────────────
+  let ghToken = localStorage.getItem(STORAGE_TOKEN) || '';
+  let files = JSON.parse(localStorage.getItem(STORAGE_FILES) || '[]');
+
+  // ── Elements ───────────────────────────────────────────
+  const tokenInput   = document.getElementById('fm-token-input');
+  const tokenSave    = document.getElementById('fm-token-save');
+  const tokenStatus  = document.getElementById('fm-token-status');
+  const noTokenMsg   = document.getElementById('fm-no-token');
+  const dropZone     = document.getElementById('fm-drop');
+  const fileInput    = document.getElementById('fm-file-input');
+  const fileList     = document.getElementById('fm-list');
+  const emptyMsg     = document.getElementById('fm-empty');
+  const countBadge   = document.getElementById('fm-count');
+
+  // ── Token ──────────────────────────────────────────────
+  function initToken() {
+    if (ghToken) {
+      tokenInput.value = '•'.repeat(20);
+      tokenStatus.innerHTML = '<span class="fm-token-ok">✓ Token saved</span>&nbsp;<button class="fm-token-clear" id="fm-token-clear">Clear</button>';
+      document.getElementById('fm-token-clear').addEventListener('click', clearToken);
+      noTokenMsg.style.display = 'none';
+    } else {
+      noTokenMsg.style.display = 'block';
+    }
+  }
+
+  tokenSave.addEventListener('click', () => {
+    const val = tokenInput.value.trim();
+    if (!val || val.startsWith('•')) return;
+    ghToken = val;
+    localStorage.setItem(STORAGE_TOKEN, ghToken);
+    tokenInput.value = '•'.repeat(20);
+    tokenStatus.innerHTML = '<span class="fm-token-ok">✓ Token saved</span>&nbsp;<button class="fm-token-clear" id="fm-token-clear">Clear</button>';
+    document.getElementById('fm-token-clear').addEventListener('click', clearToken);
+    noTokenMsg.style.display = 'none';
+  });
+
+  tokenInput.addEventListener('keydown', e => { if (e.key === 'Enter') tokenSave.click(); });
+
+  function clearToken() {
+    ghToken = '';
+    localStorage.removeItem(STORAGE_TOKEN);
+    tokenInput.value = '';
+    tokenStatus.innerHTML = '';
+    noTokenMsg.style.display = 'block';
+  }
+
+  // ── Drag & Drop ────────────────────────────────────────
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    handleFiles([...e.dataTransfer.files]);
+  });
+  fileInput.addEventListener('change', () => {
+    handleFiles([...fileInput.files]);
+    fileInput.value = '';
+  });
+
+  // ── File handling ──────────────────────────────────────
+  async function handleFiles(fileObjs) {
+    if (!ghToken) { noTokenMsg.style.display = 'block'; noTokenMsg.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    for (const f of fileObjs) {
+      if (!f.name.match(/\.(html|htm)$/i)) { alert(`Skipped "${f.name}" — only HTML files are supported.`); continue; }
+      await pushFile(f);
+    }
+  }
+
+  async function pushFile(f) {
+    const filename = f.name.replace(/\s+/g, '-').toLowerCase();
+    const fileUrl = BASE_URL + filename;
+    const now = new Date().toISOString();
+
+    // Add to list immediately as "deploying"
+    const entry = { filename, fileUrl, pushedAt: now, status: 'deploying' };
+    files = [entry, ...files.filter(x => x.filename !== filename)];
+    saveFiles();
+    renderList();
+
+    try {
+      const content = await readFileAsBase64(f);
+
+      // Check if file already exists (need SHA to update)
+      let sha = null;
+      try {
+        const check = await ghFetch(`contents/${filename}`);
+        if (check.sha) sha = check.sha;
+      } catch(e) { /* new file */ }
+
+      // Commit via GitHub API
+      const body = { message: `deploy: add ${filename}`, content, branch: BRANCH };
+      if (sha) body.sha = sha;
+      await ghFetch(`contents/${filename}`, 'PUT', body);
+
+      // Start polling
+      pollLive(filename, fileUrl);
+    } catch(err) {
+      updateFileStatus(filename, 'error', err.message || 'Push failed');
+    }
+  }
+
+  async function pollLive(filename, fileUrl) {
+    const start = Date.now();
+    const maxWait = 90000; // 90s timeout
+    const interval = 5000;
+
+    async function check() {
+      try {
+        // Try fetching the file — use no-store to bypass cache
+        const res = await fetch(fileUrl + '?_=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+        if (res.ok) {
+          updateFileStatus(filename, 'live');
+          return;
+        }
+      } catch(e) { /* not up yet */ }
+
+      if (Date.now() - start < maxWait) {
+        setTimeout(check, interval);
+      } else {
+        // After 90s assume live (Netlify is usually < 30s)
+        updateFileStatus(filename, 'live');
+      }
+    }
+
+    setTimeout(check, 8000); // First check after 8s
+  }
+
+  function updateFileStatus(filename, status, errorMsg) {
+    files = files.map(f => f.filename === filename ? { ...f, status, errorMsg } : f);
+    saveFiles();
+    renderList();
+  }
+
+  // ── GitHub API ─────────────────────────────────────────
+  async function ghFetch(path, method = 'GET', body = null) {
+    const opts = {
+      method,
+      headers: {
+        Authorization: `Bearer ${ghToken}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      }
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(`https://api.github.com/repos/${REPO}/${path}`, opts);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `GitHub API error ${res.status}`);
+    }
+    return res.json();
+  }
+
+  function readFileAsBase64(f) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(f);
+    });
+  }
+
+  // ── Render ─────────────────────────────────────────────
+  function renderList() {
+    countBadge.textContent = files.length + (files.length === 1 ? ' file' : ' files');
+
+    if (files.length === 0) {
+      fileList.innerHTML = '';
+      fileList.appendChild(emptyMsg);
+      return;
+    }
+
+    emptyMsg.remove();
+    fileList.innerHTML = files.map(f => {
+      const date = new Date(f.pushedAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+      const statusHtml = f.status === 'live'
+        ? `<span class="fm-status live">Live ✓</span>`
+        : f.status === 'error'
+        ? `<span class="fm-status error" title="${escHtml(f.errorMsg || 'Error')}">Error ✕</span>`
+        : `<span class="fm-status deploying">Deploying…</span>`;
+
+      return `<div class="fm-file-row">
+        <div class="fm-file-icon">📄</div>
+        <div class="fm-file-info">
+          <div class="fm-file-name">${escHtml(f.filename)}</div>
+          <div class="fm-file-meta">Pushed ${date}</div>
+        </div>
+        ${statusHtml}
+        <div class="fm-file-actions">
+          <button class="fm-btn" onclick="fmCopyLink('${escHtml(f.fileUrl)}', this)">⎘ Copy link</button>
+          <a class="fm-btn" href="${escHtml(f.fileUrl)}" target="_blank" rel="noopener">↗ Preview</a>
+          <button class="fm-btn" onclick="fmDelete('${escHtml(f.filename)}')" title="Remove from list">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function saveFiles() {
+    localStorage.setItem(STORAGE_FILES, JSON.stringify(files));
+  }
+
+  // ── Public helpers (called from inline onclick) ────────
+  window.fmCopyLink = function(url, btn) {
+    navigator.clipboard.writeText(url).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      btn.style.color = '#16A34A';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 1500);
+    });
+  };
+
+  window.fmDelete = function(filename) {
+    files = files.filter(f => f.filename !== filename);
+    saveFiles();
+    renderList();
+  };
+
+  // ── Init ───────────────────────────────────────────────
+  initToken();
+  renderList();
+})();
+</script>
 </body>
 </html>
