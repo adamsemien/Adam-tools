@@ -529,6 +529,28 @@ body.workspace-nbc .modal-title{font-style:italic;font-weight:400}
   display:flex;justify-content:space-between;align-items:flex-start;
   margin-bottom:28px;
 }
+
+/* ===== TOOL MODAL — URL + ANALYZE ===== */
+.url-row{display:flex;gap:8px;align-items:stretch}
+.url-row .modal-input{flex:1}
+.btn-analyze{padding:0 16px;background:var(--accent);color:#fff;border:none;border-radius:var(--card-radius,8px);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;letter-spacing:0.02em;transition:opacity 150ms;flex-shrink:0}
+.btn-analyze:hover{opacity:0.85}
+.btn-analyze:disabled{opacity:0.45;cursor:default}
+body.workspace-nbc .btn-analyze{border-radius:2px;text-transform:uppercase;font-size:10px;letter-spacing:0.1em}
+.analyze-state{font-size:11px;min-height:16px;margin-top:5px;color:var(--text-muted)}
+.field-filled{border-color:var(--accent) !important;background:rgba(var(--accent-rgb),0.04) !important;transition:border-color 200ms,background 200ms}
+
+/* ===== MOVE POPOVER ===== */
+.move-popover{position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,0.28);z-index:600;min-width:136px;padding:4px;opacity:0;transform:scale(0.95) translateY(-4px);transition:opacity 140ms,transform 140ms;pointer-events:none}
+.move-popover.visible{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
+body.workspace-nbc .move-popover{border-radius:4px}
+.move-popover-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);padding:6px 10px 2px;font-family:inherit}
+.move-popover-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:5px;font-size:12px;cursor:pointer;color:var(--text-secondary);width:100%;background:none;border:none;font-family:inherit;text-align:left;transition:background 120ms,color 120ms}
+.move-popover-item:hover{background:var(--surface-2);color:var(--text-primary)}
+.move-ws-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+body.workspace-nbc .move-popover-item{border-radius:2px;font-size:11px}
+.btn-move{opacity:0.55}
+.btn-move:hover{opacity:1}
 </style>
 </head>
 <body class="workspace-canto">
@@ -679,6 +701,50 @@ body.workspace-nbc .modal-title{font-style:italic;font-weight:400}
     <div class="modal-footer">
       <button class="btn-ghost" onclick="testConnectionModal()">Test Connection</button>
       <button class="btn-add" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD TOOL MODAL -->
+<div class="modal-overlay" id="tool-modal" onclick="closeOnOverlay(event,'tool-modal')">
+  <div class="modal-card">
+    <div class="modal-header">
+      <span class="modal-title">Add Tool</span>
+      <button class="modal-close" onclick="closeModal('tool-modal')">&#x2715;</button>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">URL</label>
+      <div class="url-row">
+        <input class="modal-input" type="url" id="tool-url-input" placeholder="https://... or /filename.html" oninput="onToolUrlChange(this.value)">
+        <button class="btn-analyze" id="analyze-btn" onclick="analyzeTool()">✦ Analyze</button>
+      </div>
+      <div class="analyze-state" id="analyze-state"></div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Name</label>
+      <input class="modal-input" type="text" id="tool-name-input" placeholder="Tool name">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">Description</label>
+      <textarea class="modal-input modal-textarea" id="tool-desc-input" placeholder="What does this tool do?" style="min-height:72px"></textarea>
+    </div>
+    <div class="modal-field" style="display:flex;gap:12px">
+      <div style="flex:1">
+        <label class="modal-label">Category</label>
+        <select class="modal-input" id="tool-cat-input"></select>
+      </div>
+      <div style="flex:1">
+        <label class="modal-label">Type</label>
+        <select class="modal-input" id="tool-type-input">
+          <option value="Built in Claude">Built in Claude</option>
+          <option value="External tool">External tool</option>
+          <option value="Deployed file">Deployed file</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('tool-modal')">Cancel</button>
+      <button class="btn-add" onclick="saveTool()">Add Tool</button>
     </div>
   </div>
 </div>
@@ -863,14 +929,15 @@ function esc(str) {
 function renderTools() {
   var tools = getTools(activeWorkspace) || [];
   var ws = activeWorkspace;
-  var html = '<div class="section-header-row"><div><h1 class="section-title">Tools</h1><p class="section-subtitle">Your workspace toolkit</p></div></div>';
+  var html = '<div class="section-header-row"><div><h1 class="section-title">Tools</h1><p class="section-subtitle">Your workspace toolkit</p></div>' +
+    '<button class="btn-add" onclick="openToolModal()">+ Add Tool</button></div>';
 
   if (tools.length === 0) {
     return html + '<div class="empty-state">' +
       '<div class="empty-icon">&#x229E;</div>' +
       '<div class="empty-title">No tools yet</div>' +
       '<div class="empty-sub">Drop an HTML file or add a link to get started</div>' +
-      '<button class="btn-cta" onclick="toggleDrawer()">Add your first tool</button>' +
+      '<button class="btn-cta" onclick="openToolModal()">Add your first tool</button>' +
       '</div>';
   }
 
@@ -884,6 +951,7 @@ function renderTools() {
           '<div class="nbc-row-type">' + esc(t.type || '') + '</div>' +
         '</div>' +
         '<div class="nbc-row-actions">' +
+          '<button class="btn-ghost btn-move" onclick="openMovePopover(event,\'' + t.id + '\')">Move &#x2192;</button>' +
           '<button class="btn-ghost" onclick="copyToClipboard(\'' + esc(t.url) + '\',this,\'Copy\')">Copy</button>' +
           '<button class="btn-ghost" onclick="deleteTool(\'' + t.id + '\')">Delete</button>' +
         '</div>' +
@@ -905,6 +973,7 @@ function renderTools() {
         '<div class="card-actions">' +
           '<a href="' + esc(t.url) + '" target="_blank" class="btn-open">Open &#x2197;</a>' +
           '<button class="btn-ghost" onclick="copyToClipboard(\'' + esc(t.url) + '\',this,\'Copy link\')">Copy link</button>' +
+          '<button class="btn-ghost btn-move" onclick="openMovePopover(event,\'' + t.id + '\')">Move</button>' +
           '<button class="btn-delete" onclick="deleteTool(\'' + t.id + '\')">&#x2715;</button>' +
         '</div>' +
       '</div>';
@@ -1344,6 +1413,154 @@ function closeOnOverlay(e, id) {
   if (e.target === document.getElementById(id)) closeModal(id);
 }
 
+/* ===== TOOL MODAL ===== */
+var WS_CATEGORIES = {
+  canto: ['Sales Tools','Partner Program','Internal','Strategy','Other'],
+  nbc: ['Newsletter','Content','Design','Ops','Other'],
+  personal: ['Project','Finance','Creative','Utility','Other']
+};
+
+function openToolModal() {
+  var cats = WS_CATEGORIES[activeWorkspace] || ['General','Other'];
+  var sel = document.getElementById('tool-cat-input');
+  sel.innerHTML = cats.map(function(c) { return '<option value="'+esc(c)+'">'+esc(c)+'</option>'; }).join('');
+  document.getElementById('tool-url-input').value = '';
+  document.getElementById('tool-name-input').value = '';
+  document.getElementById('tool-desc-input').value = '';
+  document.getElementById('analyze-state').textContent = '';
+  document.getElementById('analyze-state').style.color = '';
+  document.getElementById('analyze-btn').disabled = false;
+  ['tool-url-input','tool-name-input','tool-desc-input'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.classList.remove('field-filled');
+  });
+  openModal('tool-modal');
+  setTimeout(function() { document.getElementById('tool-url-input').focus(); }, 60);
+}
+
+function onToolUrlChange(url) {
+  if (!url) return;
+  // Auto-detect type from URL
+  if (url.includes('adam-tools.netlify.app') || (!url.startsWith('http') && url.match(/\.html?$/i))) {
+    document.getElementById('tool-type-input').value = 'Deployed file';
+  }
+}
+
+function analyzeTool() {
+  var url = document.getElementById('tool-url-input').value.trim();
+  if (!url) { document.getElementById('tool-url-input').focus(); return; }
+
+  var stateEl = document.getElementById('analyze-state');
+  var btn = document.getElementById('analyze-btn');
+  btn.disabled = true;
+  stateEl.style.color = 'var(--text-muted)';
+  stateEl.textContent = 'Analyzing...';
+
+  fetch('/.netlify/functions/describe-tool', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({url: url})
+  }).then(function(r) {
+    if (!r.ok) throw new Error('status ' + r.status);
+    return r.json();
+  }).then(function(data) {
+    var filled = false;
+    if (data.name) {
+      var n = document.getElementById('tool-name-input');
+      n.value = data.name; n.classList.add('field-filled'); filled = true;
+    }
+    if (data.desc) {
+      var d = document.getElementById('tool-desc-input');
+      d.value = data.desc; d.classList.add('field-filled');
+    }
+    if (data.type) { document.getElementById('tool-type-input').value = data.type; }
+    stateEl.style.color = filled ? '#4ade80' : 'var(--text-muted)';
+    stateEl.textContent = filled ? 'Filled by AI ✓  — edit if needed' : 'Could not extract info. Fill in manually.';
+    btn.disabled = false;
+  }).catch(function() {
+    stateEl.style.color = 'var(--text-muted)';
+    stateEl.textContent = 'Could not reach page — fill in manually.';
+    btn.disabled = false;
+  });
+}
+
+function saveTool() {
+  var name = document.getElementById('tool-name-input').value.trim();
+  if (!name) { document.getElementById('tool-name-input').focus(); return; }
+  var tools = getTools(activeWorkspace) || [];
+  tools.unshift({
+    id: uid(),
+    name: name,
+    url: document.getElementById('tool-url-input').value.trim(),
+    desc: document.getElementById('tool-desc-input').value.trim(),
+    category: document.getElementById('tool-cat-input').value,
+    type: document.getElementById('tool-type-input').value,
+    created: Date.now()
+  });
+  setTools(activeWorkspace, tools);
+  closeModal('tool-modal');
+  renderSection();
+}
+
+/* ===== MOVE TOOL ===== */
+var _movePopover = null;
+
+function openMovePopover(e, id) {
+  e.stopPropagation();
+  closeMovePopover();
+
+  var rect = e.currentTarget.getBoundingClientRect();
+  var pop = document.createElement('div');
+  pop.className = 'move-popover';
+  pop.id = 'move-popover-el';
+  pop.style.top = (rect.bottom + 6) + 'px';
+  pop.style.left = rect.left + 'px';
+
+  var label = document.createElement('div');
+  label.className = 'move-popover-label';
+  label.textContent = 'Move to workspace';
+  pop.appendChild(label);
+
+  var WS_META = [
+    {id:'canto', label:'Canto', color:'#D95A00'},
+    {id:'nbc', label:'No Bad Company', color:'#BC311D'},
+    {id:'personal', label:'Personal', color:'#2C5F4A'}
+  ];
+
+  WS_META.filter(function(w) { return w.id !== activeWorkspace; }).forEach(function(w) {
+    var btn = document.createElement('button');
+    btn.className = 'move-popover-item';
+    btn.innerHTML = '<span class="move-ws-dot" style="background:'+w.color+'"></span>' + w.label;
+    btn.onclick = function(ev) { ev.stopPropagation(); moveTool(id, w.id); closeMovePopover(); };
+    pop.appendChild(btn);
+  });
+
+  document.body.appendChild(pop);
+  _movePopover = pop;
+  requestAnimationFrame(function() { pop.classList.add('visible'); });
+
+  setTimeout(function() {
+    document.addEventListener('click', closeMovePopover, {once: true});
+  }, 0);
+}
+
+function closeMovePopover() {
+  var el = document.getElementById('move-popover-el');
+  if (el) el.remove();
+  _movePopover = null;
+}
+
+function moveTool(id, targetWs) {
+  var tools = getTools(activeWorkspace) || [];
+  var tool = tools.find(function(t) { return t.id === id; });
+  if (!tool) return;
+  setTools(activeWorkspace, tools.filter(function(t) { return t.id !== id; }));
+  var dest = getTools(targetWs) || [];
+  tool.workspace = targetWs;
+  dest.unshift(tool);
+  setTools(targetWs, dest);
+  renderSection();
+}
+
 /* ===== KEYBOARD SHORTCUTS ===== */
 document.addEventListener('keydown', function(e) {
   var meta = e.metaKey || e.ctrlKey;
@@ -1351,8 +1568,9 @@ document.addEventListener('keydown', function(e) {
   if (meta && e.key === '2') { e.preventDefault(); switchWorkspace('nbc'); }
   if (meta && e.key === '3') { e.preventDefault(); switchWorkspace('personal'); }
   if (e.key === 'Escape') {
+    closeMovePopover();
     if (drawerOpen) toggleDrawer();
-    ['settings-modal','prompt-modal'].forEach(function(id) {
+    ['settings-modal','prompt-modal','tool-modal'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el && el.classList.contains('open')) closeModal(id);
     });
