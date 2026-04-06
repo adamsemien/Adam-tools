@@ -7,6 +7,15 @@
   var tools = [
     {
       id: Math.random().toString(36).slice(2) + Date.now().toString(36),
+      name: 'Master Partner Plan 2026',
+      url: 'https://adam-tools.netlify.app/canto-master-plan-2026.html',
+      desc: 'Complete FY2026 partner acquisition plan — monthly calendar, full strategy, and partner prospecting with scored agencies and outreach sequences.',
+      category: 'Strategy',
+      type: 'Deployed file',
+      created: Date.now()
+    },
+    {
+      id: Math.random().toString(36).slice(2) + Date.now().toString(36),
       name: 'Integration Marketplace',
       url: 'https://adam-tools.netlify.app/canto-marketplace-v5.html',
       desc: '36+ integration cards across E-Commerce, CMS, PIM, Social, and ERP. ICP context per card, partner program tab, integration request modal.',

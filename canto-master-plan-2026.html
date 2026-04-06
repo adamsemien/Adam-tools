@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canto Master Partner Plan 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0F1B2D;
+    overflow: hidden;
+  }
+
+  /* ── MASTER NAV ── */
+  .master-nav {
+    height: 54px;
+    background: #0F1B2D;
+    border-bottom: 2px solid #D95A00;
+    display: flex;
+    align-items: center;
+    padding: 0 24px 0 28px;
+    gap: 0;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    justify-content: space-between;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+
+  .master-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: #00B09B;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .master-subtitle {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.28);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding-left: 20px;
+  }
+
+  .tab-group {
+    display: flex;
+    height: 54px;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .tab-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 22px;
+    height: 100%;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    color: rgba(255,255,255,0.38);
+    cursor: pointer;
+    transition: color 0.14s, background 0.14s, border-color 0.14s;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .tab-btn:hover {
+    color: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .tab-btn.active {
+    color: #D95A00;
+    border-bottom-color: #D95A00;
+    background: rgba(217,90,0,0.06);
+  }
+
+  .tab-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  .tab-btn.active .tab-dot { opacity: 1; }
+
+  /* ── LOADING INDICATOR ── */
+  .loading-bar {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00B09B, #D95A00);
+    z-index: 999;
+    width: 0;
+    transition: width 0.3s ease;
+    opacity: 0;
+  }
+
+  .loading-bar.loading {
+    opacity: 1;
+    animation: loadBar 1.8s ease-in-out infinite;
+  }
+
+  @keyframes loadBar {
+    0%   { width: 0; margin-left: 0; }
+    40%  { width: 60%; margin-left: 0; }
+    60%  { width: 25%; margin-left: 75%; }
+    100% { width: 0; margin-left: 100%; }
+  }
+
+  /* ── FRAME AREA ── */
+  .frame-container {
+    position: fixed;
+    top: 54px;
+    left: 0; right: 0; bottom: 0;
+  }
+
+  .frame-panel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+  }
+
+  .frame-panel.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .frame-panel iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: #F7F3EE;
+  }
+
+  /* ── LOADING OVERLAY ── */
+  .frame-loading {
+    position: absolute;
+    inset: 0;
+    background: #0F1B2D;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+  }
+
+  .frame-loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .frame-loading-logo {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: #00B09B;
+  }
+
+  .frame-loading-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid rgba(255,255,255,0.08);
+    border-top-color: #D95A00;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<nav class="master-nav">
+  <div class="nav-left">
+    <div class="master-title">Canto Partner Plan</div>
+    <div class="master-subtitle">FY2026 — Complete Acquisition Strategy</div>
+  </div>
+  <div class="tab-group">
+    <button class="tab-btn active" data-panel="monthly" onclick="switchPanel('monthly', this)">
+      <span class="tab-dot"></span>Monthly Plan
+    </button>
+    <button class="tab-btn" data-panel="strategy" onclick="switchPanel('strategy', this)">
+      <span class="tab-dot"></span>Partner Strategy
+    </button>
+    <button class="tab-btn" data-panel="prospecting" onclick="switchPanel('prospecting', this)">
+      <span class="tab-dot"></span>Partner Prospecting
+    </button>
+  </div>
+</nav>
+
+<div class="loading-bar" id="loading-bar"></div>
+
+<div class="frame-container">
+
+  <!-- MONTHLY PLAN -->
+  <div class="frame-panel active" id="panel-monthly">
+    <div class="frame-loading" id="loading-monthly">
+      <div class="frame-loading-logo">Canto</div>
+      <div class="spinner"></div>
+      <div class="frame-loading-sub">Loading Monthly Plan...</div>
+    </div>
+    <iframe
+      src="https://adam-tools.netlify.app/canto-monthly-plan-2026.html"
+      title="Monthly Plan"
+      onload="frameLoaded('monthly')"
+    ></iframe>
+  </div>
+
+  <!-- PARTNER STRATEGY -->
+  <div class="frame-panel" id="panel-strategy">
+    <div class="frame-loading" id="loading-strategy">
+      <div class="frame-loading-logo">Canto</div>
+      <div class="spinner"></div>
+      <div class="frame-loading-sub">Loading Partner Strategy...</div>
+    </div>
+    <iframe
+      src="https://adam-tools.netlify.app/canto-partner-plan-2026.html"
+      title="Partner Strategy"
+      onload="frameLoaded('strategy')"
+    ></iframe>
+  </div>
+
+  <!-- PARTNER PROSPECTING -->
+  <div class="frame-panel" id="panel-prospecting">
+    <div class="frame-loading" id="loading-prospecting">
+      <div class="frame-loading-logo">Canto</div>
+      <div class="spinner"></div>
+      <div class="frame-loading-sub">Loading Partner Prospecting...</div>
+    </div>
+    <iframe
+      src="https://adam-tools.netlify.app/partner-tool-v2.html"
+      title="Partner Prospecting"
+      onload="frameLoaded('prospecting')"
+    ></iframe>
+  </div>
+
+</div>
+
+<script>
+  var activePanel = 'monthly';
+
+  function switchPanel(id, btn) {
+    if (id === activePanel) return;
+    activePanel = id;
+
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+
+    document.querySelectorAll('.frame-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+
+  function frameLoaded(id) {
+    var overlay = document.getElementById('loading-' + id);
+    if (overlay) overlay.classList.add('hidden');
+  }
+
+  // Keyboard shortcuts: 1/2/3 to switch tabs
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    var map = { '1': 'monthly', '2': 'strategy', '3': 'prospecting' };
+    if (map[e.key]) {
+      var panel = map[e.key];
+      var btn = document.querySelector('[data-panel="' + panel + '"]');
+      if (btn) switchPanel(panel, btn);
+    }
+  });
+</script>
+</body>
+</html>
