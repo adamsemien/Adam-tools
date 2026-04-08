@@ -1107,6 +1107,470 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   height: 1px; background: var(--border); margin: 8px 0 24px;
   max-width: 100%;
 }
+
+/* ─── SALES ENABLEMENT SECTIONS ──────────────────────────────── */
+
+/* Signal Question Banner */
+.signal-section {
+  background: linear-gradient(135deg, var(--navy) 0%, #162844 60%, #1a3560 100%);
+  padding: 60px 32px;
+  position: relative; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.signal-section::before {
+  content: '';
+  position: absolute; top: -80px; right: -40px;
+  width: 440px; height: 440px;
+  background: radial-gradient(circle, rgba(217,90,0,0.14) 0%, transparent 68%);
+  pointer-events: none;
+}
+.signal-inner {
+  max-width: 820px; margin: 0 auto;
+  text-align: center; position: relative;
+}
+.signal-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--orange-light);
+  margin-bottom: 22px;
+  background: rgba(217,90,0,0.15); border: 1px solid rgba(217,90,0,0.25);
+  padding: 5px 16px; border-radius: 20px;
+}
+.signal-quote {
+  font-size: 32px; font-weight: 800; color: white;
+  letter-spacing: -1.2px; line-height: 1.15;
+  margin: 0 0 20px; font-style: normal;
+}
+.signal-sub {
+  font-size: 15px; color: rgba(255,255,255,0.48);
+  line-height: 1.7; max-width: 540px; margin: 0 auto;
+}
+@media (max-width: 640px) {
+  .signal-section { padding: 44px 16px; }
+  .signal-quote { font-size: 22px; }
+}
+
+/* Enablement section wrappers */
+.enable-section {
+  padding: 56px 32px;
+  background: var(--bg);
+}
+.enable-section.alt-bg { background: white; }
+.enable-inner { max-width: 1240px; margin: 0 auto; }
+.enable-header { margin-bottom: 32px; }
+.enable-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--orange);
+  margin-bottom: 6px;
+}
+.enable-title {
+  font-size: 22px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.5px; line-height: 1.2;
+}
+.enable-sub {
+  font-size: 14px; color: var(--muted);
+  margin-top: 6px; line-height: 1.6; max-width: 620px;
+}
+.enable-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  align-items: start;
+}
+@media (max-width: 860px) { .enable-cols { grid-template-columns: 1fr; gap: 28px; } }
+@media (max-width: 640px) { .enable-section { padding: 40px 16px; } }
+
+/* Rep Playbook steps */
+.playbook-steps { display: flex; flex-direction: column; gap: 10px; }
+.playbook-step {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 16px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.playbook-step:hover {
+  border-color: rgba(217,90,0,0.25);
+  box-shadow: 0 4px 16px rgba(217,90,0,0.06);
+}
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--navy); color: white;
+  font-size: 13px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.step-body { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* De-booking callout */
+.debooking-block {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a3560 100%);
+  border-radius: var(--radius); padding: 28px 28px 24px;
+  color: white;
+}
+.debooking-stat {
+  font-size: 40px; font-weight: 800; color: var(--orange-light);
+  letter-spacing: -1.5px; line-height: 1; margin-bottom: 8px;
+}
+.debooking-label {
+  font-size: 17px; font-weight: 700; color: white;
+  letter-spacing: -0.3px; margin-bottom: 12px;
+}
+.debooking-body {
+  font-size: 13.5px; color: rgba(255,255,255,0.55);
+  line-height: 1.65;
+}
+
+/* Partner Spectrum table */
+.spectrum-table {
+  width: 100%; border-collapse: collapse;
+  border-radius: var(--radius); overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.spectrum-table th {
+  background: var(--navy); color: white;
+  padding: 12px 16px; text-align: left;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+.spectrum-table td {
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--text-2);
+  vertical-align: top; background: white;
+  line-height: 1.55;
+}
+.spectrum-table tr:last-child td { border-bottom: none; }
+.spectrum-table tr:nth-child(even) td { background: var(--bg); }
+.tier-cell { display: flex; align-items: center; gap: 10px; }
+.tier-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  font-size: 11px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.tier-1 { background: #059669; }
+.tier-2 { background: #2563EB; }
+.tier-3 { background: #7C3AED; }
+.tier-4 { background: #D97706; }
+.tier-name { font-weight: 700; color: var(--text); }
+
+/* Native integrations list */
+.native-callout {
+  background: white; border: 1.5px solid var(--green-border);
+  border-radius: var(--radius); padding: 24px 24px 20px;
+  background: linear-gradient(135deg, white 80%, var(--green-bg) 100%);
+}
+.native-callout-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--green); margin-bottom: 6px;
+}
+.native-callout-title {
+  font-size: 16px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.3px; margin-bottom: 4px;
+}
+.native-callout-sub {
+  font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5;
+}
+.native-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.native-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; border: 1.5px solid var(--green-border);
+  border-radius: 8px; padding: 7px 13px;
+  font-size: 13px; font-weight: 600; color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.native-chip-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0;
+}
+
+/* Funded / Bespoke examples */
+.examples-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 14px;
+}
+.example-card {
+  border-radius: var(--radius); padding: 20px;
+  border: 1.5px solid var(--border); background: white;
+}
+.example-card-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.example-card-name {
+  font-size: 15px; font-weight: 800; color: var(--text);
+  letter-spacing: -0.3px; margin-bottom: 8px;
+}
+.example-card-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.example-card-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; padding: 2px 9px;
+  border-radius: 20px; margin-top: 10px;
+}
+.funded-card {
+  border-color: rgba(124,58,237,0.2);
+  background: linear-gradient(135deg, white 75%, rgba(245,243,255,0.8) 100%);
+}
+.funded-card .example-card-label { color: var(--purple); }
+.funded-card .example-card-tag { background: var(--purple-bg); color: var(--purple); }
+.bespoke-card {
+  border-color: rgba(217,119,6,0.2);
+  background: linear-gradient(135deg, white 75%, rgba(255,251,235,0.8) 100%);
+}
+.bespoke-card .example-card-label { color: var(--yellow); }
+.bespoke-card .example-card-tag { background: var(--yellow-bg); color: var(--yellow); border: 1px solid var(--yellow-border); }
+
+/* New Edge partner highlight */
+.partner-highlight-card {
+  background: white; border: 1.5px solid rgba(37,99,235,0.2);
+  border-radius: var(--radius); padding: 24px;
+  background: linear-gradient(135deg, white 78%, rgba(239,246,255,0.8) 100%);
+}
+.partner-highlight-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: #1D4ED8;
+  background: var(--blue-bg); border: 1px solid var(--blue-border);
+  padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+}
+.partner-highlight-name {
+  font-size: 20px; font-weight: 800; color: var(--navy);
+  letter-spacing: -0.4px; margin-bottom: 4px;
+}
+.partner-highlight-price {
+  font-size: 14px; font-weight: 700; color: var(--text-2); margin-bottom: 12px;
+}
+.partner-highlight-price strong { color: var(--orange); }
+.partner-highlight-body {
+  font-size: 13.5px; color: var(--muted); line-height: 1.65; margin-bottom: 14px;
+}
+.partner-highlight-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.partner-highlight-tag {
+  font-size: 12px; font-weight: 500; color: var(--text-2);
+  background: var(--bg); border: 1px solid var(--border);
+  padding: 3px 10px; border-radius: 20px;
+}
+
+/* Forms A and B */
+.form-section { padding: 56px 32px; }
+.form-section.rep-form-bg {
+  background: var(--orange-bg);
+  border-top: 2px solid var(--orange-border);
+}
+.form-section.partner-form-bg {
+  background: linear-gradient(135deg, var(--navy) 0%, #162844 60%, #1a3560 100%);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.form-inner { max-width: 720px; }
+.form-audience-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase; padding: 4px 12px; border-radius: 20px;
+  margin-bottom: 10px;
+}
+.rep-badge { background: rgba(217,90,0,0.15); border: 1px solid rgba(217,90,0,0.3); color: var(--orange); }
+.partner-badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
+.form-title-dark { font-size: 24px; font-weight: 800; color: var(--navy); letter-spacing: -0.6px; margin-bottom: 6px; }
+.form-title-light { font-size: 24px; font-weight: 800; color: white; letter-spacing: -0.6px; margin-bottom: 6px; }
+.form-sub-dark { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 28px; max-width: 580px; }
+.form-sub-light { font-size: 14px; color: rgba(255,255,255,0.48); line-height: 1.65; margin-bottom: 28px; max-width: 580px; }
+.form-grid { display: grid; gap: 14px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .form-row-2 { grid-template-columns: 1fr; } }
+.form-field { display: flex; flex-direction: column; gap: 5px; }
+.form-label-dark { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-2); }
+.form-label-light { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: rgba(255,255,255,0.45); }
+.form-ctrl-dark {
+  padding: 10px 14px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px; color: var(--text); background: white;
+  outline: none; transition: all 0.15s; width: 100%;
+}
+.form-ctrl-dark:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(217,90,0,0.08); }
+.form-ctrl-light {
+  padding: 10px 14px; border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px; color: white; background: rgba(255,255,255,0.07);
+  outline: none; transition: all 0.15s; width: 100%;
+}
+.form-ctrl-light:focus { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.1); }
+.form-ctrl-light::placeholder { color: rgba(255,255,255,0.28); }
+.form-ctrl-light option { background: #1e3352; color: white; }
+.form-submit-rep {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: white;
+  padding: 12px 26px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer; transition: background 0.15s; margin-top: 6px;
+}
+.form-submit-rep:hover { background: var(--orange-light); }
+.form-submit-partner {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: white; color: var(--navy);
+  padding: 12px 26px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer; transition: all 0.15s; margin-top: 6px;
+}
+.form-submit-partner:hover { background: rgba(255,255,255,0.88); }
+.form-note-dark { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+.form-note-light { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 10px; line-height: 1.5; }
+@media (max-width: 640px) { .form-section { padding: 40px 16px; } }
+
+/* Section divider line */
+.section-rule { height: 1px; background: var(--border); }
+
+/* ─── DIRECTION BADGES ───────────────────────────────────────── */
+.badge-direction {
+  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 3px; white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.dir-bidirectional   { background: #DBEAFE; color: #1D4ED8; }
+.dir-outbound        { background: #FFF3EC; color: #C2410C; }
+.dir-inbound         { background: #DCFCE7; color: #15803D; }
+.dir-inbound-manual  { background: #FFFBEB; color: #92400E; }
+.dir-configurable    { background: #F3F4F6; color: #374151; }
+.dir-coming-soon     { background: #FEF2F2; color: #991B1B; }
+.dir-na              { background: #F3F4F6; color: #6B7280; }
+
+/* ─── PAID ADD-ON BADGE ──────────────────────────────────────── */
+.badge-paid-addon {
+  font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px;
+  background: #FEF2F2; color: #B91C1C; letter-spacing: 0.5px;
+  text-transform: uppercase; white-space: nowrap; display: inline-block;
+}
+
+/* ─── FOR PRODUCTS BADGE ─────────────────────────────────────── */
+.badge-for-products {
+  font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px;
+  background: #FFFBEB; color: #92400E; letter-spacing: 0.5px;
+  text-transform: uppercase; white-space: nowrap; display: inline-block;
+  border: 1px solid #FDE68A;
+}
+
+/* ─── EXTRA STATUS BADGES ────────────────────────────────────── */
+.badge-beta         { background: #FEF2F2; color: #B91C1C; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: inline-block; }
+.badge-platform-app { background: #F3F4F6; color: #374151; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: inline-block; }
+.badge-needs-verify { background: #FFFBEB; color: #92400E; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: inline-block; border: 1px solid #FDE68A; }
+.badge-coming-soon-red { background: #FEF2F2; color: #991B1B; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: inline-block; }
+
+/* ─── FLAG WARNING ICON ──────────────────────────────────────── */
+.flag-icon { font-size: 12px; color: #D97706; cursor: help; }
+.flag-callout {
+  background: #FFFBEB; border: 1px solid #FDE68A;
+  border-radius: 6px; padding: 8px 12px;
+  font-size: 12.5px; color: #92400E; line-height: 1.5;
+  display: flex; align-items: flex-start; gap: 6px;
+}
+.flag-callout-icon { flex-shrink: 0; margin-top: 1px; }
+
+/* ─── PLATFORM APPS SECTION ──────────────────────────────────── */
+.platform-apps-section {
+  margin-top: 32px; padding-top: 24px;
+  border-top: 2px dashed var(--border);
+}
+.platform-apps-header {
+  background: #F3F4F6; border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 16px; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.platform-apps-label {
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.8px; color: #6B7280;
+}
+.platform-apps-sub { font-size: 12px; color: #9CA3AF; margin-left: auto; }
+.card.is-platform-app { opacity: 0.75; border-style: dashed; }
+.card.is-platform-app:hover { opacity: 1; }
+
+/* ─── "TAG ADAM" MODAL ───────────────────────────────────────── */
+.tag-adam-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,15,25,0.6); z-index: 2000;
+  align-items: center; justify-content: center;
+  padding: 20px; backdrop-filter: blur(6px);
+}
+.tag-adam-overlay.open { display: flex; animation: overlayIn 0.2s ease; }
+.tag-adam-modal {
+  background: white; border-radius: 18px;
+  width: 100%; max-width: 600px; max-height: 90vh;
+  overflow-y: auto; box-shadow: var(--shadow-xl);
+  animation: modalIn 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.tag-adam-header {
+  padding: 22px 22px 16px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: white;
+  border-radius: 18px 18px 0 0;
+}
+.tag-adam-title { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; margin-bottom: 4px; }
+.tag-adam-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.tag-adam-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.tag-adam-field { display: flex; flex-direction: column; gap: 5px; }
+.tag-adam-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-2); }
+.tag-adam-input {
+  padding: 10px 14px; border: 1.5px solid var(--border);
+  border-radius: 8px; font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px; color: var(--text); background: white;
+  outline: none; transition: all 0.15s; width: 100%;
+}
+.tag-adam-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(217,90,0,0.08); }
+.tag-adam-input.error { border-color: var(--red); }
+.tag-adam-error { font-size: 11px; color: var(--red); margin-top: 2px; display: none; }
+.tag-adam-error.visible { display: block; }
+.tag-adam-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 540px) { .tag-adam-row2 { grid-template-columns: 1fr; } }
+.tag-adam-submit {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: white;
+  padding: 12px 24px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer; transition: background 0.15s; margin-top: 4px;
+  align-self: flex-start;
+}
+.tag-adam-submit:hover { background: var(--orange-light); }
+.tag-adam-confirm {
+  background: var(--green-bg); border: 1px solid var(--green-border);
+  border-radius: 10px; padding: 20px; text-align: center;
+  display: none;
+}
+.tag-adam-confirm.visible { display: block; }
+.tag-adam-confirm-title { font-size: 16px; font-weight: 800; color: #065F46; margin-bottom: 6px; }
+.tag-adam-confirm-body { font-size: 13px; color: #064E3B; margin-bottom: 14px; line-height: 1.5; }
+.tag-adam-close-btn {
+  background: var(--green); color: white; border: none; border-radius: 7px;
+  padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+}
+
+/* ─── INTEGRATION REQUESTS VIEW (admin) ─────────────────────── */
+.req-panel {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,15,25,0.6); z-index: 3000;
+  align-items: center; justify-content: center;
+  padding: 20px; backdrop-filter: blur(6px);
+}
+.req-panel.open { display: flex; }
+.req-modal {
+  background: white; border-radius: 14px;
+  width: 100%; max-width: 900px; max-height: 88vh;
+  overflow-y: auto; box-shadow: var(--shadow-xl);
+}
+.req-modal-header {
+  padding: 18px 22px; border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: white; border-radius: 14px 14px 0 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.req-modal-title { font-size: 16px; font-weight: 800; color: var(--navy); }
+.req-modal-actions { display: flex; gap: 8px; align-items: center; }
+.req-export-csv-btn {
+  background: var(--navy); color: white; border: none; border-radius: 7px;
+  padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit;
+}
+.req-close-btn {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
+  padding: 6px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; color: var(--text-2);
+}
+.req-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.req-table th { background: var(--navy); color: white; padding: 8px 12px; text-align: left; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
+.req-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-2); }
+.req-table tr:nth-child(even) td { background: var(--bg); }
+.req-empty { padding: 40px; text-align: center; color: var(--muted); font-size: 13px; }
 </style>
 </head>
 <body>
@@ -1135,6 +1599,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <button class="export-btn add-integration-btn" onclick="openAddModal()" aria-label="Add new integration">+ Add Integration</button>
     <button class="export-btn sow-import-btn" onclick="openSowModal()" aria-label="Import from SOW document">📄 Import SOW</button>
     <button class="export-btn" onclick="exportJSON()" aria-label="Export filtered integrations as JSON">⬇ Export JSON</button>
+    <button class="export-btn" onclick="openRequestsPanel()" aria-label="View integration requests" style="background:#7C3AED !important;">📋 Integration Requests</button>
+    <button class="cheatsheet-btn" onclick="openTagAdamModal()" aria-label="Tag Adam on a deal" style="background:rgba(5,150,105,0.15);border-color:rgba(5,150,105,0.3);color:#34D399;">🤝 Tag Adam on a Deal</button>
     <button class="cheatsheet-btn" onclick="openCheatSheet()" aria-label="Open sales cheat sheet (press ?)">⚡ Sales Cheat Sheet</button>
     <span class="header-pill">Sales Rep Guide</span>
     <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu" aria-expanded="false" id="navHamburger">
@@ -1151,7 +1617,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   <div class="hero-inner">
     <div class="hero-eyebrow">Partner Ecosystem</div>
     <div class="hero-title">Connect Canto to<br><span>every tool in your stack</span></div>
-    <div class="hero-sub">34 integrations. Built by Canto, certified partners, and the world's best SIs.</div>
+    <div class="hero-sub">30+ integrations. Built by Canto, certified partners, and the world's best SIs.</div>
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num" id="statTotal">—</div>
@@ -1168,6 +1634,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <div class="stat">
         <div class="stat-num" id="statCategories">—</div>
         <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">$319,838</div>
+        <div class="stat-label">Influenced Pipeline</div>
       </div>
     </div>
   </div>
@@ -1204,6 +1674,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
           <button class="filter-panel-item" id="fpi-canto-built"  onclick="toggleQF('canto-built',this)"><span class="fpi-check"></span>◈ Canto-Built Only</button>
           <button class="filter-panel-item" id="fpi-third-party"  onclick="toggleQF('third-party',this)"><span class="fpi-check"></span>◎ 3rd-Party Only</button>
           <button class="filter-panel-item" id="fpi-recent"       onclick="toggleQF('recent',this)"><span class="fpi-check"></span>🕐 Recently Updated</button>
+          <div class="filter-panel-divider"></div>
+          <button class="filter-panel-item" id="fpi-dir-bidir"    onclick="toggleQF('dir-bidir',this)"><span class="fpi-check"></span>⇄ Bidirectional</button>
+          <button class="filter-panel-item" id="fpi-dir-outbound" onclick="toggleQF('dir-outbound',this)"><span class="fpi-check"></span>→ Outbound from Canto</button>
+          <button class="filter-panel-item" id="fpi-dir-inbound"  onclick="toggleQF('dir-inbound',this)"><span class="fpi-check"></span>← Inbound to Canto</button>
+          <button class="filter-panel-item" id="fpi-needs-verify" onclick="toggleQF('needs-verify',this)"><span class="fpi-check"></span>⚠ Needs Verification</button>
+          <button class="filter-panel-item" id="fpi-paid-addon"   onclick="toggleQF('paid-addon',this)"><span class="fpi-check"></span>💰 Paid Add-On</button>
+          <button class="filter-panel-item" id="fpi-for-products" onclick="toggleQF('for-products',this)"><span class="fpi-check"></span>📦 For Products Required</button>
         </div>
       </div>
       <div class="results-meta" id="resultsMeta"></div>
@@ -1245,6 +1722,15 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <div class="results-count" id="resultsCount"></div>
     </div>
     <div class="grid" id="grid"></div>
+    <div id="platformAppsSection" style="display:none">
+      <div class="platform-apps-section">
+        <div class="platform-apps-header">
+          <span class="platform-apps-label">Canto Platform Apps — Not Third-Party Integrations</span>
+          <span class="platform-apps-sub">These are built-in Canto features, not external integrations</span>
+        </div>
+        <div class="grid" id="platformAppsGrid"></div>
+      </div>
+    </div>
     <div class="empty" id="emptyState" style="display:none">
       <div class="empty-icon">🔍</div>
       <div class="empty-title">No integrations match</div>
@@ -1253,6 +1739,344 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SALES ENABLEMENT SECTIONS
+     ═════════════════════════════════════════════════════════════ -->
+
+<!-- SIGNAL QUESTION BANNER -->
+<section class="signal-section" aria-label="The Signal Question">
+  <div class="signal-inner">
+    <div class="signal-eyebrow">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      The Signal Question — Ask on every discovery call.
+    </div>
+    <blockquote class="signal-quote">
+      "What tools does your team use every day that Canto would need to work with?"
+    </blockquote>
+    <p class="signal-sub">One question surfaces integration needs before the deal is closed. Every rep, every call, every segment.</p>
+  </div>
+</section>
+
+<!-- REP PLAYBOOK + DE-BOOKING -->
+<section class="enable-section" aria-label="Rep Playbook">
+  <div class="enable-inner">
+    <div class="enable-cols">
+
+      <!-- Left: Rep Playbook -->
+      <div>
+        <div class="enable-header">
+          <div class="enable-eyebrow">For Sales Reps</div>
+          <div class="enable-title">Rep Playbook</div>
+          <div class="enable-sub">Five steps — from first discovery call to implementation handoff.</div>
+        </div>
+        <div class="playbook-steps">
+          <div class="playbook-step">
+            <div class="step-num">1</div>
+            <div>
+              <div class="step-title">Ask the Signal Question</div>
+              <div class="step-body">Every discovery call. Every AE. Every segment. Surface integration needs before the deal progresses.</div>
+            </div>
+          </div>
+          <div class="playbook-step">
+            <div class="step-num">2</div>
+            <div>
+              <div class="step-title">Tag the integration in CRM</div>
+              <div class="step-body">One field. Which integration did the prospect mention? Log it on the opportunity — it becomes part of the deal story.</div>
+            </div>
+          </div>
+          <div class="playbook-step">
+            <div class="step-num">3</div>
+            <div>
+              <div class="step-title">Marketplace surfaces the right path</div>
+              <div class="step-body">Native → demo it live. Partner-built (New Edge) → request a quote. Canto-funded or bespoke → submit the triage form.</div>
+            </div>
+          </div>
+          <div class="playbook-step">
+            <div class="step-num">4</div>
+            <div>
+              <div class="step-title">Submit the triage form</div>
+              <div class="step-body">For active deals with a specific integration need. Auto-routes to the right resource. Use the Rep Triage Form below.</div>
+            </div>
+          </div>
+          <div class="playbook-step">
+            <div class="step-num">5</div>
+            <div>
+              <div class="step-title">Integration travels with the deal</div>
+              <div class="step-body">Hand it off to CS and Impl at kickoff. Integration requirement goes in the handoff doc — getting it live early is what protects the renewal.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: De-booking + Native integ callout -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <div class="debooking-block">
+          <div class="debooking-stat">90-Day</div>
+          <div class="debooking-label">De-booking Window</div>
+          <div class="debooking-body">Most cancellations happen in the first 90 days — before integrations are installed. Getting an integration in place early creates switching cost that protects the deal at renewal. Surface it in discovery. Prioritize it at kickoff.</div>
+        </div>
+
+        <div class="native-callout">
+          <div class="native-callout-label">Zero Setup · Demo Live</div>
+          <div class="native-callout-title">Native Integrations</div>
+          <div class="native-callout-sub">Built into Canto. No partner needed. Highlight on every demo — these are included.</div>
+          <div class="native-chips">
+            <span class="native-chip"><span class="native-chip-dot"></span>HubSpot</span>
+            <span class="native-chip"><span class="native-chip-dot"></span>Asana</span>
+            <span class="native-chip"><span class="native-chip-dot"></span>Shopify</span>
+            <span class="native-chip"><span class="native-chip-dot"></span>Canva</span>
+            <span class="native-chip"><span class="native-chip-dot"></span>Adobe Creative Cloud</span>
+            <span class="native-chip"><span class="native-chip-dot"></span>SharePoint</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-rule"></div>
+
+<!-- PARTNER SPECTRUM FRAMEWORK -->
+<section class="enable-section alt-bg" aria-label="Partner Spectrum Framework">
+  <div class="enable-inner">
+    <div class="enable-header">
+      <div class="enable-eyebrow">Integration Strategy</div>
+      <div class="enable-title">Partner Spectrum Framework</div>
+      <div class="enable-sub">Four tiers from zero-setup native to fully bespoke SI engagements. Know which path to take before the prospect asks.</div>
+    </div>
+    <table class="spectrum-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>When to Use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="tier-cell"><span class="tier-badge tier-1">1</span><span class="tier-name">Native</span></div></td>
+          <td><strong>Native Integration</strong></td>
+          <td>Built into Canto. Demo live. No partner needed. HubSpot, Asana, Shopify, Canva, Adobe CC, SharePoint.</td>
+          <td>Prospect mentions a tool on the native list → demo it on the call. Close the integration question immediately.</td>
+        </tr>
+        <tr>
+          <td><div class="tier-cell"><span class="tier-badge tier-2">2</span><span class="tier-name">New Edge</span></div></td>
+          <td><strong>Partner-Built (New Edge SI)</strong></td>
+          <td>New Edge builds the integration. Client pays $2,500 setup + $50/month. Competitive with iPaaS platforms. New Edge sources referral pipeline back to the rep.</td>
+          <td>Prospect needs a non-native integration at an accessible price point. Custom build, managed ongoing. Not on the native list → quote New Edge.</td>
+        </tr>
+        <tr>
+          <td><div class="tier-cell"><span class="tier-badge tier-3">3</span><span class="tier-name">Canto-Funded</span></div></td>
+          <td><strong>Canto-Funded Build</strong></td>
+          <td>Canto funds the build for integrations with high market value. Mirichi Labs / Salsify model. CI Hub. Sprout Social.</td>
+          <td>Integration is a consistent blocker across multiple deals. Flag it via triage form. Canto evaluates funding based on pipeline impact.</td>
+        </tr>
+        <tr>
+          <td><div class="tier-cell"><span class="tier-badge tier-4">4</span><span class="tier-name">Bespoke SI</span></div></td>
+          <td><strong>Bespoke SI Build</strong></td>
+          <td>Complex, client-funded, specialist SI required. Used when the prospect's stack is highly custom or technical (e.g., 3D production pipelines, legacy ERP, multi-system architecture).</td>
+          <td>Client has a stack New Edge can't serve — 3D tools, Linux EC2, custom scripting, dual-DAM environments. Escalate to specialist SI. MediVisuals is the reference example.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-rule"></div>
+
+<!-- NEW EDGE PARTNER + CANTO-FUNDED + MEDIVISUALS EXAMPLES -->
+<section class="enable-section" aria-label="Integration Examples">
+  <div class="enable-inner">
+
+    <!-- New Edge -->
+    <div class="enable-header">
+      <div class="enable-eyebrow">Tier 2 · Partner-Built</div>
+      <div class="enable-title">New Edge — Your Default SI for Custom Builds</div>
+      <div class="enable-sub">When a prospect needs an integration that isn't native, New Edge is the first call. They build it, they manage it, and they send referral deals back to you.</div>
+    </div>
+    <div style="margin-bottom:40px;">
+      <div class="partner-highlight-card">
+        <div class="partner-highlight-badge">Systems Integrator (SI)</div>
+        <div class="partner-highlight-name">New Edge</div>
+        <div class="partner-highlight-price"><strong>$2,500</strong> setup + <strong>$50/month</strong> — competitive with iPaaS platforms</div>
+        <div class="partner-highlight-body">New Edge doesn't just implement — they source new Canto deals back to the rep. This is not just an implementation partner; it's a referral channel. Use them for custom integrations where the client wants a managed build at an accessible price point. When you refer a deal to New Edge, you stay on the deal.</div>
+        <div class="partner-highlight-tags">
+          <span class="partner-highlight-tag">Managed build</span>
+          <span class="partner-highlight-tag">$2,500 setup</span>
+          <span class="partner-highlight-tag">$50/month ongoing</span>
+          <span class="partner-highlight-tag">Referral pipeline back to rep</span>
+          <span class="partner-highlight-tag">Non-native integrations</span>
+          <span class="partner-highlight-tag">Client-accessible pricing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Canto-Funded + Bespoke examples -->
+    <div class="enable-header" style="margin-bottom:20px;">
+      <div class="enable-eyebrow">Tiers 3 &amp; 4 · Real-World Examples</div>
+      <div class="enable-title">Funded Builds &amp; Bespoke Engagements</div>
+      <div class="enable-sub">Reference these examples to explain the upper tiers of the spectrum to prospects and internal stakeholders.</div>
+    </div>
+    <div class="examples-grid">
+
+      <div class="example-card funded-card">
+        <div class="example-card-label">Canto-Funded · Tier 3</div>
+        <div class="example-card-name">Salsify</div>
+        <div class="example-card-body">Built by Mirichi Labs, funded by Canto. High-value PIM integration that was a consistent deal blocker. Canto funded the build; now it's available as a managed integration. Use this model as the argument for flagging integrations that appear in multiple active deals.</div>
+        <span class="example-card-tag">Built by Mirichi Labs</span>
+      </div>
+
+      <div class="example-card funded-card">
+        <div class="example-card-label">Canto-Funded · Tier 3</div>
+        <div class="example-card-name">CI Hub</div>
+        <div class="example-card-body">Canto-funded integration enabling asset distribution across major content hubs. Consistent demand across enterprise accounts made it a strong candidate for Canto investment. Available now — flag it in deals where content syndication is a priority.</div>
+        <span class="example-card-tag">Canto-Funded</span>
+      </div>
+
+      <div class="example-card funded-card">
+        <div class="example-card-label">Canto-Funded · Tier 3</div>
+        <div class="example-card-name">Sprout Social</div>
+        <div class="example-card-body">Funded build for social media workflow integration. Enables brand teams to push approved Canto assets directly into Sprout Social publishing workflows. Eliminates manual asset sourcing for social campaigns.</div>
+        <span class="example-card-tag">Canto-Funded</span>
+      </div>
+
+      <div class="example-card bespoke-card">
+        <div class="example-card-label">Bespoke SI Build · Tier 4</div>
+        <div class="example-card-name">MediVisuals</div>
+        <div class="example-card-body"><strong style="color:var(--text)">Medical visualization company</strong> running Linux EC2, Maya, 3DSMax, ZBrush, Adobe suite, and Python automation scripts with 3D file format support. Uses both Bynder and Canto and needed deep custom integration with their production pipeline. Client-funded. Required a specialist SI with 3D and media pipeline experience — beyond New Edge's scope. <strong style="color:var(--text)">Use this as the example of when to escalate to a specialist SI.</strong></div>
+        <span class="example-card-tag">Client-funded · Specialist SI required</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-rule"></div>
+
+<!-- FORM B: REP TRIAGE FORM (Active Deals Only) -->
+<section class="form-section rep-form-bg" aria-label="Rep Triage Form" id="rep-triage-form">
+  <div class="enable-inner">
+    <div class="form-inner">
+      <div class="form-audience-badge rep-badge">For Canto Sales Reps Only</div>
+      <div class="form-title-dark">Triage an Integration Need<br><span style="color:var(--orange)">Active Deals Only</span></div>
+      <div class="form-sub-dark">You have an active deal where a prospect needs a specific integration. Submit it here to get routed to the right resource — native demo, New Edge quote, SI referral, or Canto-funded path. This form is for reps, not partners.</div>
+      <form class="form-grid" onsubmit="handleRepTriageSubmit(event)">
+        <div class="form-row-2">
+          <div class="form-field">
+            <label class="form-label-dark">Your Name</label>
+            <input type="text" class="form-ctrl-dark" placeholder="Adam Semien" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label-dark">Your CRM Opportunity ID</label>
+            <input type="text" class="form-ctrl-dark" placeholder="e.g. OPP-00482" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label-dark">Prospect / Account Name</label>
+          <input type="text" class="form-ctrl-dark" placeholder="e.g. Acme Corporation" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-field">
+            <label class="form-label-dark">Integration Needed</label>
+            <input type="text" class="form-ctrl-dark" placeholder="e.g. Workday, SAP, Figma" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label-dark">Deal Stage</label>
+            <select class="form-ctrl-dark" required>
+              <option value="">Select stage…</option>
+              <option>Discovery</option>
+              <option>Demo / Evaluation</option>
+              <option>Proposal / Negotiation</option>
+              <option>Closed — Pre-implementation</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label-dark">What does the prospect need this integration to do?</label>
+          <textarea class="form-ctrl-dark" rows="3" placeholder="Describe the workflow, the systems involved, and what the prospect said in their own words…" style="resize:vertical;line-height:1.5"></textarea>
+        </div>
+        <div class="form-field">
+          <label class="form-label-dark">Is there a deal at risk if this isn't resolved?</label>
+          <select class="form-ctrl-dark">
+            <option value="">Select…</option>
+            <option>Yes — integration is a stated requirement</option>
+            <option>Likely — mentioned as a concern</option>
+            <option>No — exploratory only</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" class="form-submit-rep">Submit for Triage →</button>
+          <div class="form-note-dark">Submissions are routed to the integration team within 1 business day. You'll receive a recommended path and next step.</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FORM A: PARTNER / AGENCY SUBMIT FORM -->
+<section class="form-section partner-form-bg" aria-label="Partner Integration Submission" id="partner-submit-form">
+  <div class="enable-inner">
+    <div class="form-inner">
+      <div class="form-audience-badge partner-badge">For Partners, Agencies &amp; Integration Developers</div>
+      <div class="form-title-light">Submit an Integration<br>to the Marketplace</div>
+      <div class="form-sub-light">Built a Canto integration — or want to build one? Submit it here to be reviewed for the Canto Integration Marketplace. This form is for integration partners, agencies, and SIs — not for sales reps.</div>
+      <form class="form-grid" onsubmit="handlePartnerSubmit(event)">
+        <div class="form-row-2">
+          <div class="form-field">
+            <label class="form-label-light">Your Name</label>
+            <input type="text" class="form-ctrl-light" placeholder="Jane Smith" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label-light">Company / Agency Name</label>
+            <input type="text" class="form-ctrl-light" placeholder="New Edge, Mirichi Labs, etc." required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label-light">Contact Email</label>
+          <input type="email" class="form-ctrl-light" placeholder="you@yourcompany.com" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-field">
+            <label class="form-label-light">Integration Name</label>
+            <input type="text" class="form-ctrl-light" placeholder="e.g. Workday → Canto" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label-light">Integration Status</label>
+            <select class="form-ctrl-light" required>
+              <option value="">Select…</option>
+              <option>Already built — ready for listing</option>
+              <option>In development</option>
+              <option>Proposal / scoping phase</option>
+              <option>Concept only — seeking validation</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label-light">What does this integration do? (One paragraph)</label>
+          <textarea class="form-ctrl-light" rows="3" placeholder="Describe the workflow this integration enables, which systems are connected, and the primary use case for Canto customers…" style="resize:vertical;line-height:1.5;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.15);color:white;font-family:'DM Sans',sans-serif;font-size:13.5px;padding:10px 14px;border-radius:8px;outline:none;width:100%;"></textarea>
+        </div>
+        <div class="form-field">
+          <label class="form-label-light">Partner Type</label>
+          <select class="form-ctrl-light">
+            <option value="">Select…</option>
+            <option>Systems Integrator (SI)</option>
+            <option>Technology Partner / ISV</option>
+            <option>Agency</option>
+            <option>Independent Developer</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" class="form-submit-partner">Submit Integration →</button>
+          <div class="form-note-light">Submissions are reviewed by the Canto Partner team. You'll hear back within 5 business days. Not all submissions will be listed.</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
@@ -1516,10 +2340,11 @@ const INTEGRATIONS = [
     talktrack: '"Ask them: \'How do approved images get from your DAM into Salsify today?\' The answer is almost always manual — downloads, re-uploads, email threads. That\'s the problem. Canto-to-Salsify automation kills that workflow entirely."',
     capabilities:['Automated Asset Sync','Metadata Mapping','Asset-to-Product Association','Selective Asset Sync','Push Triggers'],
     timeline:'~2 weeks', investment:'Custom quote',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/salsify.svg', installCount:'180+', lastUpdated:'Feb 2026', prereq:'Requires Salsify license' },
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/salsify.svg', installCount:'180+', lastUpdated:'Feb 2026', prereq:'Requires Salsify license',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'akeneo', name:'Akeneo', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'📦',
-    partnerType:'canto', availability:'live',
+    partnerType:'canto', availability:'soon',
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#00B09B',
     partnerDesc:'Built and maintained by Canto. Native integration with full support.',
@@ -1527,10 +2352,11 @@ const INTEGRATIONS = [
     icp:'Mid-market to enterprise brands in manufacturing, food & bev, and complex retail catalogs using Akeneo.',
     signals:['We use Akeneo', 'Product enrichment is slow', 'Assets aren\'t linked to product records'],
     problem:'Akeneo customers managing complex product catalogs need a governed source for every asset attached to a product record. Without Canto, assets come from wherever — slowing enrichment and creating compliance risk.',
-    talktrack: '"This is native Canto — it\'s included. If they\'re on Akeneo, the integration story is: one click connects Canto as the governed source for every asset enriching every product record. No re-uploading. No version drift."',
+    talktrack: '"IMPORTANT: This integration is listed on the public site but is NOT currently live. Do NOT promise this to prospects. Log as a future roadmap item only."',
     capabilities:['Native Canto Integration','Asset-to-Product Linking','Bulk Sync','Metadata Passthrough','Approval Status Enforcement'],
-    timeline:'~1 week', investment:'Included in Canto plan',
-    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/akeneo.svg', installCount:'310+', lastUpdated:'Mar 2026', prereq:'Requires Akeneo license' },
+    timeline:'TBD', investment:'TBD',
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/akeneo.svg', installCount:'310+', lastUpdated:'Mar 2026', prereq:'Requires Akeneo license',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'For Products Required', additionalCost:'TBD', status:'Coming Soon', flags:['CRITICAL: Listed on public site but NOT LIVE','Do NOT promise to prospects','17 open opps at $29K avg ACV citing this gap','Remove Coming Soon label or remove from public site immediately'] },
 
   { id:'inriver', logo:'https://www.inriver.com/wp-content/themes/inriver/assets/images/favicons/favicon-96x96.png', name:'inriver', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🌊',
     partnerType:'si', availability:'live',
@@ -1544,7 +2370,8 @@ const INTEGRATIONS = [
     talktrack: '"inriver customers in manufacturing are dealing with product images scattered across file servers. The Canto connector maps those to inriver product records with version control. Ask: \'Where do your product images live today?\'"',
     capabilities:['Asset-to-Product Mapping','Version Governance','Metadata Sync','Approval Gating','Mass Asset Operations'],
     timeline:'3–4 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/inriver.svg', installCount:'95+', lastUpdated:'Nov 2025', prereq:'Requires inriver · MindCloud' },
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/inriver.svg', installCount:'95+', lastUpdated:'Nov 2025', prereq:'Requires inriver · MindCloud',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   // ── CREATIVE WORKFLOW ─────────────────────────────────────────────
   { id:'adobe-cc', name:'Adobe Creative Cloud', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎨',
@@ -1559,20 +2386,136 @@ const INTEGRATIONS = [
     talktrack: '"If their team uses Photoshop, Illustrator, InDesign, or Premiere — this is already included. Creatives can find, place, and upload Canto assets without leaving Adobe. It\'s one of the most used integrations we have, and it\'s zero extra cost."',
     capabilities:['In-App Asset Browser','Direct Upload to Canto','Version Control Sync','Metadata Preservation','Photoshop + Illustrator + InDesign + Premiere'],
     timeline:'Included', investment:'Included in plan',
-    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/adobe-cc.svg', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud' },
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/adobe-cc.svg', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  // Adobe app suite — individual cards per verified data
+  { id:'adobe-photoshop', name:'Adobe Photoshop', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🖼️',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Part of the Adobe Creative Cloud connector.',
+    tagline:'Access and save Canto assets directly from Adobe Photoshop.',
+    icp:'Retouchers, photo editors, and creative teams using Photoshop for image production.',
+    signals:['We use Photoshop', 'Our designers retouch in Photoshop'],
+    problem:'Designers download from Canto, edit in Photoshop, forget to re-upload. Approved versions get lost.',
+    capabilities:['In-App Asset Browser','Direct Upload to Canto','Version Control Sync','Metadata Preservation'],
+    timeline:'Included', investment:'Included in plan',
+    costStatus:'Included', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'adobe-illustrator', name:'Adobe Illustrator', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'✏️',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Part of the Adobe Creative Cloud connector.',
+    tagline:'Browse and save Canto assets without leaving Adobe Illustrator.',
+    icp:'Brand designers, illustrators, and agencies working in Illustrator.',
+    signals:['We use Illustrator', 'Our designers work in Illustrator'],
+    problem:'Illustrator users waste time switching apps to find approved logos, icons, and vector assets.',
+    capabilities:['In-App Asset Browser','Direct Upload to Canto','Metadata Preservation'],
+    timeline:'Included', investment:'Included in plan',
+    costStatus:'Included', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'adobe-indesign', name:'Adobe InDesign', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📄',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Part of the Adobe Creative Cloud connector.',
+    tagline:'Place approved Canto assets directly into InDesign layouts.',
+    icp:'Print designers, catalog teams, and agencies producing layouts in InDesign.',
+    signals:['We use InDesign', 'We produce catalogs or print materials'],
+    problem:'InDesign layouts reference assets from desktop folders — when assets update, layouts fall out of sync. Canto-linked assets update automatically.',
+    capabilities:['In-App Asset Browser','Direct Asset Placement','Version Sync','Metadata Preservation'],
+    timeline:'Included', investment:'Included in plan',
+    costStatus:'Included', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'adobe-premiere', name:'Adobe Premiere Pro', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎬',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Part of the Adobe Creative Cloud connector.',
+    tagline:'Access Canto video assets and upload edits directly from Premiere Pro.',
+    icp:'Video editors and content teams producing video in Adobe Premiere.',
+    signals:['We use Premiere Pro', 'We have a video team', 'We produce video content'],
+    problem:'Video teams download footage from Canto, edit in Premiere, and manually re-upload finished files — creating version confusion.',
+    capabilities:['In-App Asset Browser','Video Asset Access','Direct Upload to Canto','Metadata Preservation'],
+    timeline:'Included', investment:'Included in plan',
+    costStatus:'Included', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'adobe-after-effects', name:'Adobe After Effects', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'✨',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Part of the Adobe Creative Cloud connector.',
+    tagline:'Access Canto assets for motion graphics and upload outputs from After Effects.',
+    icp:'Motion designers and video teams using After Effects for animations and visual effects.',
+    signals:['We use After Effects', 'We create motion graphics'],
+    problem:'Motion designers pull assets from shared drives into After Effects projects, creating version drift on source files.',
+    capabilities:['In-App Asset Browser','Asset Access for Compositions','Direct Upload to Canto'],
+    timeline:'Included', investment:'Included in plan',
+    costStatus:'Included', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'adobe-lightroom', name:'Adobe Lightroom', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📷',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Export-only — push Canto assets into Lightroom for editing.',
+    tagline:'Push approved Canto assets into Adobe Lightroom for editing workflows.',
+    icp:'Photographers and content teams that use Lightroom as their editing tool.',
+    signals:['We use Lightroom', 'We have photographers on the team'],
+    problem:'Photographers edit in Lightroom but sourcing files from Canto requires manual download. Export connector streamlines the ingest.',
+    capabilities:['Asset Export to Lightroom','Metadata Passthrough'],
+    timeline:'Included', investment:'Included in plan',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Export only — cannot pull raw files from Canto into Lightroom'] },
+
+  { id:'adobe-workfront', name:'Adobe Workfront', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📋',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'medium', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto. Bidirectional sync between Canto DAM and Adobe Workfront project management.',
+    tagline:'Connect Canto assets to Adobe Workfront project workflows.',
+    icp:'Creative operations teams using Adobe Workfront for project management and creative approval workflows.',
+    signals:['We use Workfront', 'We manage creative projects in Workfront', 'We have a creative ops team'],
+    problem:'Assets produced in Workfront creative briefs get disconnected from the Canto DAM. Teams end up with final files in Workfront that never make it to the governed library.',
+    capabilities:['Asset Linking to Projects','Bidirectional Sync','Approval Workflow Integration','Metadata Mapping'],
+    timeline:'~2 weeks', investment:'Included in plan',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Adobe Workfront',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Documentation links currently broken — flag to product team'] },
+
+  { id:'canva', name:'Canva', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎨',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#00C4CC',
+    partnerDesc:'Built and maintained by Canto. Access Canto assets directly inside Canva.',
+    tagline:'Use approved Canto brand assets in every Canva design.',
+    icp:'Marketing teams, social teams, and non-designers using Canva for brand content creation.',
+    signals:['We use Canva', 'Our marketing team designs in Canva', 'We have a Canva brand kit'],
+    problem:'Canva users pull logos, images, and brand assets from wherever they can find them — not from the approved DAM. Brand governance breaks at the point of creation.',
+    capabilities:['In-App Asset Browser','Brand Asset Access','Approved-Only Mode','Direct Insert into Canva'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Canva',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'figma', name:'Figma', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🖌️',
-    partnerType:'tech', availability:'soon',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'medium', includedInPlan:false,
-    partner:'Figma', partnerBg:'#F24E1E',
-    partnerDesc:'Figma integration partner in evaluation. DAM-to-Figma asset library sync is a high-demand workflow for product and brand design teams.',
+    partnerType:'tech', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'medium', includedInPlan:true,
+    partner:'Partner Supported', partnerBg:'#F24E1E',
+    partnerDesc:'Partner-supported integration. Confirm maintenance status before committing in deals.',
     tagline:'Surface approved Canto assets inside every Figma project.',
     icp:'Product design teams, brand design teams, and UX-forward organizations where Figma is the primary design tool.',
     signals:['Our designers use Figma', 'We design in Figma', 'We have a product design team'],
     problem:'Figma users pull assets from wherever they can find them — screenshots, old files, personal drives. Approved brand assets in Canto never make it into Figma automatically. Every design review risks off-brand elements.',
-    talktrack: '"This is coming — flag it in the deal as a forward roadmap item. If they\'re Figma-first, note it in the account: \'Figma integration expected [TBD]\'. Don\'t let this be a blocker."',
+    talktrack: '"Flag it in the deal as a forward roadmap item. If they\'re Figma-first, note it in the account. Partner-supported — confirm current maintenance status before committing."',
     capabilities:['Asset Library Sync','Brand Asset Panel in Figma','Approved-Only Mode','Direct Link to Canto Source','Version Alerts'],
-    timeline:'TBD', investment:'Contact us' },
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Partner Supported', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Partner-supported — confirm maintenance status'] },
 
   // ── CMS ────────────────────────────────────────────────────────────
   { id:'contentful', logo:'https://images.ctfassets.net/jtqsy5pye0zd/6wNuQ2xMvbw134rccObi0q/bf61badc6d6d9780609e541713f0bba6/Contentful_Logo_2.5_Dark.svg', name:'Contentful', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📰',
@@ -1587,7 +2530,8 @@ const INTEGRATIONS = [
     talktrack: '"If they\'re on Contentful, sell the live sync story: update an asset in Canto and it updates everywhere Contentful references it. No re-uploading, no stale images on the website. Ask: \'What happens today when you update an approved image?\'"',
     capabilities:['Native Asset Reference','Live Sync on Update','Metadata Passthrough','Role-Based Access Enforcement','Multi-environment Support'],
     timeline:'~1 week', investment:'Included',
-    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/contentful.svg', installCount:'1,100+', lastUpdated:'Feb 2026', prereq:'Requires Contentful' },
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/contentful.svg', installCount:'1,100+', lastUpdated:'Feb 2026', prereq:'Requires Contentful',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'wordpress', name:'WordPress', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'🌐',
     partnerType:'canto', availability:'live',
@@ -1601,36 +2545,81 @@ const INTEGRATIONS = [
     talktrack: '"WordPress is 43% of the internet — if they\'re on it, this is included and easy. Editors get a Canto browser right inside the media library. Ask: \'Who manages your website? Do they pull images from a shared drive?\'"',
     capabilities:['Media Library Integration','In-Editor Asset Browser','Approved Asset Enforcement','Metadata Sync','Multi-site Support'],
     timeline:'~1 week', investment:'Included',
-    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/wordpress.svg', installCount:'3,800+', lastUpdated:'Feb 2026', prereq:'Requires WordPress' },
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/wordpress.svg', installCount:'3,800+', lastUpdated:'Feb 2026', prereq:'Requires WordPress',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'drupal', name:'Drupal', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'💧',
     partnerType:'si', availability:'live',
-    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
+    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:false,
     partner:'MindCloud', partnerBg:'#0077C0',
     partnerDesc:'Drupal integration delivered via certified SI partner. Recommended for enterprise deployments with custom Drupal builds.',
     tagline:'Govern enterprise web assets by connecting Canto to Drupal.',
     icp:'Enterprise organizations (higher ed, government, large B2B) running complex Drupal deployments.',
     signals:['We use Drupal', 'We have a large website with lots of media', 'We\'re a university or government org'],
     problem:'Large Drupal sites accumulate assets in Drupal\'s media module without governance or lifecycle management. Connecting to Canto establishes the DAM as the source of truth for all media referenced in the CMS.',
-    talktrack: '"Drupal is common in higher ed and government. If you\'re in that segment, lead with: the Canto-Drupal connection turns your DAM into the governed source for every piece of media on your website. Delivered via SI — budget accordingly."',
+    talktrack: '"Drupal is common in higher ed and government. If you\'re in that segment, lead with: the Canto-Drupal connection turns your DAM into the governed source for every piece of media on your website. Implementation partner recommended."',
     capabilities:['Media Module Integration','Asset Governance','Metadata Mapping','Bulk Import/Sync','Role-Based Access'],
     timeline:'3–4 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/drupal.svg', installCount:'220+', lastUpdated:'Dec 2025', prereq:'Requires Drupal · MindCloud' },
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/drupal.svg', installCount:'220+', lastUpdated:'Dec 2025', prereq:'Requires Drupal · MindCloud',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'typo3', name:'TYPO3', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'🔶',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'medium', includedInPlan:true,
+    partner:'Canto', partnerBg:'#F49700',
+    partnerDesc:'Built and maintained by Canto. Available for TYPO3 enterprise customers.',
+    tagline:'Connect Canto as the governed media source for TYPO3 websites.',
+    icp:'Enterprise organizations in Germany and Europe running TYPO3 for their web presence.',
+    signals:['We use TYPO3', 'We have a TYPO3 website'],
+    problem:'TYPO3 installations accumulate media without governance. Canto as the connected source of truth ensures editors always insert approved assets.',
+    capabilities:['Media Integration','Asset Browser','Metadata Sync','Role-Based Access'],
+    timeline:'~2 weeks', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires TYPO3',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'contentstack', name:'Contentstack', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📚',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Unknown', partnerBg:'#6B7280',
+    partnerDesc:'Not verified — no internal documentation found. Do not present to prospects until confirmed.',
+    tagline:'Connect Canto assets to Contentstack headless CMS.',
+    icp:'Enterprise brands running headless CMS on Contentstack.',
+    signals:['We use Contentstack', 'We have a headless CMS'],
+    problem:'Contentstack editors need a governed source for every asset referenced in headless content.',
+    capabilities:['Asset Reference','Live Sync'],
+    timeline:'TBD', investment:'Unknown',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'',
+    direction:'Unknown', builtBy:'Unknown', cantoProduct:'Unknown', additionalCost:'Unknown', status:'Needs Verification', flags:['Not verified — no internal documentation found','Do not present to prospects until confirmed'] },
 
   // ── E-COMMERCE ────────────────────────────────────────────────────
   { id:'shopify', logo:'https://cdn.shopify.com/b/shopify-brochure2-assets/d9340911ca8c679b148dd4a205ad2ffa.svg', name:'Shopify', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🛒',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'Canto', partnerBg:'#96BF48',
-    partnerDesc:'Built and maintained by Canto. Native integration available as an add-on purchase.',
+    partnerDesc:'Built and maintained by Canto. Native integration available as an add-on purchase. Requires Canto for Products.',
     tagline:'Push approved product images from Canto to Shopify automatically.',
     icp:'DTC and mid-market brands on Shopify managing 100+ SKUs.',
     signals:['We sell on Shopify', 'We have a Shopify store', 'Product images are updated frequently'],
     problem:'Shopify merchants download product images from Canto and re-upload them to Shopify manually. Images fall out of sync the moment a new version is approved in the DAM. Product pages go live with outdated assets.',
-    talktrack: '"If they\'re on Shopify with a real product catalog — this is a killer feature. Approve an image in Canto and it automatically updates on Shopify. It\'s an add-on purchase sold on Canto paper. Ask: \'How do product images get from your team to your Shopify store today?\' The answer closes the deal."',
+    talktrack: '"If they\'re on Shopify with a real product catalog — this is a killer feature. Approve an image in Canto and it automatically updates on Shopify. Requires Canto for Products. Ask: \'How do product images get from your team to your Shopify store today?\' The answer closes the deal."',
     capabilities:['Product Image Sync','Auto-update on DAM Change','Multi-channel Asset Delivery','Variant-Level Image Mapping','Metadata Passthrough'],
-    timeline:'~1 week', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/shopify.svg', installCount:'680+', lastUpdated:'Mar 2026', prereq:'Requires Shopify' },
+    timeline:'~1 week', investment:'Included with Product Hub',
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/shopify.svg', installCount:'680+', lastUpdated:'Mar 2026', prereq:'Requires Shopify + Canto for Products',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'For Products Required', additionalCost:'Included with Product Hub', status:'Live', flags:['Requires Canto for Products — NOT available on DAM standalone','DAM-only customers = upsell to Product Hub','DAM assets ARE included in the sync'] },
+
+  { id:'amazon', name:'Amazon', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'📦',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Canto', partnerBg:'#FF9900',
+    partnerDesc:'Built and maintained by Canto. Beta — opt-in only. North America only.',
+    tagline:'Sync approved Canto product images to Amazon product listings (Beta).',
+    icp:'Brands selling on Amazon in North America who need consistent, approved product imagery on their ASINs.',
+    signals:['We sell on Amazon', 'We have Amazon product listings', 'We sell in North America'],
+    problem:'Amazon sellers manually update product images across thousands of ASINs. Approved images in Canto need to flow automatically to Amazon product pages.',
+    capabilities:['Product Image Sync to Amazon','ASIN-Level Image Mapping','Multi-variant Support','North America Markets'],
+    timeline:'Beta — contact team', investment:'Included with Product Hub',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Canto for Products + Amazon Seller Central',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'For Products Required', additionalCost:'Included with Product Hub', status:'Beta', flags:['BETA — opt-in only, not GA','North America only: US, CA, MX','Existing ASINs only — no new product creation','Internal demo video only — not public'] },
 
   { id:'bigcommerce', name:'BigCommerce', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🏪',
     partnerType:'canto', availability:'soon',
@@ -1686,18 +2675,33 @@ const INTEGRATIONS = [
 
   // ── EMAIL & MARKETING ─────────────────────────────────────────────
   { id:'hubspot-mktg', logo:'https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png', name:'HubSpot', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🟠',
-    partnerType:'canto', availability:'live', featured:true,
-    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
-    partner:'Canto', partnerBg:'#FF7A59',
-    partnerDesc:'Built and maintained by Canto. Available as an add-on purchase sold on Canto paper.',
+    partnerType:'tech', availability:'live', featured:true,
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
+    partner:'The DAM Consultants', partnerBg:'#FF7A59',
+    partnerDesc:'Built and maintained by The DAM Consultants — NOT Canto. $10,000/year add-on. Must be a separate contract line item. Disclose upfront.',
     tagline:'Insert approved Canto assets directly into HubSpot campaigns.',
     icp:'Mid-market B2B and DTC brands running marketing programs on HubSpot.',
     signals:['We use HubSpot', 'Our marketing team is in HubSpot', 'We send email campaigns from HubSpot'],
     problem:'Marketing teams building HubSpot campaigns download assets from Canto, re-upload to HubSpot\'s file manager, and create a second asset library that goes stale immediately.',
-    talktrack: '"HubSpot is one of the most common stacks we see. Your marketing team gets a Canto browser right inside HubSpot — no more downloading and re-uploading. Sold on Canto paper as an add-on. Ask: \'Does your marketing team ever complain about finding the right images for campaigns?\'"',
+    talktrack: '"HubSpot is a $10K/year add-on built by The DAM Consultants — not Canto. Disclose the cost upfront. Must be a separate contract line item. Ask: \'Does your marketing team ever complain about finding the right images for campaigns?\'"',
     capabilities:['In-Editor Asset Browser','File Manager Sync','Approved-Only Mode','Landing Page Asset Insert','Campaign Asset Tracking'],
-    timeline:'~1 week', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/hubspot-mktg.svg', installCount:'920+', lastUpdated:'Mar 2026', prereq:'Requires HubSpot' },
+    timeline:'~1 week', investment:'$10,000/year (separate contract)',
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/hubspot-mktg.svg', installCount:'920+', lastUpdated:'Mar 2026', prereq:'Requires HubSpot',
+    direction:'Outbound from Canto', builtBy:'The DAM Consultants', cantoProduct:'Both', additionalCost:'$10,000/year', status:'Live', flags:['$10K/year add-on — disclose upfront','Built and maintained by The DAM Consultants not Canto','Must be separate contract line item'] },
+
+  { id:'mailchimp', name:'Mailchimp', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🐒',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FFE01B',
+    partnerDesc:'Built and maintained by Canto. Available for all customers.',
+    tagline:'Use approved Canto assets in Mailchimp email campaigns.',
+    icp:'SMB and mid-market brands running email marketing on Mailchimp.',
+    signals:['We use Mailchimp', 'We send email campaigns from Mailchimp'],
+    problem:'Mailchimp users pull images from wherever they can find them. Canto integration surfaces approved brand assets directly in the email builder.',
+    capabilities:['In-Editor Asset Browser','Approved Asset Mode','Email Campaign Integration'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Mailchimp',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'klaviyo', name:'Klaviyo', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'💌',
     partnerType:'tech', availability:'soon',
@@ -1713,11 +2717,11 @@ const INTEGRATIONS = [
     timeline:'TBD — High Priority', investment:'Contact us' },
 
   // ── CLOUD STORAGE ─────────────────────────────────────────────────
-  { id:'sharepoint', logo:'https://res.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/sharepoint_48x1.svg', name:'SharePoint / OneDrive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🏢',
+  { id:'sharepoint', logo:'https://res.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/brand-icons/product/svg/sharepoint_48x1.svg', name:'Microsoft SharePoint', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🏢',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#0078D4',
-    partnerDesc:'Built and maintained by Canto. Enterprise-grade sync supporting Microsoft 365 environments.',
+    partnerDesc:'Built and maintained by Canto. One of only two cloud storage integrations with true bidirectional flow.',
     tagline:'Governed Canto assets available across your Microsoft 365 ecosystem.',
     icp:'Enterprise and mid-market organizations running Microsoft 365. Near-universal in companies 200+ employees.',
     signals:['We use SharePoint', 'Files are in SharePoint or OneDrive', 'We use Microsoft 365', 'Assets live in SharePoint'],
@@ -1725,21 +2729,79 @@ const INTEGRATIONS = [
     talktrack: '"SharePoint is the most common answer when you ask where assets live. Use that. \'Great — we have a native SharePoint integration included in your plan. Migration support, folder-to-album mapping, ongoing sync. You keep SharePoint for what it\'s good at. Canto governs the assets.\'"',
     capabilities:['Migration Support','Folder-to-Album Mapping','Ongoing Sync Rules','OneDrive Individual Sync','Permission Mapping','Metadata Preservation'],
     timeline:'~1 week', investment:'Included',
-    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sharepoint.svg', installCount:'2,900+', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365' },
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sharepoint.svg', installCount:'2,900+', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['One of only two cloud storage integrations with true bidirectional flow'] },
+
+  { id:'onedrive', name:'OneDrive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'☁️',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#0078D4',
+    partnerDesc:'Built and maintained by Canto. Inbound migration tool — assets flow from OneDrive into Canto.',
+    tagline:'Migrate assets from OneDrive into Canto for governed management.',
+    icp:'Organizations with assets stored in OneDrive migrating to Canto as their DAM.',
+    signals:['Files are in OneDrive', 'We use Microsoft 365', 'We\'re moving away from OneDrive for assets'],
+    problem:'Teams have years of assets sitting in OneDrive with no governance, no metadata, no version control. Canto migration pull solves the ingest problem.',
+    capabilities:['Inbound Migration','Folder Mapping','Metadata Import','Bulk Transfer'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365',
+    direction:'Inbound to Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool'] },
 
   { id:'gdrive', logo:'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png', name:'Google Drive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'📁',
-    partnerType:'tech', availability:'live',
-    soldBy:'partner', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
-    partner:'New Edge', partnerBg:'#4285F4',
-    partnerDesc:'New Edge delivers the Canto-Google Drive two-way sync. Certified Canto partner with active implementations.',
-    tagline:'Sync approved Canto assets to Google Drive for team access.',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#4285F4',
+    partnerDesc:'Built and maintained by Canto. Inbound migration tool — assets flow from Google Drive into Canto.',
+    tagline:'Migrate assets from Google Drive into Canto for governed management.',
     icp:'SMB and mid-market organizations where Google Workspace is the productivity standard.',
     signals:['Files are in Google Drive', 'We use Google Workspace', 'Teams share assets via Drive'],
-    problem:'Google Drive teams want approved assets to flow back out to Drive for stakeholders who never adopted the DAM. Two-way sync makes Canto the master without forcing a hard migration.',
-    talktrack: '"If assets are in Google Drive, pitch the two-way sync: Canto becomes the master, Drive stays as the distribution layer for people who never touch the DAM. No forced adoption — approved assets just flow to the right Drive folders automatically."',
-    capabilities:['Two-Way Sync','Folder-to-Album Mapping','Shared Drive Support','Approval-Triggered Push','Metadata Property Mapping'],
-    timeline:'~2 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/gdrive.svg', installCount:'1,200+', lastUpdated:'Feb 2026', prereq:'Requires Google Workspace' },
+    problem:'Google Drive teams want to move to a governed DAM but have years of assets in Drive. Canto\'s inbound connector makes migration clean.',
+    talktrack: '"If assets are in Google Drive, this is your migration story: pull everything from Drive into Canto as the governed master. Inbound only — nothing flows back to Drive automatically."',
+    capabilities:['Inbound Migration','Folder-to-Album Mapping','Shared Drive Support','Metadata Property Mapping'],
+    timeline:'~2 weeks', investment:'Included',
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/gdrive.svg', installCount:'1,200+', lastUpdated:'Feb 2026', prereq:'Requires Google Workspace',
+    direction:'Inbound to Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool, nothing goes back to Google Drive automatically'] },
+
+  { id:'dropbox', name:'Dropbox', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'📦',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#0061FF',
+    partnerDesc:'Built and maintained by Canto. Inbound pull + manual share-back. Not a true sync.',
+    tagline:'Pull assets from Dropbox into Canto, share back manually.',
+    icp:'Teams with assets stored in Dropbox migrating to or alongside Canto.',
+    signals:['Files are in Dropbox', 'We use Dropbox', 'We\'re considering moving away from Dropbox'],
+    problem:'Dropbox is not a DAM. Teams storing brand assets in Dropbox have no metadata, no approvals, no version control. Canto pull gets assets governed.',
+    capabilities:['Inbound Asset Pull','Folder Mapping','Manual Share-Back'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Dropbox',
+    direction:'Inbound to Canto + Manual Share Back', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['NOT a sync — share-back is manual and user-initiated only'] },
+
+  { id:'box', name:'Box', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🗳️',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#0061D5',
+    partnerDesc:'Built and maintained by Canto. Inbound pull + manual share-back. Not a true sync.',
+    tagline:'Pull assets from Box into Canto, share back manually.',
+    icp:'Enterprise teams with assets in Box migrating to or alongside Canto.',
+    signals:['We use Box', 'Files are in Box', 'We store brand assets in Box'],
+    problem:'Box is enterprise file storage, not a DAM. Assets in Box lack governance, approvals, and brand management capabilities that Canto provides.',
+    capabilities:['Inbound Asset Pull','Folder Mapping','Manual Share-Back'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Box',
+    direction:'Inbound to Canto + Manual Share Back', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['NOT a sync — share-back is manual and user-initiated only'] },
+
+  { id:'egnyte', name:'Egnyte', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🔒',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#00A0D1',
+    partnerDesc:'Built and maintained by Canto. Inbound pull + manual share-back. Not a true sync.',
+    tagline:'Pull governed assets from Egnyte into Canto.',
+    icp:'Companies using Egnyte for secure file storage, especially in regulated industries.',
+    signals:['We use Egnyte', 'We store assets in Egnyte', 'We\'re in a regulated industry'],
+    problem:'Egnyte provides secure file storage but not DAM-level governance. Canto ingest brings those assets under brand management.',
+    capabilities:['Inbound Asset Pull','Folder Mapping','Manual Share-Back'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Egnyte',
+    direction:'Inbound to Canto + Manual Share Back', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['NOT a sync — share-back is manual and user-initiated only'] },
 
   // ── SOCIAL & PUBLISHING ───────────────────────────────────────────
   { id:'sprout', logo:'https://brandfolder.sproutsocial.com/VXTUTVL1/at/8vwz9b7w83rhgfc8xvm8t8/lgo_sprout_lockup.png?auto=webp&format=png', name:'Sprout Social', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🌿',
@@ -1754,20 +2816,378 @@ const INTEGRATIONS = [
     talktrack: '"850+ customers use both Canto and Sprout. If they\'re on Sprout, this is a natural conversation: \'Your social team publishes how often? How do they find approved images today?\' The answer always involves Slack or email. Canto in Sprout fixes that."',
     capabilities:['Asset Library Sync','In-Publisher Asset Browser','Approval Status Enforcement','Multi-platform Image Sizing','Usage Rights Gating'],
     timeline:'~2 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sprout.svg', installCount:'850+', lastUpdated:'Mar 2026', prereq:'Requires Sprout Social' },
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sprout.svg', installCount:'850+', lastUpdated:'Mar 2026', prereq:'Requires Sprout Social',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'hootsuite', name:'Hootsuite', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🦉',
-    partnerType:'tech', availability:'soon',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'medium', includedInPlan:false,
-    partner:'Hootsuite', partnerBg:'#1F2D3D',
-    partnerDesc:'Hootsuite integration partner in evaluation. High install base in mid-market makes this a meaningful pipeline opportunity.',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#1F2D3D',
+    partnerDesc:'Built and maintained by Canto.',
     tagline:'Publish approved Canto assets to social channels via Hootsuite.',
     icp:'Mid-market brands running social programs across multiple platforms and regions.',
     signals:['We use Hootsuite', 'Social compliance is important', 'We manage social across regions'],
     problem:'Hootsuite users pull images from shared folders, Dropbox, or personal drives. Approved assets in the DAM never make it to social without a manual download step.',
-    talktrack: '"Hootsuite integration is coming. If they\'re on Hootsuite, note it and log the interest. The pitch is identical to Sprout: DAM-governed assets flowing directly into the publishing tool. No rogue images on the feed."',
+    talktrack: '"If they\'re on Hootsuite, this is included. The pitch is: DAM-governed assets flowing directly into the publishing tool. No rogue images on the feed."',
     capabilities:['DAM Asset Browser in Hootsuite','Approved Asset Mode','Multi-region Support','Format Auto-resize','Publishing Audit Trail'],
-    timeline:'TBD', investment:'Contact us' },
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'facebook', name:'Facebook', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'📘',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#1877F2',
+    partnerDesc:'Built and maintained by Canto. Share assets directly to Facebook.',
+    tagline:'Share approved Canto assets directly to Facebook.',
+    icp:'Marketing and social teams publishing to Facebook.',
+    signals:['We post to Facebook', 'We manage Facebook pages', 'We have a social media team'],
+    problem:'Social teams pull images manually for Facebook posts. Canto direct share eliminates the download step.',
+    capabilities:['Direct Share to Facebook','Approved Asset Enforcement'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'linkedin', name:'LinkedIn', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'💼',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#0A66C2',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Share approved Canto assets to LinkedIn from within the DAM.',
+    icp:'B2B marketing teams and brand managers publishing to LinkedIn.',
+    signals:['We post to LinkedIn', 'We have a LinkedIn company page', 'We share thought leadership content'],
+    problem:'LinkedIn posts go out with whatever image is accessible. Canto share enforces approved brand assets on every post.',
+    capabilities:['Direct Share to LinkedIn','Approved Asset Enforcement'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'pinterest', name:'Pinterest', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'📌',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#E60023',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Pin approved Canto assets directly to Pinterest boards.',
+    icp:'DTC and consumer brands with active Pinterest presence.',
+    signals:['We use Pinterest', 'We post product images to Pinterest'],
+    problem:'Pinterest content teams download product images from Canto and upload manually. Direct share streamlines the workflow.',
+    capabilities:['Direct Pin from Canto','Board Selection','Approved Asset Mode'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'twitter-x', name:'Twitter / X', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🐦',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#000000',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Share approved Canto assets directly to Twitter / X.',
+    icp:'Marketing and social teams managing Twitter / X accounts.',
+    signals:['We post to Twitter', 'We use X / Twitter', 'We have a social media team'],
+    problem:'Social teams pull images manually. Canto direct share to Twitter/X eliminates the download step.',
+    capabilities:['Direct Share to Twitter/X','Approved Asset Enforcement'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'youtube', name:'YouTube', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'▶️',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF0000',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Share approved Canto video assets to YouTube.',
+    icp:'Video marketing teams and content creators managing YouTube channels.',
+    signals:['We have a YouTube channel', 'We post video content', 'We manage a YouTube presence'],
+    problem:'Video teams export from Canto and manually upload to YouTube. Direct share removes the manual step.',
+    capabilities:['Direct Upload to YouTube','Metadata Passthrough','Approved Asset Mode'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'vimeo', name:'Vimeo', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🎥',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#1AB7EA',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Push approved Canto video assets to Vimeo.',
+    icp:'Creative and video teams using Vimeo for professional video hosting.',
+    signals:['We use Vimeo', 'We host video on Vimeo', 'We have a video library'],
+    problem:'Video teams export from Canto and manually upload to Vimeo. Direct share closes the loop.',
+    capabilities:['Direct Upload to Vimeo','Metadata Passthrough'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  // ── MICROSOFT OFFICE ─────────────────────────────────────────────────
+  { id:'microsoft-excel', name:'Microsoft Excel', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'📊',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#217346',
+    partnerDesc:'Built and maintained by Canto. Export assets and metadata to Excel.',
+    tagline:'Export Canto asset metadata and links into Microsoft Excel.',
+    icp:'Operations and marketing teams that manage asset inventories or reporting in Excel.',
+    signals:['We use Excel', 'We manage reports in Excel', 'We use Microsoft 365'],
+    problem:'Teams tracking asset metadata, usage, and distribution in spreadsheets have no direct line from Canto to Excel.',
+    capabilities:['Asset Metadata Export','Link Export','Bulk Operations'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Microsoft 365',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'microsoft-powerpoint', name:'Microsoft PowerPoint', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'📊',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#B7472A',
+    partnerDesc:'Built and maintained by Canto. Insert Canto assets into PowerPoint presentations.',
+    tagline:'Insert approved Canto assets directly into PowerPoint decks.',
+    icp:'Sales teams, marketing teams, and executives building presentations in PowerPoint.',
+    signals:['We use PowerPoint', 'Sales reps build decks in PowerPoint', 'We use Microsoft 365'],
+    problem:'Sales reps and marketers pull images and logos into PowerPoint from wherever they can find them. Off-brand slides go to customers.',
+    capabilities:['In-App Asset Browser','Direct Insert into Slides','Approved Asset Enforcement'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Microsoft 365',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'microsoft-word', name:'Microsoft Word', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'📝',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#185ABD',
+    partnerDesc:'Built and maintained by Canto. Insert Canto assets into Word documents.',
+    tagline:'Insert approved Canto assets into Word documents.',
+    icp:'Teams creating branded documents, proposals, and reports in Microsoft Word.',
+    signals:['We use Word', 'We create branded documents in Word', 'We use Microsoft 365'],
+    problem:'Document creators pull images and logos into Word from wherever — creating off-brand documents.',
+    capabilities:['In-App Asset Browser','Direct Insert into Documents','Approved Asset Enforcement'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Microsoft 365',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'microsoft-outlook', name:'Microsoft Outlook', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'📧',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#0072C6',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Insert approved Canto assets into Outlook emails and signatures.',
+    icp:'Organizations where email signature and communication branding is managed centrally.',
+    signals:['We use Outlook', 'We manage email signatures', 'We use Microsoft 365'],
+    problem:'Employees create email signatures and communications with outdated logos pulled from desktop folders.',
+    capabilities:['In-App Asset Browser','Email Signature Support','Approved Asset Enforcement'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Microsoft 365',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'microsoft-teams', name:'Microsoft Teams', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'👥',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#5558AF',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Share approved Canto assets in Microsoft Teams conversations and channels.',
+    icp:'Organizations using Microsoft Teams as their primary collaboration platform.',
+    signals:['We use Teams', 'We communicate in Microsoft Teams', 'We use Microsoft 365'],
+    problem:'Teams users share assets via chat attachments from desktop, creating uncontrolled versions in conversations.',
+    capabilities:['Asset Share in Teams','Approved Asset Enforcement','Channel Integration'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Microsoft 365',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  // ── PRODUCTIVITY & COLLABORATION ──────────────────────────────────────
+  { id:'slack', name:'Slack', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'💬',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#4A154B',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Share approved Canto assets in Slack channels and conversations.',
+    icp:'Teams using Slack as their primary communication and collaboration tool.',
+    signals:['We use Slack', 'Our team is on Slack', 'We share files in Slack'],
+    problem:'Teams share asset links and attachments in Slack from local files or random cloud storage. Approved assets from Canto never make it into the conversation.',
+    capabilities:['Asset Share in Slack','Approved Asset Enforcement','Search Canto from Slack'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'asana', name:'Asana', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'🎯',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Canto via Paragon', partnerBg:'#F06A6A',
+    partnerDesc:'Built via Paragon middleware. Bidirectional integration between Canto and Asana project management.',
+    tagline:'Link Canto assets to Asana tasks and projects bidirectionally.',
+    icp:'Creative and marketing teams using Asana for project management with asset-heavy workflows.',
+    signals:['We use Asana', 'Our team manages projects in Asana', 'We have a creative project workflow'],
+    problem:'Asana tasks reference assets from Dropbox or Google Drive links. Canto integration makes assets attached to tasks always current and approved.',
+    capabilities:['Asset Linking to Tasks','Bidirectional Sync','Project Asset Tracking','Approval Status in Tasks'],
+    timeline:'~2 weeks', investment:'Tiered pricing',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Bidirectional', builtBy:'Canto via Paragon', cantoProduct:'Both', additionalCost:'Tiered pricing', status:'Live', flags:['Built via Paragon middleware — additional licensing may apply','Confirm pricing with product team'] },
+
+  { id:'monday-com', name:'monday.com', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'📅',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#FF3D57',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Attach approved Canto assets to monday.com projects and workflows.',
+    icp:'Teams using monday.com for project management with asset-heavy deliverables.',
+    signals:['We use monday.com', 'We manage projects in monday', 'We have campaign or creative workflows'],
+    problem:'monday.com users attach assets from Dropbox or Google Drive — uncontrolled versions get embedded in project boards.',
+    capabilities:['Asset Linking to Boards','Approved Asset Enforcement','Project Workflow Integration'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'wrike', name:'Wrike', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'⚡',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#30B44A',
+    partnerDesc:'Built and maintained by Canto.',
+    tagline:'Connect Canto assets to Wrike projects and tasks.',
+    icp:'Marketing operations and creative teams using Wrike for work management.',
+    signals:['We use Wrike', 'We manage creative projects in Wrike'],
+    problem:'Wrike users attach assets from various sources — Canto integration ensures assets in projects are always the approved version.',
+    capabilities:['Asset Linking to Projects','Approved Asset Enforcement','Task Integration'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  // ── CRM ────────────────────────────────────────────────────────────
+  { id:'salesforce-mktg', name:'Salesforce Marketing Cloud', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'☁️',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'medium', includedInPlan:false,
+    partner:'Canto', partnerBg:'#00A1E0',
+    partnerDesc:'Built and maintained by Canto. $5,000/year add-on. Australia accounts NOT supported. Revenue shared with Salesforce.',
+    tagline:'Push approved Canto assets directly into Salesforce Marketing Cloud campaigns.',
+    icp:'Enterprise brands running marketing automation on Salesforce Marketing Cloud.',
+    signals:['We use Salesforce Marketing Cloud', 'We use SFMC', 'We run email campaigns in Salesforce'],
+    problem:'Marketing Cloud teams source images from file servers or shared drives. Canto integration puts approved assets directly in the SFMC content builder.',
+    capabilities:['Content Builder Integration','Approved Asset Mode','Campaign Asset Tracking'],
+    timeline:'~2 weeks', investment:'$5,000/year (separate contract)',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Salesforce Marketing Cloud',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'$5,000/year', status:'Live', flags:['$5K/year add-on — disclose upfront','Australia accounts NOT supported','Revenue shared with Salesforce'] },
+
+  // ── DEVELOPER / API ────────────────────────────────────────────────────
+  { id:'zapier', name:'Zapier', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'⚡',
+    partnerType:'tech', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Partner Supported', partnerBg:'#FF4A00',
+    partnerDesc:'Configurable via Zapier workflow builder. Direction depends on how workflow is configured. Requires separate Zapier subscription.',
+    tagline:'Automate Canto workflows with 6,000+ apps via Zapier.',
+    icp:'Operations teams and marketers who want to automate asset workflows without code.',
+    signals:['We use Zapier', 'We want to automate workflows', 'We want to connect Canto to other tools'],
+    problem:'Teams want to trigger Canto actions based on events in other tools (or vice versa) without developer resources. Zapier makes this possible.',
+    capabilities:['Trigger on Asset Upload','Send Assets to Other Apps','Automate Metadata Updates','6,000+ App Connections'],
+    timeline:'~1 week', investment:'Zapier subscription required',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Zapier subscription',
+    direction:'Configurable', builtBy:'Partner Supported', cantoProduct:'Both', additionalCost:'Zapier subscription required', status:'Live', flags:['Direction depends on how workflow is configured','Requires separate Zapier subscription'] },
+
+  { id:'rest-api', name:'REST API', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'🔌',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'bidirectional', authType:'API Key', difficulty:'advanced', includedInPlan:true,
+    partner:'Canto', partnerBg:'#374151',
+    partnerDesc:'Built and maintained by Canto. Full REST API access for custom integrations.',
+    tagline:'Build custom integrations using Canto\'s full REST API.',
+    icp:'Organizations with developer resources who need custom integration workflows not covered by native connectors.',
+    signals:['We have developers on staff', 'We want to build a custom integration', 'We need API access'],
+    problem:'No out-of-the-box integration covers every use case. Canto\'s REST API enables any custom workflow a developer can build.',
+    capabilities:['Full CRUD Operations','Asset Upload/Download','Metadata Management','Search API','Webhook Support'],
+    timeline:'Variable', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Developer resource required',
+    direction:'Bidirectional', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Requires developer resource to implement'] },
+
+  { id:'universal-connector', name:'Universal Connector', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'🔗',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:true,
+    partner:'Canto', partnerBg:'#374151',
+    partnerDesc:'Built and maintained by Canto. JavaScript developer tool for embedding Canto asset picker in external apps.',
+    tagline:'Embed the Canto asset picker in Salesforce or any custom web app.',
+    icp:'Organizations with Salesforce or custom web apps that need an embedded Canto asset picker.',
+    signals:['We use Salesforce', 'We want to embed Canto in our app', 'We have developers who can implement'],
+    problem:'Organizations want Canto\'s asset selection experience inside their own tools — Salesforce, custom portals, or any web app — without leaving the context of their workflow.',
+    capabilities:['Embeddable Asset Picker','Salesforce Integration','Custom Web App Embedding','JavaScript SDK'],
+    timeline:'Variable', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'JavaScript developer required',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['JavaScript developer tool — requires implementation','Primary use case: embedding Canto asset picker in Salesforce or custom web apps'] },
+
+  { id:'google-analytics', name:'Google Analytics', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'📊',
+    partnerType:'canto', availability:'live',
+    soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#E37400',
+    partnerDesc:'Built and maintained by Canto. Pull analytics data into Canto for asset performance tracking.',
+    tagline:'Pull Google Analytics data into Canto to track asset performance.',
+    icp:'Marketing teams who want to understand which assets drive the most web engagement.',
+    signals:['We use Google Analytics', 'We want to track asset performance', 'We need to report on content ROI'],
+    problem:'Brand teams have no visibility into which Canto assets drive traffic and conversions. Google Analytics data brought into Canto surfaces performance metrics on assets.',
+    capabilities:['Asset Performance Metrics','Web Traffic Attribution','Content ROI Reporting'],
+    timeline:'~1 week', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'Inbound to Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
+
+  { id:'ciloo', name:'Ciloo', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'❓',
+    partnerType:'tech', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'TBD', difficulty:'medium', includedInPlan:false,
+    partner:'Unknown', partnerBg:'#6B7280',
+    partnerDesc:'Not verified — no internal documentation found. Do not present to prospects until confirmed.',
+    tagline:'Unknown — not verified.',
+    icp:'Unknown.',
+    signals:[],
+    problem:'Integration status not verified.',
+    capabilities:[],
+    timeline:'TBD', investment:'Unknown',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'',
+    direction:'Unknown', builtBy:'Unknown', cantoProduct:'Unknown', additionalCost:'Unknown', status:'Needs Verification', flags:['Not verified — no internal documentation found','Do not present to prospects until confirmed'] },
+
+  // ── PLATFORM APPS (not third-party integrations) ───────────────────────
+  { id:'chrome-extension', name:'Chrome Extension', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🌐',
+    partnerType:'canto', availability:'live', isPlatformApp:true,
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'N/A', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#4285F4',
+    partnerDesc:'Built and maintained by Canto. This is a Canto product feature — NOT a third-party integration.',
+    tagline:'Access and share Canto assets from any webpage using the Chrome Extension.',
+    icp:'Any Canto user who works in a browser.',
+    signals:['We use Chrome', 'Users want browser-based access to assets'],
+    problem:'Users need quick access to Canto assets without opening the DAM — the Chrome Extension solves this.',
+    capabilities:['Browser-Based Asset Access','Quick Share','Direct Insert'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'N/A', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Platform Feature', flags:['This is a Canto product feature — NOT a third-party integration','Should not be listed alongside integrations'] },
+
+  { id:'ios-mobile', name:'iOS Mobile App', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📱',
+    partnerType:'canto', availability:'live', isPlatformApp:true,
+    soldBy:'canto', dataFlow:'bidirectional', authType:'N/A', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#555555',
+    partnerDesc:'Built and maintained by Canto. This is a Canto product feature — NOT a third-party integration.',
+    tagline:'Access and manage Canto assets from iOS devices.',
+    icp:'Any Canto user with an iPhone or iPad.',
+    signals:['Our team uses iPhones', 'We need mobile access to assets'],
+    problem:'Teams need access to assets on the go. The iOS app provides full Canto access from mobile.',
+    capabilities:['Mobile Asset Access','Upload from Camera Roll','Asset Management'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'N/A', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Platform Feature', flags:['This is a Canto product feature — NOT a third-party integration'] },
+
+  { id:'mac-connect', name:'Mac OS Canto Connect', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🍎',
+    partnerType:'canto', availability:'live', isPlatformApp:true,
+    soldBy:'canto', dataFlow:'bidirectional', authType:'N/A', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#555555',
+    partnerDesc:'Built and maintained by Canto. This is a Canto product feature — NOT a third-party integration.',
+    tagline:'Access Canto assets from Finder on Mac OS via Canto Connect.',
+    icp:'Mac users who want native filesystem access to Canto assets.',
+    signals:['Our team uses Macs', 'We want Canto accessible from Finder'],
+    problem:'Mac users want to access Canto assets directly from Finder without using a browser.',
+    capabilities:['Finder Integration','Native Mac Access','Asset Upload and Download'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'N/A', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Platform Feature', flags:['This is a Canto product feature — NOT a third-party integration'] },
+
+  { id:'windows-connect', name:'Windows Canto Connect', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🪟',
+    partnerType:'canto', availability:'live', isPlatformApp:true,
+    soldBy:'canto', dataFlow:'bidirectional', authType:'N/A', difficulty:'easy', includedInPlan:true,
+    partner:'Canto', partnerBg:'#0078D4',
+    partnerDesc:'Built and maintained by Canto. This is a Canto product feature — NOT a third-party integration.',
+    tagline:'Access Canto assets from File Explorer on Windows via Canto Connect.',
+    icp:'Windows users who want native filesystem access to Canto assets.',
+    signals:['Our team uses Windows PCs', 'We want Canto accessible from File Explorer'],
+    problem:'Windows users want to access Canto assets directly from File Explorer without using a browser.',
+    capabilities:['File Explorer Integration','Native Windows Access','Asset Upload and Download'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
+    direction:'N/A', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Platform Feature', flags:['This is a Canto product feature — NOT a third-party integration'] },
 
   // ── CRM ────────────────────────────────────────────────────────────
   { id:'salesforce', logo:'https://a.sfdcstatic.com/shared/images/c360-nav/salesforce-with-type-logo.svg', name:'Salesforce CRM', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'☁️',
@@ -1782,14 +3202,15 @@ const INTEGRATIONS = [
     talktrack: '"This one sells itself to sales leaders: \'Right now your reps are pulling pitch decks and product images from wherever. Some are outdated. Some are off-brand. Canto in Salesforce means every rep accesses only approved, current assets — directly from the deal view.\'"',
     capabilities:['Asset Panel in Salesforce','Sales Enablement Asset Access','Opportunity-Level Asset Tagging','Approval Status Visibility','Lightning Web Component'],
     timeline:'Included', investment:'Included',
-    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/salesforce.svg', installCount:'3,100+', lastUpdated:'Mar 2026', prereq:'Requires Salesforce CRM' },
+    costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/salesforce.svg', installCount:'3,100+', lastUpdated:'Mar 2026', prereq:'Requires Salesforce CRM',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   // ── ERP ────────────────────────────────────────────────────────────
   { id:'sap', logo:'https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg/sap-logo-svg.svg', name:'SAP S/4HANA', cat:'erp', type:'For Products', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🏭',
     partnerType:'si', availability:'live',
-    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
+    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:false,
     partner:'MindCloud', partnerBg:'#007DB8',
-    partnerDesc:'SAP integration delivered via certified SI partner. Recommended for enterprise manufacturers and distributors with full SAP stack.',
+    partnerDesc:'SAP integration delivered via certified SI partner. Implementation partner recommended for enterprise deployments.',
     tagline:'Link governed product assets from Canto to SAP product master records.',
     icp:'Enterprise manufacturers, distributors, and CPG brands running SAP S/4HANA.',
     signals:['We run SAP', 'We use SAP S/4HANA', 'Compliance and version control are critical', 'We\'re in manufacturing'],
@@ -1797,13 +3218,14 @@ const INTEGRATIONS = [
     talktrack: '"SAP deals are enterprise and budget is there. Lead with compliance: \'Technical drawings, compliance docs, product images — they all need to be version-controlled and tied to the SAP material record. That\'s exactly what the Canto-SAP integration delivers.\'"',
     capabilities:['Product Master Integration','Asset-to-Material Mapping','Compliance Document Governance','Version Traceability','SAP Fiori Panel'],
     timeline:'8–12 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sap.svg', installCount:'60+', lastUpdated:'Dec 2025', prereq:'Requires SAP S/4HANA · MindCloud' },
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sap.svg', installCount:'60+', lastUpdated:'Dec 2025', prereq:'Requires SAP S/4HANA · MindCloud',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   { id:'netsuite', name:'NetSuite', cat:'erp', type:'For Products', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🔢',
     partnerType:'si', availability:'live',
-    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'difficult', includedInPlan:false,
+    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:false,
     partner:'MindCloud', partnerBg:'#009EDB',
-    partnerDesc:'NetSuite integration via SI partner network. Strong fit for mid-market manufacturers and distributors running NetSuite as their system of record.',
+    partnerDesc:'NetSuite integration via SI partner network. Implementation partner recommended. Strong fit for mid-market manufacturers and distributors running NetSuite as their system of record.',
     tagline:'Connect Canto product assets directly to NetSuite item records.',
     icp:'Mid-market manufacturers, distributors, and e-commerce brands running NetSuite.',
     signals:['We run NetSuite', 'We use NetSuite ERP', 'We\'re a distributor or manufacturer'],
@@ -1811,7 +3233,8 @@ const INTEGRATIONS = [
     talktrack: '"NetSuite prospects in manufacturing almost always have the same problem: product assets are floating outside the ERP. Ask: \'Where do your product images and spec sheets live today?\' The answer opens the Canto conversation immediately."',
     capabilities:['Item Record Asset Linking','Product Image Sync','Spec Sheet Governance','Version Control','SuiteApp Compatible'],
     timeline:'4–6 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/netsuite.svg', installCount:'140+', lastUpdated:'Jan 2026', prereq:'Requires NetSuite · MindCloud' },
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/netsuite.svg', installCount:'140+', lastUpdated:'Jan 2026', prereq:'Requires NetSuite · MindCloud',
+    direction:'Outbound from Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[] },
 
   // ── WIP DRAFTS ────────────────────────────────────────────────────────
   { id:'express-doc', name:'Express Doc', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📄',
@@ -2349,6 +3772,12 @@ function getFilteredIntegrations() {
       const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 90);
       if (isNaN(d.getTime()) || d < cutoff) return false;
     }
+    if (activeQF.has('dir-bidir')    && i.direction !== 'Bidirectional') return false;
+    if (activeQF.has('dir-outbound') && i.direction !== 'Outbound from Canto') return false;
+    if (activeQF.has('dir-inbound')  && !(i.direction || '').includes('Inbound')) return false;
+    if (activeQF.has('needs-verify') && i.status !== 'Needs Verification') return false;
+    if (activeQF.has('paid-addon')   && (i.additionalCost === 'Included' || !i.additionalCost)) return false;
+    if (activeQF.has('for-products') && i.cantoProduct !== 'For Products Required') return false;
     return true;
   });
 }
@@ -2425,11 +3854,52 @@ function difficultyPillHTML(diff, timeline) {
     easy:      'pill pill-easy',
     medium:    'pill pill-medium',
     difficult: 'pill pill-difficult',
+    advanced:  'pill pill-difficult',
   };
-  const label = diff ? diff.charAt(0).toUpperCase() + diff.slice(1) : '';
+  // Change 6: replace "difficult" display text with "Advanced"
+  const labelMap = { easy:'Easy', medium:'Medium', difficult:'Advanced', advanced:'Advanced' };
+  const label = labelMap[diff] || (diff ? diff.charAt(0).toUpperCase() + diff.slice(1) : '');
   const cls = map[diff] || 'pill';
   const timelineHtml = timeline ? '<span class="timeline-text">' + timeline + '</span>' : '';
   return '<span class="' + cls + '">' + label + '</span>' + timelineHtml;
+}
+
+function directionBadgeHTML(i) {
+  const dir = i.direction || 'Outbound from Canto';
+  const map = {
+    'Bidirectional':                          ['dir-bidirectional',  '\u21C4 Bidirectional'],
+    'Outbound from Canto':                    ['dir-outbound',       '\u2192 Outbound'],
+    'Inbound to Canto':                       ['dir-inbound',        '\u2190 Inbound'],
+    'Inbound to Canto + Manual Share Back':   ['dir-inbound-manual', '\u2190\u2197 Inbound + Share Back'],
+    'Configurable':                           ['dir-configurable',   '\u2699 Configurable'],
+    'Coming Soon':                            ['dir-coming-soon',    '? Coming Soon'],
+    'N/A':                                    ['dir-na',             '\u2014 N/A'],
+    'Unknown':                                ['dir-na',             '? Unknown'],
+  };
+  const [cls, label] = map[dir] || ['dir-outbound', '\u2192 Outbound'];
+  return '<span class="badge-direction ' + cls + '">' + label + '</span>';
+}
+
+function extraStatusBadgesHTML(i) {
+  let html = '';
+  const st = i.status || '';
+  if (st === 'Beta')                html += '<span class="badge-beta">BETA</span>';
+  if (st === 'Platform Feature')    html += '<span class="badge-platform-app">PLATFORM APP</span>';
+  if (st === 'Needs Verification')  html += '<span class="badge-needs-verify">NEEDS VERIFY</span>';
+  if (st === 'Coming Soon')         html += '<span class="badge-coming-soon-red">COMING SOON</span>';
+  if (i.additionalCost && i.additionalCost !== 'Included' && i.additionalCost !== 'Unknown') {
+    const costLabel = i.additionalCost.length > 20 ? 'PAID ADD-ON' : 'PAID ADD-ON \u00B7 ' + i.additionalCost;
+    html += '<span class="badge-paid-addon">' + costLabel + '</span>';
+  }
+  if (i.cantoProduct === 'For Products Required') {
+    html += '<span class="badge-for-products">FOR PRODUCTS</span>';
+  }
+  return html;
+}
+
+function flagIconHTML(i) {
+  if (!i.flags || i.flags.length === 0) return '';
+  return '<span class="flag-icon" title="' + i.flags.length + ' flag(s) — click to view">\u26A0</span>';
 }
 
 function logoHTML(i) {
@@ -2566,6 +4036,74 @@ function clearAllFilters() {
   clearSearch();
 }
 
+// ─── BUILD CARD HTML ──────────────────────────────────────────────────
+function buildCardHTML(i, idx) {
+  const partnerLogoHTML = i.partnerLogo
+    ? '<img class="partner-logo-sm" src="' + i.partnerLogo + '" alt="" onerror="this.style.display=\'none\'">'
+    : '';
+  const costPillHTML = i.costStatus
+    ? '<span class="cost-pill ' + (i.costStatus === 'Included' ? 'cost-included' : 'cost-extra') + '">' + i.costStatus + '</span>'
+    : '';
+  const prereqHTML = i.prereq
+    ? '<div class="card-prereq">\u25CB\u00A0' + i.prereq + '</div>'
+    : '';
+  const metaHTML = (i.installCount || i.lastUpdated)
+    ? '<div class="card-meta">' +
+        partnerLogoHTML +
+        '<span class="built-by">Built by ' + i.partner + '</span>' +
+        '<span class="meta-stats">' +
+          (i.installCount ? i.installCount + ' installs' : '') +
+          (i.installCount && i.lastUpdated ? ' \u00B7 ' : '') +
+          (i.lastUpdated || '') +
+        '</span>' +
+      '</div>'
+    : '<div class="card-meta">' + partnerLogoHTML + '<span class="built-by">Built by ' + i.partner + '</span></div>';
+  const editBtnHTML = isEditMode
+    ? '<button class="card-edit-btn" onclick="openEditModal(\'' + i.id + '\',event)">\u270E Edit</button>'
+    : '';
+  const checkboxHTML = isEditMode
+    ? '<input type="checkbox" class="card-select-cb" data-id="' + i.id + '"' + (selectedCards.has(i.id) ? ' checked' : '') + ' onclick="toggleCardSelect(\'' + i.id + '\',event)">'
+    : '';
+  const manageHTML = isEditMode
+    ? '<button class="card-manage-btn" onclick="openManagePanel(\'' + i.id + '\',event)">Manage \u2192</button>'
+    : '';
+  const extraBadges = extraStatusBadgesHTML(i);
+  const flagIcon    = flagIconHTML(i);
+  const animStyle   = (typeof idx === 'number') ? 'animation-delay:' + Math.min(idx * 40, 300) + 'ms;' : '';
+  const platformCls = i.isPlatformApp ? ' is-platform-app' : '';
+
+  return '<div class="card' + (i.featured ? ' is-featured' : '') + platformCls + '" ' +
+    'data-type="' + (i.type || 'DAM') + '" ' +
+    'style="' + animStyle + '" ' +
+    'onclick="openModal(\'' + i.id + '\')">' +
+    checkboxHTML +
+    editBtnHTML +
+    manageHTML +
+    '<div class="card-top">' +
+      logoHTML(i) +
+      '<div class="card-top-right">' +
+        (i.featured ? '<span class="featured-badge">\u2605 Top Pick</span>' : '') +
+        statusBadgeHTML(i.availability) +
+        healthDotHTML(i) +
+        flagIcon +
+      '</div>' +
+    '</div>' +
+    '<div class="card-name">' + i.name + '</div>' +
+    '<div class="card-cat-label">' + i.catLabel + typeBadgeHTML(i) + '</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">' +
+      directionBadgeHTML(i) + extraBadges +
+    '</div>' +
+    '<div class="card-tagline">' + i.tagline + '</div>' +
+    prereqHTML +
+    '<div class="card-footer">' +
+      soldByBadgeHTML(i.soldBy) +
+      costPillHTML +
+      '<span class="card-arrow">\u2192</span>' +
+    '</div>' +
+    metaHTML +
+  '</div>';
+}
+
 // ─── RENDER CARDS ─────────────────────────────────────────────────────
 function renderCards() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -2586,9 +4124,21 @@ function renderCards() {
     if (pc) pc.textContent = count ? count : '';
   });
 
+  // Platform Apps section
+  const platformApps = INTEGRATIONS.filter(i => i.isPlatformApp && i.availability === 'live');
+  const platformAppsSection = document.getElementById('platformAppsSection');
+  const platformAppsGrid    = document.getElementById('platformAppsGrid');
+  if (platformApps.length > 0 && platformAppsSection && platformAppsGrid) {
+    platformAppsSection.style.display = 'block';
+    platformAppsGrid.innerHTML = platformApps.map(i => buildCardHTML(i, false)).join('');
+  } else if (platformAppsSection) {
+    platformAppsSection.style.display = 'none';
+  }
+
   // Filter
   let filtered = INTEGRATIONS.filter(i => {
     if (i.cat === 'tech') return false;
+    if (i.isPlatformApp) return false;
     if (i.availability === 'track' || i.availability === 'soon') return false;
     if (activeCat !== 'all' && i.cat !== activeCat) return false;
     if (activePT  !== 'all' && i.partnerType !== activePT) return false;
@@ -2606,6 +4156,12 @@ function renderCards() {
       const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 90);
       if (isNaN(d.getTime()) || d < cutoff) return false;
     }
+    if (activeQF.has('dir-bidir')    && i.direction !== 'Bidirectional') return false;
+    if (activeQF.has('dir-outbound') && i.direction !== 'Outbound from Canto') return false;
+    if (activeQF.has('dir-inbound')  && !(i.direction || '').includes('Inbound')) return false;
+    if (activeQF.has('needs-verify') && i.status !== 'Needs Verification') return false;
+    if (activeQF.has('paid-addon')   && (i.additionalCost === 'Included' || !i.additionalCost)) return false;
+    if (activeQF.has('for-products') && i.cantoProduct !== 'For Products Required') return false;
     if (q) {
       const hay = [i.name, i.tagline, i.catLabel, i.partner, i.icp||'', (i.signals||[]).join(' ')].join(' ').toLowerCase();
       if (!hay.includes(q)) return false;
@@ -2641,118 +4197,14 @@ function renderCards() {
   // Featured section
   if (featuredItems.length > 0) {
     featuredSection.style.display = 'block';
-    featuredGrid.innerHTML = featuredItems.map(i => {
-      const partnerLogoHTML = i.partnerLogo
-        ? '<img class="partner-logo-sm" src="' + i.partnerLogo + '" alt="" onerror="this.style.display=\'none\'">'
-        : '';
-      const costPillHTML = i.costStatus
-        ? '<span class="cost-pill ' + (i.costStatus === 'Included' ? 'cost-included' : 'cost-extra') + '">' + i.costStatus + '</span>'
-        : '';
-      const prereqHTML = i.prereq
-        ? '<div class="card-prereq">\u25CB\u00A0' + i.prereq + '</div>'
-        : '';
-      const metaHTML = '<div class="card-meta">' +
-          partnerLogoHTML +
-          '<span class="built-by">Built by ' + i.partner + '</span>' +
-          ((i.installCount || i.lastUpdated)
-            ? '<span class="meta-stats">' + (i.installCount ? i.installCount + ' installs' : '') + (i.installCount && i.lastUpdated ? ' \u00B7 ' : '') + (i.lastUpdated || '') + '</span>'
-            : '') +
-        '</div>';
-      const editBtnHTML = isEditMode
-        ? '<button class="card-edit-btn" onclick="openEditModal(\'' + i.id + '\',event)">\u270E Edit</button>'
-        : '';
-      const checkboxHTML = isEditMode
-        ? '<input type="checkbox" class="card-select-cb" data-id="' + i.id + '"' + (selectedCards.has(i.id) ? ' checked' : '') + ' onclick="toggleCardSelect(\'' + i.id + '\',event)">'
-        : '';
-      const manageHTML = isEditMode
-        ? '<button class="card-manage-btn" onclick="openManagePanel(\'' + i.id + '\',event)">Manage \u2192</button>'
-        : '';
-      return '<div class="card featured-card is-featured" data-type="' + (i.type || 'DAM') + '" onclick="openModal(\'' + i.id + '\')">' +
-        checkboxHTML +
-        editBtnHTML +
-        manageHTML +
-        '<div class="card-top">' +
-          logoHTML(i) +
-          '<div class="card-top-right">' +
-            (i.featured ? '<span class="featured-badge">\u2605 Top Pick</span>' : '') + statusBadgeHTML(i.availability) + healthDotHTML(i) +
-          '</div>' +
-        '</div>' +
-        '<div class="card-name">' + i.name + '</div>' +
-        '<div class="card-cat-label">' + i.catLabel + typeBadgeHTML(i) + '</div>' +
-        '<div class="card-tagline">' + i.tagline + '</div>' +
-        prereqHTML +
-        '<div class="card-footer">' +
-          soldByBadgeHTML(i.soldBy) +
-          costPillHTML +
-          '<span class="card-arrow">\u2192</span>' +
-        '</div>' +
-        metaHTML +
-      '</div>';
-    }).join('');
+    featuredGrid.innerHTML = featuredItems.map(i => buildCardHTML(i, false)).join('');
   } else {
     featuredSection.style.display = 'none';
     featuredGrid.innerHTML = '';
   }
 
   // Regular grid
-  grid.innerHTML = regularItems.map((i, idx) => {
-    const partnerLogoHTML = i.partnerLogo
-      ? '<img class="partner-logo-sm" src="' + i.partnerLogo + '" alt="" onerror="this.style.display=\'none\'">'
-      : '';
-    const costPillHTML = i.costStatus
-      ? '<span class="cost-pill ' + (i.costStatus === 'Included' ? 'cost-included' : 'cost-extra') + '">' + i.costStatus + '</span>'
-      : '';
-    const prereqHTML = i.prereq
-      ? '<div class="card-prereq">\u25CB\u00A0' + i.prereq + '</div>'
-      : '';
-    const metaHTML = (i.installCount || i.lastUpdated)
-      ? '<div class="card-meta">' +
-          partnerLogoHTML +
-          '<span class="built-by">Built by ' + i.partner + '</span>' +
-          '<span class="meta-stats">' +
-            (i.installCount ? i.installCount + ' installs' : '') +
-            (i.installCount && i.lastUpdated ? ' \u00B7 ' : '') +
-            (i.lastUpdated || '') +
-          '</span>' +
-        '</div>'
-      : '<div class="card-meta">' + partnerLogoHTML + '<span class="built-by">Built by ' + i.partner + '</span></div>';
-    const editBtnHTML = isEditMode
-      ? '<button class="card-edit-btn" onclick="openEditModal(\'' + i.id + '\',event)">\u270E Edit</button>'
-      : '';
-    const checkboxHTML = isEditMode
-      ? '<input type="checkbox" class="card-select-cb" data-id="' + i.id + '"' + (selectedCards.has(i.id) ? ' checked' : '') + ' onclick="toggleCardSelect(\'' + i.id + '\',event)">'
-      : '';
-    const manageHTML = isEditMode
-      ? '<button class="card-manage-btn" onclick="openManagePanel(\'' + i.id + '\',event)">Manage \u2192</button>'
-      : '';
-
-    return '<div class="card' + (i.featured ? ' is-featured' : '') + '" ' +
-      'data-type="' + (i.type || 'DAM') + '" ' +
-      'style="animation-delay:' + Math.min(idx * 40, 300) + 'ms" ' +
-      'onclick="openModal(\'' + i.id + '\')">' +
-      checkboxHTML +
-      editBtnHTML +
-      manageHTML +
-      '<div class="card-top">' +
-        logoHTML(i) +
-        '<div class="card-top-right">' +
-          (i.featured ? '<span class="featured-badge">\u2605 Top Pick</span>' : '') + statusBadgeHTML(i.availability) + healthDotHTML(i) +
-        '</div>' +
-      '</div>' +
-      '<div class="card-name">' + i.name + '</div>' +
-      '<div class="card-cat-label">' + i.catLabel +
-        typeBadgeHTML(i) +
-      '</div>' +
-      '<div class="card-tagline">' + i.tagline + '</div>' +
-      prereqHTML +
-      '<div class="card-footer">' +
-        soldByBadgeHTML(i.soldBy) +
-        costPillHTML +
-        '<span class="card-arrow">\u2192</span>' +
-      '</div>' +
-      metaHTML +
-    '</div>';
-  }).join('');
+  grid.innerHTML = regularItems.map((i, idx) => buildCardHTML(i, idx)).join('');
 
   // Keep WIP section in sync
   if (typeof renderWipCards === 'function') renderWipCards();
@@ -2766,9 +4218,19 @@ function openModal(id) {
   document.getElementById('mLogo').innerHTML = modalLogoHTML(i);
   document.getElementById('mName').textContent = i.name;
   document.getElementById('mCat').textContent = i.catLabel + ' \u00B7 ' + dataFlowLabel(i);
-  document.getElementById('mBadges').innerHTML = statusBadgeHTML(i.availability) + ' ' + soldByBadgeHTML(i.soldBy);
+  document.getElementById('mBadges').innerHTML = statusBadgeHTML(i.availability) + ' ' + soldByBadgeHTML(i.soldBy) + ' ' + directionBadgeHTML(i) + ' ' + extraStatusBadgesHTML(i);
 
   let html = getVisualHTML(i);
+
+  // Flags display
+  if (i.flags && i.flags.length > 0) {
+    html += '<div style="padding:0 0 0;display:flex;flex-direction:column;gap:6px;margin-bottom:4px">';
+    html += i.flags.map(f =>
+      '<div class="flag-callout"><span class="flag-callout-icon">\u26A0</span><span>' + f + '</span></div>'
+    ).join('');
+    html += '</div>';
+  }
+
   html += '<div class="modal-cols">';
 
   // LEFT column
@@ -2804,14 +4266,18 @@ function openModal(id) {
   }
 
   // Deal Details (compact meta)
-  const diffLabel = i.difficulty ? i.difficulty.charAt(0).toUpperCase() + i.difficulty.slice(1) : null;
-  const diffMap = { easy:'#059669', medium:'#D97706', difficult:'#DC2626' };
+  const diffLabelMap = { easy:'Easy', medium:'Medium', difficult:'Advanced', advanced:'Advanced' };
+  const diffLabel = diffLabelMap[i.difficulty] || (i.difficulty ? i.difficulty.charAt(0).toUpperCase() + i.difficulty.slice(1) : null);
+  const diffMap = { easy:'#059669', medium:'#D97706', difficult:'#DC2626', advanced:'#DC2626' };
   const diffColor = diffMap[i.difficulty] || '#6B7280';
   html += '<div class="modal-section deal-details">' +
     '<div class="msection-title">Deal Details</div>' +
     '<div class="deal-tags">' +
       (i.partner ? '<span class="deal-tag">Built by ' + i.partner + '</span>' : '') +
       (diffLabel ? '<span class="deal-tag" style="color:' + diffColor + ';background:' + diffColor + '18">' + diffLabel + ' setup</span>' : '') +
+      (i.direction ? '<span class="deal-tag">' + i.direction + '</span>' : '') +
+      (i.additionalCost && i.additionalCost !== 'Included' && i.additionalCost !== 'Unknown' ? '<span class="deal-tag" style="color:#B91C1C;background:#FEF2F2">Cost: ' + i.additionalCost + '</span>' : '') +
+      (i.cantoProduct === 'For Products Required' ? '<span class="deal-tag" style="color:#92400E;background:#FFFBEB">Requires Canto for Products</span>' : '') +
       (i.timeline ? '<span class="deal-tag">\u23F1 ' + i.timeline + '</span>' : '') +
       (i.investment ? '<span class="deal-tag">\u0024 ' + i.investment + '</span>' : '') +
       (i.authType && i.authType !== 'TBD' ? '<span class="deal-tag">\uD83D\uDD11 ' + i.authType + '</span>' : '') +
@@ -2903,6 +4369,8 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal();
     closePrint();
+    closeTagAdamModal();
+    closeRequestsPanel();
     const filterPanel = document.getElementById('filterPanel');
     if (filterPanel) filterPanel.classList.remove('open');
   }
@@ -2960,6 +4428,152 @@ function updateBreadcrumb(cat) {
     }
   });
 })();
+
+// ─── FORM HANDLERS ────────────────────────────────────────────────────
+function handleRepTriageSubmit(e) {
+  e.preventDefault();
+  showToast('✓ Triage submitted — you\'ll hear back within 1 business day');
+  e.target.reset();
+}
+function handlePartnerSubmit(e) {
+  e.preventDefault();
+  showToast('✓ Integration submitted to the marketplace team');
+  e.target.reset();
+}
+
+// ─── TAG ADAM MODAL ────────────────────────────────────────────────────
+function openTagAdamModal() {
+  // Populate integration select
+  const sel = document.getElementById('ta-integration');
+  if (sel && sel.options.length <= 1) {
+    const names = INTEGRATIONS
+      .filter(i => i.availability === 'live' && !i.isPlatformApp && i.cat !== 'tech')
+      .map(i => i.name)
+      .sort();
+    names.forEach(n => {
+      const opt = document.createElement('option');
+      opt.value = n; opt.textContent = n;
+      sel.appendChild(opt);
+    });
+  }
+  // Reset form
+  document.getElementById('tagAdamForm').style.display = 'block';
+  document.getElementById('tagAdamConfirm').classList.remove('visible');
+  ['ta-rep-name','ta-rep-email','ta-integration','ta-account','ta-sfdc','ta-stage','ta-use-case','ta-urgency','ta-context'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.querySelectorAll('.tag-adam-input.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.tag-adam-error.visible').forEach(el => el.classList.remove('visible'));
+  document.getElementById('tagAdamOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTagAdamModal() {
+  document.getElementById('tagAdamOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function validateTagAdamField(id, errId, validator) {
+  const el = document.getElementById(id);
+  const errEl = document.getElementById(errId);
+  if (!el || !errEl) return true;
+  const valid = validator(el.value.trim());
+  el.classList.toggle('error', !valid);
+  errEl.classList.toggle('visible', !valid);
+  return valid;
+}
+
+function submitTagAdam() {
+  let ok = true;
+  ok = validateTagAdamField('ta-rep-name', 'ta-rep-name-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-rep-email', 'ta-rep-email-err', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) && ok;
+  ok = validateTagAdamField('ta-integration', 'ta-integration-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-account', 'ta-account-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-sfdc', 'ta-sfdc-err', v => { try { new URL(v); return true; } catch { return false; } }) && ok;
+  ok = validateTagAdamField('ta-stage', 'ta-stage-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-use-case', 'ta-use-case-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-urgency', 'ta-urgency-err', v => v.length > 0) && ok;
+  if (!ok) return;
+
+  const request = {
+    timestamp: new Date().toISOString(),
+    repName: document.getElementById('ta-rep-name').value.trim(),
+    repEmail: document.getElementById('ta-rep-email').value.trim(),
+    integration: document.getElementById('ta-integration').value.trim(),
+    account: document.getElementById('ta-account').value.trim(),
+    sfdcLink: document.getElementById('ta-sfdc').value.trim(),
+    dealStage: document.getElementById('ta-stage').value.trim(),
+    useCase: document.getElementById('ta-use-case').value.trim(),
+    urgency: document.getElementById('ta-urgency').value.trim(),
+    context: document.getElementById('ta-context').value.trim()
+  };
+
+  const existing = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
+  existing.push(request);
+  localStorage.setItem('canto_integration_requests_v1', JSON.stringify(existing));
+
+  document.getElementById('tagAdamForm').style.display = 'none';
+  document.getElementById('tagAdamConfirm').classList.add('visible');
+}
+
+// ─── INTEGRATION REQUESTS PANEL (admin) ────────────────────────────────
+function openRequestsPanel() {
+  const requests = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
+  const content = document.getElementById('reqContent');
+  if (!content) return;
+  if (requests.length === 0) {
+    content.innerHTML = '<div class="req-empty">No integration requests submitted yet.</div>';
+  } else {
+    const rows = requests.map(r =>
+      '<tr>' +
+        '<td>' + new Date(r.timestamp).toLocaleDateString() + '</td>' +
+        '<td>' + escHtml(r.repName) + '</td>' +
+        '<td>' + escHtml(r.repEmail) + '</td>' +
+        '<td><strong>' + escHtml(r.integration) + '</strong></td>' +
+        '<td>' + escHtml(r.account) + '</td>' +
+        '<td><a href="' + escHtml(r.sfdcLink) + '" target="_blank" style="color:var(--blue)">Link</a></td>' +
+        '<td>' + escHtml(r.dealStage) + '</td>' +
+        '<td>' + escHtml(r.urgency) + '</td>' +
+        '<td style="max-width:200px;font-size:11px">' + escHtml(r.useCase) + '</td>' +
+      '</tr>'
+    ).join('');
+    content.innerHTML = '<div style="overflow-x:auto"><table class="req-table">' +
+      '<thead><tr><th>Date</th><th>Rep</th><th>Email</th><th>Integration</th><th>Account</th><th>SFDC</th><th>Stage</th><th>Urgency</th><th>Use Case</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody>' +
+      '</table></div>';
+  }
+  document.getElementById('reqPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRequestsPanel() {
+  document.getElementById('reqPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function exportRequestsCSV() {
+  const requests = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
+  if (requests.length === 0) { showToast('No requests to export'); return; }
+  const headers = ['Date','Rep Name','Rep Email','Integration','Account','SFDC Link','Deal Stage','Urgency','Use Case','Context'];
+  const rows = requests.map(r => [
+    new Date(r.timestamp).toLocaleDateString(),
+    r.repName, r.repEmail, r.integration, r.account,
+    r.sfdcLink, r.dealStage, r.urgency,
+    (r.useCase || '').replace(/"/g,'""'),
+    (r.context || '').replace(/"/g,'""')
+  ].map(v => '"' + v + '"').join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'integration-requests-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function escHtml(str) {
+  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 // ─── INIT ─────────────────────────────────────────────────────────────
 renderCards();
@@ -3023,6 +4637,106 @@ renderCards();
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 </main>
+
+<!-- TAG ADAM ON A DEAL MODAL -->
+<div class="tag-adam-overlay" id="tagAdamOverlay" onclick="if(event.target===this)closeTagAdamModal()">
+  <div class="tag-adam-modal">
+    <div class="tag-adam-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <div class="tag-adam-title">🤝 Tag Adam on a Deal</div>
+          <div class="tag-adam-sub">Use this when you've matched a prospect to an integration and need Adam to activate the partner. Do not contact the partner directly.</div>
+        </div>
+        <button class="modal-close" onclick="closeTagAdamModal()">✕</button>
+      </div>
+    </div>
+    <div class="tag-adam-body" id="tagAdamBody">
+      <div class="tag-adam-confirm" id="tagAdamConfirm">
+        <div class="tag-adam-confirm-title">✓ Got it!</div>
+        <div class="tag-adam-confirm-body">Adam will be in touch within 24 hours. Do not contact the partner directly.</div>
+        <button class="tag-adam-close-btn" onclick="closeTagAdamModal()">Close</button>
+      </div>
+      <div id="tagAdamForm">
+        <div class="tag-adam-row2">
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Rep Name *</label>
+            <input type="text" class="tag-adam-input" id="ta-rep-name" placeholder="Your full name">
+            <div class="tag-adam-error" id="ta-rep-name-err">Required</div>
+          </div>
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Rep Email *</label>
+            <input type="email" class="tag-adam-input" id="ta-rep-email" placeholder="you@canto.com">
+            <div class="tag-adam-error" id="ta-rep-email-err">Valid email required</div>
+          </div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Integration Name *</label>
+          <select class="tag-adam-input" id="ta-integration">
+            <option value="">Select integration…</option>
+          </select>
+          <div class="tag-adam-error" id="ta-integration-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Prospect / Account Name *</label>
+          <input type="text" class="tag-adam-input" id="ta-account" placeholder="e.g. Acme Corporation">
+          <div class="tag-adam-error" id="ta-account-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Salesforce Opportunity Link *</label>
+          <input type="url" class="tag-adam-input" id="ta-sfdc" placeholder="Paste your SFDC opp URL">
+          <div class="tag-adam-error" id="ta-sfdc-err">Valid URL required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Deal Stage *</label>
+          <select class="tag-adam-input" id="ta-stage">
+            <option value="">Select stage…</option>
+            <option>1-Prospecting</option>
+            <option>2-Demo &amp; Validation</option>
+            <option>3-Canto Selected</option>
+            <option>4-Budget Approval</option>
+            <option>5-Closed Won</option>
+          </select>
+          <div class="tag-adam-error" id="ta-stage-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">What does the prospect use this tool for? *</label>
+          <textarea class="tag-adam-input" id="ta-use-case" rows="3" style="resize:vertical;line-height:1.5" placeholder="e.g. They run all email marketing through HubSpot and want assets to sync automatically"></textarea>
+          <div class="tag-adam-error" id="ta-use-case-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">What's the urgency? *</label>
+          <select class="tag-adam-input" id="ta-urgency">
+            <option value="">Select…</option>
+            <option>This week</option>
+            <option>This month</option>
+            <option>Next quarter</option>
+            <option>Just exploring</option>
+          </select>
+          <div class="tag-adam-error" id="ta-urgency-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Additional Context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+          <textarea class="tag-adam-input" id="ta-context" rows="3" style="resize:vertical;line-height:1.5" placeholder="Anything else Adam should know before reaching out to the partner"></textarea>
+        </div>
+        <button class="tag-adam-submit" onclick="submitTagAdam()">Submit to Adam →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATION REQUESTS PANEL (admin) -->
+<div class="req-panel" id="reqPanel" onclick="if(event.target===this)closeRequestsPanel()">
+  <div class="req-modal">
+    <div class="req-modal-header">
+      <div class="req-modal-title">📋 Integration Requests</div>
+      <div class="req-modal-actions">
+        <button class="req-export-csv-btn" onclick="exportRequestsCSV()">⬇ Export CSV</button>
+        <button class="req-close-btn" onclick="closeRequestsPanel()">✕ Close</button>
+      </div>
+    </div>
+    <div id="reqContent"></div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer class="site-footer" role="contentinfo">
