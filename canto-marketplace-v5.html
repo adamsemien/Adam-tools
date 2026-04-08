@@ -2467,7 +2467,7 @@ const INTEGRATIONS = [
 
   // ── PARTNER PROGRAMS ───────────────────────────────────────────────
   { id:'shopify-tp', name:'Shopify Plus', cat:'tech', type:'DAM', catLabel:'Partner Program', catColor:'#1E40AF', catBg:'#EFF6FF', emoji:'🛍️',
-    partnerType:'tech', availability:'track', featured:true,
+    partnerType:'tech', availability:'track', featured:false,
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'TBD', difficulty:'medium', includedInPlan:false,
     partner:'Canto Partner Team', partnerBg:'#1E40AF',
     partnerDesc:'Shopify Plus Agency Partners are among the most active referral sources in mid-market e-commerce. The Shopify App Store provides passive inbound lead generation at scale.',
@@ -2700,7 +2700,7 @@ const INTEGRATIONS = [
     capabilities:['Asset Export to Lightroom','Metadata Passthrough'],
     timeline:'Included', investment:'Included in plan',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
-    direction:'Canto → Lightroom (export only)', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Export only — pushes finalized photos from Lightroom into Canto. Cannot pull raw files from Canto into Lightroom.'],
+    direction:'Lightroom → Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Export only — pushes finalized photos from Lightroom into Canto. Cannot pull raw files from Canto into Lightroom.'],
     whatItDoes:'Export and push finalized color-graded photo batches from Lightroom directly into Canto.',
     bestFor:'Photographers pushing final approved images into DAM after post-processing.' },
 
@@ -2986,7 +2986,7 @@ const INTEGRATIONS = [
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sharepoint.svg', installCount:'2,900+', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365',
     direction:'Canto ↔ SharePoint', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['One of only two cloud storage integrations with true bidirectional flow.'],
     whatItDoes:'Import files from SharePoint into Canto. Share files back to SharePoint. Both directions are core designed use cases.',
-    bestFor:'Organizations migrating from SharePoint-based asset storage to Canto while maintaining SharePoint workflows.' },
+    bestFor:'Organizations migrating from SharePoint while maintaining SharePoint workflows.' },
 
   { id:'onedrive', name:'OneDrive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'☁️',
     partnerType:'canto', availability:'live',
@@ -3000,7 +3000,7 @@ const INTEGRATIONS = [
     capabilities:['Inbound Migration','Folder Mapping','Metadata Import','Bulk Transfer'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365',
-    direction:'→ Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool. Files come into Canto.'],
+    direction:'→ Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool.'],
     whatItDoes:'Migrate content from OneDrive into your Canto library. Import personal and shared folders with metadata preserved.',
     bestFor:'Microsoft-stack organizations migrating from OneDrive into Canto.' },
 
@@ -3017,7 +3017,7 @@ const INTEGRATIONS = [
     capabilities:['Inbound Migration','Folder-to-Album Mapping','Shared Drive Support','Metadata Property Mapping'],
     timeline:'~2 weeks', investment:'Included',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/gdrive.svg', installCount:'1,200+', lastUpdated:'Feb 2026', prereq:'Requires Google Workspace',
-    direction:'→ Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool. Files come into Canto. Nothing goes back to Google Drive automatically.'],
+    direction:'→ Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool. Nothing goes back to Google Drive automatically.'],
     whatItDoes:'Migrate digital assets from Google Drive directly into your Canto library. Import folders with metadata preserved. Auto-sync or on-demand.',
     bestFor:'Teams moving from Google Drive-based asset storage into a governed DAM.' },
 
@@ -3359,7 +3359,7 @@ const INTEGRATIONS = [
     capabilities:['Content Builder Integration','Approved Asset Mode','Campaign Asset Tracking'],
     timeline:'~2 weeks', investment:'$5,000/year (separate contract)',
     costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Salesforce Marketing Cloud',
-    direction:'Canto → SFMC', builtBy:'Canto', cantoProduct:'Both', additionalCost:'$5,000/year', status:'Live', flags:['⚠️ PAID ADD-ON — $5,000/year. Must be disclosed upfront.','Australia accounts NOT supported.','Revenue shared with Salesforce — cannot be discounted.','Supported: canto.com, canto.global, canto.de, ca.canto.com only.'],
+    direction:'Canto → SFMC', builtBy:'Canto', cantoProduct:'Both', additionalCost:'$5,000/year', status:'Live', flags:['⚠️ PAID ADD-ON — $5,000/year. Must be disclosed upfront.','Australia accounts NOT supported.','Revenue shared with Salesforce — cannot be discounted.','Supported accounts: canto.com, canto.global, canto.de, ca.canto.com only.'],
     whatItDoes:'Access Canto library from inside SFMC email builder. Search, browse, configure resolution and alt text, insert directly into email templates.',
     bestFor:'SFMC marketing teams inserting approved brand assets into email campaigns without leaving the platform.' },
 
@@ -4129,17 +4129,17 @@ const CAT_LABELS = {
 };
 
 const CAT_DESCRIPTIONS = {
-  creative: 'Creative Workflow integrations connect Canto directly to Adobe Creative Cloud, Figma, Canva, and other design tools — so creative teams access approved assets without leaving the app they work in. These are high-velocity closes: included in plan, easy setup, and immediately visible to the creative team.',
-  pim: 'PIM integrations sync Canto product assets into systems like Salsify, Akeneo, and inriver. These are For Products deals — always qualify the SKU count and PIM first. The value prop is eliminating manual asset downloads between DAM and PIM. Many require an SI partner — quote accordingly.',
-  cms: 'CMS integrations embed Canto assets into content management platforms like WordPress, Contentful, and Drupal. Editors pull approved assets directly inside the CMS — no downloads, no stale images. These are included in most plans and close fast with content-heavy teams.',
-  ecommerce: 'E-Commerce integrations connect Canto to Shopify, BigCommerce, and similar platforms. Product teams access approved assets without leaving the storefront admin. Often paired with For Products — qualify catalog size and time-to-publish pain.',
-  feed: 'Feed Management integrations syndicate product assets alongside product data to retail channels. These deals are technical and require a For Products conversation. Feedonomics, Channable, and Channel Engine are the key players — SI partners often required.',
-  esp: 'ESP integrations connect Canto to email marketing platforms like HubSpot, Mailchimp, and Klaviyo. Marketing teams access approved brand assets inside campaign builders. HubSpot is a paid add-on ($10K/year) — always disclose upfront.',
-  storage: 'Cloud Storage integrations connect Canto to Box, Dropbox, Google Drive, and OneDrive. These are often bilateral syncs — bidirectional flows between the DAM and storage. Qualify whether the prospect uses cloud storage as their primary asset source.',
-  social: 'Social & Publishing integrations let social teams schedule brand-approved Canto assets directly inside Sprout Social, Hootsuite, and similar tools. These are tech partner integrations — pricing and availability set by the partner.',
-  crm: 'CRM integrations surface approved Canto assets inside Salesforce and HubSpot deal views. Sales reps access pitch materials, product images, and brand collateral without leaving the CRM. Salesforce is included in plan — fast close for Salesforce shops.',
-  erp: 'ERP integrations connect Canto product assets to SAP S/4HANA and NetSuite item records. These are enterprise, technical, For Products deals — always require an SI partner (MindCloud). Budget is there; complexity is real. Lead with compliance and version governance.',
-  tech: 'Technology Partner integrations are co-sell and referral opportunities built by ecosystem partners. These are not Canto-native — pricing and support is partner-controlled. Use this section to identify partner-influenced pipeline and co-sell opportunities.'
+  creative: "Adobe CC, Canva, Figma, and design tools where your customer's team lives. These integrations keep approved Canto assets accessible inside creative workflows — no downloading, no version drift.",
+  storage: 'Migration and sync integrations for teams moving off Google Drive, Dropbox, OneDrive, Box, Egnyte, or SharePoint. Most are inbound — files come into Canto. SharePoint is the exception with true bidirectional flow.',
+  cms: 'WordPress, Drupal, TYPO3, and headless CMS platforms. These push approved Canto assets directly into web publishing workflows.',
+  ecommerce: 'Shopify and Amazon — both require Canto for Products (Product Hub). These are your strongest Product Hub upsell triggers. If a prospect mentions Shopify or Amazon, ask about their product catalog workflow.',
+  esp: 'HubSpot ($10K/yr) and Salesforce Marketing Cloud ($5K/yr) are paid add-ons — disclose cost before promising them in deals. Mailchimp and Hootsuite are included.',
+  social: 'Facebook, LinkedIn, Pinterest, Twitter/X, YouTube, Vimeo — push approved Canto assets to social channels without downloading first.',
+  crm: 'Asana, monday.com, Wrike (project management), Slack, Teams (communications), Zapier, REST API, Universal Connector (developer tools), and more.',
+  pim: 'Akeneo is Coming Soon and NOT live despite being listed on canto.com. Do not promise it in deals.',
+  feed: 'Feed management tools — Feedonomics, Channable, ChannelEngine. These require Canto for Products and connect your product catalog to retail channels.',
+  erp: 'SAP S/4HANA and NetSuite. ERP integrations touch product master data and require Canto for Products.',
+  tech: 'Partner programs and tech ecosystem relationships. These are business development motions, not native integrations.'
 };
 
 // ─── HELPER FUNCTIONS ─────────────────────────────────────────────────
@@ -4315,7 +4315,7 @@ function setCat(cat, el) {
   const catDescLbl = document.getElementById('catDescLabel');
   const catDescTxt = document.getElementById('catDescText');
   if (cat !== 'all' && CAT_DESCRIPTIONS[cat]) {
-    catDescLbl.textContent = (CAT_LABELS[cat] || cat).toUpperCase() + ' — Rep Briefing';
+    catDescLbl.innerHTML = '<a href="#" onclick="setCat(\'all\',document.querySelector(\'.cat-pill\'));return false;" style="color:rgba(255,255,255,0.55);text-decoration:none;font-size:11px;font-weight:700;">← All Integrations</a><span style="margin-left:10px;">' + (CAT_LABELS[cat] || cat).toUpperCase() + ' — Rep Briefing</span>';
     catDescTxt.textContent = CAT_DESCRIPTIONS[cat];
     catDescEl.classList.add('visible');
   } else {
@@ -4614,17 +4614,33 @@ function openModal(id) {
 
   // ── DARK FLOW DIAGRAM PANEL ──
   if (i.direction) {
-    const parts = i.direction.split(/↔|→|←/).map(s => s.trim()).filter(Boolean);
     html += '<div class="modal-flow-panel">';
-    if (parts.length >= 2) {
-      const isBI = i.direction.includes('↔');
-      html += '<span class="modal-flow-from">' + parts[0] + '</span>';
-      html += '<span class="modal-flow-arrow">' + (isBI ? '⇄' : '→') + '</span>';
-      html += '<span class="modal-flow-to">' + parts[1] + '</span>';
+    const dir = i.direction;
+    const boxStyle = '"background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;color:white;"';
+    const arrowStyle = '"color:rgba(255,255,255,0.5);font-size:16px;font-weight:300;"';
+    if (dir === 'N/A') {
+      html += '<span style=' + boxStyle + '>Canto Platform Feature</span>';
+    } else if (dir.includes('Configurable')) {
+      html += '<span style=' + boxStyle + '>⚙️ Configurable</span>';
+    } else if (dir.includes('↔')) {
+      const parts = dir.split('↔').map(function(s){return s.trim();}).filter(Boolean);
+      html += '<span style=' + boxStyle + '>' + (parts[0] || 'Canto') + '</span>';
+      html += '<span style=' + arrowStyle + '>⇄</span>';
+      html += '<span style=' + boxStyle + '>' + (parts[1] || i.name) + '</span>';
+    } else if (dir.startsWith('Canto →')) {
+      const to = dir.replace('Canto →','').trim();
+      html += '<span style=' + boxStyle + '>Canto</span>';
+      html += '<span style=' + arrowStyle + '>→</span>';
+      html += '<span style=' + boxStyle + '>' + to + '</span>';
+    } else if (dir.startsWith('→')) {
+      const to = dir.replace(/^→\s*/,'').replace(/\(.*\)/,'').trim() || 'Canto';
+      html += '<span style=' + boxStyle + '>' + i.name + '</span>';
+      html += '<span style=' + arrowStyle + '>→</span>';
+      html += '<span style=' + boxStyle + '>' + to + '</span>';
     } else {
-      html += '<span class="modal-flow-from">' + i.direction + '</span>';
+      html += '<span style=' + boxStyle + '>' + dir + '</span>';
     }
-    if (i.authType && i.authType !== 'TBD') {
+    if (i.authType && i.authType !== 'TBD' && i.authType !== 'N/A') {
       html += '<span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,0.5);font-weight:600;letter-spacing:0.3px;">🔑 ' + i.authType + '</span>';
     }
     html += '</div>';
@@ -4723,14 +4739,8 @@ function openModal(id) {
 
   // ── STICKY ACTION BAR ──
   html += '<div class="modal-action-bar">';
-  html += '<div class="modal-action-left">';
-  if (i.prereq) {
-    html += '<strong>Requires:</strong> ' + i.prereq;
-  } else {
-    html += '<strong>' + i.name + '</strong> integration';
-  }
-  html += '</div>';
-  html += '<button class="modal-req-btn" onclick="openCardReqModal(\'' + i.id + '\')">Request This Integration →</button>';
+  html += '<button style="background:#E8651A;color:white;border:none;border-radius:8px;padding:10px 20px;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;" onclick="openCardReqModal(\'' + i.id + '\')">Request This Integration →</button>';
+  html += '<button style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline;" onclick="openTagAdamModal()">Request New Integration</button>';
   html += '</div>';
 
   document.getElementById('modalInner').innerHTML = html;
@@ -4803,7 +4813,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeModal();
     closePrint();
-    closeTagAdamModal();
+    closeIntReqModal();
     closeRequestsPanel();
     const filterPanel = document.getElementById('filterPanel');
     if (filterPanel) filterPanel.classList.remove('open');
@@ -4878,40 +4888,73 @@ function handlePartnerSubmit(e) {
 // ─── UNIFIED INTEGRATION REQUEST MODAL ────────────────────────────────
 const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/x8pr1g6skkxqd3fhozp9yp3cpzdk2bq8';
 
-function openIntReqModal(integrationId) {
-  const i = integrationId ? INTEGRATIONS.find(x => x.id === integrationId) : null;
-  const intName = i ? i.name : '';
-  const overlay = document.getElementById('intReqOverlay');
-  overlay.dataset.integrationId = integrationId || '';
-  overlay.dataset.integrationName = intName;
+function _populateIntegrationDropdown() {
+  var sel = document.getElementById('ir-integration');
+  if (!sel || sel.options.length > 1) return;
+  var names = INTEGRATIONS
+    .filter(function(i) { return i.availability === 'live' && !i.isPlatformApp && i.cat !== 'tech'; })
+    .map(function(i) { return i.name; })
+    .sort();
+  names.forEach(function(n) {
+    var opt = document.createElement('option');
+    opt.value = n; opt.textContent = n;
+    sel.appendChild(opt);
+  });
+}
 
-  // Update header
-  document.getElementById('intReqTitle').textContent = intName ? 'Request: ' + intName : 'Request New Integration';
-  document.getElementById('intReqSub').textContent = intName
+function openIntReqModal(integrationId) {
+  _populateIntegrationDropdown();
+  var i = integrationId ? INTEGRATIONS.find(function(x) { return x.id === integrationId; }) : null;
+  var intName = i ? i.name : '';
+  var isCard = !!integrationId;
+
+  // Title / sub
+  document.getElementById('intReqTitle').textContent = isCard ? ('Request: ' + intName) : 'Request New Integration';
+  document.getElementById('intReqSub').textContent = isCard
     ? 'Let Adam know you have a prospect that needs ' + intName + ' so he can activate the partner.'
-    : 'Submit this and Adam will identify the right partner and get back to you. Do not contact partners directly.';
+    : "Don't see the integration you need? Submit this and Adam will identify the right partner and get back to you. Do not contact partners directly.";
+
+  // Source hidden field
+  document.getElementById('ir-source').value = isCard ? ('Card: ' + intName) : 'Global Button';
+
+  // Pre-fill / show-hide integration field
+  var sel = document.getElementById('ir-integration');
+  if (isCard && sel) {
+    sel.value = intName;
+    if (!sel.value) {
+      var opt = document.createElement('option');
+      opt.value = intName; opt.textContent = intName;
+      sel.appendChild(opt); sel.value = intName;
+    }
+  } else if (sel) {
+    sel.value = '';
+  }
+
+  // Update accomplish label
+  var lbl = document.getElementById('ir-accomplish-label');
+  if (lbl) lbl.textContent = isCard
+    ? ('What does the customer want to accomplish with ' + intName + '? *')
+    : 'What does the customer want to accomplish? *';
 
   // Reset form
-  document.getElementById('intReqForm').style.display = 'block';
+  document.getElementById('intReqFormFields').style.display = 'block';
   document.getElementById('intReqConfirm').style.display = 'none';
-  ['ir-integration','ir-rep-name','ir-rep-email','ir-account','ir-sfdc','ir-use-case','ir-gong','ir-context'].forEach(function(id) {
-    const el = document.getElementById(id);
+  ['ir-rep-name','ir-rep-email','ir-account','ir-sfdc','ir-tool','ir-close-date','ir-deal-value','ir-accomplish','ir-gong','ir-context'].forEach(function(id) {
+    var el = document.getElementById(id);
     if (el) el.value = '';
   });
-  if (intName) {
-    const intEl = document.getElementById('ir-integration');
-    if (intEl) intEl.value = intName;
-  }
-  document.querySelectorAll('input[name="ir-direction"], input[name="ir-critical"], input[name="ir-region"]').forEach(function(r) { r.checked = false; });
-  document.querySelectorAll('#intReqOverlay .tag-adam-input.error').forEach(function(el) { el.classList.remove('error'); });
-  document.querySelectorAll('#intReqOverlay .tag-adam-error.visible').forEach(function(el) { el.classList.remove('visible'); });
-  overlay.classList.add('open');
+  var ds = document.getElementById('ir-deal-stage');
+  if (ds) ds.value = '';
+  document.querySelectorAll('input[name="ir-direction"],input[name="ir-critical"],input[name="ir-region"]').forEach(function(r){ r.checked = false; });
+  document.querySelectorAll('#intReqOverlay .tag-adam-input.error').forEach(function(el){ el.classList.remove('error'); });
+  document.querySelectorAll('#intReqOverlay .tag-adam-error.visible').forEach(function(el){ el.classList.remove('visible'); });
+
+  document.getElementById('intReqOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
-// Aliases to maintain backward compatibility
-function openTagAdamModal() { openIntReqModal(); }
-function openCardReqModal(integrationId) { openIntReqModal(integrationId); }
+function openTagAdamModal() { openIntReqModal(null); }
+function openCardReqModal(id) { openIntReqModal(id); }
 
 function closeIntReqModal() {
   document.getElementById('intReqOverlay').classList.remove('open');
@@ -4920,81 +4963,80 @@ function closeIntReqModal() {
 function closeTagAdamModal() { closeIntReqModal(); }
 function closeCardReqModal() { closeIntReqModal(); }
 
-function validateTagAdamField(id, errId, validator) {
-  const el = document.getElementById(id);
-  const errEl = document.getElementById(errId);
-  if (!el || !errEl) return true;
-  const valid = validator(el.value.trim());
+function _validateIR(id, errId, fn) {
+  var el = document.getElementById(id);
+  var errEl = document.getElementById(errId);
+  if (!el) return true;
+  var valid = fn(el.value.trim());
   el.classList.toggle('error', !valid);
-  errEl.classList.toggle('visible', !valid);
+  if (errEl) errEl.classList.toggle('visible', !valid);
   return valid;
 }
 
-function getRadioVal(name) {
-  const checked = document.querySelector('input[name="' + name + '"]:checked');
-  return checked ? checked.value : '';
-}
-
 function submitIntReq() {
-  let ok = true;
-  ok = validateTagAdamField('ir-rep-name', 'ir-rep-name-err', v => v.length > 0) && ok;
-  ok = validateTagAdamField('ir-rep-email', 'ir-rep-email-err', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) && ok;
-  ok = validateTagAdamField('ir-account', 'ir-account-err', v => v.length > 0) && ok;
-  ok = validateTagAdamField('ir-sfdc', 'ir-sfdc-err', v => v.length > 0) && ok;
-  ok = validateTagAdamField('ir-use-case', 'ir-use-case-err', v => v.length > 0) && ok;
-  const dirVal = getRadioVal('ir-direction');
-  const dirErr = document.getElementById('ir-direction-err');
-  if (!dirVal) { dirErr.classList.add('visible'); ok = false; } else { dirErr.classList.remove('visible'); }
-  const critVal = getRadioVal('ir-critical');
-  const critErr = document.getElementById('ir-critical-err');
-  if (!critVal) { critErr.classList.add('visible'); ok = false; } else { critErr.classList.remove('visible'); }
-  const regVal = getRadioVal('ir-region');
-  const regErr = document.getElementById('ir-region-err');
-  if (!regVal) { regErr.classList.add('visible'); ok = false; } else { regErr.classList.remove('visible'); }
+  var ok = true;
+  ok = _validateIR('ir-rep-name','ir-rep-name-err',function(v){return v.length>0;}) && ok;
+  ok = _validateIR('ir-rep-email','ir-rep-email-err',function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}) && ok;
+  ok = _validateIR('ir-account','ir-account-err',function(v){return v.length>0;}) && ok;
+  ok = _validateIR('ir-sfdc','ir-sfdc-err',function(v){return v.length>0;}) && ok;
+  ok = _validateIR('ir-deal-stage','ir-deal-stage-err',function(v){return v.length>0;}) && ok;
+  ok = _validateIR('ir-close-date','ir-close-date-err',function(v){return v.length>0;}) && ok;
+  ok = _validateIR('ir-accomplish','ir-accomplish-err',function(v){return v.length>0;}) && ok;
+
+  var dirVal = (document.querySelector('input[name="ir-direction"]:checked')||{}).value||'';
+  var dirErr = document.getElementById('ir-direction-err');
+  if (!dirVal){ if(dirErr) dirErr.classList.add('visible'); ok=false; } else { if(dirErr) dirErr.classList.remove('visible'); }
+
+  var critVal = (document.querySelector('input[name="ir-critical"]:checked')||{}).value||'';
+  var critErr = document.getElementById('ir-critical-err');
+  if (!critVal){ if(critErr) critErr.classList.add('visible'); ok=false; } else { if(critErr) critErr.classList.remove('visible'); }
+
   if (!ok) return;
 
-  const overlay = document.getElementById('intReqOverlay');
-  const request = {
-    type: 'integration-request',
+  var integSel = document.getElementById('ir-integration');
+  var integVal = (integSel ? integSel.value.trim() : '') || (document.getElementById('ir-tool') ? document.getElementById('ir-tool').value.trim() : '');
+
+  var payload = {
     timestamp: new Date().toISOString(),
-    integration: document.getElementById('ir-integration').value.trim() || overlay.dataset.integrationName || '',
     repName: document.getElementById('ir-rep-name').value.trim(),
     repEmail: document.getElementById('ir-rep-email').value.trim(),
-    account: document.getElementById('ir-account').value.trim(),
-    sfdcLink: document.getElementById('ir-sfdc').value.trim(),
-    useCase: document.getElementById('ir-use-case').value.trim(),
-    direction: dirVal,
-    critical: critVal,
-    region: regVal,
-    gongLink: document.getElementById('ir-gong').value.trim(),
-    context: document.getElementById('ir-context').value.trim()
+    integrationName: integVal,
+    source: document.getElementById('ir-source') ? document.getElementById('ir-source').value : 'Unknown',
+    prospectName: document.getElementById('ir-account').value.trim(),
+    salesforceLink: document.getElementById('ir-sfdc').value.trim(),
+    dealStage: document.getElementById('ir-deal-stage') ? document.getElementById('ir-deal-stage').value : '',
+    expectedCloseDate: document.getElementById('ir-close-date') ? document.getElementById('ir-close-date').value : '',
+    dealValue: document.getElementById('ir-deal-value') ? document.getElementById('ir-deal-value').value.trim() : '',
+    whatToAccomplish: document.getElementById('ir-accomplish').value.trim(),
+    dataDirection: dirVal,
+    dealCriticality: critVal,
+    region: (document.querySelector('input[name="ir-region"]:checked')||{}).value||'',
+    gongLink: document.getElementById('ir-gong') ? document.getElementById('ir-gong').value.trim() : '',
+    additionalContext: document.getElementById('ir-context') ? document.getElementById('ir-context').value.trim() : ''
   };
 
   // Save to localStorage
-  const existing = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
-  existing.push(request);
+  var existing = JSON.parse(localStorage.getItem('canto_integration_requests_v1')||'[]');
+  existing.push(payload);
   localStorage.setItem('canto_integration_requests_v1', JSON.stringify(existing));
 
-  // POST to Make.com webhook
-  if (MAKE_WEBHOOK_URL && MAKE_WEBHOOK_URL !== 'YOUR_MAKE_WEBHOOK_URL') {
-    fetch(MAKE_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(request)
-    }).then(function(res) {
-      console.log('[Make.com] Webhook response:', res.status, res.statusText);
-    }).catch(function(err) {
-      console.error('[Make.com] Webhook error:', err);
-    });
-  }
+  // Send to Make.com webhook
+  fetch(MAKE_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function(r){ console.log('[Make.com] '+r.status); }).catch(function(e){ console.error('[Make.com] Failed:',e); });
 
-  document.getElementById('intReqForm').style.display = 'none';
+  // Show success state
+  var refEl = document.getElementById('intReqRefNum');
+  if (refEl) refEl.textContent = 'Reference: REQ-' + Date.now();
+  document.getElementById('intReqFormFields').style.display = 'none';
   document.getElementById('intReqConfirm').style.display = 'block';
 }
 
-// Backward-compat alias
-function submitCardReq() { submitIntReq(); }
+// Backward compat
 function submitTagAdam() { submitIntReq(); }
+function submitCardReq() { submitIntReq(); }
 
 // ─── INTEGRATION REQUESTS PANEL (admin) ────────────────────────────────
 function openRequestsPanel() {
@@ -5007,21 +5049,23 @@ function openRequestsPanel() {
     const rows = requests.map(r =>
       '<tr>' +
         '<td>' + new Date(r.timestamp).toLocaleDateString() + '</td>' +
-        '<td>' + escHtml(r.type === 'card-request' ? '📌 Card' : '➕ New') + '</td>' +
+        '<td>' + escHtml(r.source || (r.type === 'card-request' ? '📌 Card' : '➕ New')) + '</td>' +
         '<td>' + escHtml(r.repName) + '</td>' +
         '<td>' + escHtml(r.repEmail) + '</td>' +
-        '<td><strong>' + escHtml(r.integration) + '</strong></td>' +
-        '<td>' + escHtml(r.account) + '</td>' +
-        '<td><a href="' + escHtml(r.sfdcLink) + '" target="_blank" style="color:var(--blue)">Link</a></td>' +
+        '<td><strong>' + escHtml(r.integrationName || r.integration || '') + '</strong></td>' +
+        '<td>' + escHtml(r.prospectName || r.account || '') + '</td>' +
+        '<td><a href="' + escHtml(r.salesforceLink || r.sfdcLink || '') + '" target="_blank" style="color:var(--blue)">Link</a></td>' +
+        '<td>' + escHtml(r.dealStage || '—') + '</td>' +
+        '<td>' + escHtml(r.expectedCloseDate || '—') + '</td>' +
         '<td>' + escHtml(r.region || '—') + '</td>' +
-        '<td>' + escHtml(r.direction || '—') + '</td>' +
-        '<td>' + escHtml(r.critical || '—') + '</td>' +
-        '<td style="max-width:180px;font-size:11px">' + escHtml(r.accomplish || r.useCase || '') + '</td>' +
+        '<td>' + escHtml(r.dataDirection || r.direction || '—') + '</td>' +
+        '<td>' + escHtml(r.dealCriticality || r.critical || '—') + '</td>' +
+        '<td style="max-width:180px;font-size:11px">' + escHtml(r.whatToAccomplish || r.accomplish || r.useCase || '') + '</td>' +
         '<td>' + (r.gongLink ? '<a href="' + escHtml(r.gongLink) + '" target="_blank" style="color:var(--blue)">Gong</a>' : '—') + '</td>' +
       '</tr>'
     ).join('');
     content.innerHTML = '<div style="overflow-x:auto"><table class="req-table">' +
-      '<thead><tr><th>Date</th><th>Type</th><th>Rep</th><th>Email</th><th>Integration</th><th>Account</th><th>SFDC</th><th>Region</th><th>Direction</th><th>Critical?</th><th>Accomplish</th><th>Gong</th></tr></thead>' +
+      '<thead><tr><th>Date</th><th>Source</th><th>Rep</th><th>Email</th><th>Integration</th><th>Account</th><th>SFDC</th><th>Deal Stage</th><th>Close Date</th><th>Region</th><th>Direction</th><th>Critical?</th><th>Accomplish</th><th>Gong</th></tr></thead>' +
       '<tbody>' + rows + '</tbody>' +
       '</table></div>';
   }
@@ -5037,15 +5081,16 @@ function closeRequestsPanel() {
 function exportRequestsCSV() {
   const requests = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
   if (requests.length === 0) { showToast('No requests to export'); return; }
-  const headers = ['Date','Type','Rep Name','Rep Email','Integration','Account','SFDC Link','Region','Direction','Critical','Accomplish/Use Case','Gong Link','Context'];
+  const headers = ['Date','Source','Rep Name','Rep Email','Integration','Account','SFDC Link','Deal Stage','Close Date','Deal Value','Region','Direction','Critical','Accomplish/Use Case','Gong Link','Context'];
   const rows = requests.map(r => [
     new Date(r.timestamp).toLocaleDateString(),
-    r.type === 'card-request' ? 'Card Request' : 'New Integration Request',
-    r.repName, r.repEmail, r.integration, r.account, r.sfdcLink,
-    r.region || '', r.direction || '', r.critical || '',
-    (r.accomplish || r.useCase || '').replace(/"/g,'""'),
+    r.source || (r.type === 'card-request' ? 'Card Request' : 'New Integration Request'),
+    r.repName, r.repEmail, r.integrationName || r.integration || '', r.prospectName || r.account || '', r.salesforceLink || r.sfdcLink || '',
+    r.dealStage || '', r.expectedCloseDate || '', r.dealValue || '',
+    r.region || '', r.dataDirection || r.direction || '', r.dealCriticality || r.critical || '',
+    (r.whatToAccomplish || r.accomplish || r.useCase || '').replace(/"/g,'""'),
     r.gongLink || '',
-    (r.context || '').replace(/"/g,'""')
+    (r.additionalContext || r.context || '').replace(/"/g,'""')
   ].map(v => '"' + (v||'') + '"').join(','));
   const csv = [headers.join(','), ...rows].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
@@ -5174,78 +5219,140 @@ buildCheatSheet();
       </div>
     </div>
     <div class="tag-adam-body" id="intReqBody">
-      <div class="tag-adam-confirm" id="intReqConfirm" style="display:none;">
-        <div class="tag-adam-confirm-title">✓ Submitted!</div>
-        <div class="tag-adam-confirm-body">Adam will be in touch within 24 hours. Do not contact the partner directly.</div>
+      <!-- Success state -->
+      <div id="intReqConfirm" style="display:none;text-align:center;padding:32px 24px;">
+        <div style="font-size:56px;margin-bottom:12px;">✅</div>
+        <div style="font-size:20px;font-weight:800;color:#065F46;margin-bottom:8px;">Request Submitted!</div>
+        <div style="font-size:14px;color:#064E3B;line-height:1.6;margin-bottom:6px;">Adam will be in touch within 24 hours.</div>
+        <div style="font-size:14px;color:#064E3B;line-height:1.6;margin-bottom:20px;">Do not contact the partner directly.</div>
+        <div id="intReqRefNum" style="font-size:11px;color:#6B7280;margin-bottom:20px;font-family:monospace;"></div>
         <button class="tag-adam-close-btn" onclick="closeIntReqModal()">Close</button>
       </div>
-      <div id="intReqForm">
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Integration <span style="font-weight:400;text-transform:none;color:var(--muted)">(pre-filled if opened from a card)</span></label>
-          <input type="text" class="tag-adam-input" id="ir-integration" placeholder="e.g. Salesforce, SAP, their Shopify store">
+
+      <!-- Form fields -->
+      <div id="intReqFormFields">
+
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#6B7280;padding-bottom:8px;border-bottom:1px solid #F3F4F6;margin-bottom:16px;">Rep Info</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Rep Name *</label>
+            <input type="text" class="tag-adam-input" id="ir-rep-name" placeholder="Your full name">
+            <div class="tag-adam-error" id="ir-rep-name-err">Required</div>
+          </div>
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Rep Email *</label>
+            <input type="email" class="tag-adam-input" id="ir-rep-email" placeholder="you@canto.com">
+            <div class="tag-adam-error" id="ir-rep-email-err">Valid email required</div>
+          </div>
+        </div>
+
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#6B7280;padding-bottom:8px;border-bottom:1px solid #F3F4F6;margin-bottom:16px;">Deal Info</div>
+
+        <div class="tag-adam-field" style="margin-bottom:16px;">
+          <label class="tag-adam-label">Integration Name *</label>
+          <select class="tag-adam-input" id="ir-integration">
+            <option value="">Select integration…</option>
+          </select>
           <div class="tag-adam-error" id="ir-integration-err">Required</div>
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Rep Name *</label>
-          <input type="text" class="tag-adam-input" id="ir-rep-name" placeholder="Your full name">
-          <div class="tag-adam-error" id="ir-rep-name-err">Required</div>
+        <input type="hidden" id="ir-source" value="Global Button">
+
+        <div class="tag-adam-field" id="ir-tool-field" style="margin-bottom:16px;">
+          <label class="tag-adam-label">Or describe the tool (if not in list above) *</label>
+          <input type="text" class="tag-adam-input" id="ir-tool" placeholder="e.g. their custom ERP, legacy PIM, etc.">
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Rep Email *</label>
-          <input type="email" class="tag-adam-input" id="ir-rep-email" placeholder="you@canto.com">
-          <div class="tag-adam-error" id="ir-rep-email-err">Valid email required</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Prospect / Account Name *</label>
+            <input type="text" class="tag-adam-input" id="ir-account" placeholder="e.g. Acme Corporation">
+            <div class="tag-adam-error" id="ir-account-err">Required</div>
+          </div>
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Deal Stage *</label>
+            <select class="tag-adam-input" id="ir-deal-stage">
+              <option value="">Select stage…</option>
+              <option>Qualification</option>
+              <option>Discovery</option>
+              <option>Demo &amp; Validation</option>
+              <option>Canto Selected</option>
+              <option>Budget Approval &amp; SLIP</option>
+              <option>Closed Won</option>
+            </select>
+            <div class="tag-adam-error" id="ir-deal-stage-err">Required</div>
+          </div>
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Prospect / Account Name *</label>
-          <input type="text" class="tag-adam-input" id="ir-account" placeholder="e.g. Acme Corporation">
-          <div class="tag-adam-error" id="ir-account-err">Required</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Salesforce Opportunity Link *</label>
+            <input type="text" class="tag-adam-input" id="ir-sfdc" placeholder="Paste your SFDC opp URL">
+            <div class="tag-adam-error" id="ir-sfdc-err">Required</div>
+          </div>
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Expected Close Date *</label>
+            <input type="date" class="tag-adam-input" id="ir-close-date">
+            <div class="tag-adam-error" id="ir-close-date-err">Required</div>
+          </div>
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Salesforce Opportunity Link *</label>
-          <input type="text" class="tag-adam-input" id="ir-sfdc" placeholder="Paste your SFDC opp URL">
-          <div class="tag-adam-error" id="ir-sfdc-err">Required</div>
+
+        <div class="tag-adam-field" style="margin-bottom:16px;">
+          <label class="tag-adam-label">Deal Value / ACV Estimate <span style="font-weight:400;text-transform:none;color:#9CA3AF">(optional)</span></label>
+          <input type="text" class="tag-adam-input" id="ir-deal-value" placeholder="e.g. ~$30K">
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">What does the prospect want to accomplish? *</label>
-          <textarea class="tag-adam-input" id="ir-use-case" rows="3" style="resize:vertical;line-height:1.55" placeholder="e.g. Product images approved in Canto should automatically sync into their PIM when published"></textarea>
-          <div class="tag-adam-error" id="ir-use-case-err">Required</div>
+
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#6B7280;padding-bottom:8px;border-bottom:1px solid #F3F4F6;margin-bottom:16px;">Integration Context</div>
+
+        <div class="tag-adam-field" style="margin-bottom:16px;">
+          <label class="tag-adam-label" id="ir-accomplish-label">What does the customer want to accomplish? *</label>
+          <textarea class="tag-adam-input" id="ir-accomplish" rows="3" style="resize:vertical;line-height:1.55" placeholder="e.g. Product images approved in Canto should automatically sync into their Shopify store when published"></textarea>
+          <div class="tag-adam-error" id="ir-accomplish-err">Required</div>
         </div>
-        <div class="tag-adam-field">
+
+        <div class="tag-adam-field" style="margin-bottom:16px;">
           <label class="tag-adam-label">Which direction should data flow? *</label>
           <div class="ta-radio-group">
-            <label class="ta-radio-label"><input type="radio" name="ir-direction" value="Canto → Other tool"> Canto → Other tool</label>
-            <label class="ta-radio-label"><input type="radio" name="ir-direction" value="Other tool → Canto"> Other tool → Canto</label>
+            <label class="ta-radio-label"><input type="radio" name="ir-direction" value="Canto → Platform (we push to them)"> Canto → Platform (we push to them)</label>
+            <label class="ta-radio-label"><input type="radio" name="ir-direction" value="Platform → Canto (they push to us)"> Platform → Canto (they push to us)</label>
             <label class="ta-radio-label"><input type="radio" name="ir-direction" value="Both directions"> Both directions</label>
             <label class="ta-radio-label"><input type="radio" name="ir-direction" value="Not sure yet"> Not sure yet</label>
           </div>
           <div class="tag-adam-error" id="ir-direction-err">Please select one</div>
         </div>
-        <div class="tag-adam-field">
+
+        <div class="tag-adam-field" style="margin-bottom:16px;">
           <label class="tag-adam-label">Is this critical to closing the deal? *</label>
           <div class="ta-radio-group">
-            <label class="ta-radio-label"><input type="radio" name="ir-critical" value="Yes - deal is blocked"> Yes — deal is blocked</label>
-            <label class="ta-radio-label"><input type="radio" name="ir-critical" value="Nice to have"> Nice to have</label>
+            <label class="ta-radio-label"><input type="radio" name="ir-critical" value="Yes — deal is blocked without it"> Yes — deal is blocked without it</label>
+            <label class="ta-radio-label"><input type="radio" name="ir-critical" value="Nice to have but not blocking"> Nice to have but not blocking</label>
             <label class="ta-radio-label"><input type="radio" name="ir-critical" value="Post-sale requirement"> Post-sale requirement</label>
           </div>
           <div class="tag-adam-error" id="ir-critical-err">Please select one</div>
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Region *</label>
-          <div class="ta-radio-group">
-            <label class="ta-radio-label"><input type="radio" name="ir-region" value="US"> US</label>
-            <label class="ta-radio-label"><input type="radio" name="ir-region" value="EMEA"> EMEA</label>
+
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#6B7280;padding-bottom:8px;border-bottom:1px solid #F3F4F6;margin-bottom:16px;">Optional</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Region</label>
+            <div class="ta-radio-group" style="margin-top:8px;flex-direction:row;gap:20px;">
+              <label class="ta-radio-label"><input type="radio" name="ir-region" value="US"> US</label>
+              <label class="ta-radio-label"><input type="radio" name="ir-region" value="EMEA"> EMEA</label>
+            </div>
           </div>
-          <div class="tag-adam-error" id="ir-region-err">Please select one</div>
+          <div class="tag-adam-field">
+            <label class="tag-adam-label">Gong Call Link</label>
+            <input type="text" class="tag-adam-input" id="ir-gong" placeholder="https://app.gong.io/call?id=...">
+          </div>
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Gong Call Link <span style="font-weight:400;text-transform:none;color:var(--muted)">(optional)</span></label>
-          <input type="text" class="tag-adam-input" id="ir-gong" placeholder="https://app.gong.io/call?id=...">
+
+        <div class="tag-adam-field" style="margin-bottom:20px;">
+          <label class="tag-adam-label">Additional Context</label>
+          <textarea class="tag-adam-input" id="ir-context" rows="2" style="resize:vertical;line-height:1.55" placeholder="Anything else Adam should know before reaching out to the partner"></textarea>
         </div>
-        <div class="tag-adam-field">
-          <label class="tag-adam-label">Additional Context <span style="font-weight:400;text-transform:none;color:var(--muted)">(optional)</span></label>
-          <textarea class="tag-adam-input" id="ir-context" rows="2" style="resize:vertical;line-height:1.55" placeholder="Anything else Adam should know"></textarea>
-        </div>
-        <button class="tag-adam-submit" onclick="submitIntReq()">Submit Request →</button>
+
+        <button class="tag-adam-submit" id="intReqSubmitBtn" onclick="submitIntReq()" style="background:#E8651A;">Submit to Adam →</button>
       </div>
     </div>
   </div>
