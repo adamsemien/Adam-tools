@@ -1791,6 +1791,22 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   flex-shrink: 0;
 }
 .modal-req-btn:hover { background: var(--navy-mid); }
+
+/* ─── PARTNER BUILT BADGE ────────────────────────────────────── */
+.partner-built-badge { background: #1B2A4A; color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; display: inline-block; }
+
+/* ─── MAIN TAB NAV ───────────────────────────────────────────── */
+.main-tab-nav { display: flex; gap: 4px; padding: 0 32px; background: #f8f8f8; border-bottom: 1px solid #e8e8e8; }
+.main-tab-btn { padding: 14px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.3px; border: none; background: none; cursor: pointer; color: #666; border-bottom: 2px solid transparent; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.main-tab-btn.active { color: #1B2A4A; border-bottom-color: #E8651A; }
+.main-tab-btn:hover:not(.active) { color: #1B2A4A; }
+
+/* ─── 90-DAY BANNER ──────────────────────────────────────────── */
+.ninety-day-banner { background: #FFF8E1; border-left: 3px solid #F59E0B; padding: 10px 20px; font-size: 13px; color: #92400E; margin: 0 0 12px 0; }
+
+/* ─── REP GUIDE PANE ─────────────────────────────────────────── */
+#repGuidePane { max-width: 1240px; margin: 0 auto; padding: 40px 32px 80px; }
+@media (max-width: 768px) { #repGuidePane { padding: 24px 16px 60px; } }
 </style>
 </head>
 <body>
@@ -1829,8 +1845,16 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </header>
 
+<!-- MAIN TAB NAV -->
+<nav class="main-tab-nav">
+  <button class="main-tab-btn active" data-tab="integrations" onclick="switchMainTab('integrations')">Integrations</button>
+  <button class="main-tab-btn" data-tab="rep" onclick="switchMainTab('rep')">Rep Guide</button>
+</nav>
+
 <!-- MAIN CONTENT ANCHOR (skip-link target) -->
 <main id="main-content">
+
+<div id="integrationsPane">
 
 <!-- HERO -->
 <div class="hero">
@@ -1907,6 +1931,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </div>
     <div class="cat-pills-row" id="catPillsRow">
       <button class="cat-pill active" onclick="setCat('all',this)">All <span class="cat-pill-count" id="pc-all"></span></button>
+      <button class="cat-pill canto-built-pill" onclick="setCantoBuild(this)">Canto Built <span class="cat-pill-count" id="pc-canto-built"></span></button>
       <button class="cat-pill" onclick="setCat('creative',this)">Creative <span class="cat-pill-count" id="pc-creative"></span></button>
       <button class="cat-pill" onclick="setCat('pim',this)">PIM <span class="cat-pill-count" id="pc-pim"></span></button>
       <button class="cat-pill" onclick="setCat('cms',this)">CMS <span class="cat-pill-count" id="pc-cms"></span></button>
@@ -1938,6 +1963,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <div class="featured-grid" id="featuredGrid"></div>
       <div class="featured-section-divider"></div>
     </div>
+    <div class="ninety-day-banner">
+      ⏱ <strong>90-Day Rule:</strong> Most cancellations happen before integrations are installed. Surface integration needs in discovery. Prioritize at kickoff — it protects the renewal.
+    </div>
     <div class="results-header">
       <div class="results-title" id="resultsTitle">All Integrations</div>
       <div class="results-count" id="resultsCount"></div>
@@ -1961,9 +1989,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     SALES ENABLEMENT SECTIONS
-     ═════════════════════════════════════════════════════════════ -->
+</div><!-- /integrationsPane -->
+
+<!-- REP GUIDE PANE -->
+<div id="repGuidePane" style="display:none">
+<div id="repGuideInner">
 
 <!-- SIGNAL QUESTION BANNER -->
 <section class="signal-section" aria-label="The Signal Question">
@@ -1979,80 +2009,49 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </section>
 
-<!-- REP PLAYBOOK + DE-BOOKING -->
+<!-- REP PLAYBOOK -->
 <section class="enable-section" aria-label="Rep Playbook">
   <div class="enable-inner">
-    <div class="enable-cols">
-
-      <!-- Left: Rep Playbook -->
-      <div>
-        <div class="enable-header">
-          <div class="enable-eyebrow">For Sales Reps</div>
-          <div class="enable-title">Rep Playbook</div>
-          <div class="enable-sub">Five steps — from first discovery call to implementation handoff.</div>
-        </div>
-        <div class="playbook-steps">
-          <div class="playbook-step">
-            <div class="step-num">1</div>
-            <div>
-              <div class="step-title">Ask the Signal Question</div>
-              <div class="step-body">Every discovery call. Every AE. Every segment. Surface integration needs before the deal progresses.</div>
-            </div>
-          </div>
-          <div class="playbook-step">
-            <div class="step-num">2</div>
-            <div>
-              <div class="step-title">Tag the integration in CRM</div>
-              <div class="step-body">One field. Which integration did the prospect mention? Log it on the opportunity — it becomes part of the deal story.</div>
-            </div>
-          </div>
-          <div class="playbook-step">
-            <div class="step-num">3</div>
-            <div>
-              <div class="step-title">Marketplace surfaces the right path</div>
-              <div class="step-body">Native → demo it live. Partner-built (New Edge) → request a quote. Canto-funded or bespoke → submit the triage form.</div>
-            </div>
-          </div>
-          <div class="playbook-step">
-            <div class="step-num">4</div>
-            <div>
-              <div class="step-title">Submit the triage form</div>
-              <div class="step-body">For active deals with a specific integration need. Auto-routes to the right resource. Use the Rep Triage Form below.</div>
-            </div>
-          </div>
-          <div class="playbook-step">
-            <div class="step-num">5</div>
-            <div>
-              <div class="step-title">Integration travels with the deal</div>
-              <div class="step-body">Hand it off to CS and Impl at kickoff. Integration requirement goes in the handoff doc — getting it live early is what protects the renewal.</div>
-            </div>
-          </div>
+    <div class="enable-header">
+      <div class="enable-eyebrow">For Sales Reps</div>
+      <div class="enable-title">Rep Playbook</div>
+      <div class="enable-sub">Five steps — from first discovery call to implementation handoff.</div>
+    </div>
+    <div class="playbook-steps">
+      <div class="playbook-step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Ask the Signal Question</div>
+          <div class="step-body">Every discovery call. Every AE. Every segment.<br>"What tools does your team use every day that Canto would need to work with?"</div>
         </div>
       </div>
-
-      <!-- Right: De-booking + Native integ callout -->
-      <div style="display:flex;flex-direction:column;gap:16px;">
-
-        <div class="debooking-block">
-          <div class="debooking-stat">90-Day</div>
-          <div class="debooking-label">De-booking Window</div>
-          <div class="debooking-body">Most cancellations happen in the first 90 days — before integrations are installed. Getting an integration in place early creates switching cost that protects the deal at renewal. Surface it in discovery. Prioritize it at kickoff.</div>
+      <div class="playbook-step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Find it in the Marketplace</div>
+          <div class="step-body">Search the integration by name. The card tells you everything: native and included, native with additional cost, partner-built, coming soon, or not yet verified. Don't promise what isn't on the card.</div>
         </div>
-
-        <div class="native-callout">
-          <div class="native-callout-label">Zero Setup · Demo Live</div>
-          <div class="native-callout-title">Native Integrations</div>
-          <div class="native-callout-sub">Built into Canto. No partner needed. Highlight on every demo — these are included.</div>
-          <div class="native-chips">
-            <span class="native-chip"><span class="native-chip-dot"></span>HubSpot</span>
-            <span class="native-chip"><span class="native-chip-dot"></span>Asana</span>
-            <span class="native-chip"><span class="native-chip-dot"></span>Shopify</span>
-            <span class="native-chip"><span class="native-chip-dot"></span>Canva</span>
-            <span class="native-chip"><span class="native-chip-dot"></span>Adobe Creative Cloud</span>
-            <span class="native-chip"><span class="native-chip-dot"></span>SharePoint</span>
-          </div>
+      </div>
+      <div class="playbook-step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Request it on the Card</div>
+          <div class="step-body">Click "Request This Integration" on the card. Adam activates the right partner or scopes the build. Do not contact the partner directly — ever.</div>
         </div>
-
+      </div>
+      <div class="playbook-step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Don't see it? Request it anyway</div>
+          <div class="step-body">Click "Request New Integration" top right. The partner team will scope it based on the need, deal timing, and pipeline impact.</div>
+        </div>
+      </div>
+      <div class="playbook-step">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-title">Integration travels with the deal</div>
+          <div class="step-body">Hand off to CS and Impl at kickoff. Integration requirement goes in the handoff doc — getting it live in the first 90 days protects the renewal.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -2176,68 +2175,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </section>
 
-<div class="section-rule"></div>
-
-<!-- FORM B: REP TRIAGE FORM (Active Deals Only) -->
-<section class="form-section rep-form-bg" aria-label="Rep Triage Form" id="rep-triage-form">
-  <div class="enable-inner">
-    <div class="form-inner">
-      <div class="form-audience-badge rep-badge">For Canto Sales Reps Only</div>
-      <div class="form-title-dark">Triage an Integration Need<br><span style="color:var(--orange)">Active Deals Only</span></div>
-      <div class="form-sub-dark">You have an active deal where a prospect needs a specific integration. Submit it here to get routed to the right resource — native demo, New Edge quote, SI referral, or Canto-funded path. This form is for reps, not partners.</div>
-      <form class="form-grid" onsubmit="handleRepTriageSubmit(event)">
-        <div class="form-row-2">
-          <div class="form-field">
-            <label class="form-label-dark">Your Name</label>
-            <input type="text" class="form-ctrl-dark" placeholder="Adam Semien" required>
-          </div>
-          <div class="form-field">
-            <label class="form-label-dark">Your CRM Opportunity ID</label>
-            <input type="text" class="form-ctrl-dark" placeholder="e.g. OPP-00482" required>
-          </div>
-        </div>
-        <div class="form-field">
-          <label class="form-label-dark">Prospect / Account Name</label>
-          <input type="text" class="form-ctrl-dark" placeholder="e.g. Acme Corporation" required>
-        </div>
-        <div class="form-row-2">
-          <div class="form-field">
-            <label class="form-label-dark">Integration Needed</label>
-            <input type="text" class="form-ctrl-dark" placeholder="e.g. Workday, SAP, Figma" required>
-          </div>
-          <div class="form-field">
-            <label class="form-label-dark">Deal Stage</label>
-            <select class="form-ctrl-dark" required>
-              <option value="">Select stage…</option>
-              <option>Discovery</option>
-              <option>Demo / Evaluation</option>
-              <option>Proposal / Negotiation</option>
-              <option>Closed — Pre-implementation</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-field">
-          <label class="form-label-dark">What does the prospect need this integration to do?</label>
-          <textarea class="form-ctrl-dark" rows="3" placeholder="Describe the workflow, the systems involved, and what the prospect said in their own words…" style="resize:vertical;line-height:1.5"></textarea>
-        </div>
-        <div class="form-field">
-          <label class="form-label-dark">Is there a deal at risk if this isn't resolved?</label>
-          <select class="form-ctrl-dark">
-            <option value="">Select…</option>
-            <option>Yes — integration is a stated requirement</option>
-            <option>Likely — mentioned as a concern</option>
-            <option>No — exploratory only</option>
-          </select>
-        </div>
-        <div>
-          <button type="submit" class="form-submit-rep">Submit for Triage →</button>
-          <div class="form-note-dark">Submissions are routed to the integration team within 1 business day. You'll receive a recommended path and next step.</div>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
 <!-- FORM A: PARTNER / AGENCY SUBMIT FORM -->
 <section class="form-section partner-form-bg" aria-label="Partner Integration Submission" id="partner-submit-form">
   <div class="enable-inner">
@@ -2298,6 +2235,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </div>
   </div>
 </section>
+
+</div><!-- /repGuideInner -->
+</div><!-- /repGuidePane -->
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
@@ -2538,23 +2478,6 @@ const INTEGRATIONS = [
     recruit:'Apply to Workato Technology Partner Program. Build and publish Canto connector with template recipes.' },
 
   // ── PIM ────────────────────────────────────────────────────────────
-  { id:'salsify', logo:'https://www.salsify.com/hubfs/Flower-Blue.ico', name:'Salsify', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🔄',
-    partnerType:'tech', availability:'live',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'Mirichi Labs', partnerBg:'#4F46E5',
-    partnerDesc:'Deep syndication expertise — built Riversand\'s syndication practice, then ran Inriver\'s. Named reference across multiple PIM deployments.',
-    tagline:'Sync governed product media from Canto into Salsify PIM.',
-    icp:'Brands in fashion, CPG, sporting goods, and food & bev managing 500+ SKUs and selling through major retailers.',
-    signals:['We use Salsify', 'Product images are out of sync', 'We sell through retail channels'],
-    problem:'Product teams waste hours downloading assets from Canto and re-uploading them into Salsify. Approved images get missed, versions drift, and product launches get delayed.',
-    talktrack: '"Ask them: \'How do approved images get from your DAM into Salsify today?\' The answer is almost always manual — downloads, re-uploads, email threads. That\'s the problem. Canto-to-Salsify automation kills that workflow entirely."',
-    capabilities:['Automated Asset Sync','Metadata Mapping','Asset-to-Product Association','Selective Asset Sync','Push Triggers'],
-    timeline:'~2 weeks', investment:'Custom quote',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/salsify.svg', installCount:'180+', lastUpdated:'Feb 2026', prereq:'Requires Salsify license',
-    direction:'Canto → Salsify', builtBy:'Tech Partner (Mirichi Labs)', cantoProduct:'For Products Required', additionalCost:'Additional Cost', status:'Live', flags:['⚠️ Requires Mirichi Labs SI — quote separately.','For Products SKU required.'],
-    whatItDoes:'Automatically sync approved Canto product assets into Salsify PIM. Map metadata fields, associate assets to product records, and trigger sync on publish or approval.',
-    bestFor:'Brands in fashion, CPG, and retail managing 500+ SKUs who need automated asset-to-PIM sync without manual downloads.' },
-
   { id:'akeneo', name:'Akeneo', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'📦',
     partnerType:'canto', availability:'soon',
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
@@ -2571,23 +2494,6 @@ const INTEGRATIONS = [
     direction:'Canto ↔ Akeneo', builtBy:'Canto', cantoProduct:'For Products Required', additionalCost:'TBD', status:'Coming Soon', flags:['⚠️ CRITICAL: Listed on canto.com/integrations but NOT LIVE.','Do NOT promise to prospects — no firm release date.','17 open opportunities citing this gap at $29K avg ACV (~$493K at-risk pipeline).','Recommend removing from public integrations page or adding Coming Soon label immediately.'],
     whatItDoes:'When live: search and insert Canto assets into Akeneo PIM. Sync asset metadata between platforms. Pull selected field values from Akeneo into Canto.',
     bestFor:'Brands using Akeneo as their PIM who need Canto as the upstream asset governance layer.' },
-
-  { id:'inriver', logo:'https://www.inriver.com/wp-content/themes/inriver/assets/images/favicons/favicon-96x96.png', name:'inriver', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🌊',
-    partnerType:'si', availability:'live',
-    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'MindCloud', partnerBg:'#6366F1',
-    partnerDesc:'inriver SI partner network includes certified implementers with DAM+PIM practice experience.',
-    tagline:'Link Canto product media directly to inriver PIM records.',
-    icp:'Mid-market to enterprise manufacturers and distributors managing complex product hierarchies in inriver.',
-    signals:['We use inriver', 'We\'re in manufacturing', 'Product data governance is a priority'],
-    problem:'inriver deployments in complex manufacturing environments often expose the asset chaos upstream — hundreds of product images living in file servers or SharePoint, unmapped to product records.',
-    talktrack: '"inriver customers in manufacturing are dealing with product images scattered across file servers. The Canto connector maps those to inriver product records with version control. Ask: \'Where do your product images live today?\'"',
-    capabilities:['Asset-to-Product Mapping','Version Governance','Metadata Sync','Approval Gating','Mass Asset Operations'],
-    timeline:'3–4 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/inriver.svg', installCount:'95+', lastUpdated:'Nov 2025', prereq:'Requires inriver · MindCloud',
-    direction:'Canto → inriver', builtBy:'SI Partner (MindCloud)', cantoProduct:'For Products Required', additionalCost:'Additional Cost', status:'Live', flags:['⚠️ Requires MindCloud SI — quote separately.','For Products SKU required.'],
-    whatItDoes:'Map Canto product assets to inriver PIM product records. Sync metadata, enforce approval gating, and maintain version governance across complex product hierarchies.',
-    bestFor:'Manufacturers and distributors using inriver PIM who need governed product images and documents linked to the product record.' },
 
   // ── CREATIVE WORKFLOW ─────────────────────────────────────────────
   { id:'adobe-cc', name:'Adobe Creative Cloud', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎨',
@@ -2736,23 +2642,6 @@ const INTEGRATIONS = [
     whatItDoes:'Access Canto asset library directly within Canva to enhance design workflows.',
     bestFor:'Marketing and brand teams using Canva for quick designs with approved assets.' },
 
-  { id:'figma', name:'Figma', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🖌️',
-    partnerType:'tech', availability:'live',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'medium', includedInPlan:true,
-    partner:'Partner Supported', partnerBg:'#F24E1E',
-    partnerDesc:'Partner-supported integration. Confirm maintenance status before committing in deals.',
-    tagline:'Surface approved Canto assets inside every Figma project.',
-    icp:'Product design teams, brand design teams, and UX-forward organizations where Figma is the primary design tool.',
-    signals:['Our designers use Figma', 'We design in Figma', 'We have a product design team'],
-    problem:'Figma users pull assets from wherever they can find them — screenshots, old files, personal drives. Approved brand assets in Canto never make it into Figma automatically. Every design review risks off-brand elements.',
-    talktrack: '"Flag it in the deal as a forward roadmap item. If they\'re Figma-first, note it in the account. Partner-supported — confirm current maintenance status before committing."',
-    capabilities:['Asset Library Sync','Brand Asset Panel in Figma','Approved-Only Mode','Direct Link to Canto Source','Version Alerts'],
-    timeline:'~1 week', investment:'Included',
-    costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
-    direction:'Canto → Figma', builtBy:'Partner Supported', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Partner-supported build — confirm maintenance status before committing in deals.'],
-    whatItDoes:'Access Canto assets inside Figma design files.',
-    bestFor:'UX and product designers accessing brand assets inside Figma.' },
-
   // ── CMS ────────────────────────────────────────────────────────────
   { id:'contentful', logo:'https://images.ctfassets.net/jtqsy5pye0zd/6wNuQ2xMvbw134rccObi0q/bf61badc6d6d9780609e541713f0bba6/Contentful_Logo_2.5_Dark.svg', name:'Contentful', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📰',
     partnerType:'canto', availability:'live',
@@ -2871,18 +2760,23 @@ const INTEGRATIONS = [
     whatItDoes:'Update existing Amazon product listings from Product Hub. Push descriptions, attributes, and images to Amazon Seller Central via direct API. Eliminates manual Amazon updates.',
     bestFor:'Brands with existing Amazon Seller Central accounts who manage product content in Canto for Products.' },
 
-  { id:'bigcommerce', name:'BigCommerce', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🏪',
-    partnerType:'canto', availability:'soon',
-    soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'Canto', partnerBg:'#34313F',
-    partnerDesc:'BigCommerce Technology Partner Program integration in evaluation. Strong mid-market e-commerce platform with API-first architecture.',
-    tagline:'Sync approved Canto assets to BigCommerce product listings.',
-    icp:'Mid-market brands ($20M–$200M) on BigCommerce, particularly in consumer goods, B2B wholesale, and multi-channel retail.',
-    signals:['We use BigCommerce', 'We sell on multiple channels', 'We sell on Amazon and Walmart'],
-    problem:'BigCommerce merchants managing large catalogs across multiple sales channels have no single source of truth for product images. Canto governs the master; the integration delivers to every channel.',
-    talktrack: '"BigCommerce integration is in progress — log it as a forward interest item. If they\'re on BigCommerce, the pitch is the same as Shopify: one source of truth for every product image across every channel."',
-    capabilities:['Product Catalog Sync','Multi-channel Asset Delivery','Variant Mapping','Format Conversion','Channel-Specific Image Rules'],
-    timeline:'TBD', investment:'Contact us' },
+  { id:'bigcommerce', name:'BigCommerce', cat:'ecommerce', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'🏪',
+    partnerType:'partner', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Partner Built', partnerBg:'#34313F',
+    partnerDesc:'MindCloud-built integration that syncs digital assets and metadata from Canto DAM and Canto for Products directly to BigCommerce storefronts.',
+    tagline:'MindCloud-built integration that syncs digital assets and metadata from Canto to BigCommerce storefronts.',
+    icp:'E-commerce brands on BigCommerce who need approved product images and metadata to stay in sync with their Canto library.',
+    signals:['We use BigCommerce', 'We sell on BigCommerce', 'We need product images in our store'],
+    problem:'BigCommerce merchants managing large catalogs have no single source of truth for product images. Canto governs the master; this MindCloud-built integration delivers to BigCommerce.',
+    capabilities:['Asset sync to BigCommerce storefront','Metadata passthrough','Canto for Products support','Contact Adam for full capability list'],
+    timeline:'Contact Adam', investment:'Contact Adam',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'',
+    direction:'Canto → BigCommerce', builtBy:'Partner Built', cantoProduct:'Both', additionalCost:'Contact Adam', status:'Live', partnerBuilt:true,
+    flags:['Partner-built integration via MindCloud.','Syncs digital assets and metadata from Canto to BigCommerce.','Contact Adam to scope pricing and timeline.'],
+    whatItDoes:'MindCloud-built integration that syncs digital assets and metadata from Canto DAM and Canto for Products directly to BigCommerce storefronts.',
+    bestFor:'E-commerce brands on BigCommerce who need approved product images and metadata to stay in sync with their Canto library.',
+    talktrack:'Ask about product image workflows and how they currently push assets to BigCommerce. MindCloud handles the build — flag for Adam before any scoping conversation.' },
 
   // ── FEED MANAGEMENT ───────────────────────────────────────────────
   { id:'feedonomics', logo:'https://feedonomics.com/wp-content/uploads/2025/02/feedonomics-logo.svg', name:'Feedonomics', cat:'feed', type:'For Products', catLabel:'Feed Management', catColor:'#6D28D9', catBg:'#F5F3FF', emoji:'📡',
@@ -3070,23 +2964,6 @@ const INTEGRATIONS = [
     bestFor:'Security-conscious organizations migrating from Egnyte into Canto.' },
 
   // ── SOCIAL & PUBLISHING ───────────────────────────────────────────
-  { id:'sprout', logo:'https://brandfolder.sproutsocial.com/VXTUTVL1/at/8vwz9b7w83rhgfc8xvm8t8/lgo_sprout_lockup.png?auto=webp&format=png', name:'Sprout Social', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🌿',
-    partnerType:'tech', availability:'live',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
-    partner:'Sprout Social', partnerBg:'#59CB59',
-    partnerDesc:'Sprout Social is an active Canto technology partner. 850+ customers use both platforms — significant existing base to activate.',
-    tagline:'Schedule brand-approved Canto content directly in Sprout Social.',
-    icp:'Mid-market and enterprise brands with dedicated social teams managing multi-channel publishing.',
-    signals:['We use Sprout Social', 'We have a social media team', 'Social managers publish frequently'],
-    problem:'Social teams publish dozens of assets per week. Without a DAM integration, every post involves finding the asset, downloading, and re-uploading to Sprout. Brand governance breaks down at the most visible touchpoint.',
-    talktrack: '"850+ customers use both Canto and Sprout. If they\'re on Sprout, this is a natural conversation: \'Your social team publishes how often? How do they find approved images today?\' The answer always involves Slack or email. Canto in Sprout fixes that."',
-    capabilities:['Asset Library Sync','In-Publisher Asset Browser','Approval Status Enforcement','Multi-platform Image Sizing','Usage Rights Gating'],
-    timeline:'~2 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sprout.svg', installCount:'850+', lastUpdated:'Mar 2026', prereq:'Requires Sprout Social',
-    direction:'Canto → Sprout Social', builtBy:'Tech Partner (Sprout Social)', cantoProduct:'Both', additionalCost:'Additional Cost', status:'Live', flags:['⚠️ Built and maintained by Sprout Social — not a Canto-native integration.','Pricing set by Sprout Social. Not discountable by Canto.'],
-    whatItDoes:'Browse and insert approved Canto assets directly inside the Sprout Social publishing interface. Enforce approval status and usage rights at the point of scheduling.',
-    bestFor:'Social media teams publishing frequently who need governed brand assets accessible without leaving Sprout.' },
-
   { id:'hootsuite', name:'Hootsuite', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🦉',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
@@ -3364,22 +3241,6 @@ const INTEGRATIONS = [
     bestFor:'SFMC marketing teams inserting approved brand assets into email campaigns without leaving the platform.' },
 
   // ── DEVELOPER / API ────────────────────────────────────────────────────
-  { id:'zapier', name:'Zapier', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'⚡',
-    partnerType:'tech', availability:'live',
-    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'Partner Supported', partnerBg:'#FF4A00',
-    partnerDesc:'Configurable via Zapier workflow builder. Direction depends on how workflow is configured. Requires separate Zapier subscription.',
-    tagline:'Automate Canto workflows with 6,000+ apps via Zapier.',
-    icp:'Operations teams and marketers who want to automate asset workflows without code.',
-    signals:['We use Zapier', 'We want to automate workflows', 'We want to connect Canto to other tools'],
-    problem:'Teams want to trigger Canto actions based on events in other tools (or vice versa) without developer resources. Zapier makes this possible.',
-    capabilities:['Trigger on Asset Upload','Send Assets to Other Apps','Automate Metadata Updates','6,000+ App Connections'],
-    timeline:'~1 week', investment:'Zapier subscription required',
-    costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Zapier subscription',
-    direction:'Configurable ⚙️', builtBy:'Partner', cantoProduct:'Both', additionalCost:'Zapier subscription required', status:'Live', flags:['Requires a separate Zapier subscription.','Direction depends entirely on how the workflow is configured.'],
-    whatItDoes:'Connect Canto to 5,000+ apps via Zapier workflows. Direction is configurable — trigger actions in other apps from Canto events, or vice versa.',
-    bestFor:'Teams automating repetitive asset workflows without custom development.' },
-
   { id:'rest-api', name:'REST API', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'🔌',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'bidirectional', authType:'API Key', difficulty:'advanced', includedInPlan:true,
@@ -3528,68 +3389,60 @@ const INTEGRATIONS = [
     bestFor:'Sales teams using Salesforce CRM who need governed, on-brand assets accessible at the point of sale.' },
 
   // ── ERP ────────────────────────────────────────────────────────────
-  { id:'sap', logo:'https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg/sap-logo-svg.svg', name:'SAP S/4HANA', cat:'erp', type:'For Products', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🏭',
-    partnerType:'si', availability:'live',
-    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:false,
-    partner:'MindCloud', partnerBg:'#007DB8',
-    partnerDesc:'SAP integration delivered via certified SI partner. Implementation partner recommended for enterprise deployments.',
-    tagline:'Link governed product assets from Canto to SAP product master records.',
-    icp:'Enterprise manufacturers, distributors, and CPG brands running SAP S/4HANA.',
-    signals:['We run SAP', 'We use SAP S/4HANA', 'Compliance and version control are critical', 'We\'re in manufacturing'],
-    problem:'SAP customers manage complex product hierarchies with critical asset governance requirements — technical drawings, compliance documents, and product images all need to be tied to the SAP product record with version control.',
-    talktrack: '"SAP deals are enterprise and budget is there. Lead with compliance: \'Technical drawings, compliance docs, product images — they all need to be version-controlled and tied to the SAP material record. That\'s exactly what the Canto-SAP integration delivers.\'"',
-    capabilities:['Product Master Integration','Asset-to-Material Mapping','Compliance Document Governance','Version Traceability','SAP Fiori Panel'],
-    timeline:'8–12 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sap.svg', installCount:'60+', lastUpdated:'Dec 2025', prereq:'Requires SAP S/4HANA · MindCloud',
-    direction:'Canto → SAP', builtBy:'SI Partner (MindCloud)', cantoProduct:'For Products Required', additionalCost:'Additional Cost', status:'Live', flags:['⚠️ Requires MindCloud SI — quote separately.','For Products SKU required.'],
-    whatItDoes:'Link approved Canto product assets to SAP S/4HANA material master records. Govern technical drawings, compliance documents, and product images with version traceability inside SAP Fiori.',
-    bestFor:'Enterprise manufacturers and CPG brands running SAP S/4HANA who need compliant, versioned asset governance tied to the product record.' },
-
-  { id:'netsuite', name:'NetSuite', cat:'erp', type:'For Products', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🔢',
+  { id:'netsuite', name:'NetSuite', cat:'erp', catLabel:'ERP', catColor:'#007DB8', catBg:'#E5F2FB', emoji:'🔢',
     partnerType:'si', availability:'live',
     soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:false,
     partner:'MindCloud', partnerBg:'#009EDB',
-    partnerDesc:'NetSuite integration via SI partner network. Implementation partner recommended. Strong fit for mid-market manufacturers and distributors running NetSuite as their system of record.',
-    tagline:'Connect Canto product assets directly to NetSuite item records.',
-    icp:'Mid-market manufacturers, distributors, and e-commerce brands running NetSuite.',
+    partnerDesc:'MindCloud-built integration connecting Canto to NetSuite. Contact Adam for scoping details.',
+    tagline:'MindCloud-built integration connecting Canto to NetSuite. Contact Adam for scoping details.',
+    icp:'Brands running NetSuite ERP who need Canto assets connected to their product and operations workflows.',
     signals:['We run NetSuite', 'We use NetSuite ERP', 'We\'re a distributor or manufacturer'],
     problem:'NetSuite customers managing product catalogs have no native DAM capability. Product images, spec sheets, and compliance documents live outside the ERP with no governance or versioning.',
-    talktrack: '"NetSuite prospects in manufacturing almost always have the same problem: product assets are floating outside the ERP. Ask: \'Where do your product images and spec sheets live today?\' The answer opens the Canto conversation immediately."',
-    capabilities:['Item Record Asset Linking','Product Image Sync','Spec Sheet Governance','Version Control','SuiteApp Compatible'],
-    timeline:'4–6 weeks', investment:'Contact us',
-    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/netsuite.svg', installCount:'140+', lastUpdated:'Jan 2026', prereq:'Requires NetSuite · MindCloud',
-    direction:'Canto → NetSuite', builtBy:'SI Partner (MindCloud)', cantoProduct:'For Products Required', additionalCost:'Additional Cost', status:'Live', flags:['⚠️ Requires MindCloud SI — quote separately.','For Products SKU required.'],
-    whatItDoes:'Link Canto product assets directly to NetSuite item records. Sync product images, spec sheets, and compliance docs with version control inside the ERP.',
-    bestFor:'Mid-market manufacturers and distributors running NetSuite who need governed product assets tied to the item record.' },
+    capabilities:['Asset sync to NetSuite','Metadata mapping','Contact Adam for full capability list'],
+    timeline:'Contact Adam', investment:'Contact Adam',
+    costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/netsuite.svg', installCount:'', lastUpdated:'Jan 2026', prereq:'',
+    direction:'Canto → NetSuite', builtBy:'Partner Built', cantoProduct:'Both', additionalCost:'Contact Adam', status:'Live', partnerBuilt:true,
+    flags:['Partner-built integration via MindCloud.','Contact Adam to scope pricing and timeline.','Do not promise to prospects without checking with Adam first.'],
+    whatItDoes:'MindCloud-built integration connecting Canto to NetSuite. Contact Adam for scoping details.',
+    bestFor:'Brands running NetSuite ERP who need Canto assets connected to their product and operations workflows.',
+    talktrack:'Ask about ERP workflows that depend on current assets. NetSuite customers with product data requirements are strong For Products candidates — flag for Adam before scoping.' },
 
-  // ── WIP DRAFTS ────────────────────────────────────────────────────────
-  { id:'express-doc', name:'Express Doc', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📄',
-    partnerType:'partner', availability:'draft',
-    soldBy:'si', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'New Edge', partnerBg:'#1E3A5F',
-    si:'MindCloud',
-    partnerDesc:'Express Doc integration scoped by New Edge and built via MindCloud.',
-    tagline:'Automate document creation from Canto assets via Express Doc.',
-    description:'Scoped integration that pulls approved Canto assets into Adobe Express Doc templates for automated document generation and brand-consistent output.',
-    capabilities:['Asset Pull from Canto','Template Mapping','Automated Doc Generation','Brand Compliance'],
-    timeline:'TBD', investment:'TBD',
+  // ── PARTNER-BUILT (Live) ──────────────────────────────────────────────
+  { id:'express-doc', name:'Express Docs', cat:'creative', catLabel:'Productivity', catColor:'#E34400', catBg:'#FFF0EB', emoji:'📄',
+    partnerType:'partner', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Partner Built', partnerBg:'#1E3A5F',
+    partnerDesc:'Partner-built integration connecting Canto assets to Express Docs document generation workflows. Contact Adam for details.',
+    tagline:'Partner-built integration connecting Canto assets to Express Docs document generation workflows. Contact Adam for details.',
+    icp:'Teams generating branded documents who need approved Canto assets automatically available in Express Docs.',
+    signals:['We use Express Docs', 'We generate branded documents', 'We create document workflows'],
+    problem:'Teams generating branded documents have to manually source approved assets. This integration makes approved Canto assets automatically available in Express Docs.',
+    capabilities:['Asset availability in Express Docs','Brand-approved asset access','Contact Adam for full capability list'],
+    timeline:'Contact Adam', investment:'Contact Adam',
     costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'',
-    draftStatus:'scoped',
-    draftNotes:'Scoped with New Edge + MindCloud. New Edge leading the build. Next step: technical discovery call.' },
+    direction:'Canto → Express Docs', builtBy:'Partner Built', cantoProduct:'Both', additionalCost:'Contact Adam', status:'Live', partnerBuilt:true,
+    flags:['Partner-built integration.','Contact Adam to scope pricing and timeline.','Do not promise to prospects without checking with Adam first.'],
+    whatItDoes:'Partner-built integration connecting Canto assets to Express Docs document generation workflows. Contact Adam for details.',
+    bestFor:'Teams generating branded documents who need approved Canto assets automatically available in Express Docs.',
+    talktrack:'Ask about document generation workflows. If the prospect uses Express Docs for branded collateral, flag for Adam — this integration keeps assets current without manual downloads.' },
 
-  { id:'stibo', name:'Stibo Systems', cat:'pim', type:'For Products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🗂️',
-    partnerType:'partner', availability:'draft',
-    soldBy:'si', dataFlow:'bidirectional', authType:'API Key', difficulty:'medium', includedInPlan:false,
-    partner:'New Edge', partnerBg:'#1E3A5F',
-    si:'New Edge',
-    partnerDesc:'Stibo Systems is an enterprise MDM/PIM platform. New Edge is scoping the Canto integration.',
-    tagline:'Sync product assets from Canto into Stibo STEP for master data enrichment.',
-    description:'Integration between Canto DAM and Stibo STEP MDM/PIM — enabling bidirectional asset and metadata sync so product records in Stibo are enriched with approved Canto assets.',
-    capabilities:['Asset Sync to STEP','Metadata Mapping','Bidirectional Updates','Product Record Enrichment'],
-    timeline:'TBD', investment:'TBD',
+  { id:'stibo', name:'Stibo Systems', cat:'pim', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'🗂️',
+    partnerType:'partner', availability:'live',
+    soldBy:'partner', dataFlow:'bidirectional', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Partner Built', partnerBg:'#1E3A5F',
+    partnerDesc:'Partner-built integration between Canto and Stibo Systems MDM/PIM platform. Contact Adam for scoping details.',
+    tagline:'Partner-built integration between Canto and Stibo Systems MDM/PIM platform. Contact Adam for scoping details.',
+    icp:'Brands using Stibo Systems for master data management who need Canto as the upstream asset governance layer.',
+    signals:['We use Stibo', 'We use Stibo Systems', 'We have an MDM/PIM platform'],
+    problem:'Stibo customers need governed assets tied to their product master data. This partner-built integration connects Canto as the upstream asset governance layer.',
+    capabilities:['Asset governance layer','MDM/PIM integration','Bidirectional sync','Contact Adam for full capability list'],
+    timeline:'Contact Adam', investment:'Contact Adam',
     costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Stibo STEP license',
-    draftStatus:'scoped',
-    draftNotes:'New Edge scoping. Stibo STEP is their MDM/PIM — enterprise deal. Confirm data model and API access in next call.' },
+    direction:'Canto ↔ Stibo Systems', builtBy:'Partner Built', cantoProduct:'For Products Required', additionalCost:'Contact Adam', status:'Live', partnerBuilt:true,
+    flags:['Partner-built integration.','Contact Adam to scope pricing and timeline.','Do not promise to prospects without checking with Adam first.'],
+    whatItDoes:'Partner-built integration between Canto and Stibo Systems MDM/PIM platform. Contact Adam for scoping details.',
+    bestFor:'Brands using Stibo Systems for master data management who need Canto as the upstream asset governance layer.',
+    talktrack:'Ask about their MDM/PIM stack. Stibo customers are almost always For Products opportunities — flag for Adam immediately and do not promise specifics without scoping.' },
 ];
 
 // ─── VISUAL MEDIA MAP ─────────────────────────────────────────────────
@@ -3633,6 +3486,29 @@ let activePT  = 'all';
 let activeQF  = new Set();
 let selectedCards = new Set();
 let _sowExtras = {};
+var cantoBuiltActive = false;
+
+// ─── MAIN TAB SWITCHING ───────────────────────────────────────────────
+function switchMainTab(tab) {
+  document.getElementById('integrationsPane').style.display = tab === 'integrations' ? 'block' : 'none';
+  document.getElementById('repGuidePane').style.display = tab === 'rep' ? 'block' : 'none';
+  document.querySelectorAll('.main-tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab === tab); });
+}
+
+// ─── CANTO BUILT FILTER ───────────────────────────────────────────────
+function setCantoBuild(btn) {
+  cantoBuiltActive = !cantoBuiltActive;
+  btn.classList.toggle('active', cantoBuiltActive);
+  // deactivate category pills
+  document.querySelectorAll('.cat-pill:not(.canto-built-pill)').forEach(function(b){ b.classList.remove('active'); });
+  if (cantoBuiltActive) {
+    activeCat = 'all';
+  } else {
+    var allPill = document.querySelector('.cat-pill[onclick*="\'all\'"]');
+    if (allPill) allPill.classList.add('active');
+  }
+  renderCards();
+}
 
 // ─── ADMIN EDIT MODE (PIN-gated, no URL trick) ────────────────
 // Change ADMIN_PIN below to whatever you want. The URL param no longer works.
@@ -4306,6 +4182,7 @@ function getVisualHTML(i) {
 // ─── FILTER LOGIC ─────────────────────────────────────────────────────
 function setCat(cat, el) {
   activeCat = cat;
+  cantoBuiltActive = false;
   document.querySelectorAll('.cat-btn, .cat-pill').forEach(b => b.classList.remove('active'));
   if (el) el.classList.add('active');
   updateBreadcrumb(cat);
@@ -4321,11 +4198,6 @@ function setCat(cat, el) {
   } else {
     catDescEl.classList.remove('visible');
   }
-
-  // Hide/show rep-content sections (signal + enable sections)
-  document.querySelectorAll('.signal-section, .enable-section, .form-section').forEach(s => {
-    s.style.display = (cat === 'all') ? '' : 'none';
-  });
 
   renderCards();
 }
@@ -4379,13 +4251,14 @@ function clearAllFilters() {
   activeCat = 'all';
   activePT  = 'all';
   activeQF  = new Set();
+  cantoBuiltActive = false;
   document.querySelectorAll('.cat-btn, .cat-pill').forEach(b => b.classList.remove('active'));
   const firstBtn = document.querySelector('.cat-btn');
   if (firstBtn) firstBtn.classList.add('active');
-  const firstPill = document.querySelector('.cat-pill');
+  const firstPill = document.querySelector('.cat-pill[onclick*="\'all\'"]');
   if (firstPill) firstPill.classList.add('active');
-  document.querySelectorAll('.pt-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.pt-btn').classList.add('active');
+  const ptBtns = document.querySelectorAll('.pt-btn');
+  if (ptBtns.length > 0) ptBtns[0].classList.add('active');
   document.querySelectorAll('.qf-btn, .filter-panel-item').forEach(b => b.classList.remove('active'));
   updateFilterBadge();
   clearSearch();
@@ -4453,6 +4326,10 @@ function buildCardHTML(i, idx) {
     ? '<span style="display:inline-flex;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:600;color:var(--muted);white-space:nowrap;">' + dirPillText + '</span>'
     : directionBadgeHTML(i);
 
+  const statusOrPartnerBadge = i.partnerBuilt
+    ? '<span class="partner-built-badge">PARTNER BUILT</span>'
+    : statusBadgeHTML(i.availability) + healthDotHTML(i);
+
   return '<div class="card' + (i.featured ? ' is-featured' : '') + platformCls + '" ' +
     'data-type="' + (i.type || 'DAM') + '" ' +
     'style="' + animStyle + '" ' +
@@ -4465,8 +4342,7 @@ function buildCardHTML(i, idx) {
       logoHTML(i) +
       '<div class="card-top-right">' +
         (i.featured ? '<span class="featured-badge">\u2605 Top Pick</span>' : '') +
-        statusBadgeHTML(i.availability) +
-        healthDotHTML(i) +
+        statusOrPartnerBadge +
         flagIcon +
       '</div>' +
     '</div>' +
@@ -4506,6 +4382,10 @@ function renderCards() {
     const pc = document.getElementById('pc-' + cat);
     if (pc) pc.textContent = count ? count : '';
   });
+  // Canto Built count
+  const cantoBuiltCount = INTEGRATIONS.filter(i => i.builtBy === 'Canto' && i.availability === 'live').length;
+  const pcCantoBuilt = document.getElementById('pc-canto-built');
+  if (pcCantoBuilt) pcCantoBuilt.textContent = cantoBuiltCount ? cantoBuiltCount : '';
 
   // Platform Apps section
   const platformApps = INTEGRATIONS.filter(i => i.isPlatformApp && i.availability === 'live');
@@ -4523,8 +4403,10 @@ function renderCards() {
     if (i.cat === 'tech') return false;
     if (i.isPlatformApp) return false;
     if (i.availability === 'track' || i.availability === 'soon') return false;
+    if (i.availability === 'draft') return false;
     if (activeCat !== 'all' && i.cat !== activeCat) return false;
     if (activePT  !== 'all' && i.partnerType !== activePT) return false;
+    if (cantoBuiltActive && i.builtBy !== 'Canto') return false;
     if (activeQF.has('canto-sold')    && i.soldBy !== 'canto') return false;
     if (activeQF.has('live')          && i.availability !== 'live') return false;
     if (activeQF.has('bidirectional') && i.dataFlow !== 'bidirectional') return false;
@@ -4738,8 +4620,9 @@ function openModal(id) {
   html += '</div>'; // end modal-body-v2
 
   // ── STICKY ACTION BAR ──
+  const ctaBtnLabel = i.partnerBuilt ? 'Contact Adam to Scope' : 'Request This Integration →';
   html += '<div class="modal-action-bar">';
-  html += '<button style="background:#E8651A;color:white;border:none;border-radius:8px;padding:10px 20px;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;" onclick="openCardReqModal(\'' + i.id + '\')">Request This Integration →</button>';
+  html += '<button style="background:#E8651A;color:white;border:none;border-radius:8px;padding:10px 20px;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;" onclick="openCardReqModal(\'' + i.id + '\')">' + ctaBtnLabel + '</button>';
   html += '<button style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline;" onclick="openTagAdamModal()">Request New Integration</button>';
   html += '</div>';
 
