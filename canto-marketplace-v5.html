@@ -1501,7 +1501,52 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 .tag-adam-title { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; margin-bottom: 4px; }
 .tag-adam-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.tag-adam-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+.tag-adam-body { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+/* radio group */
+.ta-radio-group { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+.ta-radio-label { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; color: var(--text-2); cursor: pointer; line-height: 1.4; }
+.ta-radio-label input[type=radio] { margin-top: 2px; accent-color: var(--orange); flex-shrink: 0; width: 15px; height: 15px; cursor: pointer; }
+/* card-request modal */
+.card-req-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,15,25,0.65); z-index: 3500;
+  align-items: center; justify-content: center;
+  padding: 20px; backdrop-filter: blur(6px);
+}
+.card-req-overlay.open { display: flex; animation: overlayIn 0.2s ease; }
+.card-req-modal {
+  background: white; border-radius: 16px;
+  width: 100%; max-width: 520px; max-height: 90vh;
+  overflow-y: auto; box-shadow: var(--shadow-xl);
+  animation: modalIn 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+.card-req-header {
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: white;
+  border-radius: 16px 16px 0 0;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+.card-req-header-text { flex: 1; min-width: 0; }
+.card-req-title { font-size: 16px; font-weight: 800; color: var(--navy); letter-spacing: -0.3px; margin-bottom: 3px; }
+.card-req-sub { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.card-req-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.card-req-submit {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #C8102E; color: white;
+  padding: 11px 22px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 700;
+  border: none; cursor: pointer; transition: opacity 0.15s; align-self: flex-start; margin-top: 2px;
+}
+.card-req-submit:hover { opacity: 0.88; }
+.req-integration-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(200,16,46,0.08); border: 1.5px solid rgba(200,16,46,0.22);
+  color: #C8102E; font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700; padding: 7px 14px;
+  border-radius: 7px; cursor: pointer; transition: all 0.15s; margin-top: 8px;
+}
+.req-integration-btn:hover { background: rgba(200,16,46,0.14); }
 .tag-adam-field { display: flex; flex-direction: column; gap: 5px; }
 .tag-adam-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-2); }
 .tag-adam-input {
@@ -1600,7 +1645,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <button class="export-btn sow-import-btn" onclick="openSowModal()" aria-label="Import from SOW document">📄 Import SOW</button>
     <button class="export-btn" onclick="exportJSON()" aria-label="Export filtered integrations as JSON">⬇ Export JSON</button>
     <button class="export-btn" onclick="openRequestsPanel()" aria-label="View integration requests" style="background:#7C3AED !important;">📋 Integration Requests</button>
-    <button class="cheatsheet-btn" onclick="openTagAdamModal()" aria-label="Tag Adam on a deal" style="background:rgba(5,150,105,0.15);border-color:rgba(5,150,105,0.3);color:#34D399;">🤝 Tag Adam on a Deal</button>
+    <button class="cheatsheet-btn" onclick="openTagAdamModal()" aria-label="Request new integration" style="background:rgba(200,16,46,0.12);border-color:rgba(200,16,46,0.28);color:#ff6b87;">➕ Request New Integration</button>
     <button class="cheatsheet-btn" onclick="openCheatSheet()" aria-label="Open sales cheat sheet (press ?)">⚡ Sales Cheat Sheet</button>
     <span class="header-pill">Sales Rep Guide</span>
     <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu" aria-expanded="false" id="navHamburger">
@@ -4283,6 +4328,7 @@ function openModal(id) {
       (i.authType && i.authType !== 'TBD' ? '<span class="deal-tag">\uD83D\uDD11 ' + i.authType + '</span>' : '') +
       (dataFlowLabel(i) ? '<span class="deal-tag">' + dataFlowLabel(i) + '</span>' : '') +
     '</div>' +
+    '<button class="req-integration-btn" onclick="openCardReqModal(\'' + i.id + '\')">Request This Integration →</button>' +
   '</div>';
 
   html += '</div>'; // end right col
@@ -4441,28 +4487,81 @@ function handlePartnerSubmit(e) {
   e.target.reset();
 }
 
-// ─── TAG ADAM MODAL ────────────────────────────────────────────────────
-function openTagAdamModal() {
-  // Populate integration select
-  const sel = document.getElementById('ta-integration');
-  if (sel && sel.options.length <= 1) {
-    const names = INTEGRATIONS
-      .filter(i => i.availability === 'live' && !i.isPlatformApp && i.cat !== 'tech')
-      .map(i => i.name)
-      .sort();
-    names.forEach(n => {
-      const opt = document.createElement('option');
-      opt.value = n; opt.textContent = n;
-      sel.appendChild(opt);
-    });
-  }
-  // Reset form
-  document.getElementById('tagAdamForm').style.display = 'block';
-  document.getElementById('tagAdamConfirm').classList.remove('visible');
-  ['ta-rep-name','ta-rep-email','ta-integration','ta-account','ta-sfdc','ta-stage','ta-use-case','ta-urgency','ta-context'].forEach(id => {
+// ─── CARD-LEVEL REQUEST MODAL ──────────────────────────────────────────
+function openCardReqModal(integrationId) {
+  const i = INTEGRATIONS.find(x => x.id === integrationId);
+  const intName = i ? i.name : 'this integration';
+  // Dynamic label
+  document.getElementById('cr-use-label').textContent = 'What does the prospect use ' + intName + ' for? *';
+  // Store context on overlay for submit
+  const overlay = document.getElementById('cardReqOverlay');
+  overlay.dataset.integrationId = integrationId;
+  overlay.dataset.integrationName = intName;
+  // Reset form state
+  document.getElementById('cardReqForm').style.display = 'block';
+  const confirm = document.getElementById('cardReqConfirm');
+  confirm.style.display = 'none';
+  ['cr-rep-name','cr-rep-email','cr-account','cr-sfdc','cr-use-case','cr-gong','cr-context'].forEach(function(id) {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+  document.querySelectorAll('input[name="cr-critical"]').forEach(function(r) { r.checked = false; });
+  document.querySelectorAll('#cardReqOverlay .tag-adam-input.error').forEach(function(el) { el.classList.remove('error'); });
+  document.querySelectorAll('#cardReqOverlay .tag-adam-error.visible').forEach(function(el) { el.classList.remove('visible'); });
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCardReqModal() {
+  document.getElementById('cardReqOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitCardReq() {
+  let ok = true;
+  ok = validateTagAdamField('cr-rep-name', 'cr-rep-name-err', function(v) { return v.length > 0; }) && ok;
+  ok = validateTagAdamField('cr-rep-email', 'cr-rep-email-err', function(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }) && ok;
+  ok = validateTagAdamField('cr-account', 'cr-account-err', function(v) { return v.length > 0; }) && ok;
+  ok = validateTagAdamField('cr-sfdc', 'cr-sfdc-err', function(v) { return v.length > 0; }) && ok;
+  ok = validateTagAdamField('cr-use-case', 'cr-use-case-err', function(v) { return v.length > 0; }) && ok;
+  const critVal = getRadioVal('cr-critical');
+  const critErr = document.getElementById('cr-critical-err');
+  if (!critVal) { critErr.classList.add('visible'); ok = false; } else { critErr.classList.remove('visible'); }
+  if (!ok) return;
+
+  const overlay = document.getElementById('cardReqOverlay');
+  const request = {
+    type: 'card-request',
+    timestamp: new Date().toISOString(),
+    integration: overlay.dataset.integrationName || '',
+    repName: document.getElementById('cr-rep-name').value.trim(),
+    repEmail: document.getElementById('cr-rep-email').value.trim(),
+    account: document.getElementById('cr-account').value.trim(),
+    sfdcLink: document.getElementById('cr-sfdc').value.trim(),
+    useCase: document.getElementById('cr-use-case').value.trim(),
+    critical: critVal,
+    gongLink: document.getElementById('cr-gong').value.trim(),
+    context: document.getElementById('cr-context').value.trim()
+  };
+
+  const existing = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
+  existing.push(request);
+  localStorage.setItem('canto_integration_requests_v1', JSON.stringify(existing));
+
+  document.getElementById('cardReqForm').style.display = 'none';
+  document.getElementById('cardReqConfirm').style.display = 'block';
+}
+
+// ─── TAG ADAM MODAL ────────────────────────────────────────────────────
+function openTagAdamModal() {
+  // Reset form
+  document.getElementById('tagAdamForm').style.display = 'block';
+  document.getElementById('tagAdamConfirm').classList.remove('visible');
+  ['ta-rep-name','ta-rep-email','ta-integration','ta-accomplish','ta-account','ta-sfdc','ta-gong','ta-context'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.querySelectorAll('input[name="ta-direction"], input[name="ta-critical"], input[name="ta-region"]').forEach(r => r.checked = false);
   document.querySelectorAll('.tag-adam-input.error').forEach(el => el.classList.remove('error'));
   document.querySelectorAll('.tag-adam-error.visible').forEach(el => el.classList.remove('visible'));
   document.getElementById('tagAdamOverlay').classList.add('open');
@@ -4484,28 +4583,43 @@ function validateTagAdamField(id, errId, validator) {
   return valid;
 }
 
+function getRadioVal(name) {
+  const checked = document.querySelector('input[name="' + name + '"]:checked');
+  return checked ? checked.value : '';
+}
 function submitTagAdam() {
   let ok = true;
   ok = validateTagAdamField('ta-rep-name', 'ta-rep-name-err', v => v.length > 0) && ok;
   ok = validateTagAdamField('ta-rep-email', 'ta-rep-email-err', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) && ok;
   ok = validateTagAdamField('ta-integration', 'ta-integration-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-accomplish', 'ta-accomplish-err', v => v.length > 0) && ok;
   ok = validateTagAdamField('ta-account', 'ta-account-err', v => v.length > 0) && ok;
-  ok = validateTagAdamField('ta-sfdc', 'ta-sfdc-err', v => { try { new URL(v); return true; } catch { return false; } }) && ok;
-  ok = validateTagAdamField('ta-stage', 'ta-stage-err', v => v.length > 0) && ok;
-  ok = validateTagAdamField('ta-use-case', 'ta-use-case-err', v => v.length > 0) && ok;
-  ok = validateTagAdamField('ta-urgency', 'ta-urgency-err', v => v.length > 0) && ok;
+  ok = validateTagAdamField('ta-sfdc', 'ta-sfdc-err', v => v.length > 0) && ok;
+  // radio groups
+  const dirVal = getRadioVal('ta-direction');
+  const dirErr = document.getElementById('ta-direction-err');
+  if (!dirVal) { dirErr.classList.add('visible'); ok = false; } else { dirErr.classList.remove('visible'); }
+  const critVal = getRadioVal('ta-critical');
+  const critErr = document.getElementById('ta-critical-err');
+  if (!critVal) { critErr.classList.add('visible'); ok = false; } else { critErr.classList.remove('visible'); }
+  const regVal = getRadioVal('ta-region');
+  const regErr = document.getElementById('ta-region-err');
+  if (!regVal) { regErr.classList.add('visible'); ok = false; } else { regErr.classList.remove('visible'); }
   if (!ok) return;
 
   const request = {
+    type: 'new-integration-request',
     timestamp: new Date().toISOString(),
     repName: document.getElementById('ta-rep-name').value.trim(),
     repEmail: document.getElementById('ta-rep-email').value.trim(),
     integration: document.getElementById('ta-integration').value.trim(),
+    accomplish: document.getElementById('ta-accomplish').value.trim(),
+    direction: dirVal,
+    critical: critVal,
     account: document.getElementById('ta-account').value.trim(),
     sfdcLink: document.getElementById('ta-sfdc').value.trim(),
-    dealStage: document.getElementById('ta-stage').value.trim(),
-    useCase: document.getElementById('ta-use-case').value.trim(),
-    urgency: document.getElementById('ta-urgency').value.trim(),
+    region: regVal,
+    gongLink: document.getElementById('ta-gong').value.trim(),
     context: document.getElementById('ta-context').value.trim()
   };
 
@@ -4528,18 +4642,21 @@ function openRequestsPanel() {
     const rows = requests.map(r =>
       '<tr>' +
         '<td>' + new Date(r.timestamp).toLocaleDateString() + '</td>' +
+        '<td>' + escHtml(r.type === 'card-request' ? '📌 Card' : '➕ New') + '</td>' +
         '<td>' + escHtml(r.repName) + '</td>' +
         '<td>' + escHtml(r.repEmail) + '</td>' +
         '<td><strong>' + escHtml(r.integration) + '</strong></td>' +
         '<td>' + escHtml(r.account) + '</td>' +
         '<td><a href="' + escHtml(r.sfdcLink) + '" target="_blank" style="color:var(--blue)">Link</a></td>' +
-        '<td>' + escHtml(r.dealStage) + '</td>' +
-        '<td>' + escHtml(r.urgency) + '</td>' +
-        '<td style="max-width:200px;font-size:11px">' + escHtml(r.useCase) + '</td>' +
+        '<td>' + escHtml(r.region || '—') + '</td>' +
+        '<td>' + escHtml(r.direction || '—') + '</td>' +
+        '<td>' + escHtml(r.critical || '—') + '</td>' +
+        '<td style="max-width:180px;font-size:11px">' + escHtml(r.accomplish || r.useCase || '') + '</td>' +
+        '<td>' + (r.gongLink ? '<a href="' + escHtml(r.gongLink) + '" target="_blank" style="color:var(--blue)">Gong</a>' : '—') + '</td>' +
       '</tr>'
     ).join('');
     content.innerHTML = '<div style="overflow-x:auto"><table class="req-table">' +
-      '<thead><tr><th>Date</th><th>Rep</th><th>Email</th><th>Integration</th><th>Account</th><th>SFDC</th><th>Stage</th><th>Urgency</th><th>Use Case</th></tr></thead>' +
+      '<thead><tr><th>Date</th><th>Type</th><th>Rep</th><th>Email</th><th>Integration</th><th>Account</th><th>SFDC</th><th>Region</th><th>Direction</th><th>Critical?</th><th>Accomplish</th><th>Gong</th></tr></thead>' +
       '<tbody>' + rows + '</tbody>' +
       '</table></div>';
   }
@@ -4555,14 +4672,16 @@ function closeRequestsPanel() {
 function exportRequestsCSV() {
   const requests = JSON.parse(localStorage.getItem('canto_integration_requests_v1') || '[]');
   if (requests.length === 0) { showToast('No requests to export'); return; }
-  const headers = ['Date','Rep Name','Rep Email','Integration','Account','SFDC Link','Deal Stage','Urgency','Use Case','Context'];
+  const headers = ['Date','Type','Rep Name','Rep Email','Integration','Account','SFDC Link','Region','Direction','Critical','Accomplish/Use Case','Gong Link','Context'];
   const rows = requests.map(r => [
     new Date(r.timestamp).toLocaleDateString(),
-    r.repName, r.repEmail, r.integration, r.account,
-    r.sfdcLink, r.dealStage, r.urgency,
-    (r.useCase || '').replace(/"/g,'""'),
+    r.type === 'card-request' ? 'Card Request' : 'New Integration Request',
+    r.repName, r.repEmail, r.integration, r.account, r.sfdcLink,
+    r.region || '', r.direction || '', r.critical || '',
+    (r.accomplish || r.useCase || '').replace(/"/g,'""'),
+    r.gongLink || '',
     (r.context || '').replace(/"/g,'""')
-  ].map(v => '"' + v + '"').join(','));
+  ].map(v => '"' + (v||'') + '"').join(','));
   const csv = [headers.join(','), ...rows].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
@@ -4642,10 +4761,10 @@ renderCards();
 <div class="tag-adam-overlay" id="tagAdamOverlay" onclick="if(event.target===this)closeTagAdamModal()">
   <div class="tag-adam-modal">
     <div class="tag-adam-header">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
         <div>
-          <div class="tag-adam-title">🤝 Tag Adam on a Deal</div>
-          <div class="tag-adam-sub">Use this when you've matched a prospect to an integration and need Adam to activate the partner. Do not contact the partner directly.</div>
+          <div class="tag-adam-title">Request New Integration</div>
+          <div class="tag-adam-sub">Don't see the integration you need? Submit this and Adam will identify the right partner and get back to you. Do not contact partners directly.</div>
         </div>
         <button class="modal-close" onclick="closeTagAdamModal()">✕</button>
       </div>
@@ -4657,24 +4776,44 @@ renderCards();
         <button class="tag-adam-close-btn" onclick="closeTagAdamModal()">Close</button>
       </div>
       <div id="tagAdamForm">
-        <div class="tag-adam-row2">
-          <div class="tag-adam-field">
-            <label class="tag-adam-label">Rep Name *</label>
-            <input type="text" class="tag-adam-input" id="ta-rep-name" placeholder="Your full name">
-            <div class="tag-adam-error" id="ta-rep-name-err">Required</div>
-          </div>
-          <div class="tag-adam-field">
-            <label class="tag-adam-label">Rep Email *</label>
-            <input type="email" class="tag-adam-input" id="ta-rep-email" placeholder="you@canto.com">
-            <div class="tag-adam-error" id="ta-rep-email-err">Valid email required</div>
-          </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Rep Name *</label>
+          <input type="text" class="tag-adam-input" id="ta-rep-name" placeholder="Your full name">
+          <div class="tag-adam-error" id="ta-rep-name-err">Required</div>
         </div>
         <div class="tag-adam-field">
-          <label class="tag-adam-label">Integration Name *</label>
-          <select class="tag-adam-input" id="ta-integration">
-            <option value="">Select integration…</option>
-          </select>
+          <label class="tag-adam-label">Rep Email *</label>
+          <input type="email" class="tag-adam-input" id="ta-rep-email" placeholder="you@canto.com">
+          <div class="tag-adam-error" id="ta-rep-email-err">Valid email required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">What tool does the customer want to connect to Canto? *</label>
+          <input type="text" class="tag-adam-input" id="ta-integration" placeholder="e.g. Salesforce, SAP, their Shopify store">
           <div class="tag-adam-error" id="ta-integration-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">What does the customer want to accomplish? *</label>
+          <textarea class="tag-adam-input" id="ta-accomplish" rows="3" style="resize:vertical;line-height:1.55" placeholder="e.g. Product images approved in Canto should automatically sync into Salsify when published"></textarea>
+          <div class="tag-adam-error" id="ta-accomplish-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Which direction should data or assets flow? *</label>
+          <div class="ta-radio-group">
+            <label class="ta-radio-label"><input type="radio" name="ta-direction" value="Canto → Other tool"> Canto → Other tool</label>
+            <label class="ta-radio-label"><input type="radio" name="ta-direction" value="Other tool → Canto"> Other tool → Canto</label>
+            <label class="ta-radio-label"><input type="radio" name="ta-direction" value="Both directions"> Both directions</label>
+            <label class="ta-radio-label"><input type="radio" name="ta-direction" value="Not sure yet"> Not sure yet</label>
+          </div>
+          <div class="tag-adam-error" id="ta-direction-err">Please select one</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Is this integration critical to closing the deal? *</label>
+          <div class="ta-radio-group">
+            <label class="ta-radio-label"><input type="radio" name="ta-critical" value="Yes - deal is blocked without it"> Yes — deal is blocked without it</label>
+            <label class="ta-radio-label"><input type="radio" name="ta-critical" value="Nice to have but not blocking"> Nice to have but not blocking</label>
+            <label class="ta-radio-label"><input type="radio" name="ta-critical" value="Post-sale requirement"> Post-sale requirement</label>
+          </div>
+          <div class="tag-adam-error" id="ta-critical-err">Please select one</div>
         </div>
         <div class="tag-adam-field">
           <label class="tag-adam-label">Prospect / Account Name *</label>
@@ -4683,42 +4822,91 @@ renderCards();
         </div>
         <div class="tag-adam-field">
           <label class="tag-adam-label">Salesforce Opportunity Link *</label>
-          <input type="url" class="tag-adam-input" id="ta-sfdc" placeholder="Paste your SFDC opp URL">
+          <input type="text" class="tag-adam-input" id="ta-sfdc" placeholder="Paste your SFDC opp URL">
           <div class="tag-adam-error" id="ta-sfdc-err">Valid URL required</div>
         </div>
         <div class="tag-adam-field">
-          <label class="tag-adam-label">Deal Stage *</label>
-          <select class="tag-adam-input" id="ta-stage">
-            <option value="">Select stage…</option>
-            <option>1-Prospecting</option>
-            <option>2-Demo &amp; Validation</option>
-            <option>3-Canto Selected</option>
-            <option>4-Budget Approval</option>
-            <option>5-Closed Won</option>
-          </select>
-          <div class="tag-adam-error" id="ta-stage-err">Required</div>
+          <label class="tag-adam-label">Region *</label>
+          <div class="ta-radio-group">
+            <label class="ta-radio-label"><input type="radio" name="ta-region" value="US"> US</label>
+            <label class="ta-radio-label"><input type="radio" name="ta-region" value="EMEA"> EMEA</label>
+          </div>
+          <div class="tag-adam-error" id="ta-region-err">Please select one</div>
         </div>
         <div class="tag-adam-field">
-          <label class="tag-adam-label">What does the prospect use this tool for? *</label>
-          <textarea class="tag-adam-input" id="ta-use-case" rows="3" style="resize:vertical;line-height:1.5" placeholder="e.g. They run all email marketing through HubSpot and want assets to sync automatically"></textarea>
-          <div class="tag-adam-error" id="ta-use-case-err">Required</div>
+          <label class="tag-adam-label">Gong Call Link <span style="font-weight:400;text-transform:none;color:var(--muted)">(optional)</span></label>
+          <input type="text" class="tag-adam-input" id="ta-gong" placeholder="https://app.gong.io/call?id=...">
         </div>
         <div class="tag-adam-field">
-          <label class="tag-adam-label">What's the urgency? *</label>
-          <select class="tag-adam-input" id="ta-urgency">
-            <option value="">Select…</option>
-            <option>This week</option>
-            <option>This month</option>
-            <option>Next quarter</option>
-            <option>Just exploring</option>
-          </select>
-          <div class="tag-adam-error" id="ta-urgency-err">Required</div>
+          <label class="tag-adam-label">Additional Context <span style="font-weight:400;text-transform:none;color:var(--muted)">(optional)</span></label>
+          <textarea class="tag-adam-input" id="ta-context" rows="3" style="resize:vertical;line-height:1.55" placeholder="Anything else Adam should know before reaching out to the partner"></textarea>
+        </div>
+        <button class="tag-adam-submit" onclick="submitTagAdam()">Submit Request →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARD-LEVEL REQUEST MODAL -->
+<div class="card-req-overlay" id="cardReqOverlay" onclick="if(event.target===this)closeCardReqModal()">
+  <div class="card-req-modal">
+    <div class="card-req-header">
+      <div class="card-req-header-text">
+        <div class="card-req-title" id="cardReqTitle">Request This Integration</div>
+        <div class="card-req-sub">Let Adam know you have a prospect that needs this integration so he can activate the partner.</div>
+      </div>
+      <button class="modal-close" onclick="closeCardReqModal()" style="flex-shrink:0;">✕</button>
+    </div>
+    <div class="card-req-body">
+      <div class="tag-adam-confirm" id="cardReqConfirm" style="display:none;">
+        <div class="tag-adam-confirm-title">✓ Submitted!</div>
+        <div class="tag-adam-confirm-body">Adam will be in touch within 24 hours. Do not contact the partner directly.</div>
+        <button class="tag-adam-close-btn" onclick="closeCardReqModal()">Close</button>
+      </div>
+      <div id="cardReqForm">
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Rep Name *</label>
+          <input type="text" class="tag-adam-input" id="cr-rep-name" placeholder="Your full name">
+          <div class="tag-adam-error" id="cr-rep-name-err">Required</div>
         </div>
         <div class="tag-adam-field">
-          <label class="tag-adam-label">Additional Context <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-          <textarea class="tag-adam-input" id="ta-context" rows="3" style="resize:vertical;line-height:1.5" placeholder="Anything else Adam should know before reaching out to the partner"></textarea>
+          <label class="tag-adam-label">Rep Email *</label>
+          <input type="text" class="tag-adam-input" id="cr-rep-email" placeholder="you@canto.com">
+          <div class="tag-adam-error" id="cr-rep-email-err">Valid email required</div>
         </div>
-        <button class="tag-adam-submit" onclick="submitTagAdam()">Submit to Adam →</button>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Prospect / Account Name *</label>
+          <input type="text" class="tag-adam-input" id="cr-account" placeholder="e.g. Acme Corporation">
+          <div class="tag-adam-error" id="cr-account-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Salesforce Opportunity Link *</label>
+          <input type="text" class="tag-adam-input" id="cr-sfdc" placeholder="Paste your SFDC opp URL">
+          <div class="tag-adam-error" id="cr-sfdc-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label" id="cr-use-label">What does the prospect use this integration for? *</label>
+          <textarea class="tag-adam-input" id="cr-use-case" rows="3" style="resize:vertical;line-height:1.55" placeholder="e.g. They run all email marketing through HubSpot and want assets to sync automatically"></textarea>
+          <div class="tag-adam-error" id="cr-use-case-err">Required</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Is this critical to closing the deal? *</label>
+          <div class="ta-radio-group">
+            <label class="ta-radio-label"><input type="radio" name="cr-critical" value="Yes - deal is blocked"> Yes — deal is blocked</label>
+            <label class="ta-radio-label"><input type="radio" name="cr-critical" value="Nice to have"> Nice to have</label>
+            <label class="ta-radio-label"><input type="radio" name="cr-critical" value="Post-sale requirement"> Post-sale requirement</label>
+          </div>
+          <div class="tag-adam-error" id="cr-critical-err">Please select one</div>
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Gong Call Link <span style="font-weight:400;text-transform:none;color:var(--muted)">(optional)</span></label>
+          <input type="text" class="tag-adam-input" id="cr-gong" placeholder="https://app.gong.io/call?id=...">
+        </div>
+        <div class="tag-adam-field">
+          <label class="tag-adam-label">Additional Context <span style="font-weight:400;text-transform:none;color:var(--muted)">(optional)</span></label>
+          <textarea class="tag-adam-input" id="cr-context" rows="2" style="resize:vertical;line-height:1.55" placeholder="Anything else Adam should know before reaching out to the partner"></textarea>
+        </div>
+        <button class="card-req-submit" onclick="submitCardReq()">Submit to Adam →</button>
       </div>
     </div>
   </div>
