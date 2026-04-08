@@ -4975,13 +4975,17 @@ function submitIntReq() {
   existing.push(request);
   localStorage.setItem('canto_integration_requests_v1', JSON.stringify(existing));
 
-  // Fire-and-forget webhook POST to Make.com
+  // POST to Make.com webhook
   if (MAKE_WEBHOOK_URL && MAKE_WEBHOOK_URL !== 'YOUR_MAKE_WEBHOOK_URL') {
     fetch(MAKE_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(request)
-    }).catch(function() {}); // fire-and-forget
+    }).then(function(res) {
+      console.log('[Make.com] Webhook response:', res.status, res.statusText);
+    }).catch(function(err) {
+      console.error('[Make.com] Webhook error:', err);
+    });
   }
 
   document.getElementById('intReqForm').style.display = 'none';
