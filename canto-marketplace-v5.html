@@ -2185,66 +2185,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </section>
 
-<!-- FORM A: PARTNER / AGENCY SUBMIT FORM -->
-<section class="form-section partner-form-bg" aria-label="Partner Integration Submission" id="partner-submit-form">
-  <div class="enable-inner">
-    <div class="form-inner">
-      <div class="form-audience-badge partner-badge">For Partners, Agencies &amp; Integration Developers</div>
-      <div class="form-title-light">Submit an Integration<br>to the Marketplace</div>
-      <div class="form-sub-light">Built a Canto integration — or want to build one? Submit it here to be reviewed for the Canto Integration Marketplace. This form is for integration partners, agencies, and SIs — not for sales reps.</div>
-      <form class="form-grid" onsubmit="handlePartnerSubmit(event)">
-        <div class="form-row-2">
-          <div class="form-field">
-            <label class="form-label-light">Your Name</label>
-            <input type="text" class="form-ctrl-light" placeholder="Jane Smith" required>
-          </div>
-          <div class="form-field">
-            <label class="form-label-light">Company / Agency Name</label>
-            <input type="text" class="form-ctrl-light" placeholder="New Edge, MindCloud, Sitation, Lettuce Commerce, etc." required>
-          </div>
-        </div>
-        <div class="form-field">
-          <label class="form-label-light">Contact Email</label>
-          <input type="email" class="form-ctrl-light" placeholder="you@yourcompany.com" required>
-        </div>
-        <div class="form-row-2">
-          <div class="form-field">
-            <label class="form-label-light">Integration Name</label>
-            <input type="text" class="form-ctrl-light" placeholder="e.g. Workday → Canto" required>
-          </div>
-          <div class="form-field">
-            <label class="form-label-light">Integration Status</label>
-            <select class="form-ctrl-light" required>
-              <option value="">Select…</option>
-              <option>Already built — ready for listing</option>
-              <option>In development</option>
-              <option>Proposal / scoping phase</option>
-              <option>Concept only — seeking validation</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-field">
-          <label class="form-label-light">What does this integration do? (One paragraph)</label>
-          <textarea class="form-ctrl-light" rows="3" placeholder="Describe the workflow this integration enables, which systems are connected, and the primary use case for Canto customers…" style="resize:vertical;line-height:1.5;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.15);color:white;font-family:'DM Sans',sans-serif;font-size:13.5px;padding:10px 14px;border-radius:8px;outline:none;width:100%;"></textarea>
-        </div>
-        <div class="form-field">
-          <label class="form-label-light">Partner Type</label>
-          <select class="form-ctrl-light">
-            <option value="">Select…</option>
-            <option>Systems Integrator (SI)</option>
-            <option>Technology Partner / ISV</option>
-            <option>Agency</option>
-            <option>Independent Developer</option>
-          </select>
-        </div>
-        <div>
-          <button type="submit" class="form-submit-partner">Submit Integration →</button>
-          <div class="form-note-light">Submissions are reviewed by the Canto Partner team. You'll hear back within 5 business days. Not all submissions will be listed.</div>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
 
 </div><!-- /repGuideInner -->
 </div><!-- /repGuidePane -->
@@ -4874,11 +4814,6 @@ function updateBreadcrumb(cat) {
 function handleRepTriageSubmit(e) {
   e.preventDefault();
   showToast('✓ Triage submitted — you\'ll hear back within 1 business day');
-  e.target.reset();
-}
-function handlePartnerSubmit(e) {
-  e.preventDefault();
-  showToast('✓ Integration submitted to the marketplace team');
   e.target.reset();
 }
 
