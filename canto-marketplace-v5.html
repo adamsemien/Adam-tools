@@ -4152,14 +4152,14 @@ const CLEARBIT_DOMAINS = {
   'salesforce':'salesforce.com','netsuite':'netsuite.com','express-doc':'canto.com','stibo':'stibosystems.com'
 };
 
-function getClearbitUrl(id) {
+function getLogoUrl(id) {
   const domain = CLEARBIT_DOMAINS[id];
-  return domain ? 'https://logo.clearbit.com/' + domain + '?size=80' : '';
+  return domain ? 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=128' : '';
 }
 
 function logoHTML(i) {
   // Primary: Clearbit. Fallback 1: i.logo. Fallback 2: text initial.
-  const clearbitUrl = getClearbitUrl(i.id);
+  const clearbitUrl = getLogoUrl(i.id);
   const altUrl = i.logo ? i.logo.replace(/'/g, "\\'") : '';
   const fallbackStyle = 'background:' + i.catBg + ';color:' + i.catColor;
   const fallbackToText = 'this.style.display=\'none\';this.parentElement.querySelector(\'.logo-fallback\').style.display=\'flex\';';
@@ -4183,7 +4183,7 @@ function logoHTML(i) {
 }
 
 function modalLogoHTML(i) {
-  const clearbitUrl = getClearbitUrl(i.id);
+  const clearbitUrl = getLogoUrl(i.id);
   const altUrl = i.logo ? i.logo.replace(/'/g, "\\'") : '';
   const fallbackStyle = 'width:50px;height:50px;border-radius:12px;background:' + i.catBg + ';color:' + i.catColor + ';display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;font-family:DM Sans,sans-serif;flex-shrink:0';
   const fallbackToText = 'this.style.display=\'none\';this.parentElement.querySelector(\'.logo-fallback-modal\').style.display=\'flex\';';
@@ -4217,7 +4217,7 @@ function getVisualHTML(i) {
   } else {
     const arrow = i.dataFlow === 'bidirectional' ? '\u21C4' : (i.dataFlow === 'platform-to-canto' ? '\u2190' : '\u2192');
     const dir   = i.dataFlow === 'bidirectional' ? 'Bidirectional' : (i.dataFlow === 'platform-to-canto' ? 'To Canto' : 'To ' + i.name);
-    const logoUrl = getClearbitUrl(i.id) || (i.logo || '');
+    const logoUrl = getLogoUrl(i.id) || (i.logo || '');
     const fallbackSpan = '<span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:22px;font-weight:800;font-family:DM Sans,sans-serif;color:' + i.catColor + '">' + i.name.charAt(0) + '</span>';
     inner = '<div class="flow-diagram">' +
       '<div class="flow-node">' +
@@ -4328,7 +4328,7 @@ function clearAllFilters() {
 
 // ─── BUILD CARD HTML ──────────────────────────────────────────────────
 function buildCardHTML(i, idx) {
-  const partnerLogoSrc = getClearbitUrl(i.id) || i.partnerLogo || '';
+  const partnerLogoSrc = getLogoUrl(i.id) || i.partnerLogo || '';
   const partnerLogoHTML = partnerLogoSrc
     ? '<img class="partner-logo-sm" src="' + partnerLogoSrc + '" alt="" onerror="this.style.display=\'none\'">'
     : '';
