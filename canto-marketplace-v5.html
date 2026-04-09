@@ -1833,8 +1833,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <header class="header" role="banner">
   <div class="header-left">
     <a href="canto-marketplace-v5.html" class="logo-link" aria-label="Canto — go to marketplace homepage">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.85 0 3.58-.51 5.06-1.39l-1.56-2.7A6.959 6.959 0 0 1 12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c1.62 0 3.11.55 4.29 1.47l1.65-2.64A9.947 9.947 0 0 0 12 2z"/></svg>
+      <div class="logo-mark" style="padding:0;overflow:hidden;">
+        <img src="https://www.google.com/s2/favicons?domain=canto.com&sz=128" alt="Canto" style="width:100%;height:100%;object-fit:contain;border-radius:7px;">
       </div>
       <span class="logo-text">Canto</span>
     </a>
@@ -1853,7 +1853,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <button class="export-btn" onclick="openRequestsPanel()" aria-label="View integration requests" style="background:#7C3AED !important;">📋 Integration Requests</button>
     <button class="cheatsheet-btn" onclick="openTagAdamModal()" aria-label="Request new integration" style="background:rgba(200,16,46,0.12);border-color:rgba(200,16,46,0.28);color:#ff6b87;">➕ Request New Integration</button>
     <button class="cheatsheet-btn" onclick="openCheatSheet()" aria-label="Open sales cheat sheet (press ?)">⚡ Sales Cheat Sheet</button>
-    <span class="header-pill">Sales Rep Guide</span>
+    <span class="header-pill" onclick="switchMainTab('rep');this.scrollIntoView({behavior:'smooth',block:'start'})" style="cursor:pointer">Sales Rep Guide</span>
     <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu" aria-expanded="false" id="navHamburger">
       <span></span><span></span><span></span>
     </button>
@@ -2185,6 +2185,35 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   </div>
 </section>
 
+
+<!-- CHEAT SHEET (inside Rep Guide) -->
+<div class="cs-divider"></div>
+<section id="cheatsheetSection">
+  <div class="cs-header">
+    <div>
+      <div class="cs-title">Integration Cheat Sheet</div>
+      <div class="cs-sub">Every integration at a glance — direction, cost, status, and who builds it.</div>
+    </div>
+    <input class="cs-search" id="csSearch" type="text" placeholder="Search integrations…" oninput="filterCheatSheet(this.value)">
+  </div>
+  <div class="cs-table-wrap">
+    <table class="cs-table" id="csTable">
+      <thead>
+        <tr>
+          <th>Integration</th>
+          <th>Category</th>
+          <th>Direction</th>
+          <th>Built By</th>
+          <th>Cost</th>
+          <th>Status</th>
+          <th>Product</th>
+          <th>What It Does</th>
+        </tr>
+      </thead>
+      <tbody id="csTableBody"></tbody>
+    </table>
+  </div>
+</section>
 
 </div><!-- /repGuideInner -->
 </div><!-- /repGuidePane -->
@@ -2608,6 +2637,22 @@ const INTEGRATIONS = [
     direction:'Canto → Canva', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
     whatItDoes:'Access Canto asset library directly within Canva to enhance design workflows.',
     bestFor:'Marketing and brand teams using Canva for quick designs with approved assets.' },
+
+  { id:'figma', name:'Figma', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎨',
+    partnerType:'partner', availability:'live',
+    soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Partner Supported', partnerBg:'#A259FF',
+    partnerDesc:'Partner-supported integration. Access Canto assets inside Figma design files.',
+    tagline:'Access Canto assets inside Figma design files.',
+    icp:'Product and UI/UX design teams using Figma for collaborative design.',
+    signals:['We use Figma', 'Our designers work in Figma'],
+    problem:'Figma users pull brand assets from scattered sources rather than the governed DAM.',
+    capabilities:['In-App Asset Browser','Approved Asset Access','Direct Insert into Figma'],
+    timeline:'Included', investment:'Included',
+    costStatus:'Included', installCount:'', lastUpdated:'Apr 2026', prereq:'Requires Figma',
+    direction:'Canto → Figma', builtBy:'Partner Supported', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
+    whatItDoes:'Access Canto assets inside Figma design files for UI/UX and product design workflows.',
+    bestFor:'Product and UI/UX design teams using Figma with Canto as their asset source.' },
 
   // ── CMS ────────────────────────────────────────────────────────────
   { id:'contentful', logo:'https://images.ctfassets.net/jtqsy5pye0zd/6wNuQ2xMvbw134rccObi0q/bf61badc6d6d9780609e541713f0bba6/Contentful_Logo_2.5_Dark.svg', name:'Contentful', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'📰',
@@ -3239,6 +3284,22 @@ const INTEGRATIONS = [
     direction:'Canto → [Your App]', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['JavaScript developer tool — requires implementation resource.','Primary documented use case: Salesforce CRM (Lightning and Classic).','Can be embedded in any web application, ERP, or custom portal.'],
     whatItDoes:'Developer implements the JavaScript toolkit in the target web application. Users see a Canto asset picker embedded directly inside the application. Browse, search, and insert approved assets without leaving the host application. Primary documented use case: Salesforce CRM (Lightning and Classic).',
     bestFor:'Organizations with custom internal tools, portals, CRMs, or ERP systems where teams need Canto asset access embedded directly.' },
+
+  { id:'zapier', name:'Zapier', cat:'crm', type:'DAM', catLabel:'Automation', catColor:'#FF4A00', catBg:'#FFF3EC', emoji:'⚡',
+    partnerType:'partner', availability:'live',
+    soldBy:'partner', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
+    partner:'Zapier', partnerBg:'#FF4A00',
+    partnerDesc:'Connect Canto to 5,000+ apps via Zapier workflows. Requires a Zapier subscription.',
+    tagline:'Connect Canto to 5,000+ apps via Zapier workflows.',
+    icp:'Teams wanting to automate asset workflows across their entire stack without developer resources.',
+    signals:['We use Zapier', 'We want to automate asset workflows', 'We connect tools via Zapier'],
+    problem:'Teams want to trigger actions in other apps when assets are uploaded or approved in Canto, but there\'s no native connector for every tool.',
+    capabilities:['5,000+ App Connections','Trigger-Based Workflows','No Code Automation','Asset Event Triggers'],
+    timeline:'Included', investment:'Included (Zapier subscription required)',
+    costStatus:'Included', installCount:'', lastUpdated:'Apr 2026', prereq:'Requires Zapier subscription',
+    direction:'Configurable', builtBy:'Zapier', cantoProduct:'Both', additionalCost:'Included (Zapier subscription required)', status:'Live', flags:[],
+    whatItDoes:'Connect Canto to 5,000+ apps via Zapier workflows. Automate asset distribution, notifications, and cross-platform sync without code.',
+    bestFor:'Teams wanting to automate asset workflows across their entire stack without developer resources.' },
 
   { id:'google-analytics', name:'Google Analytics', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'📊',
     partnerType:'canto', availability:'live',
@@ -4088,7 +4149,7 @@ const CLEARBIT_DOMAINS = {
   'akeneo':'akeneo.com','salsify':'salsify.com',
   'adobe-cc':'adobe.com','adobe-photoshop':'adobe.com','adobe-illustrator':'adobe.com','adobe-indesign':'adobe.com',
   'adobe-premiere':'adobe.com','adobe-after-effects':'adobe.com','adobe-lightroom':'adobe.com','adobe-workfront':'workfront.com',
-  'canva':'canva.com','contentful':'contentful.com','wordpress':'wordpress.com','drupal':'drupal.org','typo3':'typo3.org','contentstack':'contentstack.com',
+  'canva':'canva.com','figma':'figma.com','contentful':'contentful.com','wordpress':'wordpress.com','drupal':'drupal.org','typo3':'typo3.org','contentstack':'contentstack.com',
   'shopify':'shopify.com','amazon':'amazon.com','bigcommerce':'bigcommerce.com',
   'feedonomics':'feedonomics.com','channable':'channable.com','channel-engine':'channelengine.com',
   'hubspot-mktg':'hubspot.com','mailchimp':'mailchimp.com','klaviyo':'klaviyo.com',
@@ -4099,7 +4160,7 @@ const CLEARBIT_DOMAINS = {
   'microsoft-excel':'microsoft.com','microsoft-powerpoint':'microsoft.com','microsoft-word':'microsoft.com','microsoft-outlook':'microsoft.com',
   'microsoft-teams':'microsoft.com','slack':'slack.com','asana':'asana.com',
   'monday-com':'monday.com','wrike':'wrike.com','salesforce-mktg':'salesforce.com',
-  'rest-api':'canto.com','universal-connector':'canto.com','google-analytics':'google.com',
+  'rest-api':'canto.com','universal-connector':'canto.com','zapier':'zapier.com','google-analytics':'google.com',
   'ciloo':'ciloo.com','chrome-extension':'google.com','ios-mobile':'apple.com',
   'mac-connect':'apple.com','windows-connect':'microsoft.com',
   'salesforce':'salesforce.com','netsuite':'netsuite.com','express-doc':'canto.com','stibo':'stibosystems.com'
@@ -5021,7 +5082,7 @@ function buildCheatSheet() {
   const tbody = document.getElementById('csTableBody');
   if (!tbody) return;
   const rows = INTEGRATIONS
-    .filter(i => i.availability !== 'track' && i.availability !== 'draft' && i.cat !== 'tech')
+    .filter(i => i.cat !== 'tech' && i.availability !== 'track' && i.availability !== 'draft' && i.status !== 'Needs Verification' && (i.availability === 'live' || i.availability === 'soon'))
     .map(function(i) {
       const statusCls = i.status === 'Live' ? 'cs-pill-live'
         : i.status === 'Coming Soon' ? 'cs-pill-soon'
@@ -5279,41 +5340,13 @@ buildCheatSheet();
   </div>
 </div>
 
-<!-- CHEAT SHEET PERMANENT SECTION -->
-<div class="cs-divider"></div>
-<section id="cheatsheetSection">
-  <div class="cs-header">
-    <div>
-      <div class="cs-title">Integration Cheat Sheet</div>
-      <div class="cs-sub">Every integration at a glance — direction, cost, status, and who builds it.</div>
-    </div>
-    <input class="cs-search" id="csSearch" type="text" placeholder="Search integrations…" oninput="filterCheatSheet(this.value)">
-  </div>
-  <div class="cs-table-wrap">
-    <table class="cs-table" id="csTable">
-      <thead>
-        <tr>
-          <th>Integration</th>
-          <th>Category</th>
-          <th>Direction</th>
-          <th>Built By</th>
-          <th>Cost</th>
-          <th>Status</th>
-          <th>Product</th>
-          <th>What It Does</th>
-        </tr>
-      </thead>
-      <tbody id="csTableBody"></tbody>
-    </table>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-logo">
-      <div class="footer-logo-mark">
-        <svg viewBox="0 0 24 24"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.85 0 3.58-.51 5.06-1.39l-1.56-2.7A6.959 6.959 0 0 1 12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c1.62 0 3.11.55 4.29 1.47l1.65-2.64A9.947 9.947 0 0 0 12 2z"/></svg>
+      <div class="footer-logo-mark" style="padding:0;overflow:hidden;">
+        <img src="https://www.google.com/s2/favicons?domain=canto.com&sz=128" alt="Canto" style="width:100%;height:100%;object-fit:contain;border-radius:5px;">
       </div>
       <span class="footer-logo-text">Canto</span>
     </div>
