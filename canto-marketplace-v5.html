@@ -1876,15 +1876,11 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
   <div class="hero-inner">
     <div class="hero-eyebrow">Partner Ecosystem</div>
     <div class="hero-title">Connect Canto to<br><span>every tool in your stack</span></div>
-    <div class="hero-sub">30+ integrations. Built by Canto, certified partners, and the world's best SIs.</div>
+    <div class="hero-sub">40+ integrations. Built by Canto, certified partners, and the world's best SIs.</div>
     <div class="hero-stats">
       <div class="stat">
         <div class="stat-num" id="statTotal">—</div>
         <div class="stat-label">Integrations</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" id="statIncluded">—</div>
-        <div class="stat-label">Included in Plan</div>
       </div>
       <div class="stat">
         <div class="stat-num">30,000+</div>
@@ -4446,8 +4442,7 @@ function renderCards() {
 
   // Hero stats (only count live integrations)
   const liveOnly = INTEGRATIONS.filter(i => i.availability === 'live');
-  document.getElementById('statTotal').textContent = '50+';
-  document.getElementById('statIncluded').textContent = liveOnly.filter(i => i.includedInPlan).length;
+  document.getElementById('statTotal').textContent = '40+';
   document.getElementById('statCategories').textContent = new Set(liveOnly.map(i => i.cat)).size;
 
   // Update sidebar counts dynamically based on currently visible (filtered) cards
