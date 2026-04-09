@@ -1879,10 +1879,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <div class="stat-num" id="statCategories">—</div>
         <div class="stat-label">Categories</div>
       </div>
-      <div class="stat">
-        <div class="stat-num">$319,838</div>
-        <div class="stat-label">Influenced Pipeline</div>
-      </div>
     </div>
   </div>
 </div>
@@ -2495,18 +2491,36 @@ const INTEGRATIONS = [
     whatItDoes:'When live: search and insert Canto assets into Akeneo PIM. Sync asset metadata between platforms. Pull selected field values from Akeneo into Canto.',
     bestFor:'Brands using Akeneo as their PIM who need Canto as the upstream asset governance layer.' },
 
+  { id:'salsify', name:'Salsify', cat:'pim', type:'For Products', cantoProduct:'products', catLabel:'PIM', catColor:'#4F46E5', catBg:'#EEF2FF', emoji:'📊',
+    partnerType:'partner', availability:'live',
+    soldBy:'partner', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'medium', includedInPlan:false,
+    partner:'Mirichi Labs', partnerBg:'#4F46E5',
+    partnerDesc:'Partner-built via Mirichi Labs. Requires scoping via Adam. Highest-priority co-sell motion — every Salsify customer is a potential Canto customer.',
+    tagline:'Sync governed product media from Canto directly into Salsify product records.',
+    icp:'Brands using Salsify for product content syndication who need a governed DAM as the upstream asset source. Strongest fit for CPG, food & bev, and consumer goods brands with 100+ SKUs.',
+    signals:['We use Salsify', 'Product enrichment is slow', 'Assets aren\'t linked to product records', 'We distribute to retail channels'],
+    problem:'Brands using Salsify for product content distribution manage their assets in a separate system — Google Drive, Dropbox, or a shared folder. Assets that feed into Salsify are ungoverned, versions drift, and the connection between asset library and product record is manual.',
+    talktrack: '"You\'re using Salsify for product content distribution — where do the product images and brand assets that feed into Salsify come from? Is there a governance process for assets going into Salsify, or does your team pull from multiple sources?"',
+    capabilities:['Governed Asset Sync to Salsify','Auto-update When Assets Change','Metadata Passthrough','Bulk Asset Sync','Approval Status Enforcement'],
+    timeline:'Contact Adam to arrange', investment:'Contact Adam',
+    costStatus:'Additional Cost', installCount:'', lastUpdated:'Apr 2026', prereq:'Requires Salsify license',
+    direction:'Canto → Salsify', builtBy:'Mirichi Labs', cantoProduct:'For Products Required', additionalCost:'Contact Adam', status:'Live',
+    flags:['⚠️ Partner-built via Mirichi Labs. Requires scoping via Adam.','Highest-priority co-sell motion — every Salsify customer is a potential Canto customer.','Use with Sitation and Gournay.'],
+    whatItDoes:'Canto governs product assets — approved images, videos, documents, spec sheets. Integration syncs approved assets from Canto directly into Salsify product records. When assets update in Canto, Salsify reflects the change automatically.',
+    bestFor:'Brands using Salsify for product content syndication who need a governed DAM as the upstream asset source. Strongest fit for CPG, food & bev, and consumer goods brands with 100+ SKUs.' },
+
   // ── CREATIVE WORKFLOW ─────────────────────────────────────────────
   { id:'adobe-cc', name:'Adobe Creative Cloud', cat:'creative', type:'DAM', catLabel:'Creative Workflow', catColor:'#E34400', catBg:'#FFF0EB', emoji:'🎨',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'bidirectional', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#FF0000',
-    partnerDesc:'Built and maintained by Canto. Access and place Canto assets directly inside Photoshop, Illustrator, InDesign, and Premiere.',
-    tagline:'Access your entire Canto library from inside Adobe Creative Cloud.',
-    icp:'In-house creative teams and agencies managing brand assets at volume. Any organization running Adobe CC is a Canto integration conversation.',
-    signals:['Our designers use Photoshop', 'We use InDesign', 'We have an in-house creative team', 'We use Premiere'],
-    problem:'Creative teams switch between Canto and Adobe apps constantly — downloading files, making changes, re-uploading. Every switch is friction. Final approved versions often get lost before they make it back to the DAM.',
-    talktrack: '"If their team uses Photoshop, Illustrator, InDesign, or Premiere — this is already included. Creatives can find, place, and upload Canto assets without leaving Adobe. It\'s one of the most used integrations we have, and it\'s zero extra cost."',
-    capabilities:['In-App Asset Browser','Direct Upload to Canto','Version Control Sync','Metadata Preservation','Photoshop + Illustrator + InDesign + Premiere'],
+    partnerDesc:'Built and maintained by Canto. Access, edit, and save Canto assets directly inside Photoshop, Illustrator, InDesign, Premiere Pro, and After Effects.',
+    tagline:'Access, edit, and save Canto assets directly inside Photoshop, Illustrator, InDesign, Premiere Pro, and After Effects.',
+    icp:'Creative and design teams working in Adobe CC who produce brand content against a governed asset library. Strongest fit for teams with 5+ designers and 500+ managed assets.',
+    signals:['Our designers use Photoshop', 'We use InDesign', 'We have an in-house creative team', 'We use Premiere', 'We create motion graphics'],
+    problem:'Designers spend significant time hunting for approved assets across shared drives, downloading files to their desktop, and manually uploading finished work back to the asset library. Approved assets drift out of reach, and finished creative files never make it back to the governed library.',
+    talktrack: '"When your designers need an approved brand asset for a project, where do they go and how long does that take? How do finished creative files get back into your asset library after a project is complete?"',
+    capabilities:['In-App Asset Browser','Direct Upload to Canto','Version Control Sync','Metadata Preservation','Photoshop + Illustrator + InDesign + Premiere + After Effects','One-time Install CC Connector'],
     timeline:'Included', investment:'Included in plan',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/adobe-cc.svg', installCount:'4,200+', lastUpdated:'Mar 2026', prereq:'Requires Adobe Creative Cloud',
     direction:'Canto ↔ Photoshop', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
@@ -2665,17 +2679,17 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#21759B',
     partnerDesc:'Built and maintained by Canto. Available for all customers.',
-    tagline:'Insert Canto-approved media directly into WordPress from the editor.',
-    icp:'Any organization running WordPress for their primary brand or product site.',
-    signals:['Our website is on WordPress', 'We use WordPress', 'Marketing manages the website'],
-    problem:'WordPress editors pull images from whatever they can find — Google Drive, local folders, email attachments. Brand teams lose control of what appears on the website.',
-    talktrack: '"WordPress is 43% of the internet — if they\'re on it, this is included and easy. Editors get a Canto browser right inside the media library. Ask: \'Who manages your website? Do they pull images from a shared drive?\'"',
+    tagline:'Publish photos, images, and brand assets from Canto directly to WordPress websites.',
+    icp:'Marketing and content teams managing brand websites on WordPress who publish visual content regularly.',
+    signals:['Our website is on WordPress', 'We use WordPress', 'Marketing manages the website', 'We manually update images across multiple pages'],
+    problem:'Website teams publishing content on WordPress manually download images and upload them to the media library — disconnecting website assets from the governed brand library. Outdated images persist on websites long after they\'ve been updated in Canto.',
+    talktrack: '"When you publish content on your WordPress site, where do images come from — uploaded directly or pulled from a library? How do you make sure website images are the current approved versions, especially after rebrands or product updates?"',
     capabilities:['Media Library Integration','In-Editor Asset Browser','Approved Asset Enforcement','Metadata Sync','Multi-site Support'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/wordpress.svg', installCount:'3,800+', lastUpdated:'Feb 2026', prereq:'Requires WordPress',
     direction:'Canto → WordPress', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
-    whatItDoes:'Publish photos, images, and brand assets from Canto directly to WordPress websites.',
-    bestFor:'Marketing teams publishing approved brand assets to WordPress without downloading and reuploading.' },
+    whatItDoes:'Access Canto library from within the WordPress media uploader. Insert approved brand assets directly into pages, posts, and templates. Website imagery stays connected to the governed Canto source.',
+    bestFor:'Marketing and content teams managing brand websites on WordPress who publish visual content regularly.' },
 
   { id:'drupal', name:'Drupal', cat:'cms', type:'DAM', catLabel:'CMS', catColor:'#0070C0', catBg:'#EBF5FF', emoji:'💧',
     partnerType:'si', availability:'live',
@@ -2732,17 +2746,17 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'Canto', partnerBg:'#96BF48',
     partnerDesc:'Built and maintained by Canto. Native integration available as an add-on purchase. Requires Canto for Products.',
-    tagline:'Push approved product images from Canto to Shopify automatically.',
-    icp:'DTC and mid-market brands on Shopify managing 100+ SKUs.',
-    signals:['We sell on Shopify', 'We have a Shopify store', 'Product images are updated frequently'],
-    problem:'Shopify merchants download product images from Canto and re-upload them to Shopify manually. Images fall out of sync the moment a new version is approved in the DAM. Product pages go live with outdated assets.',
-    talktrack: '"If they\'re on Shopify with a real product catalog — this is a killer feature. Approve an image in Canto and it automatically updates on Shopify. Requires Canto for Products. Ask: \'How do product images get from your team to your Shopify store today?\' The answer closes the deal."',
-    capabilities:['Product Image Sync','Auto-update on DAM Change','Multi-channel Asset Delivery','Variant-Level Image Mapping','Metadata Passthrough'],
+    tagline:'Push product attributes and assets from Canto Product Hub to Shopify in one click.',
+    icp:'E-commerce brands using Canto for Products with active Shopify storefronts. Strongest fit for brands managing 100+ SKUs across multiple product lines or storefronts.',
+    signals:['We sell on Shopify', 'We have a Shopify store', 'Product images are updated frequently', 'We manage more than one Shopify storefront'],
+    problem:'Brands managing product catalogs in Canto have to manually download assets and re-enter product data into Shopify. Every product launch or update means double work. When Shopify and Canto fall out of sync, customers see wrong images or outdated descriptions.',
+    talktrack: '"How are you currently keeping your product images and descriptions in sync with your Shopify store — is that a manual process? When you launch a new product or update packaging, how long before your Shopify listing reflects the new assets?"',
+    capabilities:['Product Image Sync','Auto-update on DAM Change','Multi-channel Asset Delivery','Variant-Level Image Mapping','Metadata Passthrough','Real-time or On-demand Sync'],
     timeline:'~1 week', investment:'Included with Product Hub',
     costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/shopify.svg', installCount:'680+', lastUpdated:'Mar 2026', prereq:'Requires Shopify + Canto for Products',
     direction:'Canto → Shopify', builtBy:'Canto', cantoProduct:'For Products Required', additionalCost:'Included with Product Hub', status:'Live', flags:['⚠️ Requires Canto for Products (Product Hub) — NOT available on Canto DAM standalone.','DAM-only customers = upsell opportunity to Product Hub.','Both product attributes AND DAM assets are included in the sync.'],
-    whatItDoes:'Push product attributes and assets from Canto Product Hub to Shopify in one click. Sync product descriptions, images, and pricing in real-time or on-demand across single or multiple storefronts.',
-    bestFor:'E-commerce brands using Canto for Products who need Shopify product listings to stay accurate without manual entry.' },
+    whatItDoes:'Push product attributes and assets from Canto Product Hub to Shopify in one click. Sync product descriptions, images, pricing, and specs in real-time or on-demand across single or multiple storefronts. Updates in Canto instantly reflect on Shopify product pages — no manual upload required.',
+    bestFor:'E-commerce brands using Canto for Products with active Shopify storefronts. Strongest fit for brands managing 100+ SKUs across multiple product lines or storefronts.' },
 
   { id:'amazon', name:'Amazon', cat:'ecommerce', type:'Unified', catLabel:'E-Commerce', catColor:'#008060', catBg:'#E6F5F0', emoji:'📦',
     partnerType:'canto', availability:'live',
@@ -2823,33 +2837,33 @@ const INTEGRATIONS = [
     soldBy:'partner', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:false,
     partner:'The DAM Consultants', partnerBg:'#FF7A59',
     partnerDesc:'Built and maintained by The DAM Consultants — NOT Canto. $10,000/year add-on. Must be a separate contract line item. Disclose upfront.',
-    tagline:'Insert approved Canto assets directly into HubSpot campaigns.',
-    icp:'Mid-market B2B and DTC brands running marketing programs on HubSpot.',
-    signals:['We use HubSpot', 'Our marketing team is in HubSpot', 'We send email campaigns from HubSpot'],
-    problem:'Marketing teams building HubSpot campaigns download assets from Canto, re-upload to HubSpot\'s file manager, and create a second asset library that goes stale immediately.',
-    talktrack: '"HubSpot is a $10K/year add-on built by The DAM Consultants — not Canto. Disclose the cost upfront. Must be a separate contract line item. Ask: \'Does your marketing team ever complain about finding the right images for campaigns?\'"',
-    capabilities:['In-Editor Asset Browser','File Manager Sync','Approved-Only Mode','Landing Page Asset Insert','Campaign Asset Tracking'],
+    tagline:'Access approved Canto brand assets directly inside HubSpot\'s email and campaign builder.',
+    icp:'Marketing teams running HubSpot campaigns who need consistent access to governed brand assets without switching tools.',
+    signals:['We use HubSpot', 'Our marketing team is in HubSpot', 'We send email campaigns from HubSpot', 'We spend time downloading from one place and uploading into HubSpot'],
+    problem:'Marketing teams building HubSpot campaigns have to leave HubSpot, search for the right asset, download it, and re-upload it. This creates version drift — teams end up using outdated assets pulled from their desktop rather than the current approved version in Canto.',
+    talktrack: '"When your marketing team builds an email campaign in HubSpot, where do they go to find approved brand images? How do you make sure assets in your HubSpot emails are current approved versions — not something downloaded months ago?"',
+    capabilities:['In-Editor Asset Browser','Drag-and-Drop into Emails','Landing Page Asset Insert','Assets Stay in Sync','Campaign Asset Tracking'],
     timeline:'~1 week', investment:'$10,000/year (separate contract)',
     costStatus:'Additional Cost', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/hubspot-mktg.svg', installCount:'920+', lastUpdated:'Mar 2026', prereq:'Requires HubSpot',
     direction:'Canto → HubSpot', builtBy:'The DAM Consultants', cantoProduct:'Both', additionalCost:'$10,000/year', status:'Live', flags:['⚠️ PAID ADD-ON — $10,000/year. Must be disclosed upfront.','Built and maintained by The DAM Consultants — not a Canto-native integration.','Must be added as a separate line item in the customer contract.','Not eligible for discount.'],
-    whatItDoes:'Access approved Canto brand assets directly inside HubSpot email and campaign builder. Drag-and-drop into emails, landing pages, and templates. Assets stay in sync.',
-    bestFor:'Marketing teams building HubSpot campaigns who need one-click access to approved brand assets without leaving HubSpot.' },
+    whatItDoes:'Browse and search your entire Canto library from inside HubSpot\'s content editor. Drag-and-drop approved assets directly into emails, landing pages, and templates. Assets stay in sync — updates in Canto automatically reflect in HubSpot campaigns.',
+    bestFor:'Marketing teams running HubSpot campaigns who need consistent access to governed brand assets without switching tools.' },
 
   { id:'mailchimp', name:'Mailchimp', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'🐒',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#FFE01B',
     partnerDesc:'Built and maintained by Canto. Available for all customers.',
-    tagline:'Use approved Canto assets in Mailchimp email campaigns.',
-    icp:'SMB and mid-market brands running email marketing on Mailchimp.',
-    signals:['We use Mailchimp', 'We send email campaigns from Mailchimp'],
-    problem:'Mailchimp users pull images from wherever they can find them. Canto integration surfaces approved brand assets directly in the email builder.',
-    capabilities:['In-Editor Asset Browser','Approved Asset Mode','Email Campaign Integration'],
+    tagline:'Sync Canto assets with Mailchimp for cohesive email marketing campaigns.',
+    icp:'Marketing teams running email campaigns in Mailchimp who need consistent access to approved brand assets without switching tools.',
+    signals:['We use Mailchimp', 'We send email campaigns from Mailchimp', 'Images come from desktops or shared folders', 'We\'ve sent campaigns with outdated images'],
+    problem:'Email marketing teams building campaigns in Mailchimp pull images from wherever they can find them — often their desktop or a shared Drive folder. Approved, on-brand assets in Canto don\'t automatically flow into campaigns, leading to version drift and off-brand emails.',
+    capabilities:['In-Editor Asset Browser','Approved Asset Mode','Email Campaign Integration','Always Current Approved Version'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Mailchimp',
     direction:'Canto → Mailchimp', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
-    whatItDoes:'Sync Canto assets with Mailchimp for cohesive email marketing campaigns.',
-    bestFor:'Email marketing teams accessing approved assets inside Mailchimp.' },
+    whatItDoes:'Access Canto asset library from within Mailchimp\'s campaign builder. Insert approved images directly into email campaigns. Always the current approved version — not a manually uploaded copy.',
+    bestFor:'Marketing teams running email campaigns in Mailchimp who need consistent access to approved brand assets without switching tools.' },
 
   { id:'klaviyo', name:'Klaviyo', cat:'esp', type:'DAM', catLabel:'Email & Marketing', catColor:'#B45309', catBg:'#FFFBEB', emoji:'💌',
     partnerType:'tech', availability:'soon',
@@ -2870,17 +2884,17 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'bidirectional', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#0078D4',
     partnerDesc:'Built and maintained by Canto. One of only two cloud storage integrations with true bidirectional flow.',
-    tagline:'Governed Canto assets available across your Microsoft 365 ecosystem.',
-    icp:'Enterprise and mid-market organizations running Microsoft 365. Near-universal in companies 200+ employees.',
-    signals:['We use SharePoint', 'Files are in SharePoint or OneDrive', 'We use Microsoft 365', 'Assets live in SharePoint'],
-    problem:'Most Canto prospects stored assets in SharePoint before adopting a DAM. The integration bridges ongoing file creation and migrates historical libraries into the governed DAM.',
-    talktrack: '"SharePoint is the most common answer when you ask where assets live. Use that. \'Great — we have a native SharePoint integration included in your plan. Migration support, folder-to-album mapping, ongoing sync. You keep SharePoint for what it\'s good at. Canto governs the assets.\'"',
-    capabilities:['Migration Support','Folder-to-Album Mapping','Ongoing Sync Rules','OneDrive Individual Sync','Permission Mapping','Metadata Preservation'],
+    tagline:'Import files from SharePoint into Canto and share files back — bidirectional sync for Microsoft-stack orgs.',
+    icp:'Microsoft-stack organizations where IT requires SharePoint but marketing needs a governed DAM. Strongest fit for enterprise teams with existing SharePoint investments.',
+    signals:['We use SharePoint', 'Files are in SharePoint or OneDrive', 'We use Microsoft 365', 'Assets live in SharePoint', 'IT requires SharePoint to stay in the stack'],
+    problem:'Organizations using SharePoint as their de facto asset library face search limitations, no version control for creative files, and no approval workflows. But IT requires SharePoint to stay in the stack. Canto\'s SharePoint integration brings governance and smart search to SharePoint assets without requiring teams to abandon SharePoint.',
+    talktrack: '"Is SharePoint currently your primary place for storing and sharing marketing assets? What\'s the biggest frustration your team has finding the right asset in SharePoint? Are there IT requirements that mean SharePoint needs to stay in your stack?"',
+    capabilities:['Bidirectional Sync','Migration Support','Folder-to-Album Mapping','Ongoing Sync Rules','Permission Mapping','Metadata Preservation'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/sharepoint.svg', installCount:'2,900+', lastUpdated:'Jan 2026', prereq:'Requires Microsoft 365',
     direction:'Canto ↔ SharePoint', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['One of only two cloud storage integrations with true bidirectional flow.'],
-    whatItDoes:'Import files from SharePoint into Canto. Share files back to SharePoint. Both directions are core designed use cases.',
-    bestFor:'Organizations migrating from SharePoint while maintaining SharePoint workflows.' },
+    whatItDoes:'Connect SharePoint to Canto — admins select which libraries and folders to sync. Files import into Canto with metadata preserved. Teams can share files back to SharePoint for colleagues who rely on it.',
+    bestFor:'Microsoft-stack organizations where IT requires SharePoint but marketing needs a governed DAM. Strongest fit for enterprise teams with existing SharePoint investments.' },
 
   { id:'onedrive', name:'OneDrive', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'☁️',
     partnerType:'canto', availability:'live',
@@ -2903,65 +2917,65 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#4285F4',
     partnerDesc:'Built and maintained by Canto. Inbound migration tool — assets flow from Google Drive into Canto.',
-    tagline:'Migrate assets from Google Drive into Canto for governed management.',
-    icp:'SMB and mid-market organizations where Google Workspace is the productivity standard.',
-    signals:['Files are in Google Drive', 'We use Google Workspace', 'Teams share assets via Drive'],
-    problem:'Google Drive teams want to move to a governed DAM but have years of assets in Drive. Canto\'s inbound connector makes migration clean.',
-    talktrack: '"If assets are in Google Drive, this is your migration story: pull everything from Drive into Canto as the governed master. Inbound only — nothing flows back to Drive automatically."',
-    capabilities:['Inbound Migration','Folder-to-Album Mapping','Shared Drive Support','Metadata Property Mapping'],
+    tagline:'Migrate digital assets from Google Drive directly into your Canto media library with metadata preserved.',
+    icp:'Teams currently using Google Drive as their de facto asset library who need to move to a governed DAM without a big bang migration.',
+    signals:['Files are in Google Drive', 'We use Google Workspace', 'Teams share assets via Drive', 'Brand assets scattered across multiple Drive folders'],
+    problem:'Teams using Google Drive as their asset library have no governance layer — no approval workflows, no version control, no usage rights tracking, and limited search. Files are scattered across folders, shared drives, and individual accounts. Finding the right approved asset takes too long.',
+    talktrack: '"Is Google Drive currently where your team stores brand assets and creative files? How do people know which version in Google Drive is the approved, final version?"',
+    capabilities:['Inbound Migration','Folder-to-Album Mapping','Shared Drive Support','Metadata Property Mapping','Auto-sync Configuration'],
     timeline:'~2 weeks', investment:'Included',
     costStatus:'Included', partnerLogo:'https://d2zjq3qbslq56w.cloudfront.net/integrations/gdrive.svg', installCount:'1,200+', lastUpdated:'Feb 2026', prereq:'Requires Google Workspace',
     direction:'→ Canto', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Inbound only — migration tool. Nothing goes back to Google Drive automatically.'],
-    whatItDoes:'Migrate digital assets from Google Drive directly into your Canto library. Import folders with metadata preserved. Auto-sync or on-demand.',
-    bestFor:'Teams moving from Google Drive-based asset storage into a governed DAM.' },
+    whatItDoes:'Connect Google Drive to Canto via Settings / Links & Connections. Select folders to import — metadata migrates with files. Configure auto-sync to keep Canto updated as new files land in Drive.',
+    bestFor:'Teams currently using Google Drive as their de facto asset library who need to move to a governed DAM without a big bang migration.' },
 
   { id:'dropbox', name:'Dropbox', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'📦',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#0061FF',
     partnerDesc:'Built and maintained by Canto. Inbound pull + manual share-back. Not a true sync.',
-    tagline:'Pull assets from Dropbox into Canto, share back manually.',
-    icp:'Teams with assets stored in Dropbox migrating to or alongside Canto.',
-    signals:['Files are in Dropbox', 'We use Dropbox', 'We\'re considering moving away from Dropbox'],
-    problem:'Dropbox is not a DAM. Teams storing brand assets in Dropbox have no metadata, no approvals, no version control. Canto pull gets assets governed.',
-    capabilities:['Inbound Asset Pull','Folder Mapping','Manual Share-Back'],
+    tagline:'Migrate digital assets from Dropbox directly into Canto with metadata preserved.',
+    icp:'Teams currently using Dropbox as their de facto asset library who need to move to a governed DAM.',
+    signals:['Files are in Dropbox', 'We use Dropbox', 'We\'re considering moving away from Dropbox', 'Brand assets scattered across multiple accounts'],
+    problem:'Teams using Dropbox as their asset library have no governance layer — no approval workflows, no version control, no usage rights. Finding the right approved asset means digging through folder structures.',
+    capabilities:['Inbound Asset Pull','Folder Mapping','Metadata Migration','Manual Share-Back'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Dropbox',
     direction:'→ Canto (+ share back)', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Primary use is migration INTO Canto. Share-back to Dropbox is manual and user-initiated — not an automatic sync.'],
-    whatItDoes:'Migrate assets from Dropbox into Canto with metadata preserved. Optionally share individual files back to Dropbox for external collaborators if needed.',
-    bestFor:'Teams migrating from Dropbox while keeping Dropbox accessible for external partners.' },
+    whatItDoes:'Connect your Dropbox account to Canto. Select folders to import — metadata migrates with files. Optionally share individual files back to Dropbox when external collaborators need access.',
+    bestFor:'Teams currently using Dropbox as their de facto asset library who need to move to a governed DAM.' },
 
   { id:'box', name:'Box', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🗳️',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#0061D5',
     partnerDesc:'Built and maintained by Canto. Inbound pull + manual share-back. Not a true sync.',
-    tagline:'Pull assets from Box into Canto, share back manually.',
-    icp:'Enterprise teams with assets in Box migrating to or alongside Canto.',
-    signals:['We use Box', 'Files are in Box', 'We store brand assets in Box'],
-    problem:'Box is enterprise file storage, not a DAM. Assets in Box lack governance, approvals, and brand management capabilities that Canto provides.',
-    capabilities:['Inbound Asset Pull','Folder Mapping','Manual Share-Back'],
+    tagline:'Migrate digital assets from Box directly into Canto with metadata preserved.',
+    icp:'Teams currently using Box as their de facto asset library who need to move to a governed DAM.',
+    signals:['We use Box', 'Files are in Box', 'We store brand assets in Box', 'Brand assets scattered across multiple accounts'],
+    problem:'Teams using Box as their asset library have no governance layer — no approval workflows, no version control, no usage rights. Finding the right approved asset means digging through folder structures.',
+    capabilities:['Inbound Asset Pull','Folder Mapping','Metadata Migration','Manual Share-Back'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Box',
     direction:'→ Canto (+ share back)', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Primary use is migration INTO Canto. Share-back to Box is manual and user-initiated — not an automatic sync.'],
-    whatItDoes:'Migrate digital assets from Box into Canto. Enrich with metadata. Optionally share files back to Box for external collaborators.',
-    bestFor:'Enterprise teams migrating from Box while keeping Box accessible for external partners.' },
+    whatItDoes:'Connect your Box account to Canto. Select folders to import — metadata migrates with files. Optionally share individual files back to Box when external collaborators need access.',
+    bestFor:'Teams currently using Box as their de facto asset library who need to move to a governed DAM.' },
 
   { id:'egnyte', name:'Egnyte', cat:'storage', type:'DAM', catLabel:'Cloud Storage', catColor:'#0078D4', catBg:'#EBF4FF', emoji:'🔒',
     partnerType:'canto', availability:'live',
     soldBy:'canto', dataFlow:'platform-to-canto', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#00A0D1',
     partnerDesc:'Built and maintained by Canto. Inbound pull + manual share-back. Not a true sync.',
-    tagline:'Pull governed assets from Egnyte into Canto.',
-    icp:'Companies using Egnyte for secure file storage, especially in regulated industries.',
-    signals:['We use Egnyte', 'We store assets in Egnyte', 'We\'re in a regulated industry'],
-    problem:'Egnyte provides secure file storage but not DAM-level governance. Canto ingest brings those assets under brand management.',
-    capabilities:['Inbound Asset Pull','Folder Mapping','Manual Share-Back'],
+    tagline:'Migrate digital assets from Egnyte directly into Canto with metadata preserved.',
+    icp:'Teams currently using Egnyte as their de facto asset library who need to move to a governed DAM.',
+    signals:['We use Egnyte', 'We store assets in Egnyte', 'We\'re in a regulated industry', 'Brand assets scattered across multiple accounts'],
+    problem:'Teams using Egnyte as their asset library have no governance layer — no approval workflows, no version control, no usage rights. Finding the right approved asset means digging through folder structures.',
+    capabilities:['Inbound Asset Pull','Folder Mapping','Metadata Migration','Manual Share-Back'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Egnyte',
     direction:'→ Canto (+ share back)', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['Primary use is migration INTO Canto. Share-back to Egnyte is manual and user-initiated — not an automatic sync.'],
-    whatItDoes:'Import shared and personal folders from Egnyte into Canto. Add descriptive metadata for faster search. Optionally share enriched files back to Egnyte.',
-    bestFor:'Security-conscious organizations migrating from Egnyte into Canto.' },
+    whatItDoes:'Connect your Egnyte account to Canto. Select folders to import — metadata migrates with files. Optionally share individual files back to Egnyte when external collaborators need access.',
+    bestFor:'Teams currently using Egnyte as their de facto asset library who need to move to a governed DAM.' },
 
   // ── SOCIAL & PUBLISHING ───────────────────────────────────────────
   { id:'hootsuite', name:'Hootsuite', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'🦉',
@@ -2969,17 +2983,17 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#1F2D3D',
     partnerDesc:'Built and maintained by Canto.',
-    tagline:'Publish approved Canto assets to social channels via Hootsuite.',
-    icp:'Mid-market brands running social programs across multiple platforms and regions.',
-    signals:['We use Hootsuite', 'Social compliance is important', 'We manage social across regions'],
-    problem:'Hootsuite users pull images from shared folders, Dropbox, or personal drives. Approved assets in the DAM never make it to social without a manual download step.',
-    talktrack: '"If they\'re on Hootsuite, this is included. The pitch is: DAM-governed assets flowing directly into the publishing tool. No rogue images on the feed."',
+    tagline:'Manage and schedule social media posts using approved assets from Canto within Hootsuite.',
+    icp:'Social media teams managing brand channels in Hootsuite who need consistent access to approved assets at scale.',
+    signals:['We use Hootsuite', 'Social compliance is important', 'We manage social across regions', 'There\'s a bottleneck between creative and social publishing'],
+    problem:'Social media managers scheduling posts in Hootsuite pull images from wherever they\'re available — downloaded files, shared drives, or old campaign folders. On-brand, approved assets in Canto don\'t flow into social workflows automatically.',
+    talktrack: '"When your social team schedules posts in Hootsuite, where do the images and videos come from? How do you make sure your social team is using on-brand approved imagery rather than pulling random files?"',
     capabilities:['DAM Asset Browser in Hootsuite','Approved Asset Mode','Multi-region Support','Format Auto-resize','Publishing Audit Trail'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
     direction:'Canto → Hootsuite', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
-    whatItDoes:'Manage and schedule social media posts using assets from Canto within Hootsuite.',
-    bestFor:'Social media managers scheduling posts with approved Canto assets without downloading first.' },
+    whatItDoes:'Access Canto asset library from within Hootsuite\'s scheduling interface. Select and insert approved brand assets directly into social posts. Manage and schedule posts using always-current, approved imagery.',
+    bestFor:'Social media teams managing brand channels in Hootsuite who need consistent access to approved assets at scale.' },
 
   { id:'facebook', name:'Facebook', cat:'social', type:'DAM', catLabel:'Social & Publishing', catColor:'#2E7D32', catBg:'#E8F5E9', emoji:'📘',
     partnerType:'canto', availability:'live',
@@ -3147,16 +3161,16 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#5558AF',
     partnerDesc:'Built and maintained by Canto.',
-    tagline:'Share approved Canto assets in Microsoft Teams conversations and channels.',
-    icp:'Organizations using Microsoft Teams as their primary collaboration platform.',
-    signals:['We use Teams', 'We communicate in Microsoft Teams', 'We use Microsoft 365'],
-    problem:'Teams users share assets via chat attachments from desktop, creating uncontrolled versions in conversations.',
-    capabilities:['Asset Share in Teams','Approved Asset Enforcement','Channel Integration'],
+    tagline:'Share and access approved Canto assets within Microsoft Teams channels and chats.',
+    icp:'Microsoft-stack organizations where Teams is the primary collaboration tool and brand assets are shared frequently in internal communications.',
+    signals:['We use Teams', 'We communicate in Microsoft Teams', 'We use Microsoft 365', 'Someone needs a brand asset on a call'],
+    problem:'Teams working in Microsoft Teams share files directly in channels — often downloading from one place and uploading to Teams manually. Outdated versions circulate because there\'s no governed source.',
+    capabilities:['Asset Share in Teams','Always Current Approved Version','No Separate Canto Login Required','Channel Integration'],
     timeline:'Included', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Microsoft 365',
     direction:'Canto → Teams', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
-    whatItDoes:'Share and collaborate on Canto assets within Teams channels and chats.',
-    bestFor:'Teams sharing approved assets in internal communications without leaving Teams.' },
+    whatItDoes:'Share Canto assets directly within Teams channels and chats. Always the current approved version — not a manually uploaded copy. Accessible to everyone in the channel without needing a separate Canto login.',
+    bestFor:'Microsoft-stack organizations where Teams is the primary collaboration tool and brand assets are shared frequently in internal communications.' },
 
   // ── PRODUCTIVITY & COLLABORATION ──────────────────────────────────────
   { id:'slack', name:'Slack', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'💬',
@@ -3164,32 +3178,32 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'OAuth 2.0', difficulty:'easy', includedInPlan:true,
     partner:'Canto', partnerBg:'#4A154B',
     partnerDesc:'Built and maintained by Canto.',
-    tagline:'Share approved Canto assets in Slack channels and conversations.',
-    icp:'Teams using Slack as their primary communication and collaboration tool.',
-    signals:['We use Slack', 'Our team is on Slack', 'We share files in Slack'],
-    problem:'Teams share asset links and attachments in Slack from local files or random cloud storage. Approved assets from Canto never make it into the conversation.',
-    capabilities:['Asset Share in Slack','Approved Asset Enforcement','Search Canto from Slack'],
+    tagline:'Share and collaborate on Canto assets within Slack channels and direct messages.',
+    icp:'Teams where Slack is the primary internal communication tool and asset sharing happens frequently in conversation.',
+    signals:['We use Slack', 'Our team is on Slack', 'We share files in Slack', 'People DM files or email Drive links'],
+    problem:'Teams sharing assets in Slack are sending downloaded files or Drive links — often the wrong version. There\'s no governance on what gets shared, and assets shared in Slack are disconnected from the approved library.',
+    capabilities:['Asset Share in Slack','Always Current Approved Version','No Version Drift','Search Canto from Slack'],
     timeline:'~1 week', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026',
     direction:'Canto → Slack', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:[],
-    whatItDoes:'Share and collaborate on Canto assets within Slack channels and direct messages.',
-    bestFor:'Teams sharing approved assets in Slack without downloading and reuploading.' },
+    whatItDoes:'Access and share Canto assets from within Slack channels and DMs. Always shares the current approved version — not a downloaded copy. No version drift from assets shared informally in Slack.',
+    bestFor:'Teams where Slack is the primary internal communication tool and asset sharing happens frequently in conversation.' },
 
   { id:'asana', name:'Asana', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'🎯',
     partnerType:'canto', availability:'live', featured:true,
     soldBy:'canto', dataFlow:'bidirectional', authType:'API Key', difficulty:'medium', includedInPlan:false,
     partner:'Canto via Paragon', partnerBg:'#F06A6A',
     partnerDesc:'Built via Paragon middleware. Bidirectional integration between Canto and Asana project management.',
-    tagline:'Link Canto assets to Asana tasks and projects bidirectionally.',
-    icp:'Creative and marketing teams using Asana for project management with asset-heavy workflows.',
-    signals:['We use Asana', 'Our team manages projects in Asana', 'We have a creative project workflow'],
-    problem:'Asana tasks reference assets from Dropbox or Google Drive links. Canto integration makes assets attached to tasks always current and approved.',
-    capabilities:['Asset Linking to Tasks','Bidirectional Sync','Project Asset Tracking','Approval Status in Tasks'],
+    tagline:'Bidirectional integration — attach Canto assets to Asana tasks and create Asana tasks from Canto.',
+    icp:'Creative ops teams managing asset-dependent deliverables across project management and DAM simultaneously.',
+    signals:['We use Asana', 'Our team manages projects in Asana', 'We have a creative project workflow', 'We track which asset version is tied to which project'],
+    problem:'Creative teams managing projects in Asana and assets in Canto work across two disconnected systems. Asset handoffs happen over Slack or email. There\'s no clear record of which asset version is tied to which project or deliverable.',
+    capabilities:['Asset Linking to Tasks','Bidirectional Sync','Trigger Updates Between Platforms','Upload from Asana to Canto','Create Asana Tasks from Canto'],
     timeline:'~2 weeks', investment:'Tiered pricing',
     costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026',
     direction:'Canto ↔ Asana', builtBy:'Canto via Paragon', cantoProduct:'Both', additionalCost:'Tiered pricing', status:'Live', flags:['⚠️ Built via Paragon middleware — additional licensing may apply.','Confirm tiered pricing with product team before quoting.'],
-    whatItDoes:'Attach Canto assets to Asana tasks. Trigger asset status updates between Canto and Asana. Upload assets from Asana into Canto. Create Asana tasks from within Canto.',
-    bestFor:'Creative ops teams managing asset-dependent deliverables across Canto and Asana simultaneously.' },
+    whatItDoes:'Attach approved Canto assets directly to Asana tasks. When asset status changes in Canto, trigger updates in connected Asana tasks. Upload new assets from Asana directly into the Canto library. Create Asana tasks from within Canto.',
+    bestFor:'Creative ops teams managing asset-dependent deliverables across project management and DAM simultaneously.' },
 
   { id:'monday-com', name:'monday.com', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'📅',
     partnerType:'canto', availability:'live',
@@ -3229,16 +3243,16 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'Native Connector', difficulty:'medium', includedInPlan:false,
     partner:'Canto', partnerBg:'#00A1E0',
     partnerDesc:'Built and maintained by Canto. $5,000/year add-on. Australia accounts NOT supported. Revenue shared with Salesforce.',
-    tagline:'Push approved Canto assets directly into Salesforce Marketing Cloud campaigns.',
-    icp:'Enterprise brands running marketing automation on Salesforce Marketing Cloud.',
-    signals:['We use Salesforce Marketing Cloud', 'We use SFMC', 'We run email campaigns in Salesforce'],
-    problem:'Marketing Cloud teams source images from file servers or shared drives. Canto integration puts approved assets directly in the SFMC content builder.',
-    capabilities:['Content Builder Integration','Approved Asset Mode','Campaign Asset Tracking'],
+    tagline:'Access Canto assets from inside SFMC\'s email builder — search, browse, configure, and insert.',
+    icp:'Enterprise marketing teams running campaigns in SFMC who need governed brand assets accessible without leaving the platform.',
+    signals:['We use Salesforce Marketing Cloud', 'We use SFMC', 'We run email campaigns in Salesforce', 'We\'ve had campaigns go out with outdated assets'],
+    problem:'SFMC marketing teams manage campaigns inside the platform but assets live outside it. Finding the right approved asset requires switching tools, downloading, and reuploading — creating version drift and slowing campaign production.',
+    capabilities:['Content Builder Integration','Resolution & Alt Text Config','Approved Asset Mode','Campaign Asset Tracking','Direct Insert into Content Blocks'],
     timeline:'~2 weeks', investment:'$5,000/year (separate contract)',
     costStatus:'Additional Cost', installCount:'', lastUpdated:'Mar 2026', prereq:'Requires Salesforce Marketing Cloud',
     direction:'Canto → SFMC', builtBy:'Canto', cantoProduct:'Both', additionalCost:'$5,000/year', status:'Live', flags:['⚠️ PAID ADD-ON — $5,000/year. Must be disclosed upfront.','Australia accounts NOT supported.','Revenue shared with Salesforce — cannot be discounted.','Supported accounts: canto.com, canto.global, canto.de, ca.canto.com only.'],
-    whatItDoes:'Access Canto library from inside SFMC email builder. Search, browse, configure resolution and alt text, insert directly into email templates.',
-    bestFor:'SFMC marketing teams inserting approved brand assets into email campaigns without leaving the platform.' },
+    whatItDoes:'Browse and search Canto library from inside SFMC Content Builder. Select images, configure resolution and alt text before inserting. Assets insert directly into email and template content blocks.',
+    bestFor:'Enterprise marketing teams running campaigns in SFMC who need governed brand assets accessible without leaving the platform.' },
 
   // ── DEVELOPER / API ────────────────────────────────────────────────────
   { id:'rest-api', name:'REST API', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'🔌',
@@ -3262,16 +3276,16 @@ const INTEGRATIONS = [
     soldBy:'canto', dataFlow:'canto-to-platform', authType:'API Key', difficulty:'advanced', includedInPlan:true,
     partner:'Canto', partnerBg:'#374151',
     partnerDesc:'Built and maintained by Canto. JavaScript developer tool for embedding Canto asset picker in external apps.',
-    tagline:'Embed the Canto asset picker in Salesforce or any custom web app.',
-    icp:'Organizations with Salesforce or custom web apps that need an embedded Canto asset picker.',
-    signals:['We use Salesforce', 'We want to embed Canto in our app', 'We have developers who can implement'],
-    problem:'Organizations want Canto\'s asset selection experience inside their own tools — Salesforce, custom portals, or any web app — without leaving the context of their workflow.',
-    capabilities:['Embeddable Asset Picker','Salesforce Integration','Custom Web App Embedding','JavaScript SDK'],
+    tagline:'JavaScript toolkit that embeds a Canto asset picker inside any web application.',
+    icp:'Organizations with custom internal tools, portals, CRMs, or ERP systems where teams need Canto asset access embedded directly. Requires developer resource to implement.',
+    signals:['We use Salesforce', 'We want to embed Canto in our app', 'We have developers who can implement', 'We have custom internal tools or portals'],
+    problem:'Teams using custom internal tools, CRMs, or ERP systems need access to Canto assets without switching applications. There\'s no native integration for every possible system — the Universal Connector makes any web application Canto-aware.',
+    capabilities:['Embeddable Asset Picker','Salesforce Lightning + Classic','Smart Albums Filter','Folder Navigation','Global Search','Custom Web App Embedding'],
     timeline:'Variable', investment:'Included',
     costStatus:'Included', installCount:'', lastUpdated:'Mar 2026', prereq:'JavaScript developer required',
     direction:'Canto → [Your App]', builtBy:'Canto', cantoProduct:'Both', additionalCost:'Included', status:'Live', flags:['JavaScript developer tool — requires implementation resource.','Primary documented use case: Salesforce CRM (Lightning and Classic).','Can be embedded in any web application, ERP, or custom portal.'],
-    whatItDoes:'JavaScript toolkit that embeds a Canto asset picker inside any web application. Includes login, Smart Albums filter, folder navigation, and global search.',
-    bestFor:'Developers embedding Canto asset browsing inside any custom web app, CRM, ERP, or distributor portal.' },
+    whatItDoes:'Developer implements the JavaScript toolkit in the target web application. Users see a Canto asset picker embedded directly inside the application. Browse, search, and insert approved assets without leaving the host application. Primary documented use case: Salesforce CRM (Lightning and Classic).',
+    bestFor:'Organizations with custom internal tools, portals, CRMs, or ERP systems where teams need Canto asset access embedded directly.' },
 
   { id:'google-analytics', name:'Google Analytics', cat:'crm', type:'DAM', catLabel:'CRM', catColor:'#005B99', catBg:'#E8F2FA', emoji:'📊',
     partnerType:'canto', availability:'live',
@@ -4115,13 +4129,51 @@ function flagIconHTML(i) {
   return '<span class="flag-icon" title="' + i.flags.length + ' flag(s) — click to view">\u26A0</span>';
 }
 
+// ─── CLEARBIT LOGO DOMAIN MAP ────────────────────────────────────────
+const CLEARBIT_DOMAINS = {
+  'shopify-tp':'shopify.com','klaviyo-tp':'klaviyo.com','adobe-tp':'adobe.com','mindcloud-tp':'mindcloud.io','workato-tp':'workato.com',
+  'akeneo':'akeneo.com','salsify':'salsify.com',
+  'adobe-cc':'adobe.com','adobe-photoshop':'adobe.com','adobe-illustrator':'adobe.com','adobe-indesign':'adobe.com',
+  'adobe-premiere':'adobe.com','adobe-after-effects':'adobe.com','adobe-lightroom':'adobe.com','adobe-workfront':'workfront.com',
+  'canva':'canva.com','contentful':'contentful.com','wordpress':'wordpress.com','drupal':'drupal.org','typo3':'typo3.org','contentstack':'contentstack.com',
+  'shopify':'shopify.com','amazon':'amazon.com','bigcommerce':'bigcommerce.com',
+  'feedonomics':'feedonomics.com','channable':'channable.com','channel-engine':'channelengine.com',
+  'hubspot-mktg':'hubspot.com','mailchimp':'mailchimp.com','klaviyo':'klaviyo.com',
+  'sharepoint':'microsoft.com','onedrive':'microsoft.com','gdrive':'google.com',
+  'dropbox':'dropbox.com','box':'box.com','egnyte':'egnyte.com',
+  'hootsuite':'hootsuite.com','facebook':'facebook.com','linkedin':'linkedin.com','pinterest':'pinterest.com',
+  'twitter-x':'x.com','youtube':'youtube.com','vimeo':'vimeo.com',
+  'microsoft-excel':'microsoft.com','microsoft-powerpoint':'microsoft.com','microsoft-word':'microsoft.com','microsoft-outlook':'microsoft.com',
+  'microsoft-teams':'microsoft.com','slack':'slack.com','asana':'asana.com',
+  'monday-com':'monday.com','wrike':'wrike.com','salesforce-mktg':'salesforce.com',
+  'rest-api':'canto.com','universal-connector':'canto.com','google-analytics':'google.com',
+  'ciloo':'ciloo.com','chrome-extension':'google.com','ios-mobile':'apple.com',
+  'mac-connect':'apple.com','windows-connect':'microsoft.com',
+  'salesforce':'salesforce.com','netsuite':'netsuite.com','express-doc':'canto.com','stibo':'stibosystems.com'
+};
+
+function getClearbitUrl(id) {
+  const domain = CLEARBIT_DOMAINS[id];
+  return domain ? 'https://logo.clearbit.com/' + domain + '?size=64' : '';
+}
+
 function logoHTML(i) {
   const cdnUrl = 'https://d2zjq3qbslq56w.cloudfront.net/integrations/' + i.id + '.svg';
   const altUrl = i.logo ? i.logo.replace(/'/g, "\\'") : '';
+  const clearbitUrl = getClearbitUrl(i.id);
   const fallbackStyle = 'background:' + i.catBg + ';color:' + i.catColor;
-  const onerror = altUrl
-    ? 'if(!this.dataset.alt){this.dataset.alt=1;this.src=\'' + altUrl + '\';}else{this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';}'
-    : 'this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';';
+  // Build cascading fallback chain: CDN → i.logo → Clearbit → text initial
+  const fallbackToText = 'this.style.display=\'none\';this.parentElement.querySelector(\'.logo-fallback\').style.display=\'flex\';';
+  let onerror;
+  if (altUrl && clearbitUrl) {
+    onerror = 'if(this.dataset.fb==="2"){' + fallbackToText + '}else if(this.dataset.fb==="1"){this.dataset.fb="2";this.src=\'' + clearbitUrl + '\';}else{this.dataset.fb="1";this.src=\'' + altUrl + '\';}';
+  } else if (altUrl) {
+    onerror = 'if(this.dataset.fb==="1"){' + fallbackToText + '}else{this.dataset.fb="1";this.src=\'' + altUrl + '\';}';
+  } else if (clearbitUrl) {
+    onerror = 'if(this.dataset.fb==="1"){' + fallbackToText + '}else{this.dataset.fb="1";this.src=\'' + clearbitUrl + '\';}';
+  } else {
+    onerror = fallbackToText;
+  }
   return '<div class="logo-wrap">' +
     '<img class="logo-img" src="' + cdnUrl + '" onerror="' + onerror + '" alt="' + i.name + '">' +
     '<div class="logo-fallback" style="' + fallbackStyle + ';display:none">' + i.name.charAt(0) + '</div>' +
@@ -4131,10 +4183,19 @@ function logoHTML(i) {
 function modalLogoHTML(i) {
   const cdnUrl = 'https://d2zjq3qbslq56w.cloudfront.net/integrations/' + i.id + '.svg';
   const altUrl = i.logo ? i.logo.replace(/'/g, "\\'") : '';
+  const clearbitUrl = getClearbitUrl(i.id);
   const fallbackStyle = 'width:50px;height:50px;border-radius:12px;background:' + i.catBg + ';color:' + i.catColor + ';display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;font-family:DM Sans,sans-serif;flex-shrink:0';
-  const onerror = altUrl
-    ? 'if(!this.dataset.alt){this.dataset.alt=1;this.src=\'' + altUrl + '\';}else{this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';}'
-    : 'this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\';';
+  const fallbackToText = 'this.style.display=\'none\';this.parentElement.querySelector(\'div\').style.display=\'flex\';';
+  let onerror;
+  if (altUrl && clearbitUrl) {
+    onerror = 'if(this.dataset.fb==="2"){' + fallbackToText + '}else if(this.dataset.fb==="1"){this.dataset.fb="2";this.src=\'' + clearbitUrl + '\';}else{this.dataset.fb="1";this.src=\'' + altUrl + '\';}';
+  } else if (altUrl) {
+    onerror = 'if(this.dataset.fb==="1"){' + fallbackToText + '}else{this.dataset.fb="1";this.src=\'' + altUrl + '\';}';
+  } else if (clearbitUrl) {
+    onerror = 'if(this.dataset.fb==="1"){' + fallbackToText + '}else{this.dataset.fb="1";this.src=\'' + clearbitUrl + '\';}';
+  } else {
+    onerror = fallbackToText;
+  }
   return '<div class="modal-logo-wrap">' +
     '<img class="modal-logo-img" src="' + cdnUrl + '" onerror="' + onerror + '" alt="' + i.name + '">' +
     '<div style="' + fallbackStyle + ';display:none">' + i.name.charAt(0) + '</div>' +
@@ -4373,17 +4434,51 @@ function renderCards() {
   document.getElementById('statIncluded').textContent = liveOnly.filter(i => i.includedInPlan).length;
   document.getElementById('statCategories').textContent = new Set(liveOnly.map(i => i.cat)).size;
 
-  // Update sidebar counts (only count live)
+  // Update sidebar counts dynamically based on currently visible (filtered) cards
+  // Build a filtered base that respects all active filters EXCEPT category
+  const baseFiltered = INTEGRATIONS.filter(i => {
+    if (i.cat === 'tech') return false;
+    if (i.isPlatformApp) return false;
+    if (i.availability === 'track' || i.availability === 'soon') return false;
+    if (i.availability === 'draft') return false;
+    if (activePT  !== 'all' && i.partnerType !== activePT) return false;
+    if (cantoBuiltActive && i.builtBy !== 'Canto') return false;
+    if (activeQF.has('canto-sold')    && i.soldBy !== 'canto') return false;
+    if (activeQF.has('live')          && i.availability !== 'live') return false;
+    if (activeQF.has('bidirectional') && i.dataFlow !== 'bidirectional') return false;
+    if (activeQF.has('easy')          && i.difficulty !== 'easy') return false;
+    if (activeQF.has('included')      && !i.includedInPlan) return false;
+    if (activeQF.has('featured')      && !i.featured) return false;
+    if (activeQF.has('canto-built')   && i.partnerType !== 'canto') return false;
+    if (activeQF.has('third-party')   && i.partnerType === 'canto') return false;
+    if (activeQF.has('recent')) {
+      if (!i.lastUpdated) return false;
+      const d = new Date(i.lastUpdated);
+      const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 90);
+      if (isNaN(d.getTime()) || d < cutoff) return false;
+    }
+    if (activeQF.has('dir-bidir')    && i.direction !== 'Bidirectional') return false;
+    if (activeQF.has('dir-outbound') && i.direction !== 'Outbound from Canto') return false;
+    if (activeQF.has('dir-inbound')  && !(i.direction || '').includes('Inbound')) return false;
+    if (activeQF.has('needs-verify') && i.status !== 'Needs Verification') return false;
+    if (activeQF.has('paid-addon')   && (i.additionalCost === 'Included' || !i.additionalCost)) return false;
+    if (activeQF.has('for-products') && i.cantoProduct !== 'For Products Required') return false;
+    if (q) {
+      const hay = [i.name, i.tagline, i.catLabel, i.partner, i.icp||'', (i.signals||[]).join(' ')].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
   const cats = ['all','creative','pim','cms','ecommerce','feed','esp','storage','social','crm','erp'];
   cats.forEach(cat => {
-    const count = INTEGRATIONS.filter(i => (cat === 'all' || i.cat === cat) && i.availability === 'live').length;
+    const count = baseFiltered.filter(i => cat === 'all' || i.cat === cat).length;
     const el = document.getElementById('cnt-' + cat);
     if (el) el.textContent = count;
     const pc = document.getElementById('pc-' + cat);
     if (pc) pc.textContent = count ? count : '';
   });
   // Canto Built count
-  const cantoBuiltCount = INTEGRATIONS.filter(i => i.builtBy === 'Canto' && i.availability === 'live').length;
+  const cantoBuiltCount = baseFiltered.filter(i => i.builtBy === 'Canto').length;
   const pcCantoBuilt = document.getElementById('pc-canto-built');
   if (pcCantoBuilt) pcCantoBuilt.textContent = cantoBuiltCount ? cantoBuiltCount : '';
 
