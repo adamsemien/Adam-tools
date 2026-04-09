@@ -727,7 +727,20 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .edit-cancel-btn { background: var(--bg-2); color: var(--text-2); border: 1.5px solid var(--border); border-radius: 7px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .add-integration-btn { background: #059669 !important; margin-right: 6px; }
 .sow-import-btn { background: #6D28D9 !important; }
-.lock-admin-btn { background: rgba(220,38,38,0.75) !important; }
+.lock-admin-btn {
+  background: #DC2626 !important; color: white !important;
+  border: 2px solid #FCA5A5 !important; border-radius: 8px !important;
+  font-size: 13px !important; font-weight: 800 !important;
+  padding: 7px 16px !important; letter-spacing: 0.2px;
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.25), 0 2px 8px rgba(220,38,38,0.3) !important;
+  order: -1;
+  animation: exitPulse 2s ease-in-out infinite;
+}
+.lock-admin-btn:hover { background: #B91C1C !important; }
+@keyframes exitPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(220,38,38,0.25), 0 2px 8px rgba(220,38,38,0.3); }
+  50% { box-shadow: 0 0 0 6px rgba(220,38,38,0.15), 0 2px 12px rgba(220,38,38,0.4); }
+}
 .edit-check { margin-bottom: 14px; }
 .edit-check label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--navy); cursor: pointer; font-weight: 500; }
 .edit-check input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--orange); cursor: pointer; }
@@ -1819,7 +1832,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <!-- HEADER -->
 <header class="header" role="banner">
   <div class="header-left">
-    <a href="https://www.canto.com" target="_blank" rel="noopener noreferrer" class="logo-link" aria-label="Canto — go to canto.com">
+    <a href="canto-marketplace-v5.html" class="logo-link" aria-label="Canto — go to marketplace homepage">
       <div class="logo-mark">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.85 0 3.58-.51 5.06-1.39l-1.56-2.7A6.959 6.959 0 0 1 12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7c1.62 0 3.11.55 4.29 1.47l1.65-2.64A9.947 9.947 0 0 0 12 2z"/></svg>
       </div>
@@ -1827,7 +1840,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     </a>
     <div class="logo-sep"></div>
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="https://www.canto.com" target="_blank" rel="noopener noreferrer">Home</a>
+      <a href="canto-marketplace-v5.html">Home</a>
       <span class="breadcrumb-sep">›</span>
       <span class="breadcrumb-current" id="breadcrumbCurrent">Integration Marketplace</span>
     </nav>
