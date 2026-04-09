@@ -4883,22 +4883,8 @@ function handlePartnerSubmit(e) {
 // ─── UNIFIED INTEGRATION REQUEST MODAL ────────────────────────────────
 const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/x8pr1g6skkxqd3fhozp9yp3cpzdk2bq8';
 
-function _populateIntegrationDropdown() {
-  var sel = document.getElementById('ir-integration');
-  if (!sel || sel.options.length > 1) return;
-  var names = INTEGRATIONS
-    .filter(function(i) { return i.availability === 'live' && !i.isPlatformApp && i.cat !== 'tech'; })
-    .map(function(i) { return i.name; })
-    .sort();
-  names.forEach(function(n) {
-    var opt = document.createElement('option');
-    opt.value = n; opt.textContent = n;
-    sel.appendChild(opt);
-  });
-}
 
 function openIntReqModal(integrationId) {
-  _populateIntegrationDropdown();
   var i = integrationId ? INTEGRATIONS.find(function(x) { return x.id === integrationId; }) : null;
   var intName = i ? i.name : '';
   var isCard = !!integrationId;
@@ -4912,17 +4898,11 @@ function openIntReqModal(integrationId) {
   // Source hidden field
   document.getElementById('ir-source').value = isCard ? ('Card: ' + intName) : 'Global Button';
 
-  // Pre-fill / show-hide integration field
-  var sel = document.getElementById('ir-integration');
-  if (isCard && sel) {
-    sel.value = intName;
-    if (!sel.value) {
-      var opt = document.createElement('option');
-      opt.value = intName; opt.textContent = intName;
-      sel.appendChild(opt); sel.value = intName;
-    }
-  } else if (sel) {
-    sel.value = '';
+  // Pre-fill integration name (now a text input)
+  var intField = document.getElementById('ir-integration');
+  if (intField) {
+    intField.value = intName;
+    intField.readOnly = isCard; // lock it when opened from a card
   }
 
   // Update accomplish label
@@ -5220,7 +5200,7 @@ buildCheatSheet();
         <div style="font-size:20px;font-weight:800;color:#065F46;margin-bottom:8px;">Request Submitted!</div>
         <div style="font-size:14px;color:#064E3B;line-height:1.6;margin-bottom:6px;">Adam will be in touch within 24 hours.</div>
         <div style="font-size:14px;color:#064E3B;line-height:1.6;margin-bottom:20px;">Do not contact the partner directly.</div>
-        <div id="intReqRefNum" style="font-size:11px;color:#6B7280;margin-bottom:20px;font-family:monospace;"></div>
+        <div id="intReqRefNum" style="display:none;"></div>
         <button class="tag-adam-close-btn" onclick="closeIntReqModal()">Close</button>
       </div>
 
@@ -5246,17 +5226,11 @@ buildCheatSheet();
 
         <div class="tag-adam-field" style="margin-bottom:16px;">
           <label class="tag-adam-label">Integration Name *</label>
-          <select class="tag-adam-input" id="ir-integration">
-            <option value="">Select integration…</option>
-          </select>
+          <input type="text" class="tag-adam-input" id="ir-integration" placeholder="e.g. Shopify, HubSpot, custom ERP…">
           <div class="tag-adam-error" id="ir-integration-err">Required</div>
         </div>
         <input type="hidden" id="ir-source" value="Global Button">
-
-        <div class="tag-adam-field" id="ir-tool-field" style="margin-bottom:16px;">
-          <label class="tag-adam-label">Or describe the tool (if not in list above) *</label>
-          <input type="text" class="tag-adam-input" id="ir-tool" placeholder="e.g. their custom ERP, legacy PIM, etc.">
-        </div>
+        <input type="hidden" id="ir-tool" value="">
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
           <div class="tag-adam-field">
