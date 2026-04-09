@@ -2287,13 +2287,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
       <tr>
         <th>Integration</th>
         <th>Category</th>
-        <th>What It Does</th>
+        <th>Direction</th>
         <th>Built By</th>
-        <th>Data Flow</th>
-        <th>Sold by Canto</th>
-        <th>Difficulty</th>
-        <th>Timeline</th>
         <th>Cost</th>
+        <th>Status</th>
+        <th>Product</th>
+        <th>What It Does</th>
       </tr>
     </thead>
     <tbody id="printBody"></tbody>
@@ -4782,19 +4781,23 @@ function showToast(msg) {
 // ─── CHEAT SHEET ──────────────────────────────────────────────────────
 function openCheatSheet() {
   const tbody = document.getElementById('printBody');
-  tbody.innerHTML = INTEGRATIONS.map(i =>
-    '<tr>' +
-    '<td>' + i.name + '</td>' +
-    '<td>' + i.catLabel + '</td>' +
-    '<td style="max-width:180px">' + i.tagline + '</td>' +
-    '<td>' + i.partner + '</td>' +
-    '<td>' + dataFlowLabel(i) + '</td>' +
-    '<td>' + (i.soldBy === 'canto' ? '\u2746 Yes' : '\u2014') + '</td>' +
-    '<td>' + (i.difficulty || '\u2014') + '</td>' +
-    '<td>' + i.timeline + '</td>' +
-    '<td>' + i.investment + '</td>' +
-    '</tr>'
-  ).join('');
+  tbody.innerHTML = INTEGRATIONS
+    .filter(i => i.availability !== 'track' && i.availability !== 'draft' && i.cat !== 'tech')
+    .map(i => {
+      const costHTML = (i.additionalCost && i.additionalCost !== 'Included')
+        ? (i.additionalCost === 'TBD' ? 'TBD' : i.additionalCost)
+        : 'Included';
+      return '<tr>' +
+        '<td>' + i.name + '</td>' +
+        '<td>' + (i.catLabel || '') + '</td>' +
+        '<td>' + (i.direction || dataFlowLabel(i)) + '</td>' +
+        '<td>' + (i.builtBy || i.partner || '') + '</td>' +
+        '<td>' + costHTML + '</td>' +
+        '<td>' + (i.status || 'Live') + '</td>' +
+        '<td>' + (i.cantoProduct || 'Both') + '</td>' +
+        '<td style="max-width:220px;font-size:11px">' + (i.tagline || '') + '</td>' +
+      '</tr>';
+    }).join('');
   document.getElementById('printOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -5102,6 +5105,7 @@ function buildCheatSheet() {
         '<td>' + costHTML + '</td>' +
         '<td><span class="cs-pill ' + statusCls + '">' + (i.status || 'Live') + '</span></td>' +
         '<td style="font-size:11px;color:var(--muted)">' + (i.cantoProduct || 'Both') + '</td>' +
+        '<td style="font-size:11px;color:var(--muted);max-width:200px">' + (i.tagline || '') + '</td>' +
       '</tr>';
     });
   tbody.innerHTML = rows.join('');
@@ -5362,6 +5366,7 @@ buildCheatSheet();
           <th>Cost</th>
           <th>Status</th>
           <th>Product</th>
+          <th>What It Does</th>
         </tr>
       </thead>
       <tbody id="csTableBody"></tbody>
