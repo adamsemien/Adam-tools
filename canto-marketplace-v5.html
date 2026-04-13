@@ -4167,6 +4167,31 @@ function getLogoUrl(id) {
   return domain ? 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=128' : '';
 }
 
+// Map builder/partner names to their company domain for the "Built by" logo
+const BUILDER_DOMAINS = {
+  'canto':'canto.com',
+  'the dam consultants':'thedamconsultants.com',
+  'mirichi labs':'mirichilabs.com',
+  'mindcloud':'mindcloud.io',
+  'new edge':'newedgetechnology.com',
+  'canto via paragon':'canto.com',
+  'paragon':'useparagon.com',
+  'feedonomics':'feedonomics.com',
+  'channable':'channable.com',
+  'channelengine':'channelengine.com',
+  'zapier':'zapier.com',
+  'partner supported':'canto.com',
+  'partner built':'canto.com',
+  'sitation':'sitation.com',
+  'lettuce commerce':'lettucecommerce.com'
+};
+function getBuilderLogoUrl(builderName) {
+  if (!builderName) return '';
+  const key = builderName.toLowerCase().trim();
+  const domain = BUILDER_DOMAINS[key];
+  return domain ? 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=128' : '';
+}
+
 function logoHTML(i) {
   // Primary: Clearbit. Fallback 1: i.logo. Fallback 2: text initial.
   const clearbitUrl = getLogoUrl(i.id);
@@ -4338,7 +4363,7 @@ function clearAllFilters() {
 
 // ─── BUILD CARD HTML ──────────────────────────────────────────────────
 function buildCardHTML(i, idx) {
-  const partnerLogoSrc = getLogoUrl(i.id) || i.partnerLogo || '';
+  const partnerLogoSrc = getBuilderLogoUrl(i.builtBy || i.partner || '') || i.partnerLogo || '';
   const partnerLogoHTML = partnerLogoSrc
     ? '<img class="partner-logo-sm" src="' + partnerLogoSrc + '" alt="" onerror="this.style.display=\'none\'">'
     : '';
