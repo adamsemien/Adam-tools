@@ -134,6 +134,36 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
 
 @media(max-width:768px){.main{padding:20px;}.week-strip,.focus-grid,.two-col,.three-col,.experience-row{grid-template-columns:1fr;}.month-hero{flex-direction:column;}.month-target{text-align:left;}}
+.sort-btn{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:6px 13px;border:1px solid var(--border);background:var(--white);color:var(--muted);border-radius:6px;cursor:pointer;transition:all 0.15s;}
+.sort-btn:hover{border-color:var(--navy);color:var(--navy);opacity:1;}
+.sort-btn.active{background:var(--navy);color:white;border-color:var(--navy);}
+.ev-card{background:var(--white);border:1px solid var(--border);border-radius:10px;margin-bottom:5px;overflow:hidden;}
+.ev-header{padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background 0.1s;}
+.ev-header:hover{background:var(--warm);}
+.ev-chevron{font-size:14px;color:var(--muted);transition:transform 0.2s;flex-shrink:0;line-height:1;}
+.ev-chevron.open{transform:rotate(180deg);}
+.ev-meta-chip{font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;}
+.monday-field{margin-bottom:13px;}
+.monday-field-label{font-size:10px;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}
+.monday-field-val{background:var(--warm);border-radius:6px;padding:9px 11px;font-size:13px;color:var(--text);line-height:1.55;display:flex;align-items:flex-start;gap:8px;}
+.monday-copy-btn{background:var(--navy);color:white;border:none;padding:5px 10px;border-radius:5px;font-size:11px;font-family:'Syne',sans-serif;cursor:pointer;flex-shrink:0;white-space:nowrap;transition:background 0.15s;}
+.monday-copy-btn:hover{background:#1a3560;opacity:1;}
+.monday-copy-btn.copied{background:var(--teal);}
+/* ── Edit layer ── */
+.ev-status-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:12px;font-size:10px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;margin-right:4px;border:1px solid transparent;transition:all 0.15s;}
+.ev-status-badge:hover{opacity:0.8;}
+.kpi-card{display:flex;flex-direction:column;}
+.month-enhance{margin-top:24px;}
+.me-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;}
+.me-task{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--warm);font-size:13px;line-height:1.5;}
+.me-task:last-of-type{border-bottom:none;}
+.me-check{width:16px;height:16px;border:2px solid var(--border);border-radius:3px;flex-shrink:0;cursor:pointer;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.me-check.done{background:var(--teal);border-color:var(--teal);}
+.me-del{background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;padding:0 2px;line-height:1;opacity:0.4;transition:opacity 0.1s;}
+.me-del:hover{opacity:0.9;}
+.hdr-action{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.3px;padding:6px 13px;border-radius:7px;border:none;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.hdr-action:hover{opacity:0.85;}
+@media(max-width:768px){.kpi-grid{grid-template-columns:repeat(2,1fr) !important;}}
 </style>
 </head>
 <body>
@@ -147,7 +177,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
       <div style="color:rgba(255,255,255,0.4);font-size:12px;">Adam · Channel Partnerships · $1M pipeline → $250K closed</div>
     </div>
   </div>
-  <div class="header-right">★ = corp team present</div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <span class="header-right" style="margin-right:4px;">★ = corp team present</span>
+    <button class="hdr-action" onclick="openBrief()" style="background:rgba(0,176,155,0.18);color:var(--teal);">Executive Brief</button>
+    <button class="hdr-action" onclick="openNewVersion()" style="background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);">+ New Version</button>
+  </div>
 </header>
 
 <nav class="month-nav">
@@ -201,10 +235,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
     </div>
   </div>
 
-  <div class="section-h">Pipeline by event</div>
-  <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;">
-    <div id="pipeline-bars"></div>
+  <div id="kpi-section" style="margin-bottom:20px;"></div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <div class="section-h" style="margin:0;">Pipeline by Event</div>
+    <button onclick="openAddEvent()" style="background:var(--navy);color:white;border:none;padding:7px 14px;border-radius:7px;font-size:11px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;">+ Add Event</button>
   </div>
+  <div id="event-pipeline-wrap" style="margin-bottom:24px;"></div>
 
   <div class="callout co">
     <strong>The two piggybacking events are your most efficient spend.</strong> Fancy Food Show and Content Marketing World both have your corp team present — your incremental cost is a dinner and a flight. Those two events alone represent $340–420K in estimated pipeline at near-zero marginal budget. Protect them above everything else.
@@ -951,6 +988,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 
 </main>
 
+<!-- Monday Export Modal -->
+<div id="monday-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9998;align-items:flex-start;justify-content:center;padding:32px 20px;overflow-y:auto;">
+  <div style="background:var(--white);border-radius:14px;padding:24px;max-width:640px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,0.4);position:relative;">
+    <div id="monday-modal-content"></div>
+  </div>
+</div>
+
 <script>
 function show(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -960,43 +1004,983 @@ function show(id, btn) {
   window.scrollTo(0,0);
 }
 
-const pipelineData = [
-  {label:'Fancy Food Show (June)', val:200, max:220, color:'#E8651A'},
-  {label:'CommerceNext (June)', val:140, max:160, color:'#00B09B'},
-  {label:'Salsify DSS (May)', val:135, max:150, color:'#E8651A'},
-  {label:'Content Marketing World (Oct)', val:140, max:160, color:'#1E40AF'},
-  {label:'Shoptalk Fall (Sept)', val:120, max:140, color:'#00B09B'},
-  {label:'GROW LA (Apr)', val:90, max:100, color:'#6B21A8'},
-  {label:'Camp Commerce (Jul)', val:100, max:120, color:'#6B21A8'},
-  {label:'CPG Roundtable (self-hosted)', val:70, max:80, color:'#166534'},
-  {label:'Glossy Summit (Nov, conditional)', val:75, max:90, color:'#92400E'},
-  {label:'SuiteWorld (Oct, conditional)', val:55, max:70, color:'#1E40AF'},
-  {label:'Minneapolis eCom (May)', val:55, max:70, color:'#6B7080'},
+// ─── EVENT DATA ────────────────────────────────────────────────────────────
+const EVENTS = [
+  {
+    id: 'grow-la',
+    name: 'GROW LA',
+    date: 'April 23, 2026',
+    dateSort: 4.23,
+    location: 'West Hollywood, CA',
+    region: 'West / Southwest',
+    pipeline: [80, 100],
+    cost: [800, 1200],
+    costNote: 'Flight AUS→LAX (~$250) + 2 nights hotel (~$400) + event ticket (~$500).',
+    status: 'must',
+    website: 'https://www.joingrow.com/',
+    ticketUrl: 'https://www.joingrow.com/applylosangeles',
+    sponsorUrl: 'https://www.joingrow.com/sponsorship',
+    purpose: 'Networking / Partner-Led Pipeline Sourcing',
+    description: '800+ DTC brand operators at the Directors Guild of America. One day, all-day open bar, curated 1:1 meetings. Vuori, Lululemon, Steve Madden alumni. Strong CPG, fashion, and health & beauty density. Avex and BlueSwitch are LA-based and anchor this event.',
+    audience: '800+ DTC brand operators. CPG, fashion, health & beauty. Directors, VPs, and Founders at $10M–$150M revenue brands. Alumni from Vuori, Lululemon, Steve Madden.',
+    activations: [
+      'Pre-event dinner with Avex/BlueSwitch — brief them on 5–6 target brands and build seat plan',
+      'Walk floor as agency partner guest — let them make warm intros naturally',
+      'Use the all-day open bar as a built-in happy hour (no separate dinner needed)',
+      'Follow up all conversations within 48 hours with specific references from the conversation'
+    ],
+    outcomes: 'Source 3–5 warm CPG/fashion brand introductions via Avex or BlueSwitch. Build co-sell relationship with 1–2 LA-based agency partners. Enter $80–100K into Salesforce pipeline.',
+    notes: 'Corp team NOT present — pure channel activation. Avex and BlueSwitch anchor this event as LA-based partners. Register in March and confirm agency attendance before booking flights.',
+    sponsorship: 'Not applicable — attending only. Event ticket ~$500.',
+    sfCampaign: '2026_GROW_LA',
+    color: '#6B21A8'
+  },
+  {
+    id: 'salsify-dss',
+    name: 'Salsify Digital Shelf Summit',
+    date: 'May 4–6, 2026',
+    dateSort: 5.04,
+    location: 'Atlanta, GA',
+    region: 'Southeast',
+    pipeline: [120, 150],
+    cost: [2500, 4000],
+    costNote: 'Flight AUS→ATL (~$350) + 3 nights hotel (~$600) + partner dinner (~$150/head x 10 guests = ~$1,500).',
+    status: 'must',
+    website: 'https://www.digitalshelfsummit.com/event/3860f5e2-9181-4a85-934b-b4d017c465c7/summary',
+    ticketUrl: 'https://www.digitalshelfsummit.com/event/3860f5e2-9181-4a85-934b-b4d017c465c7/summary',
+    sponsorUrl: 'https://www.salsify.com/resources/event/2026-digital-shelf-summit',
+    purpose: 'ICP-Dense Vertical Conference / Partner Dinner Activation',
+    description: 'Highest ICP concentration of any vertical event on the calendar. CPG, food & bev, and manufacturing brands who already paid for the problem Canto solves downstream. Sitation and Gournay will both be here. Sponsor if you moved fast in March; attend and run the dinner regardless.',
+    audience: 'CPG, food & bev, and manufacturing brand operators. Supply chain, product content, and ecommerce leaders. Sitation (Score 27/30) and Gournay (Score 28/30) both attend.',
+    activations: [
+      'Host partner dinner night 2 (May 5) — 8–10 guests: Sitation + Gournay + 2–3 CPG brand attendees pre-identified',
+      'No pitch on the floor — map which brands are attending, listen for image governance pain, then invite to dinner',
+      'Dinner topic: "What is still broken about product content workflows for mid-market brands in 2026?" No deck.',
+      'Follow up within 24 hours of dinner with Kinder\'s or Nalgene case study'
+    ],
+    outcomes: '2 active co-sell conversations with Sitation and Gournay. 3–5 CPG/food & bev brand contacts in Salesforce. $120–150K pipeline entered. Each partner commits to one warm referral.',
+    notes: 'Investigate sponsorship (partnerships@salsify.com) for banner visibility if budget allows. Sponsorship not required — dinner is the activation. Book Atlanta dinner venue in April, not May.',
+    sponsorship: 'Late sponsor options may be available. Contact partnerships@salsify.com. Recommend attending + hosting dinner regardless of sponsorship decision.',
+    sfCampaign: '2026_SALSIFY_DSS',
+    color: '#E8651A'
+  },
+  {
+    id: 'mpls-ecom',
+    name: 'Minneapolis eCom Summit',
+    date: 'May 14, 2026',
+    dateSort: 5.14,
+    location: 'Minneapolis, MN',
+    region: 'Midwest',
+    pipeline: [40, 70],
+    cost: [1200, 1800],
+    costNote: 'Flight AUS→MSP (~$350) + 1 night hotel (~$200) + evening dinner (~$1,000–1,200 for 6–8 guests).',
+    status: 'conditional',
+    website: 'https://retailsummits.com/events/minneapolis-ecom-summit/',
+    ticketUrl: 'https://vivenu.com/event/minneapolis-ecom-summit-t02pja',
+    sponsorUrl: 'https://retailsummits.com/sponsors/',
+    purpose: 'Boutique Networking / Corp Team Piggyback',
+    description: 'Corp team confirmed. Boutique one-day event — 85% brand-side operators. Midwest food & bev, CPG, and sporting goods density. You piggyback on the corp team\'s presence and run the evening activation yourself.',
+    audience: '85% brand-side operators. Midwest food & bev, CPG, and sporting goods. Creative Directors, eCommerce Managers, and Marketing Directors at mid-market brands.',
+    activations: [
+      'Work roundtables throughout the day — identify food & bev and CPG Creative Directors',
+      'Flag referral targets for Netalico/Barrel in real time',
+      'Host evening dinner for 6–8 of the best conversations from the day',
+      'Pass warm Midwest leads to Netalico with specific intro notes — not just forwarded names'
+    ],
+    outcomes: '1–2 Midwest brand contacts in Salesforce. Netalico introduced to 2–3 warm Midwest leads. $40–70K pipeline entry conditional on confirmed attendee quality.',
+    notes: 'CONDITIONAL: Only book if organizer confirms Midwest CPG/food & bev density in prior year attendee breakdown. Call organizer in March before committing flights.',
+    sponsorship: 'Not applicable — attending as corp team piggyback.',
+    sfCampaign: '2026_MPLS_ECOM',
+    color: '#6B7080'
+  },
+  {
+    id: 'commercenext',
+    name: 'CommerceNext Growth Show',
+    date: 'June 23–24, 2026',
+    dateSort: 6.23,
+    location: 'NYC — Hilton Midtown',
+    region: 'Northeast',
+    pipeline: [120, 160],
+    cost: [3000, 4500],
+    costNote: 'Part of 10-day NYC trip (shared with Fancy Food). Proportional: flight ~$500, hotel ~$2,500 split 10 days, dinner ~$1,500–2,000 (NYC pricing ~$150–200/head x 8–10).',
+    status: 'must',
+    website: 'https://growthshow.commercenext.com/',
+    ticketUrl: 'https://growthshow.commercenext.com/register/',
+    sponsorUrl: 'https://growthshow.commercenext.com/sponsor/',
+    purpose: 'Retail & DTC Leadership Conference / Hosted Meetings Program',
+    description: '2,700+ brand-side retail and DTC leaders. Past speakers: Ulta, Vuori, Foot Locker, Coach, Sephora. Apply for the hosted meetings program — qualified brand operators get a free ticket and $2K travel credit. Invite-only side events (yacht, private dinners) are the highest-value moments at this conference.',
+    audience: '2,700+ brand-side retail and DTC leaders. VP Marketing, Creative Directors, CMOs at mid-to-large retail and DTC brands. Heavy CPG, fashion, health & beauty, and multi-channel retail representation.',
+    activations: [
+      'Apply for hosted meetings program at commercenext.com — free ticket + $2K travel credit for qualified brand operators',
+      'Target Creative Directors and VP Marketing from CPG/fashion/health & beauty brands',
+      'Host partner dinner evening of June 23 — 8–10 guests, Barrel + agency partners + 4–5 brand contacts',
+      'Use gap days June 25–27 for Barrel HQ visit and NYC agency lunches'
+    ],
+    outcomes: '5–8 brand-side VP/Director contacts in Salesforce. Barrel HQ relationship deepened. $120–160K pipeline entered. Hosted meetings produce 3+ discovery calls.',
+    notes: 'Book AUS→NYC June 21 for the full NYC stack (CommerceNext + Fancy Food Show). Do NOT book separate trips. One 10-day trip covers both events and agency meetings.',
+    sponsorship: 'Not applicable — attending. Apply for hosted meetings program at commercenext.com for free ticket.',
+    sfCampaign: '2026_COMMERCENEXT',
+    color: '#00B09B'
+  },
+  {
+    id: 'fancy-food',
+    name: 'Summer Fancy Food Show',
+    date: 'June 28–30, 2026',
+    dateSort: 6.28,
+    location: 'NYC — Javits Center',
+    region: 'Northeast',
+    pipeline: [180, 220],
+    cost: [500, 1000],
+    costNote: 'Incremental only — corp team is already there, flight already booked for NYC week. Dinner (~$150/head x 8 guests ~$1,200) + incidentals.',
+    status: 'corp',
+    website: 'https://www.specialtyfood.com/fancy-food-shows/summer/',
+    ticketUrl: 'https://www.specialtyfood.com/fancy-food-shows/summer/register/',
+    sponsorUrl: 'https://www.specialtyfood.com/advertising-and-sponsorships/summer-fancy-food-show-sponsorship-opportunities/',
+    purpose: 'Food & Bev Flagship Conference / Corp Team Piggyback Activation',
+    description: '30,000+ food & bev professionals. 2,400+ exhibiting brands. Corp team anchors the booth. Walk the floor with Barrel and/or Netalico — their clients are exhibiting, you get natural introductions. Your incremental cost is a dinner. Highest buyer-density event of the year.',
+    audience: '30,000+ food & bev professionals. 2,400+ exhibiting brands including CPG, specialty food, and beverage companies. Brand Creative Directors, Marketing Directors, and Operations leads at exhibiting brands.',
+    activations: [
+      'Get Barrel/Netalico to share list of 5 clients exhibiting — pre-plan booth visit order by June 20',
+      'Walk floor as agency partner guest — natural intros to Creative Directors at their clients\' booths',
+      'Do not pitch on the floor — connect and invite to dinner',
+      'Host post-show dinner evening of June 29 — 8 guests, let the agency pick the restaurant'
+    ],
+    outcomes: '5–8 food & bev brand contacts in Salesforce. 2–3 Barrel/Netalico client introductions converting to discovery calls. $180–220K pipeline entry. Highest ROI event of the year at near-zero incremental cost.',
+    notes: 'Dinner question: "How are brands managing retailer digital asset requests at scale — Costco and Walmart requirements?" Let brand ops people diagnose. Follow up next morning with Kinder\'s case study. Corp team handles the booth; your role is relationship activation.',
+    sponsorship: 'Corp team handles sponsorship and booth. Not applicable for channel role.',
+    sfCampaign: '2026_FANCY_FOOD',
+    color: '#E8651A'
+  },
+  {
+    id: 'camp-commerce',
+    name: 'Camp Commerce',
+    date: 'Summer TBD (July), 2026',
+    dateSort: 7.01,
+    location: 'Hamptons, NY',
+    region: 'Northeast',
+    pipeline: [80, 120],
+    cost: [1500, 3000],
+    costNote: 'Application required — invite only. Flights (~$500) + lodging (~$800) + optional sponsor activation slot (varies). Apply first, cost TBD.',
+    status: 'must',
+    website: 'https://www.campcommerce.nyc/',
+    ticketUrl: 'https://lu.ma/wy5vfof5',
+    sponsorUrl: 'mailto:teddy@shoplift.ai',
+    purpose: 'Invite-Only Retreat / High-Quality Relationship Building',
+    description: '150 people, 70% brand operators. Private invite-only retreat at the Billions compound in the Hamptons. Poolside breakfasts, sunset bonfires. The format is the product — conversations happen naturally. If you get in, this replaces two conference trips in terms of relationship quality.',
+    audience: '150 curated attendees — 70% brand operators. DTC, CPG, and retail brand founders and operators at senior/founder level. No junior attendees. Relationship-first, outcomes-oriented crowd.',
+    activations: [
+      'Apply immediately at campcommerce.nyc — fills fast, zero cost to apply',
+      'Take sponsor activation slot if available (morning coffee, branded gift) — secures your spot',
+      'No pitch — one genuine conversation per person. Let the environment work.',
+      'Bring a Kinder\'s or Nalgene rep if possible as a live reference',
+      'Personal follow-up within 48 hours referencing something specific from each conversation'
+    ],
+    outcomes: '3–5 high-quality brand relationships with compounding value. Founder-level contacts that convert in 2027. $80–120K pipeline from relationship-led discovery conversations.',
+    notes: 'Apply in March — fills fast. Highest relationship quality per person of any event on the calendar. A sponsor activation slot (if available) secures your position on the invite list.',
+    sponsorship: 'Sponsor activation slots may be available — morning coffee, branded gift, etc. Check campcommerce.nyc for current options.',
+    sfCampaign: '2026_CAMP_COMMERCE',
+    color: '#6B21A8'
+  },
+  {
+    id: 'cpg-roundtable',
+    name: 'CPG Vertical Roundtable (Self-Hosted)',
+    date: 'Q3 — Aug/Sep, 2026',
+    dateSort: 8.01,
+    location: 'NYC or Chicago (TBD)',
+    region: 'Northeast / Midwest',
+    pipeline: [60, 80],
+    cost: [1500, 2500],
+    costNote: 'Venue (~$0 at partner office) + catering (~$100/head x 8 = ~$800) + any travel if needed. Partner sends the invite — no Canto spend on promotion.',
+    status: 'self-hosted',
+    website: 'n/a — self-hosted event',
+    ticketUrl: '',
+    sponsorUrl: '',
+    purpose: 'Self-Hosted Partner Co-Activation / Facilitated Roundtable',
+    description: 'Co-hosted with Barrel or Netalico. Their client list, your facilitation. 6–8 CPG brand-side Marketing Directors and Creative Directors. 90 minutes. Peer conversation on product content workflows. Canto comes up naturally when someone describes the problem you solve.',
+    audience: '6–8 CPG brand-side Marketing Directors and Creative Directors. Mid-market CPG brands at $10M–$150M revenue. Sourced from Barrel or Netalico\'s active client base.',
+    activations: [
+      'Partner sends the invite — their brand, not Canto\'s. Morning session or lunch format.',
+      'Single topic: "How are mid-market CPG brands managing product content for retail distribution in 2026?"',
+      '90 minutes, 6–8 people max — intimacy is the point. One question, let them diagnose.',
+      'Leave-behind: 1-page asset governance benchmark — useful content, not a pitch deck',
+      'Partner follows up personally with every attendee within 48 hours (not Canto)'
+    ],
+    outcomes: '6–8 CPG brand contacts in Salesforce. 2–3 discovery calls from attendees who self-identify the problem. $60–80K pipeline. Barrel/Netalico deepened as an active referral source.',
+    notes: 'The invite must come from the partner, not Canto. Keep attendance at 6–8 max — intimacy is what makes it valuable. Cost is low because the partner\'s client base provides the audience.',
+    sponsorship: 'Self-hosted activation. No external sponsorship applicable.',
+    sfCampaign: '2026_CPG_ROUNDTABLE',
+    color: '#166534'
+  },
+  {
+    id: 'shoptalk-fall',
+    name: 'Shoptalk Fall',
+    date: 'Sept 29 – Oct 1, 2026',
+    dateSort: 9.29,
+    location: 'Nashville, TN',
+    region: 'Southeast',
+    pipeline: [100, 140],
+    cost: [2500, 3500],
+    costNote: 'Flight AUS→BNA (~$300) + 3 nights hotel (~$1,200) + partner dinner (~$150/head x 10 guests = ~$1,500) + incidentals.',
+    status: 'must',
+    website: 'https://fall.shoptalk.com/home',
+    ticketUrl: 'https://fall.shoptalk.com/page/lets-get-you-a-ticket',
+    sponsorUrl: 'https://fall.shoptalk.com/sponsors-apply',
+    purpose: 'Retail Leadership Conference / Q4 Budget Season Pipeline Conversion',
+    description: '1-in-3 attendees is C-suite. Nashville is more intimate than Shoptalk Spring in Vegas. Q4 timing is ideal — buyers are in budget planning mode for next year. Attend with Barrel or whichever agency has the most active client relationships by September. Do not exhibit.',
+    audience: 'Retail and DTC leadership — 1 in 3 is C-suite. VP Marketing, CMOs, Creative Directors, and Founders from omnichannel retail, DTC, and CPG brands. $20M–$150M revenue range.',
+    activations: [
+      'Attend as agency partner\'s shadow — whoever has the most active client relationships by September',
+      'Pre-identify 8–10 dinner guests from the attendee list, send personal invites 2 weeks before the event',
+      'Host dinner evening of Sept 30 — 10 guests, private room with personality (Nashville has great options)',
+      'Personal follow-ups before flying to Denver for CMWorld (Oct 2–3 window)'
+    ],
+    outcomes: '8–10 C-suite and VP-level contacts in Salesforce. 2–3 active discovery calls post-event. Dinner converts 2+ relationships into active pipeline. $100–140K entered.',
+    notes: 'Fly in Sept 28. Nashville dinner on Sept 30 is the conversion moment — relationships built all year close here. Fly AUS→DEN Oct 2 or 3 for Content Marketing World starting Oct 5.',
+    sponsorship: 'Not applicable — attending only. Do not exhibit.',
+    sfCampaign: '2026_SHOPTALK_FALL',
+    color: '#00B09B'
+  },
+  {
+    id: 'cm-world',
+    name: 'Content Marketing World',
+    date: 'Oct 5–6, 2026',
+    dateSort: 10.05,
+    location: 'Denver, CO',
+    region: 'Mountain West',
+    pipeline: [120, 160],
+    cost: [500, 1000],
+    costNote: 'Incremental only — corp team present. Flight AUS→DEN (~$300) + incidentals. Hotel split with corp team schedule.',
+    status: 'corp',
+    website: 'https://www.contentmarketingworld.com/',
+    ticketUrl: 'https://www.contentmarketingworld.com/registration/',
+    sponsorUrl: 'https://www.contentmarketingworld.com/sponsorship-opportunities/',
+    purpose: 'Content Marketing Conference / Corp Piggyback + 2027 Speaker Pipeline',
+    description: '3,400+ marketing professionals. Corp team anchors the event — your incremental cost is flights and hotel. Audience is Creative Directors and Marketing Directors thinking about content operations at scale. Your direct buyer, pre-pain. Plant seeds, host a dinner, and submit the 2027 speaker proposal while you\'re there.',
+    audience: '3,400+ marketing professionals. Creative Directors, Content Strategists, VP Marketing, and Marketing Directors at mid-to-large brands. Content operations, brand, and digital teams who are actively thinking about content workflow problems.',
+    activations: [
+      'Session-hop strategically — hallway conversations are where deals start at this event',
+      'Coordinate with corp team to divide and conquer the floor',
+      'Host dinner evening of Oct 5 — 8 guests, mix of new contacts + any agency partner attending',
+      'Submit 2027 speaker proposal on-site: "How mid-market brands built content ops that works — Kinder\'s/Nalgene case"'
+    ],
+    outcomes: '5–8 Creative Director and VP Marketing contacts in Salesforce. 1–2 discovery calls from dinner attendees. $120–160K pipeline entry. 2027 speaker proposal submitted (highest-value long-term action).',
+    notes: 'Corp team is anchoring the event — your incremental cost is minimal. You loved this event last year. Fly direct AUS→DEN ~$300. Speaker slot in 2027 is the long game that makes this a compounding investment.',
+    sponsorship: 'Corp team handles sponsorship. Not applicable for channel role.',
+    sfCampaign: '2026_CM_WORLD',
+    color: '#1E40AF'
+  },
+  {
+    id: 'suiteworld',
+    name: 'SuiteWorld (NetSuite)',
+    date: 'Oct 26–29, 2026',
+    dateSort: 10.26,
+    location: 'Las Vegas — Caesars Forum',
+    region: 'West',
+    pipeline: [40, 70],
+    cost: [1500, 2000],
+    costNote: 'AUS→LAS is one of the cheapest routes from Austin. Flight (~$250) + 3 nights (~$900) + incidentals. Low-risk even if Q4 yield is modest.',
+    status: 'conditional',
+    website: 'https://www.netsuitesuiteworld.com/home.shtml',
+    ticketUrl: 'https://www.netsuitesuiteworld.com/home.shtml',
+    sponsorUrl: 'https://www.netsuitesuiteworld.com/sponsors.shtml',
+    purpose: 'ERP Partner Conference / NetSuite SI Channel Recruitment',
+    description: 'Conditional on SuiteConnect Q3 test result. Oracle NetSuite powers hundreds of mid-market CPG, food & bev, and manufacturing brands — your ICP. These companies have clean ERP data and chaotic product assets. You may be the only person in this room solving that next-layer problem.',
+    audience: 'NetSuite customers and partners. Mid-market CPG, food & bev, and manufacturing brands on NetSuite ERP. NetSuite Solution Integrators (SIs) focused on consumer goods and manufacturing verticals.',
+    activations: [
+      'Attend consumer goods and manufacturing breakout tracks only — ignore everything else',
+      'Target NetSuite SIs in those verticals: "When your client asks about product assets after go-live — that\'s Canto."',
+      'Recruit 2–3 NetSuite SI partners as referral sources for 2027',
+      'This is a slow-burn channel — ROI is Q1 2027, not Q4 2026'
+    ],
+    outcomes: '2–3 NetSuite SI partners identified as 2027 referral sources. $40–70K pipeline entry. Long-term: NetSuite SI channel activated generating referrals in Q1 2027.',
+    notes: 'CONDITIONAL on SuiteConnect Q3 test validating audience quality. If SuiteConnect confirms strong ICP density, commit by September. Low-risk investment — cheapest long-haul route from Austin.',
+    sponsorship: 'Attending only. No sponsorship applicable.',
+    sfCampaign: '2026_SUITEWORLD',
+    color: '#1E40AF'
+  },
+  {
+    id: 'glossy-summit',
+    name: 'Glossy Beauty x Wellness Summit',
+    date: 'November 2026',
+    dateSort: 11.01,
+    location: 'Westlake Village, CA (Four Seasons)',
+    region: 'West / Southwest',
+    pipeline: [60, 90],
+    cost: [2000, 3000],
+    costNote: 'Flight AUS→BUR/LAX (~$350) + 2 nights hotel (~$500) + event ticket ($3,245–$4,845) + incidentals. Only spend if BlueSwitch/Avex confirms by Oct 1.',
+    status: 'conditional',
+    website: 'https://www.glossy.co/events/glossy-beauty-wellness-summit-nov-2026/',
+    ticketUrl: 'https://www.glossy.co/events/glossy-beauty-wellness-summit-nov-2026/',
+    sponsorUrl: 'mailto:help@glossy.co',
+    purpose: 'Health & Beauty Retreat / Partner-Anchored Activation',
+    description: 'Retreat-style summit from Glossy/Digiday. Curated indie brand founders and retail partners. High health & beauty brand density. Only attend if BlueSwitch or Avex confirms their attendance first — you go as their guest, they anchor the room. Without a partner anchor, skip and roll the budget into the year-end partner dinner.',
+    audience: 'Indie beauty and wellness brand founders and retail partners. Health & beauty DTC operators, specialty retail buyers, and brand-side creative and marketing leads. Curated, invite-style crowd.',
+    activations: [
+      'Attend ONLY as BlueSwitch or Avex guest — they anchor the room and make the intros',
+      'Work the partner\'s existing client relationships, not cold contacts',
+      'Go/No-Go: BlueSwitch or Avex confirmed by Oct 1 → book it. Not confirmed by Oct 1 → skip entirely.'
+    ],
+    outcomes: '3–5 health & beauty brand contacts via BlueSwitch/Avex. $60–90K pipeline entry if go decision is made. BlueSwitch relationship deepened as an active channel partner.',
+    notes: 'CONDITIONAL on BlueSwitch or Avex confirming by October 1. If they do not confirm, skip entirely and roll the budget into the year-end partner dinner — that dinner is more valuable than going solo.',
+    sponsorship: 'Attending as partner guest. No direct sponsorship applicable.',
+    sfCampaign: '2026_GLOSSY_SUMMIT',
+    color: '#92400E'
+  },
+  {
+    id: 'eee-miami',
+    name: 'EEE Miami',
+    date: 'Feb 2027 — Register Dec 2026',
+    dateSort: 12.01,
+    location: 'Miami, FL',
+    region: 'Southeast',
+    pipeline: [60, 90],
+    cost: [1500, 2500],
+    costNote: 'Flight AUS→MIA (~$300) + 2 nights hotel (~$400) + event ticket (~$400) + incidentals. Plan and register in December 2026 for Feb 2027.',
+    status: 'conditional',
+    website: 'https://eeemiami.com/',
+    ticketUrl: 'https://eeemiami.com/',
+    sponsorUrl: 'https://eeemiami.com/sponsors-2024/',
+    purpose: 'E-commerce Executive Event / Southeast Network Building (2027)',
+    description: 'Invite-style e-commerce executive event in Miami with high-density DTC and e-commerce leadership. The 2026 edition (Feb 4–5) already passed — register for the 2027 waitlist in December 2026. Strong ICP match: brand operators, digital leaders, and DTC founders at mid-market brands across Southeast and nationally.',
+    audience: 'E-commerce executives and DTC brand operators. Senior buyers, brand founders, and marketing leaders at DTC and omnichannel brands. Mix of Southeast and national brands.',
+    activations: [
+      'Register for 2027 waitlist in December 2026 — fills fast for invite-only format',
+      'Confirm BlueSwitch or Southeast-based partner attendance before booking flights',
+      'Target e-commerce and brand operators from Southeast DTC brands throughout event',
+      'Use Miami setting for side dinners and 1:1 meetings outside main sessions'
+    ],
+    outcomes: '3–5 DTC brand contacts in Salesforce. Southeast relationship building for 2027 channel activation. $60–90K pipeline entry if attendee ICP quality confirmed.',
+    notes: '2026 edition already took place (Feb 4–5). Action: register for 2027 waitlist in December 2026 once registration opens. Confirm ICP density with organizer before committing budget.',
+    sponsorship: 'Sponsorship inquiry via eeemiami.com/contact-us/. Confirm attendee ICP profile before pursuing sponsor package.',
+    sfCampaign: '2027_EEE_MIAMI',
+    color: '#00B09B'
+  }
 ];
 
-const container = document.getElementById('pipeline-bars');
-if (container) {
-  pipelineData.forEach(item => {
-    const pct = Math.round((item.val / 220) * 100);
-    container.innerHTML += `
-    <div class="pipeline-bar">
-      <div class="pb-header">
-        <span class="pb-label">${item.label}</span>
-        <span class="pb-val">$${item.val}K–${item.max}K</span>
-      </div>
-      <div class="pb-track">
-        <div class="pb-fill" style="width:${pct}%;background:${item.color};"></div>
-      </div>
-    </div>`;
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let currentSort = 'pipeline';
+let expandedEvent = null;
+
+// ─── SORT ────────────────────────────────────────────────────────────────────
+function sortEvents(mode, btn) {
+  currentSort = mode;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderEvents();
+}
+
+// ─── MONDAY FIELDS ───────────────────────────────────────────────────────────
+function getMondayFields(ev) {
+  return [
+    { label: 'Event Region', value: ev.region },
+    { label: 'Event Purpose', value: ev.purpose },
+    { label: 'Event Website', value: ev.website },
+    { label: 'Sponsorship Packet', value: ev.sponsorship },
+    { label: 'What are the expected outcomes for this event?', value: ev.outcomes },
+    { label: 'What are the audience demographics for this event?', value: ev.audience },
+    { label: 'Any other notes / things to share about this event', value: ev.notes },
+    { label: '90 Day Outcomes and Progress - Post Event', value: '(Fill in after the event)' },
+    { label: 'Salesforce Campaign', value: ev.sfCampaign }
+  ];
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function renderEvents() {
+  const wrap = document.getElementById('event-pipeline-wrap');
+  if (!wrap) return;
+
+  const sorted = [...EVENTS].sort((a, b) => {
+    if (currentSort === 'pipeline') return b.pipeline[0] - a.pipeline[0];
+    if (currentSort === 'date')     return a.dateSort - b.dateSort;
+    if (currentSort === 'cost')     return a.cost[0] - b.cost[0];
+    if (currentSort === 'region')   return a.region.localeCompare(b.region);
+    return 0;
   });
 
-  const total = pipelineData.reduce((a,b) => a + b.val, 0);
-  container.innerHTML += `
-  <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--navy);">Total estimated pipeline</span>
-    <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--teal);">~$${total.toLocaleString()}K</span>
-  </div>`;
+  const maxPipeline = Math.max(...EVENTS.map(e => e.pipeline[1]));
+
+  const statusMeta = {
+    must:        { label: '★★★ Must', bg: '#FFF7ED', color: '#E8651A', border: '#FED7AA' },
+    corp:        { label: 'Corp Present', bg: '#EFF6FF', color: '#1E40AF', border: '#BFDBFE' },
+    conditional: { label: 'Conditional', bg: '#FFFBEB', color: '#92400E', border: '#FDE68A' },
+    'self-hosted': { label: 'Self-Hosted', bg: '#F0FAF4', color: '#166534', border: '#BBF7D0' }
+  };
+
+  let html = '<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">'
+    + '<span style="font-size:11px;color:var(--muted);font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;margin-right:2px;">Sort:</span>';
+
+  [['pipeline','Pipeline ↓'],['date','Date'],['cost','Cost ↑'],['region','Region A–Z']].forEach(([mode, label]) => {
+    html += '<button class="sort-btn' + (currentSort === mode ? ' active' : '') + '" onclick="sortEvents(\'' + mode + '\', this)">' + label + '</button>';
+  });
+  html += '</div>';
+
+  sorted.forEach(ev => {
+    const pct = Math.round((ev.pipeline[0] / maxPipeline) * 100);
+    const sm = statusMeta[ev.status] || statusMeta.must;
+    const isOpen = expandedEvent === ev.id;
+
+    // Card header
+    html += '<div class="ev-card">'
+      + '<div class="ev-header" onclick="toggleEvent(\'' + ev.id + '\')" style="border-left:4px solid ' + ev.color + ';">'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px;">'
+      + '<span style="font-family:\'Syne\',sans-serif;font-size:14px;font-weight:700;color:var(--navy);">' + ev.name + '</span>'
+      + '<span class="ev-meta-chip" style="background:' + sm.bg + ';color:' + sm.color + ';border:1px solid ' + sm.border + ';font-size:10px;font-family:\'Syne\',sans-serif;font-weight:700;letter-spacing:0.3px;">' + sm.label + '</span>'
+      + '<span class="ev-meta-chip" style="background:var(--warm);color:var(--text);">' + ev.date + '</span>'
+      + '<span class="ev-meta-chip" style="background:#F3F4F6;color:#374151;">' + ev.location + '</span>'
+      + '</div>'
+      + '<div style="display:flex;align-items:center;gap:10px;">'
+      + '<div style="flex:1;background:var(--warm);border-radius:4px;height:6px;overflow:hidden;">'
+      + '<div style="width:' + pct + '%;background:' + ev.color + ';height:100%;border-radius:4px;"></div>'
+      + '</div>'
+      + '<span style="font-size:11px;color:var(--muted);white-space:nowrap;flex-shrink:0;">Cost: $' + ev.cost[0].toLocaleString() + '–' + ev.cost[1].toLocaleString() + '</span>'
+      + '</div></div>'
+      + '<div style="text-align:right;flex-shrink:0;">'
+      + '<div style="font-family:\'Syne\',sans-serif;font-size:16px;font-weight:800;color:var(--teal);">$' + ev.pipeline[0] + '–' + ev.pipeline[1] + 'K</div>'
+      + '<div style="font-size:10px;color:var(--muted);">est. pipeline</div>'
+      + '</div>'
+      + '<div class="ev-chevron' + (isOpen ? ' open' : '') + '">▾</div>'
+      + '</div>';
+
+    // Expanded body
+    if (isOpen) {
+      html += '<div style="padding:16px 20px 20px 20px;border-top:1px solid var(--warm);border-left:4px solid ' + ev.color + ';">';
+      html += '<p style="font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:14px;">' + ev.description + '</p>';
+
+      // Quick links row
+      var hasLinks = ev.website && ev.website !== 'n/a — self-hosted event';
+      if (hasLinks) {
+        html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">';
+        html += '<a href="' + ev.website + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:6px;font-size:11px;font-family:\'Syne\',sans-serif;font-weight:700;letter-spacing:0.3px;text-decoration:none;background:var(--navy);color:white;transition:opacity 0.15s;" onmouseover="this.style.opacity=\'0.85\'" onmouseout="this.style.opacity=\'1\'"><span>🌐</span> Website</a>';
+        if (ev.ticketUrl) html += '<a href="' + ev.ticketUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:6px;font-size:11px;font-family:\'Syne\',sans-serif;font-weight:700;letter-spacing:0.3px;text-decoration:none;background:var(--teal);color:white;transition:opacity 0.15s;" onmouseover="this.style.opacity=\'0.85\'" onmouseout="this.style.opacity=\'1\'"><span>🎟</span> Buy Tickets</a>';
+        if (ev.sponsorUrl) html += '<a href="' + ev.sponsorUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:6px;font-size:11px;font-family:\'Syne\',sans-serif;font-weight:700;letter-spacing:0.3px;text-decoration:none;background:var(--orange);color:white;transition:opacity 0.15s;" onmouseover="this.style.opacity=\'0.85\'" onmouseout="this.style.opacity=\'1\'"><span>📩</span> Request Sponsorship</a>';
+        html += '</div>';
+      }
+
+      // Stats row
+      html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">';
+      [
+        ['Exact Date', ev.date + ' · ' + ev.location, ''],
+        ['Est. Budget', '$' + ev.cost[0].toLocaleString() + '–$' + ev.cost[1].toLocaleString(), ev.costNote],
+        ['Region', ev.region, 'Event purpose: ' + ev.purpose]
+      ].forEach(function(cell) {
+        html += '<div style="background:var(--warm);border-radius:8px;padding:10px 12px;">'
+          + '<div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;">' + cell[0] + '</div>'
+          + '<div style="font-size:12px;font-weight:600;color:var(--navy);">' + cell[1] + '</div>'
+          + (cell[2] ? '<div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;">' + cell[2] + '</div>' : '')
+          + '</div>';
+      });
+      html += '</div>';
+
+      // Activations
+      html += '<div style="margin-bottom:16px;">'
+        + '<div style="font-size:11px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--navy);font-weight:700;margin-bottom:8px;">Ideal Activations</div>'
+        + '<ul style="list-style:none;padding:0;margin:0;">';
+      ev.activations.forEach(function(a) {
+        html += '<li style="font-size:13px;color:var(--text);padding:6px 0 6px 18px;border-bottom:1px solid var(--warm);position:relative;line-height:1.5;">'
+          + '<span style="position:absolute;left:0;color:var(--teal);font-size:12px;top:8px;">→</span>' + a + '</li>';
+      });
+      html += '</ul></div>';
+
+      // Monday export button
+      html += '<div style="display:flex;justify-content:flex-end;">'
+        + '<button onclick="openMondayExport(\'' + ev.id + '\')" style="background:var(--navy);color:white;border:none;padding:9px 16px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;letter-spacing:0.4px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background 0.15s;">'
+        + '<span>Export to Monday</span><span style="font-size:13px;">↗</span>'
+        + '</button></div>';
+
+      html += '</div>';
+    }
+
+    html += '</div>';
+  });
+
+  // Total row
+  const total = EVENTS.reduce((a, e) => a + e.pipeline[0], 0);
+  html += '<div style="margin-top:10px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:8px;display:flex;justify-content:space-between;align-items:center;">'
+    + '<span style="font-family:\'Syne\',sans-serif;font-size:13px;font-weight:700;color:var(--navy);">Total estimated pipeline</span>'
+    + '<span style="font-family:\'Syne\',sans-serif;font-size:18px;font-weight:800;color:var(--teal);">~$' + total.toLocaleString() + 'K</span>'
+    + '</div>';
+
+  wrap.innerHTML = html;
 }
+
+function toggleEvent(id) {
+  expandedEvent = expandedEvent === id ? null : id;
+  renderEvents();
+}
+
+// ─── MONDAY MODAL ────────────────────────────────────────────────────────────
+function openMondayExport(id) {
+  const ev = EVENTS.find(e => e.id === id);
+  if (!ev) return;
+  const fields = getMondayFields(ev);
+  const modal = document.getElementById('monday-modal');
+  const content = document.getElementById('monday-modal-content');
+
+  let html = '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">'
+    + '<div>'
+    + '<div style="font-family:\'Syne\',sans-serif;font-size:17px;font-weight:800;color:var(--navy);">' + ev.name + '</div>'
+    + '<div style="font-size:12px;color:var(--muted);margin-top:3px;">Monday.com Field Export · ' + ev.date + ' · ' + ev.location + '</div>'
+    + '</div>'
+    + '<button onclick="closeMondayModal()" style="background:none;border:none;font-size:22px;line-height:1;cursor:pointer;color:var(--muted);padding:0 2px;margin-top:-2px;">×</button>'
+    + '</div>';
+
+  fields.forEach(function(f, i) {
+    html += '<div class="monday-field">'
+      + '<div class="monday-field-label">' + f.label + '</div>'
+      + '<div class="monday-field-val">'
+      + '<span style="flex:1;">' + f.value + '</span>'
+      + '<button class="monday-copy-btn" data-field="' + id + '-' + i + '" onclick="copyField(\'' + id + '\',' + i + ')">Copy</button>'
+      + '</div></div>';
+  });
+
+  html += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;">'
+    + '<button onclick="copyAllFields(\'' + id + '\')" style="background:var(--teal);color:white;border:none;padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;transition:background 0.15s;" id="copy-all-btn-' + id + '">Copy All Fields</button>'
+    + '<button onclick="closeMondayModal()" style="background:var(--warm);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Close</button>'
+    + '</div>';
+
+  content.innerHTML = html;
+  modal.style.display = 'flex';
+}
+
+function closeMondayModal() {
+  document.getElementById('monday-modal').style.display = 'none';
+}
+
+function copyField(evId, idx) {
+  const ev = EVENTS.find(e => e.id === evId);
+  if (!ev) return;
+  const fields = getMondayFields(ev);
+  navigator.clipboard.writeText(fields[idx].value).then(function() {
+    const btn = document.querySelector('[data-field="' + evId + '-' + idx + '"]');
+    if (btn) {
+      btn.textContent = '✓';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1400);
+    }
+  });
+}
+
+function copyAllFields(evId) {
+  const ev = EVENTS.find(e => e.id === evId);
+  if (!ev) return;
+  const text = getMondayFields(ev).map(f => f.label + ':\n' + f.value).join('\n\n');
+  navigator.clipboard.writeText(text).then(function() {
+    const btn = document.getElementById('copy-all-btn-' + evId);
+    if (btn) {
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(function() { btn.textContent = orig; }, 1500);
+    }
+  });
+}
+
+document.getElementById('monday-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeMondayModal();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+renderEvents();
+
+// ════════════════════════════════════════════════════════════════════════════
+// EDIT & PROGRESS LAYER
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── State ────────────────────────────────────────────────────────────────────
+const PLAN_KEY = 'canto-plan-2026';
+function gs() { try { return JSON.parse(localStorage.getItem(PLAN_KEY)||'{}'); } catch(e) { return {}; } }
+function ps(patch) {
+  const s = gs(), n = Object.assign({}, s);
+  Object.keys(patch).forEach(k => {
+    if (patch[k] && typeof patch[k]==='object' && !Array.isArray(patch[k]) && s[k] && typeof s[k]==='object') {
+      n[k] = Object.assign({}, s[k], patch[k]);
+    } else { n[k] = patch[k]; }
+  });
+  localStorage.setItem(PLAN_KEY, JSON.stringify(n));
+}
+function estatus(id) { return gs().eventStatus?.[id] || 'planned'; }
+function epipe(id)   { return gs().eventPipeline?.[id] || 0; }
+function enote(id)   { return gs().eventNotes?.[id] || ''; }
+function mnote(id)   { return gs().monthNotes?.[id] || ''; }
+function mtasks(id)  { return gs().customTasks?.[id] || []; }
+
+const STATUSES = ['planned','confirmed','attended','pipeline','closed'];
+const SML = {
+  planned:   { label:'Planned',    bg:'#F9FAFB', color:'#6B7080', dot:'#9CA3AF' },
+  confirmed: { label:'Confirmed',  bg:'#EFF6FF', color:'#1E40AF', dot:'#60A5FA' },
+  attended:  { label:'Attended',   bg:'#F0FAF4', color:'#166534', dot:'#22C55E' },
+  pipeline:  { label:'Pipeline ✓', bg:'#F0FDF9', color:'#0F766E', dot:'#00B09B' },
+  closed:    { label:'Closed Won', bg:'#F7FEE7', color:'#3F6212', dot:'#86EFAC' }
+};
+
+function cycleStatus(id) {
+  const idx = STATUSES.indexOf(estatus(id));
+  const next = STATUSES[(idx+1) % STATUSES.length];
+  const s = gs();
+  ps({ eventStatus: Object.assign({}, s.eventStatus||{}, {[id]: next}) });
+  renderEvents();
+  injectEventBadges();
+  renderKPI();
+}
+function saveEventNote(id) {
+  const el = document.getElementById('enote-'+id);
+  if (!el) return;
+  const s = gs();
+  ps({ eventNotes: Object.assign({}, s.eventNotes||{}, {[id]: el.value}) });
+}
+
+// ── Post-process event cards: inject status badges + logged amount ─────────
+function injectEventBadges() {
+  const s = gs();
+  document.querySelectorAll('.ev-header').forEach(header => {
+    const oc = header.getAttribute('onclick')||'';
+    const m = oc.match(/toggleEvent\('([^']+)'\)/);
+    if (!m) return;
+    const id = m[1];
+
+    // Status badge
+    if (!header.querySelector('.ev-status-badge')) {
+      const sm = SML[estatus(id)];
+      const badge = document.createElement('button');
+      badge.className = 'ev-status-badge';
+      badge.title = 'Click to advance: Planned → Confirmed → Attended → Pipeline → Closed';
+      badge.style.cssText = 'background:'+sm.bg+';color:'+sm.color+';border-color:'+sm.color+'33;';
+      badge.innerHTML = '<span style="width:5px;height:5px;background:'+sm.dot+';border-radius:50%;display:block;flex-shrink:0;"></span>'+sm.label;
+      badge.addEventListener('click', function(e){ e.stopPropagation(); cycleStatus(id); });
+      const chevron = header.querySelector('.ev-chevron');
+      if (chevron) header.insertBefore(badge, chevron);
+    } else {
+      // Update existing badge
+      const sm = SML[estatus(id)];
+      const badge = header.querySelector('.ev-status-badge');
+      badge.style.background = sm.bg; badge.style.color = sm.color; badge.style.borderColor = sm.color+'33';
+      badge.innerHTML = '<span style="width:5px;height:5px;background:'+sm.dot+';border-radius:50%;display:block;flex-shrink:0;"></span>'+sm.label;
+    }
+
+    // Logged pipeline amount
+    const pipeDiv = header.querySelector('[style*="text-align:right"]');
+    if (pipeDiv) {
+      let logEl = pipeDiv.querySelector('.log-badge');
+      const amt = (s.eventPipeline||{})[id]||0;
+      if (amt > 0) {
+        if (!logEl) { logEl = document.createElement('div'); logEl.className='log-badge'; logEl.style.cssText='font-size:10px;color:#22C55E;font-weight:700;'; pipeDiv.appendChild(logEl); }
+        logEl.textContent = '✓ $'+amt+'K logged';
+      } else if (logEl) { logEl.remove(); }
+    }
+  });
+
+  // Inject event notes textarea into expanded body
+  document.querySelectorAll('.ev-card').forEach(card => {
+    const header = card.querySelector('.ev-header');
+    if (!header) return;
+    const oc = header.getAttribute('onclick')||'';
+    const m = oc.match(/toggleEvent\('([^']+)'\)/);
+    if (!m) return;
+    const id = m[1];
+    const body = Array.from(card.children).find(c => c !== header);
+    if (!body) return;
+    if (!body.querySelector('.ev-notes-section')) {
+      const nd = document.createElement('div');
+      nd.className = 'ev-notes-section';
+      nd.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid var(--warm);';
+      nd.innerHTML = '<div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;">Event Note</div>'
+        +'<textarea id="enote-'+id+'" onblur="saveEventNote(\''+id+'\')" placeholder="Meeting notes, follow-ups, key contacts..." rows="2" style="width:100%;border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:13px;color:var(--text);resize:vertical;line-height:1.55;background:var(--warm);outline:none;font-family:\'DM Sans\',sans-serif;">'+enote(id)+'</textarea>';
+      body.appendChild(nd);
+    }
+  });
+}
+
+// Wrap toggleEvent to always re-inject badges after render
+const _origToggle = toggleEvent;
+toggleEvent = function(id) { _origToggle(id); injectEventBadges(); };
+
+// Wrap sortEvents similarly
+const _origSort = sortEvents;
+sortEvents = function(mode, btn) { _origSort(mode, btn); injectEventBadges(); };
+
+// ── KPI Dashboard ─────────────────────────────────────────────────────────────
+function renderKPI() {
+  const el = document.getElementById('kpi-section');
+  if (!el) return;
+  const s = gs();
+  const loggedPipe = Object.values(s.eventPipeline||{}).reduce((a,b)=>a+(parseInt(b)||0),0);
+  const attendedN  = Object.values(s.eventStatus||{}).filter(v=>['attended','pipeline','closed'].includes(v)).length;
+  const dealsN     = s.dealsInProgress||0;
+  const closedK    = s.closedWon||0;
+  const ppct = Math.min(Math.round(loggedPipe/10),100);
+  const rpct = Math.min(Math.round(closedK/2.5),100);
+
+  el.innerHTML = '<div style="background:var(--navy);border-radius:12px;padding:20px 22px 18px;">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">'
+    +'<div style="font-family:\'Syne\',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.3);">◎ Live Progress Tracker · 2026</div>'
+    +'<button onclick="openKPIModal()" style="background:rgba(0,176,155,0.18);color:var(--teal);border:1px solid rgba(0,176,155,0.3);padding:5px 13px;border-radius:6px;font-size:11px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;transition:all 0.15s;">↑ Update</button>'
+    +'</div>'
+    +'<div class="kpi-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">'
+    +[
+      { label:'Events Attended', val:attendedN, sub:'/ '+EVENTS.length+' events', pct:Math.round(attendedN/EVENTS.length*100), color:'#A78BFA' },
+      { label:'Pipeline Created', val:'$'+loggedPipe+'K', sub:'/ $1M target', pct:ppct, color:'var(--teal)' },
+      { label:'Deals In Progress', val:dealsN, sub:'active deals', pct:Math.min(dealsN*12,100), color:'var(--orange)' },
+      { label:'Closed Won', val:'$'+closedK+'K', sub:'/ $250K target', pct:rpct, color:'#4ADE80' }
+    ].map(c=>'<div>'
+      +'<div style="font-family:\'Syne\',sans-serif;font-size:26px;font-weight:800;color:'+c.color+';line-height:1;">'+c.val+'</div>'
+      +'<div style="font-size:11px;color:rgba(255,255,255,0.3);margin:2px 0 8px;">'+c.sub+'</div>'
+      +'<div style="background:rgba(255,255,255,0.07);border-radius:3px;height:3px;overflow:hidden;"><div style="width:'+c.pct+'%;background:'+c.color+';height:100%;border-radius:3px;transition:width 0.6s ease;"></div></div>'
+      +'<div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.2);margin-top:6px;">'+c.label+'</div>'
+      +'</div>').join('')
+    +'</div></div>';
+}
+
+// ── Shared modal helper ───────────────────────────────────────────────────────
+function openModal(html) {
+  document.getElementById('monday-modal-content').innerHTML = html;
+  document.getElementById('monday-modal').style.display = 'flex';
+}
+// Override the existing close function to reuse the modal
+closeMondayModal = function() { document.getElementById('monday-modal').style.display = 'none'; };
+
+// ── KPI Update Modal ──────────────────────────────────────────────────────────
+function openKPIModal() {
+  const s = gs();
+  const attended = EVENTS.filter(e=>['attended','pipeline','closed'].includes(estatus(e.id)));
+  let pRows = attended.length ? attended.map(e=>'<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--warm);">'
+    +'<span style="flex:1;font-size:13px;">'+e.name+'</span>'
+    +'<span style="font-size:12px;color:var(--muted);">$</span>'
+    +'<input type="number" id="pe-'+e.id+'" value="'+(epipe(e.id)||'')+'" placeholder="0" style="width:80px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:13px;text-align:right;">'
+    +'<span style="font-size:12px;color:var(--muted);">K</span>'
+    +'</div>').join('')
+    : '<p style="font-size:12px;color:var(--muted);padding:8px 0;">Mark events as Attended (click status badge in Pipeline section) to log amounts here.</p>';
+
+  openModal('<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">'
+    +'<div><div style="font-family:\'Syne\',sans-serif;font-size:17px;font-weight:800;color:var(--navy);">Update Progress</div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">Feeds the live dashboard and Executive Brief</div></div>'
+    +'<button onclick="closeMondayModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);">×</button></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">'
+    +'<div><div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">Deals In Progress</div>'
+    +'<input id="ku-deals" type="number" value="'+(s.dealsInProgress||0)+'" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-weight:600;font-family:\'Syne\',sans-serif;"></div>'
+    +'<div><div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">Closed Won ($K)</div>'
+    +'<input id="ku-closed" type="number" value="'+(s.closedWon||0)+'" placeholder="e.g. 75" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:15px;font-weight:600;font-family:\'Syne\',sans-serif;"></div></div>'
+    +'<div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Pipeline per Attended Event ($K)</div>'
+    +'<div style="border:1px solid var(--border);border-radius:8px;padding:8px 12px;max-height:220px;overflow-y:auto;margin-bottom:16px;">'+pRows+'</div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;">'
+    +'<button onclick="saveKPI()" style="background:var(--teal);color:white;border:none;padding:10px 20px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Save</button>'
+    +'<button onclick="closeMondayModal()" style="background:var(--warm);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Cancel</button></div>');
+}
+function saveKPI() {
+  ps({ dealsInProgress: parseInt(document.getElementById('ku-deals').value)||0, closedWon: parseInt(document.getElementById('ku-closed').value)||0 });
+  const s = gs(); const ep = Object.assign({}, s.eventPipeline||{});
+  EVENTS.filter(e=>['attended','pipeline','closed'].includes(estatus(e.id))).forEach(e=>{
+    const el=document.getElementById('pe-'+e.id); if(el) ep[e.id]=parseInt(el.value)||0;
+  });
+  ps({ eventPipeline: ep });
+  closeMondayModal(); renderKPI(); injectEventBadges();
+}
+
+// ── Add Event Modal ───────────────────────────────────────────────────────────
+function openAddEvent() {
+  openModal('<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">'
+    +'<div><div style="font-family:\'Syne\',sans-serif;font-size:17px;font-weight:800;color:var(--navy);">Add New Event</div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">Adds to the Pipeline by Event tracker</div></div>'
+    +'<button onclick="closeMondayModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);">×</button></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">'
+    +[['ae-name','Event Name *','e.g. MAGIC Las Vegas','text'],['ae-date','Date','e.g. Aug 10–12, 2026','text'],
+      ['ae-loc','Location','e.g. Las Vegas, NV','text'],['ae-region','Region','e.g. West','text'],
+      ['ae-pipe','Est. Pipeline ($K)','e.g. 50','number'],['ae-cost','Est. Cost ($K)','e.g. 2','number']
+    ].map(([id,label,ph,type])=>'<div><div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">'+label+'</div>'
+      +'<input id="'+id+'" type="'+type+'" placeholder="'+ph+'" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;"></div>').join('')
+    +'</div>'
+    +'<div style="margin-bottom:16px;"><div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">Why attend? Notes</div>'
+    +'<textarea id="ae-notes" rows="2" placeholder="Why this event? What is the play?" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;resize:vertical;line-height:1.5;"></textarea></div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;">'
+    +'<button onclick="saveNewEvent()" style="background:var(--navy);color:white;border:none;padding:10px 20px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Add to Tracker</button>'
+    +'<button onclick="closeMondayModal()" style="background:var(--warm);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Cancel</button></div>');
+}
+function saveNewEvent() {
+  const name = document.getElementById('ae-name').value.trim();
+  if (!name) { alert('Event name is required.'); return; }
+  const pipe = parseInt(document.getElementById('ae-pipe').value)||50;
+  const cost = parseInt(document.getElementById('ae-cost').value)||1;
+  const notes = document.getElementById('ae-notes').value;
+  const ev = {
+    id:'custom-'+Date.now(), name,
+    date: document.getElementById('ae-date').value||'TBD',
+    dateSort:99,
+    location: document.getElementById('ae-loc').value||'TBD',
+    region: document.getElementById('ae-region').value||'TBD',
+    pipeline:[pipe,Math.round(pipe*1.2)], cost:[cost,Math.round(cost*1.3)],
+    costNote:'Custom event', status:'must', website:'n/a',
+    purpose:'Custom Event', description:notes||'Custom event.',
+    audience:'', activations:[], outcomes:'', notes, sponsorship:'',
+    sfCampaign:name.toUpperCase().replace(/[^A-Z0-9]/g,'_').slice(0,20),
+    color:'#E8651A', isCustom:true
+  };
+  const s = gs();
+  ps({ customEvents:[...(s.customEvents||[]),ev] });
+  EVENTS.push(ev);
+  closeMondayModal();
+  renderEvents();
+  injectEventBadges();
+}
+
+// ── Month Notes & Tasks ───────────────────────────────────────────────────────
+const MONTH_IDS = ['mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+
+function injectMonthEnhancements() {
+  MONTH_IDS.forEach(mid => {
+    const sec = document.getElementById(mid);
+    if (!sec || sec.querySelector('.month-enhance')) return;
+    const el = document.createElement('div');
+    el.className = 'month-enhance';
+    sec.appendChild(el);
+    renderMonthEnhancements(mid);
+  });
+}
+
+function renderMonthEnhancements(mid) {
+  const sec = document.getElementById(mid);
+  if (!sec) return;
+  const el = sec.querySelector('.month-enhance');
+  if (!el) return;
+  const tasks = mtasks(mid);
+  const note  = mnote(mid);
+
+  const taskHTML = tasks.map(t=>'<div class="me-task">'
+    +'<div class="me-check'+(t.done?' done':'')+'" onclick="toggleTask(\''+mid+'\','+t.id+')">'+(t.done?'<span style="color:white;font-size:9px;font-weight:700;">✓</span>':'')+'</div>'
+    +'<span style="flex:1;'+(t.done?'text-decoration:line-through;color:var(--muted);':'')+'">'+(t.text.replace(/</g,'&lt;'))+'</span>'
+    +'<button class="me-del" onclick="deleteTask(\''+mid+'\','+t.id+')">×</button>'
+    +'</div>').join('');
+
+  el.innerHTML = '<div style="border-top:1px solid var(--border);padding-top:20px;">'
+    +'<div class="me-label">📌 My Notes & Tasks</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">'
+    +'<div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px;">'
+    +'<div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Tasks</div>'
+    +(taskHTML||'<div style="font-size:12px;color:var(--muted);padding:4px 0 10px;">No tasks yet.</div>')
+    +'<div style="display:flex;gap:7px;margin-top:8px;">'
+    +'<input id="ti-'+mid+'" type="text" placeholder="Add a task..." onkeydown="if(event.key===\'Enter\')addTask(\''+mid+'\')" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">'
+    +'<button onclick="addTask(\''+mid+'\')" style="background:var(--navy);color:white;border:none;padding:7px 12px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">+</button>'
+    +'</div></div>'
+    +'<div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px;">'
+    +'<div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Notes</div>'
+    +'<textarea id="mn-'+mid+'" onblur="saveMonthNote(\''+mid+'\')" placeholder="Add notes for this month..." rows="4" style="width:100%;border:none;outline:none;font-size:13px;color:var(--text);resize:vertical;line-height:1.6;background:transparent;font-family:\'DM Sans\',sans-serif;">'+note+'</textarea>'
+    +'</div></div></div>';
+}
+
+function addTask(mid) {
+  const inp = document.getElementById('ti-'+mid);
+  if (!inp||!inp.value.trim()) return;
+  const s = gs();
+  ps({ customTasks: Object.assign({},s.customTasks||{},{[mid]:[...(s.customTasks?.[mid]||[]),{id:Date.now(),text:inp.value.trim(),done:false}]}) });
+  inp.value='';
+  renderMonthEnhancements(mid);
+}
+function toggleTask(mid,id) {
+  const s = gs();
+  ps({ customTasks: Object.assign({},s.customTasks||{},{[mid]:(s.customTasks?.[mid]||[]).map(t=>t.id===id?Object.assign({},t,{done:!t.done}):t)}) });
+  renderMonthEnhancements(mid);
+}
+function deleteTask(mid,id) {
+  const s = gs();
+  ps({ customTasks: Object.assign({},s.customTasks||{},{[mid]:(s.customTasks?.[mid]||[]).filter(t=>t.id!==id)}) });
+  renderMonthEnhancements(mid);
+}
+function saveMonthNote(mid) {
+  const el = document.getElementById('mn-'+mid);
+  if (!el) return;
+  const s = gs();
+  ps({ monthNotes: Object.assign({},s.monthNotes||{},{[mid]:el.value}) });
+}
+
+// Inject on section switch
+const _origShow = show;
+show = function(id,btn) { _origShow(id,btn); setTimeout(()=>injectMonthEnhancements(),50); };
+
+// ── Executive Brief ───────────────────────────────────────────────────────────
+function openBrief() {
+  const s = gs();
+  const loggedPipe = Object.values(s.eventPipeline||{}).reduce((a,b)=>a+(parseInt(b)||0),0);
+  const attendedEvs = EVENTS.filter(e=>['attended','pipeline','closed'].includes(estatus(e.id)));
+  const upcoming = EVENTS.filter(e=>['planned','confirmed'].includes(estatus(e.id))).slice(0,5);
+  const monthNoteLines = Object.entries(s.monthNotes||{}).filter(([,v])=>v.trim()).map(([k,v])=>k.toUpperCase()+': '+v.trim()).join('\n');
+  const date = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+  const brief = [
+    'CANTO CHANNEL PARTNERSHIPS — 2026 PLAN',
+    'Adam Semien  |  Strategic Channel Account Manager',
+    '━'.repeat(52),'',
+    'PROGRESS AT A GLANCE',
+    'Events Attended:   '+attendedEvs.length+' / '+EVENTS.length,
+    'Pipeline Created:  $'+loggedPipe+'K / $1,000K target ('+(Math.round(loggedPipe/10))+'%)',
+    'Deals In Progress: '+(s.dealsInProgress||0),
+    'Closed Won:        $'+(s.closedWon||0)+'K / $250K target','',
+    attendedEvs.length ? 'EVENTS ATTENDED\n'+attendedEvs.map(e=>'  ✓ '+e.name+' ('+e.date+')'+(epipe(e.id)?' — $'+epipe(e.id)+'K pipeline':'')+((s.eventNotes||{})[e.id]?'\n    Note: '+(s.eventNotes[e.id]).split('\n')[0]:'')).join('\n') : null,
+    upcoming.length ? '\nUPCOMING HIGH-PRIORITY\n'+upcoming.map(e=>'  → '+e.name+' ('+e.date+') — est. $'+e.pipeline[0]+'–'+e.pipeline[1]+'K pipeline').join('\n') : null,
+    monthNoteLines ? '\nMONTHLY NOTES\n'+monthNoteLines : null,
+    '','━'.repeat(52),
+    'Generated '+date
+  ].filter(v=>v!==null).join('\n');
+
+  openModal('<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">'
+    +'<div><div style="font-family:\'Syne\',sans-serif;font-size:17px;font-weight:800;color:var(--navy);">Executive Brief</div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">Copy and paste into email, Slack, or your QBR deck</div></div>'
+    +'<button onclick="closeMondayModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);">×</button></div>'
+    +'<div style="background:var(--navy);border-radius:8px;padding:14px 16px;margin-bottom:14px;">'
+    +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;">'
+    +[['Events',attendedEvs.length+'/'+EVENTS.length,'#A78BFA'],['Pipeline','$'+loggedPipe+'K','var(--teal)'],['In Prog',(s.dealsInProgress||0),'var(--orange)'],['Closed','$'+(s.closedWon||0)+'K','#4ADE80']
+    ].map(([l,v,c])=>'<div><div style="font-family:\'Syne\',sans-serif;font-size:20px;font-weight:800;color:'+c+';">'+v+'</div><div style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-top:2px;">'+l+'</div></div>').join('')
+    +'</div></div>'
+    +'<textarea id="brief-txt" rows="13" readonly style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:\'Courier New\',monospace;font-size:12px;color:var(--text);line-height:1.7;background:var(--warm);resize:vertical;">'+brief+'</textarea>'
+    +'<div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">'
+    +'<button onclick="copyBrief()" id="copy-brief" style="background:var(--teal);color:white;border:none;padding:10px 20px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Copy Brief</button>'
+    +'<button onclick="window.print()" style="background:var(--warm);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Print</button>'
+    +'<button onclick="closeMondayModal()" style="background:var(--warm);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Close</button></div>');
+}
+function copyBrief() {
+  const el = document.getElementById('brief-txt');
+  if (!el) return;
+  navigator.clipboard.writeText(el.value).then(()=>{
+    const b=document.getElementById('copy-brief');
+    if(b){b.textContent='✓ Copied!';setTimeout(()=>b.textContent='Copy Brief',1500);}
+  });
+}
+
+// ── New Version Download ──────────────────────────────────────────────────────
+function openNewVersion() {
+  openModal('<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">'
+    +'<div><div style="font-family:\'Syne\',sans-serif;font-size:17px;font-weight:800;color:var(--navy);">Export New Version</div>'
+    +'<div style="font-size:12px;color:var(--muted);margin-top:3px;">Download a standalone HTML copy of this plan</div></div>'
+    +'<button onclick="closeMondayModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);">×</button></div>'
+    +'<div style="background:var(--warm);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text);line-height:1.65;">'
+    +'<strong>Downloads a complete HTML file</strong> — all events, data, and Monday export fields intact. Open it in any browser or share with a colleague. Progress tracker starts fresh on the new copy.'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">'
+    +'<div><div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">Version Label</div>'
+    +'<input id="nv-label" type="text" value="Q3 Review" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;"></div>'
+    +'<div><div style="font-size:10px;font-family:\'Syne\',sans-serif;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px;">Year</div>'
+    +'<input id="nv-year" type="text" value="2026" style="width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;"></div></div>'
+    +'<div style="display:flex;gap:8px;justify-content:flex-end;">'
+    +'<button onclick="downloadVersion()" style="background:var(--navy);color:white;border:none;padding:10px 20px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Download HTML ↓</button>'
+    +'<button onclick="closeMondayModal()" style="background:var(--warm);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:7px;font-size:12px;font-family:\'Syne\',sans-serif;font-weight:700;cursor:pointer;">Cancel</button></div>');
+}
+function downloadVersion() {
+  const label = document.getElementById('nv-label').value||'version';
+  const year  = document.getElementById('nv-year').value||'2026';
+  const blob = new Blob([document.documentElement.outerHTML],{type:'text/html'});
+  const url  = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='canto-plan-'+year+'-'+label.toLowerCase().replace(/\s+/g,'-')+'.html'; a.click();
+  URL.revokeObjectURL(url);
+  closeMondayModal();
+}
+
+// ── Boot custom events into EVENTS array ─────────────────────────────────────
+(function() {
+  (gs().customEvents||[]).forEach(ce=>{ if(!EVENTS.find(e=>e.id===ce.id)) EVENTS.push(ce); });
+})();
+
+// ── Full init ─────────────────────────────────────────────────────────────────
+renderKPI();
+injectEventBadges();
+injectMonthEnhancements();
 </script>
 </body>
 </html>
