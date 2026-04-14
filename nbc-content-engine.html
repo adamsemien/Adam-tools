@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NBC Content Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #f2ede4;
+      --cream-dark: #e8e1d5;
+      --red:        #B22E21;
+      --text:       #2a2520;
+      --muted:      #8a8070;
+      --border:     #d8d0c4;
+    }
+
+    html, body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 11px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .topbar-right { display: flex; align-items: center; gap: 7px; }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #5a9e5a;
+      animation: blink 2.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+    .status-text { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+    /* MASTHEAD */
+    .masthead {
+      text-align: center;
+      padding: 56px 24px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .masthead-eyebrow {
+      font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 22px;
+    }
+    .masthead-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(72px, 14vw, 120px);
+      font-weight: 700;
+      line-height: 0.86;
+      letter-spacing: -0.02em;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+    .masthead-logo span { display: block; }
+    .masthead-rule { width: 36px; height: 1px; background: var(--border); margin: 0 auto 18px; }
+    .masthead-tagline {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* CONTAINER */
+    .container { max-width: 600px; margin: 0 auto; padding: 0 24px; }
+
+    /* SECTION LABEL (matches newsletter red italic headers) */
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 38px 0 18px;
+    }
+    .section-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px; font-weight: 500; font-style: italic;
+      color: var(--red); white-space: nowrap;
+    }
+    .section-rule { flex: 1; height: 1px; background: var(--border); }
+
+    /* INTRO COPY */
+    .intro-copy {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 14px; line-height: 1.85;
+      color: var(--text); margin-bottom: 32px;
+    }
+
+    /* STEPS */
+    .steps {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .step { background: var(--cream); padding: 22px 18px; }
+    .step-num {
+      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 10px; display: block;
+    }
+    .step-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; font-weight: 400;
+      color: var(--text); margin-bottom: 7px; line-height: 1.2;
+    }
+    .step-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+    /* PIPELINE */
+    .pipeline { border: 1px solid var(--border); }
+    .pipe-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 18px; border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    .pipe-row:last-child { border-bottom: none; }
+    .pipe-row:hover { background: var(--cream-dark); }
+    .pipe-num { font-size: 9px; letter-spacing: 0.15em; color: var(--red); width: 18px; flex-shrink: 0; }
+    .pipe-name { flex: 1; font-size: 13px; color: var(--muted); }
+    .pipe-name strong { color: var(--text); font-weight: 400; }
+    .pipe-tag {
+      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border); padding: 3px 7px;
+    }
+
+    /* EXAMPLE BOX */
+    .example-wrap { padding-bottom: 52px; }
+    .example-box {
+      background: var(--cream-dark);
+      border: 1px solid var(--border);
+      padding: 30px 24px; position: relative;
+    }
+    .example-eyebrow {
+      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--red); position: absolute; top: -1px; left: 20px;
+      transform: translateY(-50%); background: var(--cream-dark); padding: 0 8px;
+    }
+    .example-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 12.5px; line-height: 2; color: var(--muted);
+      white-space: pre-wrap;
+    }
+    .example-text strong {
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px; text-align: center;
+    }
+    .footer-text {
+      font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .footer-text em { color: var(--red); font-style: normal; }
+
+    @media (max-width: 540px) {
+      .steps { grid-template-columns: 1fr; }
+      .topbar { padding: 10px 20px; }
+      .masthead-logo { font-size: 72px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span class="topbar-label">No Bad Company &nbsp;·&nbsp; Internal Tools</span>
+    <div class="topbar-right">
+      <div class="status-dot"></div>
+      <span class="status-text">Pipeline active</span>
+    </div>
+  </div>
+
+  <div class="masthead">
+    <p class="masthead-eyebrow">No Bad Company — Content Engine</p>
+    <div class="masthead-logo">
+      <span>NO BAD</span>
+      <span>NEWS</span>
+    </div>
+    <div class="masthead-rule"></div>
+    <p class="masthead-tagline">Raw notes in. Newsletter out.</p>
+  </div>
+
+  <div class="container">
+
+    <div class="section-header">
+      <span class="section-label">How it works</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro-copy">
+      Open the chat widget below. Paste your rough notes - people, places, music, food, anything.
+      Five agents build the issue, find the emotional throughline, refine the voice,
+      write your distribution assets, and log everything to memory. About three minutes start to finish.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-title">Open the widget</div>
+        <p class="step-desc">Chat bubble, bottom right corner.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-title">Paste your notes</div>
+        <p class="step-desc">Bullets, names, links, fragments. No polish needed.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-title">Review output</div>
+        <p class="step-desc">6 sections, subject lines, distribution - one pass.</p>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-label">The pipeline</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipe-row">
+        <span class="pipe-num">01</span>
+        <span class="pipe-name"><strong>Section Builder</strong> - turns rough notes into all 6 pillars</span>
+        <span class="pipe-tag">Agent</span>
+      </div>
+      <div class="pipe-row">
+        <span class="pipe-num">02</span>
+        <span class="pipe-name"><strong>Theme Angle</strong> - finds the emotional throughline</span>
+        <span class="pipe-tag">Agent</span>
+      </div>
+      <div class="pipe-row">
+        <span class="pipe-num">03</span>
+        <span class="pipe-name"><strong>Editorial Voice</strong> - refines everything to NBC standard</span>
+        <span class="pipe-tag">Agent</span>
+      </div>
+      <div class="pipe-row">
+        <span class="pipe-num">04</span>
+        <span class="pipe-name"><strong>Distribution</strong> - IG caption, story sequence, hooks</span>
+        <span class="pipe-tag">Agent</span>
+      </div>
+      <div class="pipe-row">
+        <span class="pipe-num">05</span>
+        <span class="pipe-name"><strong>Memory</strong> - logs people, places, music, design, themes</span>
+        <span class="pipe-tag">Agent</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-label">Example input</span>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="example-wrap">
+      <div class="example-box">
+        <span class="example-eyebrow">Paste something like this</span>
+        <pre class="example-text"><strong>People:</strong>  Marcus Garrett - runs underground supper clubs, met at Cosmic last week
+
+<strong>Food:</strong>    Paperboy on East 6th - chicken biscuit, still the best, always a line
+
+<strong>Music:</strong>   Mk.gee album - guitar-forward, feels like 2003 in a good way
+
+<strong>Hosting:</strong> had people over Friday, turned the lights way down, changed the whole energy
+
+<strong>Design:</strong>  BDDW coffee tables - solid walnut, brutally simple
+
+<strong>Plans:</strong>   Lightning in a Bottle - good excuse for a desert trip</pre>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p class="footer-text">No Bad Company &nbsp;·&nbsp; <em>Internal</em> &nbsp;·&nbsp; Not for distribution</p>
+  </footer>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@runtypelabs/persona@3.10.0/dist/install.global.js"
+    data-config='{
+      "apiUrl": "https://api.runtype.com",
+      "clientToken": "ct_test_01kp6fc0_7cb64c0dac31972f4cf653153afc2892",
+      "parserType": "json",
+      "theme": {
+        "palette": {
+          "colors": {
+            "primary": "#B22E21",
+            "background": "#f2ede4",
+            "surface": "#e8e1d5",
+            "text": "#2a2520"
+          }
+        }
+      },
+      "launcher": {
+        "enabled": true,
+        "title": "NBC Content Engine",
+        "subtitle": "Paste your raw notes and run the pipeline",
+        "position": "bottom-right"
+      }
+    }'>
+  </script>
+
+</body>
+</html>
