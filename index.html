@@ -1,1585 +1,889 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Console</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-/* ===== RESET ===== */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-button{cursor:pointer;border:none;background:none;font-family:inherit}
-input,textarea{font-family:inherit}
-a{text-decoration:none;color:inherit}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Console</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #0c0c0e;
+      --bg2:    #141417;
+      --bg3:    #1c1c22;
+      --bg4:    #242430;
+      --border: #2a2a35;
+      --text:   #e8e8f0;
+      --text2:  #9898b0;
+      --text3:  #5a5a72;
+      --accent: #7c3aed;
+      --accent2: #a78bfa;
+      --green:  #22c55e;
+      --red:    #ef4444;
+      --yellow: #eab308;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-size: 13px;
+    }
 
-/* ===== WORKSPACE THEMES ===== */
-body.workspace-canto {
-  --bg:#0B1420;--surface:#111E33;--surface-2:#1A2C4A;--border:#1E3352;
-  --accent:#D95A00;--accent-rgb:217,90,0;--accent-bg:rgba(217,90,0,0.1);
-  --text-primary:#FFFFFF;--text-secondary:#8B929E;--text-muted:#4B5563;
-  --rail-bg:#0F1F3D;--display-font:'Fraunces',serif;--card-radius:10px;
-}
-body.workspace-nbc {
-  --bg:#121212;--surface:#1A1A1A;--surface-2:#222222;--border:#2D2D2D;
-  --accent:#BC311D;--accent-rgb:188,49,29;--accent-bg:rgba(188,49,29,0.08);
-  --text-primary:#FFFFFF;--text-secondary:#8E8E8E;--text-muted:#444444;
-  --rail-bg:#0D0D0D;--gold:#A69374;--display-font:'Playfair Display',serif;--card-radius:4px;
-}
-body.workspace-personal {
-  --bg:#F5F2ED;--surface:#FFFFFF;--surface-2:#EDE9E3;--border:#D8D3CB;
-  --accent:#2C5F4A;--accent-rgb:44,95,74;--accent-bg:rgba(44,95,74,0.08);
-  --text-primary:#1A1A1A;--text-secondary:#6B6560;--text-muted:#A09990;
-  --rail-bg:#1A1A1A;--display-font:'Fraunces',serif;--card-radius:8px;
-}
-body.ws-transition,
-body.ws-transition *{transition:background-color 300ms ease,color 300ms ease,border-color 300ms ease !important}
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      height: 48px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      background: var(--bg);
+    }
+    .logo {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .logo-mark {
+      width: 22px; height: 22px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .header-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+    .sync-pill {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--text3);
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3px 9px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .sync-pill:hover { border-color: var(--accent); color: var(--text2); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-on   { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-off  { background: var(--text3); }
+    .dot-spin { background: var(--yellow); animation: pulse 1s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .header-space { flex: 1; }
+    .search-wrap {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 7px; padding: 0 10px; height: 30px; width: 200px;
+      transition: border-color 0.15s;
+    }
+    .search-wrap:focus-within { border-color: var(--accent); }
+    .search-wrap input {
+      background: none; border: none; outline: none;
+      color: var(--text); font-size: 12px; width: 100%;
+    }
+    .search-wrap input::placeholder { color: var(--text3); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 0 11px; height: 30px; border-radius: 7px;
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      border: none; transition: all 0.12s; white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #6d28d9; }
+    .btn-ghost { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+    .btn-icon { width: 30px; padding: 0; justify-content: center; }
+    .btn-sm { height: 24px; padding: 0 8px; font-size: 11px; }
+    .btn-danger { background: #450a0a; color: var(--red); border: 1px solid #7f1d1d; }
+    .btn-danger:hover { background: #7f1d1d; }
 
-/* ===== BASE LAYOUT ===== */
-body{
-  display:flex;min-height:100vh;
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);color:var(--text-primary);
-  -webkit-font-smoothing:antialiased;
-}
-#rail{
-  width:240px;min-width:240px;height:100vh;position:sticky;top:0;
-  background:var(--rail-bg);border-right:1px solid rgba(255,255,255,0.06);
-  display:flex;flex-direction:column;padding:20px 0;flex-shrink:0;
-  overflow-y:auto;z-index:100;
-}
-#content{flex:1;background:var(--bg);overflow-y:auto;min-height:100vh;transition:background-color 300ms ease}
-.content-inner{padding:40px 44px;max-width:1100px}
+    /* ── Layout ── */
+    .layout { display: flex; flex: 1; overflow: hidden; }
 
-/* ===== RAIL WORDMARK ===== */
-.rail-wordmark{
-  padding:0 20px 16px;
-  font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.12em;
-  color:rgba(255,255,255,0.35);
-}
-.rail-wordmark.nbc-wordmark{
-  font-family:'Playfair Display',serif;font-size:13px;font-weight:600;
-  text-transform:none;letter-spacing:0.01em;
-  color:rgba(255,255,255,0.75);line-height:1.4;
-  white-space:pre;
-}
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 188px; flex-shrink: 0;
+      border-right: 1px solid var(--border);
+      padding: 10px 6px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .nav-section { margin-bottom: 4px; }
+    .nav-label {
+      font-size: 10px; font-weight: 700; color: var(--text3);
+      text-transform: uppercase; letter-spacing: 0.07em;
+      padding: 0 8px; margin-bottom: 3px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 8px; border-radius: 7px;
+      cursor: pointer; color: var(--text2);
+      transition: all 0.1s; user-select: none;
+    }
+    .nav-item:hover { background: var(--bg3); color: var(--text); }
+    .nav-item.active { background: var(--bg4); color: var(--text); }
+    .nav-item .nav-count {
+      margin-left: auto; font-size: 10px; color: var(--text3);
+      background: var(--bg4); padding: 1px 5px; border-radius: 8px;
+    }
+    .nav-item.active .nav-count { background: var(--accent); color: #fff; }
+    .proj-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-/* ===== WORKSPACE SWITCHER ===== */
-.ws-switcher{padding:0 12px 12px;display:flex;flex-direction:column;gap:2px}
-.ws-btn{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border-radius:6px;width:100%;
-  font-size:13px;font-weight:400;color:rgba(255,255,255,0.55);
-  transition:background 200ms,color 200ms;
-}
-.ws-btn:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.85)}
-.ws-btn.active{background:rgba(255,255,255,0.1);color:#fff;font-weight:600}
-.ws-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.ws-dot-canto{background:#D95A00}
-.ws-dot-nbc{background:#BC311D}
-.ws-dot-personal{background:#2C5F4A}
+    /* ── Main ── */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .toolbar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .toolbar-title { font-size: 13px; font-weight: 600; }
+    .toolbar-count { font-size: 11px; color: var(--text3); }
+    .toolbar-space { flex: 1; }
+    .view-btns {
+      display: flex; background: var(--bg3);
+      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    }
+    .view-btns button {
+      padding: 4px 8px; background: none; border: none;
+      color: var(--text3); cursor: pointer; font-size: 13px;
+    }
+    .view-btns button.active { background: var(--bg4); color: var(--text); }
 
-/* ===== RAIL DIVIDER ===== */
-.rail-divider{height:1px;background:rgba(255,255,255,0.07);margin:8px 20px}
+    /* ── Artifact Grid ── */
+    .artifacts-wrap { flex: 1; overflow-y: auto; padding: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .list { display: flex; flex-direction: column; gap: 5px; }
 
-/* ===== SECTION NAV ===== */
-.section-nav{padding:8px 12px;display:flex;flex-direction:column;gap:2px}
-.section-label{
-  font-size:10px;font-weight:600;text-transform:uppercase;
-  letter-spacing:0.1em;color:rgba(255,255,255,0.25);
-  padding:4px 10px 8px;
-}
-.nav-btn{
-  position:relative;display:flex;align-items:center;gap:9px;
-  padding:8px 10px;border-radius:6px;width:100%;
-  font-size:13px;font-weight:400;color:rgba(255,255,255,0.5);
-  transition:background 200ms,color 200ms;
-  overflow:hidden;
-}
-.nav-btn::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:0;background:var(--accent);
-  transition:width 200ms ease;
-  border-radius:0 2px 2px 0;
-}
-.nav-btn:hover{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.8)}
-.nav-btn.active{background:var(--accent-bg);color:#fff;font-weight:500}
-.nav-btn.active::before{width:2px}
-.nav-icon{font-size:14px;opacity:0.7}
+    /* Card */
+    .card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 24px rgba(124,58,237,0.12); }
+    .card-thumb {
+      height: 120px; display: flex; align-items: center;
+      justify-content: center; font-size: 38px; position: relative;
+    }
+    .card-badge {
+      position: absolute; top: 8px; right: 8px;
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 2px 7px; border-radius: 8px;
+    }
+    .card-body { padding: 11px 12px 12px; }
+    .card-name {
+      font-weight: 600; font-size: 12px; margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .card-file { font-size: 10px; color: var(--text3); margin-bottom: 8px; }
+    .card-actions { display: flex; gap: 5px; }
 
-/* ===== RAIL BOTTOM ===== */
-.rail-spacer{flex:1}
-.rail-bottom{padding:12px;display:flex;flex-direction:column;gap:4px}
-.rail-action-btn{
-  display:flex;align-items:center;gap:8px;
-  padding:9px 12px;border-radius:6px;width:100%;
-  font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);
-  transition:background 200ms,color 200ms;
-}
-.rail-action-btn:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.9)}
-.rail-action-btn.deploy-btn{color:rgba(var(--accent-rgb),0.9)}
-.rail-action-btn.deploy-btn:hover{background:var(--accent-bg)}
+    /* Row */
+    .row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 11px; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 8px;
+      cursor: pointer; transition: all 0.1s;
+    }
+    .row:hover { border-color: var(--accent); }
+    .row-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .row-info { flex: 1; min-width: 0; }
+    .row-name { font-size: 12px; font-weight: 600; }
+    .row-meta { font-size: 10px; color: var(--text3); margin-top: 1px; }
+    .row-badge {
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 2px 7px; border-radius: 8px; flex-shrink: 0;
+    }
+    .row-actions { display: flex; gap: 5px; flex-shrink: 0; }
 
-/* ===== CONTENT HEADER ===== */
-.section-header{margin-bottom:28px}
-.section-title{
-  font-family:var(--display-font);
-  font-size:28px;font-weight:600;
-  color:var(--text-primary);line-height:1.2;margin-bottom:6px;
-}
-body.workspace-nbc .section-title{
-  font-style:italic;font-weight:400;font-size:26px;
-}
-.section-subtitle{font-size:14px;color:var(--text-secondary)}
+    /* State */
+    .state-box {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; height: 100%; gap: 10px; color: var(--text3);
+    }
+    .state-box .icon { font-size: 44px; }
+    .state-box h3 { font-size: 15px; color: var(--text2); }
+    .state-box p { font-size: 12px; text-align: center; max-width: 280px; line-height: 1.5; }
+    .spinner {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--border); border-top-color: var(--accent);
+      animation: spin 0.65s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ===== CARDS ===== */
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:20px;
-  position:relative;transition:transform 200ms,box-shadow 200ms,border-color 200ms;
-  border-top:2px solid var(--border);
-}
-body.workspace-nbc .card{box-shadow:none}
-body:not(.workspace-nbc) .card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 24px rgba(0,0,0,0.18);
-  border-top-color:var(--accent);
-}
-body.workspace-nbc .card:hover{border-color:var(--accent)}
+    /* ── Modals ── */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 50; backdrop-filter: blur(3px);
+    }
+    .overlay.hidden { display: none; }
+    .modal {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 12px; display: flex; flex-direction: column;
+      max-height: 92vh; overflow: hidden;
+    }
+    .modal-sm { width: 520px; max-width: 95vw; }
+    .modal-lg { width: 92vw; max-width: 1100px; }
+    .modal-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid var(--border);
+    }
+    .modal-head h3 { font-size: 14px; font-weight: 600; }
+    .close-btn {
+      background: none; border: none; color: var(--text3);
+      font-size: 20px; cursor: pointer; line-height: 1; padding: 0;
+    }
+    .close-btn:hover { color: var(--text); }
+    .modal-body { padding: 18px; overflow-y: auto; flex: 1; }
+    .modal-foot {
+      display: flex; justify-content: flex-end; gap: 7px;
+      padding: 12px 18px; border-top: 1px solid var(--border);
+    }
 
-.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.card-tag{
-  font-size:10px;font-weight:600;text-transform:uppercase;
-  letter-spacing:0.08em;color:var(--text-muted);
-}
-body.workspace-nbc .card-tag{color:var(--gold,#A69374);letter-spacing:0.1em}
-.type-badge{
-  font-size:10px;font-weight:500;padding:2px 8px;
-  border-radius:4px;background:var(--surface-2);color:var(--text-secondary);
-  border:1px solid var(--border);
-}
-body.workspace-nbc .type-badge{border-radius:2px}
-.card-name{
-  font-family:var(--display-font);font-size:17px;font-weight:600;
-  color:var(--text-primary);margin-bottom:6px;line-height:1.3;
-}
-body.workspace-nbc .card-name{font-size:15px;font-weight:400}
-.card-desc{font-size:13px;color:var(--text-secondary);line-height:1.55;margin-bottom:16px;flex:1}
-.card-actions{display:flex;gap:8px;align-items:center}
-.btn-open{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:6px 14px;border-radius:var(--card-radius);
-  font-size:12px;font-weight:500;
-  background:var(--accent-bg);color:var(--accent);
-  border:1px solid rgba(var(--accent-rgb),0.2);
-  transition:background 180ms,transform 100ms;
-}
-.btn-open:hover{background:rgba(var(--accent-rgb),0.18)}
-body.workspace-nbc .btn-open{border-radius:2px;text-transform:uppercase;font-size:11px;letter-spacing:0.06em}
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:6px 10px;border-radius:var(--card-radius);
-  font-size:12px;font-weight:400;color:var(--text-muted);
-  border:1px solid var(--border);
-  transition:color 180ms,border-color 180ms;
-}
-.btn-ghost:hover{color:var(--text-secondary);border-color:var(--text-muted)}
-body.workspace-nbc .btn-ghost{border-radius:2px;text-transform:uppercase;font-size:10px;letter-spacing:0.06em}
-.btn-delete{
-  margin-left:auto;font-size:14px;color:var(--text-muted);
-  padding:4px 8px;border-radius:4px;
-  transition:color 180ms,background 180ms;
-}
-.btn-delete:hover{color:#e05252;background:rgba(224,82,82,0.1)}
+    /* Form */
+    .fgroup { margin-bottom: 14px; }
+    .flabel {
+      display: block; font-size: 11px; font-weight: 600;
+      color: var(--text2); margin-bottom: 5px;
+    }
+    .fhint { font-size: 10px; color: var(--text3); margin-top: 3px; line-height: 1.4; }
+    .finput {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 7px; padding: 7px 11px; color: var(--text);
+      font-size: 12px; outline: none; transition: border-color 0.15s;
+    }
+    .finput:focus { border-color: var(--accent); }
+    .ftextarea {
+      min-height: 180px; resize: vertical;
+      font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace; font-size: 11px;
+    }
+    .fselect {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%235a5a72' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center;
+      padding-right: 28px; cursor: pointer;
+    }
 
-/* ===== NBC LIST ROWS ===== */
-.nbc-list{border:1px solid var(--border)}
-.nbc-row{
-  display:flex;align-items:center;gap:16px;
-  padding:20px 24px;border-bottom:1px solid var(--border);
-  position:relative;
-  border-left:0px solid var(--accent);
-  transition:border-left-width 200ms ease,background 200ms;
-}
-.nbc-row:last-child{border-bottom:none}
-.nbc-row:hover{background:var(--surface-2);border-left-width:2px}
-.nbc-row-info{flex:1}
-.nbc-row-cat{
-  font-size:10px;font-weight:500;text-transform:uppercase;
-  letter-spacing:0.1em;color:var(--gold,#A69374);margin-bottom:4px;
-}
-.nbc-row-name{font-family:'Playfair Display',serif;font-size:15px;color:var(--text-primary)}
-.nbc-row-type{font-size:10px;color:var(--text-muted);margin-top:3px;text-transform:uppercase;letter-spacing:0.06em}
-.nbc-row-actions{display:flex;gap:8px;opacity:0;transition:opacity 200ms}
-.nbc-row:hover .nbc-row-actions{opacity:1}
-.nbc-row-arrow{font-size:16px;color:var(--text-muted);transition:transform 200ms,color 200ms}
-.nbc-row:hover .nbc-row-arrow{transform:translateX(4px);color:var(--accent)}
+    /* Tabs */
+    .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+    .tab {
+      padding: 7px 14px; font-size: 12px; cursor: pointer;
+      color: var(--text3); border-bottom: 2px solid transparent;
+      margin-bottom: -1px; transition: all 0.1s;
+    }
+    .tab:hover { color: var(--text2); }
+    .tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
 
-/* ===== LINKS SECTION ===== */
-.add-form{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:20px;margin-bottom:24px;
-}
-.add-form-title{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em}
-.form-row{display:flex;gap:10px;flex-wrap:wrap}
-.form-field{flex:1;min-width:140px;display:flex;flex-direction:column;gap:5px}
-.form-label{font-size:11px;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em}
-.form-input{
-  background:var(--surface-2);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:8px 12px;
-  font-size:13px;color:var(--text-primary);
-  outline:none;transition:border-color 200ms;width:100%;
-}
-.form-input:focus{border-color:var(--accent)}
-.form-input::placeholder{color:var(--text-muted)}
-.btn-add{
-  padding:8px 20px;background:var(--accent);color:#fff;
-  border-radius:var(--card-radius);font-size:13px;font-weight:600;
-  transition:opacity 180ms;align-self:flex-end;white-space:nowrap;
-}
-body.workspace-nbc .btn-add{border-radius:2px;text-transform:uppercase;font-size:11px;letter-spacing:0.08em}
-.btn-add:hover{opacity:0.88}
+    /* Info banner */
+    .info-banner {
+      background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 8px; padding: 10px 13px; font-size: 11px;
+      color: var(--text2); line-height: 1.5; margin-bottom: 14px;
+    }
+    .info-banner a { color: var(--accent2); }
 
-.link-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:16px;
-  transition:transform 200ms,box-shadow 200ms,border-color 200ms;cursor:pointer;
-}
-body:not(.workspace-nbc) .link-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(0,0,0,0.15);
-  border-color:rgba(var(--accent-rgb),0.4);
-}
-body.workspace-nbc .link-card:hover{border-color:var(--accent)}
-.link-card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.link-favicon{width:20px;height:20px;border-radius:4px}
-.link-title{font-size:14px;font-weight:500;color:var(--text-primary);flex:1}
-.link-delete{font-size:13px;color:var(--text-muted);padding:2px 6px;border-radius:3px;opacity:0;transition:opacity 180ms,color 180ms}
-.link-card:hover .link-delete{opacity:1}
-.link-delete:hover{color:#e05252}
-.link-url{font-size:11px;color:var(--text-muted);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.link-note{font-size:12px;color:var(--text-secondary);line-height:1.45}
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed var(--border); border-radius: 8px;
+      padding: 28px; text-align: center; color: var(--text3);
+      cursor: pointer; transition: all 0.15s; font-size: 12px;
+    }
+    .drop-zone:hover, .drop-zone.over {
+      border-color: var(--accent);
+      background: rgba(124,58,237,0.05); color: var(--text2);
+    }
 
-/* ===== NOTES SECTION ===== */
-.note-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:20px;
-  display:flex;flex-direction:column;gap:10px;
-}
-.note-title-input{
-  background:transparent;border:none;outline:none;
-  font-family:var(--display-font);font-size:17px;font-weight:600;
-  color:var(--text-primary);width:100%;
-}
-body.workspace-nbc .note-title-input{font-style:italic;font-weight:400}
-.note-title-input::placeholder{color:var(--text-muted)}
-.note-body-input{
-  background:transparent;border:none;outline:none;
-  font-size:13px;color:var(--text-secondary);
-  line-height:1.65;resize:none;width:100%;min-height:80px;
-}
-.note-body-input::placeholder{color:var(--text-muted)}
-.note-footer{display:flex;justify-content:space-between;align-items:center}
-.note-date{font-size:11px;color:var(--text-muted)}
-.note-saved{font-size:11px;color:#4ade80;opacity:0;transition:opacity 400ms}
-.note-saved.show{opacity:1}
-.note-delete{font-size:12px;color:var(--text-muted);padding:3px 7px;border-radius:3px;transition:color 180ms}
-.note-delete:hover{color:#e05252}
+    /* Preview frame */
+    .pframe {
+      width: 100%; height: 74vh; border: none;
+      border-radius: 7px; background: #fff;
+    }
 
-/* ===== PROMPTS SECTION ===== */
-.prompt-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:20px;
-  display:flex;flex-direction:column;gap:12px;
-}
-.prompt-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.prompt-title{font-family:var(--display-font);font-size:16px;font-weight:600;color:var(--text-primary)}
-body.workspace-nbc .prompt-title{font-style:italic;font-weight:400}
-.context-badge{
-  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
-  padding:3px 8px;border-radius:4px;
-  background:var(--accent-bg);color:var(--accent);
-  border:1px solid rgba(var(--accent-rgb),0.2);white-space:nowrap;flex-shrink:0;
-}
-body.workspace-nbc .context-badge{border-radius:2px}
-.prompt-preview{
-  font-size:13px;color:var(--text-secondary);line-height:1.6;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
-}
-.prompt-footer{display:flex;align-items:center;justify-content:space-between}
-.prompt-meta{font-size:11px;color:var(--text-muted)}
-.prompt-actions{display:flex;gap:8px}
-.btn-copy{
-  padding:6px 14px;border-radius:var(--card-radius);
-  font-size:12px;font-weight:500;
-  background:var(--surface-2);color:var(--text-secondary);
-  border:1px solid var(--border);
-  transition:background 180ms,color 180ms,border-color 180ms;
-}
-.btn-copy:hover{background:var(--accent-bg);color:var(--accent);border-color:rgba(var(--accent-rgb),0.3)}
-.btn-copy.copied{background:rgba(74,222,128,0.1);color:#4ade80;border-color:rgba(74,222,128,0.3)}
-body.workspace-nbc .btn-copy{border-radius:2px;text-transform:uppercase;font-size:10px;letter-spacing:0.06em}
+    /* URL row */
+    .url-row {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 7px; padding: 7px 11px; font-size: 11px;
+      color: var(--text2); cursor: pointer; transition: all 0.12s;
+    }
+    .url-row:hover { border-color: var(--accent); color: var(--text); }
 
-/* ===== EMPTY STATES ===== */
-.empty-state{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:64px 32px;text-align:center;
-  border:1px dashed var(--border);border-radius:var(--card-radius);
-}
-.empty-icon{font-size:36px;margin-bottom:16px;opacity:0.5}
-.empty-title{font-family:var(--display-font);font-size:18px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
-body.workspace-nbc .empty-title{font-style:italic;font-weight:400}
-.empty-sub{font-size:13px;color:var(--text-secondary);margin-bottom:20px;max-width:280px;line-height:1.5}
-.btn-cta{
-  padding:9px 22px;background:var(--accent);color:#fff;
-  border-radius:var(--card-radius);font-size:13px;font-weight:600;
-  transition:opacity 180ms;
-}
-body.workspace-nbc .btn-cta{border-radius:2px;text-transform:uppercase;font-size:11px;letter-spacing:0.08em}
-.btn-cta:hover{opacity:0.87}
+    /* Toast */
+    .toast-wrap {
+      position: fixed; bottom: 16px; right: 16px;
+      display: flex; flex-direction: column; gap: 6px; z-index: 200;
+    }
+    .toast {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 13px; font-size: 12px;
+      display: flex; align-items: center; gap: 7px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      animation: tin 0.18s ease-out;
+    }
+    @keyframes tin { from { transform: translateX(120%); opacity: 0; } }
+    .toast.ok  { border-color: rgba(34,197,94,0.5); }
+    .toast.err { border-color: rgba(239,68,68,0.5); }
 
-/* ===== DEPLOY DRAWER ===== */
-#deploy-drawer{
-  position:fixed;bottom:0;left:240px;right:0;
-  background:var(--surface);border-top:1px solid var(--border);
-  transform:translateY(100%);
-  transition:transform 320ms cubic-bezier(0.16,1,0.3,1);
-  z-index:200;max-height:75vh;overflow-y:auto;
-  box-shadow:0 -8px 32px rgba(0,0,0,0.2);
-}
-#deploy-drawer.open{transform:translateY(0)}
-.drawer-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:20px 28px 16px;border-bottom:1px solid var(--border);
-}
-.drawer-title{font-family:var(--display-font);font-size:18px;font-weight:600;color:var(--text-primary)}
-body.workspace-nbc .drawer-title{font-style:italic;font-weight:400}
-.drawer-close{font-size:20px;color:var(--text-muted);padding:4px 8px;border-radius:4px;transition:color 180ms}
-.drawer-close:hover{color:var(--text-primary)}
-.drawer-body{padding:24px 28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.drawer-col{display:flex;flex-direction:column;gap:16px}
-
-.drop-zone{
-  border:2px dashed var(--border);border-radius:var(--card-radius);
-  padding:40px 24px;text-align:center;
-  transition:border-color 200ms,background 200ms;cursor:pointer;
-}
-.drop-zone.dragover{border-color:var(--accent);background:var(--accent-bg)}
-.drop-zone-icon{font-size:28px;margin-bottom:10px;opacity:0.4}
-.drop-zone-text{font-size:14px;color:var(--text-secondary);margin-bottom:4px}
-.drop-zone-sub{font-size:12px;color:var(--text-muted)}
-.file-input-label{
-  display:inline-block;margin-top:12px;padding:7px 16px;
-  border:1px solid var(--border);border-radius:var(--card-radius);
-  font-size:12px;color:var(--text-secondary);cursor:pointer;
-  transition:border-color 200ms,color 200ms;
-}
-.file-input-label:hover{border-color:var(--accent);color:var(--accent)}
-
-.deploy-status{
-  background:var(--surface-2);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:16px;
-  font-size:13px;color:var(--text-secondary);min-height:60px;
-  display:flex;align-items:center;gap:8px;
-}
-.status-dot{width:8px;height:8px;border-radius:50%;background:var(--text-muted);flex-shrink:0}
-.status-dot.pushing{background:#f59e0b;animation:pulse 1s ease infinite}
-.status-dot.deploying{background:#6366f1;animation:pulse 1s ease infinite}
-.status-dot.live{background:#4ade80}
-.status-dot.error{background:#e05252}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-
-.deploy-history h4,.github-settings h4{
-  font-size:11px;font-weight:600;text-transform:uppercase;
-  letter-spacing:0.08em;color:var(--text-muted);margin-bottom:10px;
-}
-.deploy-list{display:flex;flex-direction:column;gap:6px}
-.deploy-item{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 12px;background:var(--surface-2);
-  border-radius:var(--card-radius);border:1px solid var(--border);
-  font-size:12px;
-}
-.deploy-item-name{color:var(--text-secondary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.deploy-item-time{color:var(--text-muted);font-size:11px;white-space:nowrap}
-.deploy-item-live{color:#4ade80;font-size:13px}
-
-.github-settings{border-top:1px solid var(--border);padding-top:16px}
-.settings-row{display:flex;gap:8px;align-items:flex-end;margin-bottom:10px}
-.token-wrap{position:relative;flex:1}
-.token-wrap .form-input{padding-right:46px}
-.token-toggle{
-  position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  font-size:11px;font-weight:500;color:var(--text-muted);cursor:pointer;
-  transition:color 180ms;
-}
-.token-toggle:hover{color:var(--text-secondary)}
-.btn-sm{
-  padding:7px 14px;border-radius:var(--card-radius);
-  font-size:12px;font-weight:500;
-  background:var(--surface-2);color:var(--text-secondary);
-  border:1px solid var(--border);transition:background 180ms,color 180ms;
-  white-space:nowrap;
-}
-.btn-sm:hover{background:var(--accent-bg);color:var(--accent)}
-body.workspace-nbc .btn-sm{border-radius:2px;text-transform:uppercase;font-size:10px;letter-spacing:0.06em}
-.btn-sm.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.btn-sm.primary:hover{opacity:0.88}
-
-/* ===== MODALS ===== */
-.modal-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  z-index:400;display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity 200ms;
-}
-.modal-overlay.open{opacity:1;pointer-events:all}
-.modal-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:calc(var(--card-radius) + 4px);
-  padding:28px;width:100%;max-width:480px;
-  transform:scale(0.94);transition:transform 200ms ease;
-  position:relative;max-height:80vh;overflow-y:auto;
-}
-.modal-overlay.open .modal-card{transform:scale(1)}
-.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.modal-title{font-family:var(--display-font);font-size:18px;font-weight:600;color:var(--text-primary)}
-body.workspace-nbc .modal-title{font-style:italic;font-weight:400}
-.modal-close{font-size:20px;color:var(--text-muted);padding:4px 8px;border-radius:4px;transition:color 180ms}
-.modal-close:hover{color:var(--text-primary)}
-.modal-field{margin-bottom:14px}
-.modal-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin-bottom:6px;display:block}
-.modal-input{
-  width:100%;background:var(--surface-2);border:1px solid var(--border);
-  border-radius:var(--card-radius);padding:9px 12px;
-  font-size:13px;color:var(--text-primary);outline:none;
-  transition:border-color 200ms;
-}
-.modal-input:focus{border-color:var(--accent)}
-.modal-input::placeholder{color:var(--text-muted)}
-.modal-textarea{resize:vertical;min-height:100px;line-height:1.6}
-.modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
-.modal-status{font-size:12px;color:var(--text-secondary);padding:8px 0;min-height:28px}
-.modal-status.success{color:#4ade80}
-.modal-status.error{color:#e05252}
-
-/* ===== MOBILE ===== */
-@media(max-width:768px){
-  body{flex-direction:column}
-  #rail{
-    width:100%;min-width:0;height:auto;position:fixed;bottom:0;top:auto;
-    flex-direction:row;padding:0;border-right:none;
-    border-top:1px solid rgba(255,255,255,0.1);
-    z-index:300;overflow:hidden;
-  }
-  .rail-wordmark,.ws-switcher,.rail-divider,.section-nav,.rail-spacer,.rail-bottom{display:none}
-  .mobile-tab-bar{display:flex!important;width:100%;padding:8px 0 env(safe-area-inset-bottom,8px)}
-  .mobile-tab{
-    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-    padding:6px 4px;font-size:10px;color:rgba(255,255,255,0.45);
-    background:none;border:none;cursor:pointer;
-  }
-  .mobile-tab.active{color:rgba(255,255,255,0.9)}
-  .mobile-tab-dot{width:6px;height:6px;border-radius:50%;margin-bottom:2px}
-  #content{padding-bottom:70px}
-  .content-inner{padding:20px}
-  .grid-3,.grid-2{grid-template-columns:1fr}
-  #deploy-drawer{left:0}
-  .drawer-body{grid-template-columns:1fr}
-}
-@media(min-width:769px){
-  .mobile-tab-bar{display:none!important}
-  .mobile-section-tabs{display:none!important}
-}
-
-/* ===== CONTENT FADE ===== */
-.content-inner{transition:opacity 150ms ease}
-.content-inner.fade-out{opacity:0}
-
-/* ===== MOBILE SECTION TABS ===== */
-.mobile-section-tabs{
-  display:none;overflow-x:auto;
-  border-bottom:1px solid var(--border);
-  margin-bottom:20px;scrollbar-width:none;
-  flex-shrink:0;
-}
-.mobile-section-tabs::-webkit-scrollbar{display:none}
-@media(max-width:768px){
-  .mobile-section-tabs{display:flex}
-}
-.mobile-section-tab{
-  padding:10px 16px;font-size:13px;color:var(--text-muted);
-  white-space:nowrap;border-bottom:2px solid transparent;
-  transition:color 200ms,border-color 200ms;
-  background:none;border-left:none;border-right:none;border-top:none;cursor:pointer;
-}
-.mobile-section-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
-
-/* ===== SECTION HEADER FLEX ===== */
-.section-header-row{
-  display:flex;justify-content:space-between;align-items:flex-start;
-  margin-bottom:28px;
-}
-
-/* ===== TOOL MODAL — URL + ANALYZE ===== */
-.url-row{display:flex;gap:8px;align-items:stretch}
-.url-row .modal-input{flex:1}
-.btn-analyze{padding:0 16px;background:var(--accent);color:#fff;border:none;border-radius:var(--card-radius,8px);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;letter-spacing:0.02em;transition:opacity 150ms;flex-shrink:0}
-.btn-analyze:hover{opacity:0.85}
-.btn-analyze:disabled{opacity:0.45;cursor:default}
-body.workspace-nbc .btn-analyze{border-radius:2px;text-transform:uppercase;font-size:10px;letter-spacing:0.1em}
-.analyze-state{font-size:11px;min-height:16px;margin-top:5px;color:var(--text-muted)}
-.field-filled{border-color:var(--accent) !important;background:rgba(var(--accent-rgb),0.04) !important;transition:border-color 200ms,background 200ms}
-
-/* ===== MOVE POPOVER ===== */
-.move-popover{position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,0.28);z-index:600;min-width:136px;padding:4px;opacity:0;transform:scale(0.95) translateY(-4px);transition:opacity 140ms,transform 140ms;pointer-events:none}
-.move-popover.visible{opacity:1;transform:scale(1) translateY(0);pointer-events:all}
-body.workspace-nbc .move-popover{border-radius:4px}
-.move-popover-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);padding:6px 10px 2px;font-family:inherit}
-.move-popover-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:5px;font-size:12px;cursor:pointer;color:var(--text-secondary);width:100%;background:none;border:none;font-family:inherit;text-align:left;transition:background 120ms,color 120ms}
-.move-popover-item:hover{background:var(--surface-2);color:var(--text-primary)}
-.move-ws-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-body.workspace-nbc .move-popover-item{border-radius:2px;font-size:11px}
-.btn-move{opacity:0.55}
-.btn-move:hover{opacity:1}
-</style>
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border); }
+  </style>
 </head>
-<body class="workspace-canto">
+<body>
 
-<!-- LEFT RAIL -->
-<nav id="rail">
-  <div class="rail-wordmark" id="rail-wordmark">The Console</div>
-
-  <div class="ws-switcher">
-    <button class="ws-btn active" data-ws="canto" onclick="switchWorkspace('canto')">
-      <span class="ws-dot ws-dot-canto"></span>
-      <span class="ws-btn-label">Canto</span>
-    </button>
-    <button class="ws-btn" data-ws="nbc" onclick="switchWorkspace('nbc')">
-      <span class="ws-dot ws-dot-nbc"></span>
-      <span class="ws-btn-label">No Bad Company</span>
-    </button>
-    <button class="ws-btn" data-ws="personal" onclick="switchWorkspace('personal')">
-      <span class="ws-dot ws-dot-personal"></span>
-      <span class="ws-btn-label">Personal</span>
-    </button>
+<!-- ── Header ── -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">◈</div>
+    The Console
   </div>
-
-  <div class="rail-divider"></div>
-
-  <div class="section-nav">
-    <div class="section-label">Sections</div>
-    <button class="nav-btn active" data-section="tools" onclick="switchSection('tools')">
-      <span class="nav-icon">⊞</span> Tools
-    </button>
-    <button class="nav-btn" data-section="links" onclick="switchSection('links')">
-      <span class="nav-icon">🔗</span> Links
-    </button>
-    <button class="nav-btn" data-section="notes" onclick="switchSection('notes')">
-      <span class="nav-icon">✏</span> Notes
-    </button>
-    <button class="nav-btn" data-section="prompts" onclick="switchSection('prompts')">
-      <span class="nav-icon">✦</span> Prompts
-    </button>
+  <div class="header-sep"></div>
+  <div class="sync-pill" onclick="loadArtifacts()" id="syncPill">
+    <span class="status-dot dot-off" id="statusDot"></span>
+    <span id="statusTxt">Not connected</span>
   </div>
-
-  <div class="rail-spacer"></div>
-
-  <div class="rail-bottom">
-    <button class="rail-action-btn deploy-btn" onclick="toggleDrawer()">
-      <span>↑</span> Deploy
-    </button>
-    <button class="rail-action-btn" onclick="openSettings()">
-      <span>⚙</span> Settings
-    </button>
+  <div class="header-space"></div>
+  <div class="search-wrap">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="7"/><path d="m20 20-4.35-4.35"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Search artifacts…">
   </div>
+  <button class="btn btn-primary" onclick="showAdd()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+    New Artifact
+  </button>
+  <button class="btn btn-ghost btn-icon" onclick="showSettings()" title="Settings">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </button>
+</header>
 
-  <!-- Mobile tab bar (shown only on mobile) -->
-  <div class="mobile-tab-bar">
-    <button class="mobile-tab active" data-ws="canto" onclick="switchWorkspace('canto')">
-      <span class="mobile-tab-dot" style="background:#D95A00"></span>
-      Canto
-    </button>
-    <button class="mobile-tab" data-ws="nbc" onclick="switchWorkspace('nbc')">
-      <span class="mobile-tab-dot" style="background:#BC311D"></span>
-      NBC
-    </button>
-    <button class="mobile-tab" data-ws="personal" onclick="switchWorkspace('personal')">
-      <span class="mobile-tab-dot" style="background:#2C5F4A"></span>
-      Personal
-    </button>
-  </div>
-</nav>
+<!-- ── Layout ── -->
+<div class="layout">
 
-<!-- MAIN CONTENT -->
-<main id="content">
-  <div class="content-inner" id="content-inner">
-    <!-- rendered by JS -->
-  </div>
-</main>
-
-<!-- DEPLOY DRAWER -->
-<div id="deploy-drawer">
-  <div class="drawer-header">
-    <span class="drawer-title">Deploy to GitHub &amp; Netlify</span>
-    <button class="drawer-close" onclick="toggleDrawer()">&#x2715;</button>
-  </div>
-  <div class="drawer-body">
-    <div class="drawer-col">
-      <div class="drop-zone" id="drop-zone"
-        ondragover="handleDragOver(event)"
-        ondragleave="handleDragLeave(event)"
-        ondrop="handleDrop(event)"
-        onclick="document.getElementById('file-input').click()">
-        <div class="drop-zone-icon">&#x1F4C4;</div>
-        <div class="drop-zone-text">Drop an HTML file here</div>
-        <div class="drop-zone-sub">or click to browse</div>
-        <span class="file-input-label">Browse file</span>
-        <input type="file" id="file-input" accept=".html" style="display:none" onchange="handleFileInput(event)">
-      </div>
-      <div class="deploy-status" id="deploy-status">
-        <span class="status-dot" id="status-dot"></span>
-        <span id="status-text">Ready to deploy</span>
-      </div>
-      <div class="deploy-history">
-        <h4>Recent Deploys</h4>
-        <div class="deploy-list" id="deploy-list"></div>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">Library</div>
+      <div class="nav-item active" data-proj="all" onclick="filterProj('all', this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/>
+          <rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/>
+        </svg>
+        All Artifacts
+        <span class="nav-count" id="cnt-all">—</span>
       </div>
     </div>
-    <div class="drawer-col">
-      <div class="github-settings">
-        <h4>GitHub Settings</h4>
-        <div class="modal-field">
-          <label class="modal-label">Repository</label>
-          <input class="modal-input" type="text" id="drawer-repo" placeholder="owner/repo">
+    <div class="nav-section" id="projNav">
+      <div class="nav-label">Projects</div>
+    </div>
+    <div class="nav-section" style="margin-top:auto">
+      <div class="nav-label">Links</div>
+      <div class="nav-item" onclick="window.open('https://github.com/adamsemien/Adam-tools','_blank')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+        </svg>
+        GitHub Repo
+      </div>
+      <div class="nav-item" onclick="window.open('https://adam-tools.netlify.app','_blank')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Live Site
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="toolbar">
+      <span class="toolbar-title" id="toolbarTitle">All Artifacts</span>
+      <span class="toolbar-count" id="toolbarCount"></span>
+      <div class="toolbar-space"></div>
+      <div class="view-btns">
+        <button class="active" id="vGrid" onclick="setView('grid',this)" title="Grid">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/>
+            <rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/>
+          </svg>
+        </button>
+        <button id="vList" onclick="setView('list',this)" title="List">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="artifacts-wrap" id="artifactsWrap">
+      <div class="state-box" id="emptyState">
+        <div class="icon">◈</div>
+        <h3>Connect to GitHub</h3>
+        <p>Add your GitHub token in Settings to load all your artifacts.</p>
+        <button class="btn btn-primary" onclick="showSettings()">Open Settings</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ── Add Artifact Modal ── -->
+<div class="overlay hidden" id="addModal">
+  <div class="modal modal-sm">
+    <div class="modal-head">
+      <h3>New Artifact</h3>
+      <button class="close-btn" onclick="hide('addModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <div class="tab active" onclick="switchAddTab('paste',this)">Paste HTML</div>
+        <div class="tab" onclick="switchAddTab('upload',this)">Upload File</div>
+      </div>
+
+      <div id="tab-paste">
+        <div class="fgroup">
+          <label class="flabel">Artifact filename</label>
+          <input class="finput" id="newName" type="text" placeholder="e.g. canto-dashboard-v2">
+          <div class="fhint">Will be saved as <code>[name].html</code> and deployed automatically at <code>adam-tools.netlify.app/[name].html</code></div>
         </div>
-        <div class="modal-field">
-          <label class="modal-label">GitHub Token</label>
-          <div style="position:relative">
-            <input class="modal-input" type="password" id="drawer-token" placeholder="ghp_..." style="padding-right:46px">
-            <span class="token-toggle" onclick="toggleTokenVis('drawer-token',this)">Show</span>
+        <div class="fgroup">
+          <label class="flabel">HTML Content</label>
+          <textarea class="finput ftextarea" id="newContent" placeholder="<!DOCTYPE html>&#10;<html>…"></textarea>
+        </div>
+      </div>
+
+      <div id="tab-upload" style="display:none">
+        <div class="fgroup">
+          <div class="drop-zone" id="dz" onclick="document.getElementById('fInput').click()">
+            <div style="font-size:28px;margin-bottom:7px">📄</div>
+            <div>Drop an HTML file here or click to browse</div>
+            <div style="font-size:10px;margin-top:4px;color:var(--text3)">Supports .html files</div>
+          </div>
+          <input type="file" id="fInput" accept=".html" style="display:none" onchange="handleFile(event)">
+        </div>
+        <div id="uploadMeta" style="display:none">
+          <div class="fgroup">
+            <label class="flabel">Filename</label>
+            <input class="finput" id="uploadName" type="text">
           </div>
         </div>
-        <div style="display:flex;gap:8px">
-          <button class="btn-sm" onclick="testConnection()">Test Connection</button>
-          <button class="btn-sm primary" onclick="saveDrawerSettings()">Save</button>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="hide('addModal')">Cancel</button>
+      <button class="btn btn-primary" id="pushBtn" onclick="pushArtifact()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        Push to GitHub
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Preview Modal ── -->
+<div class="overlay hidden" id="previewModal">
+  <div class="modal modal-lg">
+    <div class="modal-head">
+      <h3 id="pvTitle">Preview</h3>
+      <div style="display:flex;gap:7px;align-items:center">
+        <div class="url-row" id="pvUrl" onclick="copyPvUrl()" style="font-size:10px;padding:4px 9px">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span id="pvUrlText">—</span>
         </div>
-        <div class="modal-status" id="drawer-conn-status"></div>
+        <button class="btn btn-ghost btn-sm" id="pvOpenBtn">
+          Open ↗
+        </button>
+        <button class="btn btn-ghost btn-sm" id="pvCopyBtn" onclick="copyPvUrl()">
+          Copy URL
+        </button>
+        <button class="close-btn" onclick="closePv()">×</button>
       </div>
+    </div>
+    <div class="modal-body" style="padding:10px">
+      <iframe class="pframe" id="pframe" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
     </div>
   </div>
 </div>
 
-<!-- SETTINGS MODAL -->
-<div class="modal-overlay" id="settings-modal" onclick="closeOnOverlay(event,'settings-modal')">
-  <div class="modal-card">
-    <div class="modal-header">
-      <span class="modal-title">Settings</span>
-      <button class="modal-close" onclick="closeModal('settings-modal')">&#x2715;</button>
+<!-- ── Settings Modal ── -->
+<div class="overlay hidden" id="settingsModal">
+  <div class="modal modal-sm">
+    <div class="modal-head">
+      <h3>Settings</h3>
+      <button class="close-btn" onclick="hide('settingsModal')">×</button>
     </div>
-    <div class="modal-field">
-      <label class="modal-label">GitHub Repository</label>
-      <input class="modal-input" type="text" id="settings-repo" placeholder="owner/repo">
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">GitHub Token</label>
-      <div style="position:relative">
-        <input class="modal-input" type="password" id="settings-token" placeholder="ghp_..." style="padding-right:46px">
-        <span class="token-toggle" onclick="toggleTokenVis('settings-token',this)">Show</span>
+    <div class="modal-body">
+      <div class="info-banner">
+        Connect your GitHub repo to sync all HTML artifacts. Your token is stored locally in your browser — never sent anywhere except GitHub's API.
+        <br><br>
+        <strong style="color:var(--accent2)">How it works:</strong> Every .html file in your repo (except index.html) appears as an artifact. Netlify auto-deploys on every push — so anything you add here goes live in ~30 seconds.
+      </div>
+      <div class="fgroup">
+        <label class="flabel">GitHub Personal Access Token</label>
+        <input class="finput" id="sToken" type="password" placeholder="ghp_…">
+        <div class="fhint">Needs <code>repo</code> (read + write) scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=The+Console" target="_blank" style="color:var(--accent2)">Create one →</a></div>
+      </div>
+      <div class="fgroup">
+        <label class="flabel">GitHub Repository</label>
+        <input class="finput" id="sRepo" type="text" placeholder="username/repo">
+      </div>
+      <div class="fgroup">
+        <label class="flabel">Deployed Base URL</label>
+        <input class="finput" id="sBase" type="text" placeholder="https://adam-tools.netlify.app">
+      </div>
+      <div style="display:flex;align-items:center;gap:9px">
+        <button class="btn btn-ghost btn-sm" onclick="testConn()">Test Connection</button>
+        <span id="connResult" style="font-size:11px;color:var(--text3)"></span>
       </div>
     </div>
-    <div class="modal-status" id="settings-status"></div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="testConnectionModal()">Test Connection</button>
-      <button class="btn-add" onclick="saveSettings()">Save</button>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="hide('settingsModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSettings()">Save & Sync</button>
     </div>
   </div>
 </div>
 
-<!-- ADD TOOL MODAL -->
-<div class="modal-overlay" id="tool-modal" onclick="closeOnOverlay(event,'tool-modal')">
-  <div class="modal-card">
-    <div class="modal-header">
-      <span class="modal-title">Add Tool</span>
-      <button class="modal-close" onclick="closeModal('tool-modal')">&#x2715;</button>
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">URL</label>
-      <div class="url-row">
-        <input class="modal-input" type="url" id="tool-url-input" placeholder="https://... or /filename.html" oninput="onToolUrlChange(this.value)">
-        <button class="btn-analyze" id="analyze-btn" onclick="analyzeTool()">✦ Analyze</button>
-      </div>
-      <div class="analyze-state" id="analyze-state"></div>
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">Name</label>
-      <input class="modal-input" type="text" id="tool-name-input" placeholder="Tool name">
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">Description</label>
-      <textarea class="modal-input modal-textarea" id="tool-desc-input" placeholder="What does this tool do?" style="min-height:72px"></textarea>
-    </div>
-    <div class="modal-field" style="display:flex;gap:12px">
-      <div style="flex:1">
-        <label class="modal-label">Category</label>
-        <select class="modal-input" id="tool-cat-input"></select>
-      </div>
-      <div style="flex:1">
-        <label class="modal-label">Type</label>
-        <select class="modal-input" id="tool-type-input">
-          <option value="Built in Claude">Built in Claude</option>
-          <option value="External tool">External tool</option>
-          <option value="Deployed file">Deployed file</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('tool-modal')">Cancel</button>
-      <button class="btn-add" onclick="saveTool()">Add Tool</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADD PROMPT MODAL -->
-<div class="modal-overlay" id="prompt-modal" onclick="closeOnOverlay(event,'prompt-modal')">
-  <div class="modal-card">
-    <div class="modal-header">
-      <span class="modal-title">Add Prompt</span>
-      <button class="modal-close" onclick="closeModal('prompt-modal')">&#x2715;</button>
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">Title</label>
-      <input class="modal-input" type="text" id="prompt-title-input" placeholder="Prompt name">
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">Context Tag</label>
-      <input class="modal-input" type="text" id="prompt-context-input" placeholder="e.g. Writing, Code, Research">
-    </div>
-    <div class="modal-field">
-      <label class="modal-label">Prompt Text</label>
-      <textarea class="modal-input modal-textarea" id="prompt-text-input" placeholder="Enter your prompt..."></textarea>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('prompt-modal')">Cancel</button>
-      <button class="btn-add" onclick="savePrompt()">Add Prompt</button>
-    </div>
-  </div>
-</div>
+<!-- Toast container -->
+<div class="toast-wrap" id="toasts"></div>
 
 <script>
-/* ===== STATE ===== */
-var activeWorkspace = 'canto';
-var activeSection = 'tools';
-var drawerOpen = false;
-var noteTimers = {};
+const PROJECTS = {
+  canto:   { label: 'Canto',   color: '#a78bfa', bg: 'rgba(124,58,237,0.18)',  icon: '🎵' },
+  nbc:     { label: 'NBC',     color: '#fb923c', bg: 'rgba(249,115,22,0.18)',  icon: '🏢' },
+  partner: { label: 'Partner', color: '#38bdf8', bg: 'rgba(14,165,233,0.18)', icon: '🤝' },
+  docs:    { label: 'Docs',    color: '#4ade80', bg: 'rgba(34,197,94,0.18)',   icon: '📋' },
+  other:   { label: 'Other',   color: '#94a3b8', bg: 'rgba(148,163,184,0.18)', icon: '📄' },
+};
 
-/* ===== SEED DATA ===== */
-var SEED_TOOLS_CANTO = [
-  {id:uid(),name:'Master Partner Plan 2026',url:'https://adam-tools.netlify.app/canto-master-plan-2026.html',desc:'Complete FY2026 partner acquisition plan — monthly calendar, full strategy, and partner prospecting with scored agencies and outreach sequences.',category:'Strategy',type:'Deployed file',created:Date.now()},
-  {id:uid(),name:'Integration Marketplace',url:'/canto-marketplace-v5.html',desc:'Browse 36+ integration cards across E-Commerce, CMS, PIM, Social, and ERP.',category:'Sales Tools',type:'Built in Claude',created:Date.now()},
-  {id:uid(),name:'Integration Survey',url:'/canto-integration-survey.html',desc:'Internal rep survey to prioritize integration development and build internal business case.',category:'Sales Tools',type:'Built in Claude',created:Date.now()},
-  {id:uid(),name:'Partner Submission Portal',url:'/canto-partner-submit.html',desc:'Streamlined partner application and submission workflow.',category:'Partner Program',type:'Built in Claude',created:Date.now()},
-  {id:uid(),name:'Partner Portal Walkthrough',url:'/canto-partner-submit-walkthrough.html',desc:'Step-by-step walkthrough guide for the partner onboarding process.',category:'Partner Program',type:'Built in Claude',created:Date.now()}
-];
-var SEED_LINKS_CANTO = [
-  {id:uid(),title:'Canto DAM',url:'https://app.canto.com',note:''},
-  {id:uid(),title:'Canto Integrations Page',url:'https://www.canto.com/integrations/',note:''},
-  {id:uid(),title:'Bynder Marketplace',url:'https://marketplace.bynder.com/en-US/listing',note:''},
-  {id:uid(),title:'Adam-tools GitHub',url:'https://github.com/adamsemien/Adam-tools',note:''},
-  {id:uid(),title:'Netlify Dashboard',url:'https://app.netlify.com',note:''}
-];
-
-/* ===== LOCALSTORAGE ===== */
-function ls(key, def) {
-  try { var v = localStorage.getItem(key); return v != null ? JSON.parse(v) : def; } catch(e) { return def; }
-}
-function lsSet(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+function detectProject(name) {
+  const n = name.toLowerCase();
+  if (n.startsWith('canto')) return 'canto';
+  if (n.startsWith('nbc') || n.includes('no-bad') || n.includes('nbc-')) return 'nbc';
+  if (n.includes('partner') || n.startsWith('partner')) return 'partner';
+  if (n.startsWith('doc') || n.includes('walkthrough') || n.includes('plan') || n.includes('strategy')) return 'docs';
+  return 'other';
 }
 
-function getTools(ws) { return ls('console_tools_' + ws, null); }
-function setTools(ws, data) { lsSet('console_tools_' + ws, data); }
-function getLinks(ws) { return ls('console_links_' + ws, []); }
-function setLinks(ws, data) { lsSet('console_links_' + ws, data); }
-function getNotes(ws) { return ls('console_notes_' + ws, []); }
-function setNotes(ws, data) { lsSet('console_notes_' + ws, data); }
-function getPrompts(ws) { return ls('console_prompts_' + ws, []); }
-function setPrompts(ws, data) { lsSet('console_prompts_' + ws, data); }
-function getDeploys() { return ls('console_deploys', []); }
-function setDeploys(data) { lsSet('console_deploys', data.slice(0, 20)); }
-
-function uid() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
-
-/* ===== INIT ===== */
-function init() {
-  activeWorkspace = ls('console_active_workspace', 'canto');
-  activeSection = ls('console_active_section', 'tools');
-
-  // Seed data on first load
-  if (getTools('canto') === null) { setTools('canto', SEED_TOOLS_CANTO); }
-  if (ls('console_links_canto', null) === null) { setLinks('canto', SEED_LINKS_CANTO); }
-
-  applyWorkspace(activeWorkspace);
-  renderSection();
-  updateRailNav();
-  loadDrawerSettings();
-  renderDeployHistory();
+function prettify(filename) {
+  return filename.replace(/\.html$/i, '').replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-/* ===== WORKSPACE ===== */
-function switchWorkspace(ws) {
-  if (ws === activeWorkspace) return;
-  document.body.classList.add('ws-transition');
-  activeWorkspace = ws;
-  lsSet('console_active_workspace', ws);
-  applyWorkspace(ws);
-  fadeContent(renderSection);
-  setTimeout(function() { document.body.classList.remove('ws-transition'); }, 400);
+function fmtDate(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-function applyWorkspace(ws) {
-  ['canto','nbc','personal'].forEach(function(w) {
-    document.body.classList.remove('workspace-' + w);
-  });
-  document.body.classList.add('workspace-' + ws);
+let S = {
+  artifacts: [],
+  filtered: [],
+  proj: 'all',
+  view: 'grid',
+  q: '',
+  cfg: { token: '', repo: 'adamsemien/Adam-tools', base: 'https://adam-tools.netlify.app' },
+};
 
-  var wm = document.getElementById('rail-wordmark');
-  if (ws === 'nbc') {
-    wm.className = 'rail-wordmark nbc-wordmark';
-    wm.textContent = 'NO BAD\nCOMPANY';
-  } else {
-    wm.className = 'rail-wordmark';
-    wm.textContent = 'The Console';
+function loadCfg() {
+  const raw = localStorage.getItem('console_v2');
+  if (raw) {
+    try { S.cfg = { ...S.cfg, ...JSON.parse(raw) }; } catch(e) {}
   }
-
-  document.querySelectorAll('.ws-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.dataset.ws === ws);
-  });
-  document.querySelectorAll('.mobile-tab').forEach(function(btn) {
-    btn.classList.toggle('active', btn.dataset.ws === ws);
-  });
-}
-
-/* ===== SECTION SWITCHING ===== */
-function switchSection(s) {
-  activeSection = s;
-  lsSet('console_active_section', s);
-  updateRailNav();
-  fadeContent(renderSection);
-}
-
-function updateRailNav() {
-  document.querySelectorAll('.nav-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.dataset.section === activeSection);
-  });
-}
-
-function fadeContent(cb) {
-  var ci = document.getElementById('content-inner');
-  ci.classList.add('fade-out');
-  setTimeout(function() {
-    cb();
-    ci.classList.remove('fade-out');
-  }, 150);
-}
-
-/* ===== RENDER ROUTER ===== */
-function renderSection() {
-  var ci = document.getElementById('content-inner');
-  var html = '';
-  switch (activeSection) {
-    case 'tools':   html = renderTools();   break;
-    case 'links':   html = renderLinks();   break;
-    case 'notes':   html = renderNotes();   break;
-    case 'prompts': html = renderPrompts(); break;
-  }
-  // Prepend mobile section tabs
-  var tabsHtml = '<div class="mobile-section-tabs">';
-  ['tools','links','notes','prompts'].forEach(function(s) {
-    tabsHtml += '<button class="mobile-section-tab' + (s === activeSection ? ' active' : '') + '" onclick="switchSection(\'' + s + '\')">' + s.charAt(0).toUpperCase() + s.slice(1) + '</button>';
-  });
-  tabsHtml += '</div>';
-  ci.innerHTML = tabsHtml + html;
-  bindAfterRender();
-}
-
-function bindAfterRender() {
-  document.querySelectorAll('.note-body-input').forEach(function(ta) { autoResizeTA(ta); });
-}
-
-/* ===== ESCAPE ===== */
-function esc(str) {
-  return String(str || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-/* ===== TOOLS ===== */
-function renderTools() {
-  var tools = getTools(activeWorkspace) || [];
-  var ws = activeWorkspace;
-  var html = '<div class="section-header-row"><div><h1 class="section-title">Tools</h1><p class="section-subtitle">Your workspace toolkit</p></div>' +
-    '<button class="btn-add" onclick="openToolModal()">+ Add Tool</button></div>';
-
-  if (tools.length === 0) {
-    return html + '<div class="empty-state">' +
-      '<div class="empty-icon">&#x229E;</div>' +
-      '<div class="empty-title">No tools yet</div>' +
-      '<div class="empty-sub">Drop an HTML file or add a link to get started</div>' +
-      '<button class="btn-cta" onclick="openToolModal()">Add your first tool</button>' +
-      '</div>';
-  }
-
-  if (ws === 'nbc') {
-    html += '<div class="nbc-list">';
-    tools.forEach(function(t) {
-      html += '<div class="nbc-row">' +
-        '<div class="nbc-row-info">' +
-          '<div class="nbc-row-cat">' + esc(t.category || '') + '</div>' +
-          '<div class="nbc-row-name">' + esc(t.name) + '</div>' +
-          '<div class="nbc-row-type">' + esc(t.type || '') + '</div>' +
-        '</div>' +
-        '<div class="nbc-row-actions">' +
-          '<button class="btn-ghost btn-move" onclick="openMovePopover(event,\'' + t.id + '\')">Move &#x2192;</button>' +
-          '<button class="btn-ghost" onclick="copyToClipboard(\'' + esc(t.url) + '\',this,\'Copy\')">Copy</button>' +
-          '<button class="btn-ghost" onclick="deleteTool(\'' + t.id + '\')">Delete</button>' +
-        '</div>' +
-        '<a href="' + esc(t.url) + '" target="_blank" class="nbc-row-arrow">&#x2192;</a>' +
-      '</div>';
-    });
-    html += '</div>';
-  } else {
-    var gridClass = ws === 'personal' ? 'grid-2' : 'grid-3';
-    html += '<div class="' + gridClass + '">';
-    tools.forEach(function(t) {
-      html += '<div class="card" style="display:flex;flex-direction:column">' +
-        '<div class="card-top">' +
-          '<span class="card-tag">' + esc(t.category || '') + '</span>' +
-          '<span class="type-badge">' + esc(t.type || '') + '</span>' +
-        '</div>' +
-        '<div class="card-name">' + esc(t.name) + '</div>' +
-        '<div class="card-desc">' + esc(t.desc || '') + '</div>' +
-        '<div class="card-actions">' +
-          '<a href="' + esc(t.url) + '" target="_blank" class="btn-open">Open &#x2197;</a>' +
-          '<button class="btn-ghost" onclick="copyToClipboard(\'' + esc(t.url) + '\',this,\'Copy link\')">Copy link</button>' +
-          '<button class="btn-ghost btn-move" onclick="openMovePopover(event,\'' + t.id + '\')">Move</button>' +
-          '<button class="btn-delete" onclick="deleteTool(\'' + t.id + '\')">&#x2715;</button>' +
-        '</div>' +
-      '</div>';
-    });
-    html += '</div>';
-  }
-  return html;
-}
-
-function deleteTool(id) {
-  var tools = getTools(activeWorkspace) || [];
-  setTools(activeWorkspace, tools.filter(function(t) { return t.id !== id; }));
-  renderSection();
-}
-
-function copyToClipboard(text, btn, origLabel) {
-  navigator.clipboard.writeText(text).then(function() {
-    var orig = origLabel || btn.textContent;
-    btn.textContent = 'Copied \u2713';
-    btn.style.color = '#4ade80';
-    setTimeout(function() { btn.textContent = orig; btn.style.color = ''; }, 2000);
-  });
-}
-
-/* ===== LINKS ===== */
-function renderLinks() {
-  var links = getLinks(activeWorkspace);
-  var html = '<div class="section-header-row"><div><h1 class="section-title">Links</h1><p class="section-subtitle">Quick access to everything you use</p></div></div>' +
-    '<div class="add-form">' +
-      '<div class="add-form-title">Add Link</div>' +
-      '<div class="form-row">' +
-        '<div class="form-field"><label class="form-label">Title</label><input class="form-input" type="text" id="link-title" placeholder="Link title"></div>' +
-        '<div class="form-field" style="flex:2"><label class="form-label">URL</label><input class="form-input" type="url" id="link-url" placeholder="https://..."></div>' +
-        '<div class="form-field"><label class="form-label">Note</label><input class="form-input" type="text" id="link-note" placeholder="Optional note"></div>' +
-        '<button class="btn-add" onclick="addLink()">Add</button>' +
-      '</div>' +
-    '</div>';
-
-  if (links.length === 0) {
-    return html + '<div class="empty-state">' +
-      '<div class="empty-icon">&#x1F517;</div>' +
-      '<div class="empty-title">No saved links</div>' +
-      '<div class="empty-sub">Add anything you open regularly</div>' +
-      '</div>';
-  }
-
-  html += '<div class="grid-2">';
-  links.forEach(function(l) {
-    var domain = getDomain(l.url);
-    var favicon = 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(domain) + '&sz=32';
-    html += '<div class="link-card" onclick="openLink(\'' + esc(l.url) + '\')">' +
-      '<div class="link-card-top">' +
-        '<img class="link-favicon" src="' + favicon + '" onerror="this.style.display=\'none\'" alt="">' +
-        '<span class="link-title">' + esc(l.title) + '</span>' +
-        '<button class="link-delete" onclick="event.stopPropagation();deleteLink(\'' + l.id + '\')">&#x00D7;</button>' +
-      '</div>' +
-      '<div class="link-url">' + esc(l.url) + '</div>' +
-      (l.note ? '<div class="link-note">' + esc(l.note) + '</div>' : '') +
-    '</div>';
-  });
-  html += '</div>';
-  return html;
-}
-
-function addLink() {
-  var title = document.getElementById('link-title').value.trim();
-  var url = document.getElementById('link-url').value.trim();
-  var note = document.getElementById('link-note').value.trim();
-  if (!title || !url) return;
-  var links = getLinks(activeWorkspace);
-  links.unshift({id: uid(), title: title, url: url, note: note, created: Date.now()});
-  setLinks(activeWorkspace, links);
-  renderSection();
-}
-
-function deleteLink(id) {
-  setLinks(activeWorkspace, getLinks(activeWorkspace).filter(function(l) { return l.id !== id; }));
-  renderSection();
-}
-
-function openLink(url) { window.open(url, '_blank'); }
-
-function getDomain(url) {
-  try { return new URL(url).hostname; } catch(e) { return url; }
-}
-
-/* ===== NOTES ===== */
-function renderNotes() {
-  var notes = getNotes(activeWorkspace);
-  var html = '<div class="section-header-row">' +
-    '<div><h1 class="section-title">Notes</h1><p class="section-subtitle">Auto-saves as you type</p></div>' +
-    '<button class="btn-add" onclick="addNote()">+ New Note</button>' +
-    '</div>';
-
-  if (notes.length === 0) {
-    return html + '<div class="empty-state">' +
-      '<div class="empty-icon">&#x270F;&#xFE0F;</div>' +
-      '<div class="empty-title">Nothing written yet</div>' +
-      '<div class="empty-sub">Notes auto-save as you type</div>' +
-      '<button class="btn-cta" onclick="addNote()">New note</button>' +
-      '</div>';
-  }
-
-  html += '<div class="grid-2">';
-  notes.forEach(function(n) {
-    var d = new Date(n.updated || n.created || Date.now());
-    var dateStr = d.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
-    html += '<div class="note-card">' +
-      '<input class="note-title-input" type="text" placeholder="Note title" value="' + esc(n.title || '') + '"' +
-        ' data-note-id="' + n.id + '" data-field="title" oninput="onNoteChange(event)">' +
-      '<textarea class="note-body-input" placeholder="Start writing..." data-note-id="' + n.id + '" data-field="body"' +
-        ' oninput="autoResizeTA(this);onNoteChange(event)">' + esc(n.body || '') + '</textarea>' +
-      '<div class="note-footer">' +
-        '<span class="note-date">' + dateStr + '</span>' +
-        '<span class="note-saved" id="note-saved-' + n.id + '">Saved \u2713</span>' +
-        '<button class="note-delete" onclick="deleteNote(\'' + n.id + '\')">Delete</button>' +
-      '</div>' +
-    '</div>';
-  });
-  html += '</div>';
-  return html;
-}
-
-function autoResizeTA(ta) {
-  ta.style.height = 'auto';
-  ta.style.height = ta.scrollHeight + 'px';
-}
-
-function onNoteChange(e) {
-  var id = e.target.dataset.noteId;
-  var field = e.target.dataset.field;
-  var val = e.target.value;
-  if (noteTimers[id]) clearTimeout(noteTimers[id]);
-  noteTimers[id] = setTimeout(function() {
-    var notes = getNotes(activeWorkspace);
-    var note = notes.find(function(n) { return n.id === id; });
-    if (note) {
-      note[field] = val;
-      note.updated = Date.now();
-      setNotes(activeWorkspace, notes);
-      var saved = document.getElementById('note-saved-' + id);
-      if (saved) {
-        saved.classList.add('show');
-        setTimeout(function() { saved.classList.remove('show'); }, 1500);
-      }
-    }
-  }, 500);
-}
-
-function addNote() {
-  var notes = getNotes(activeWorkspace);
-  notes.unshift({id: uid(), title: '', body: '', created: Date.now(), updated: Date.now()});
-  setNotes(activeWorkspace, notes);
-  fadeContent(renderSection);
-}
-
-function deleteNote(id) {
-  setNotes(activeWorkspace, getNotes(activeWorkspace).filter(function(n) { return n.id !== id; }));
-  renderSection();
-}
-
-/* ===== PROMPTS ===== */
-function renderPrompts() {
-  var prompts = getPrompts(activeWorkspace);
-  var html = '<div class="section-header-row">' +
-    '<div><h1 class="section-title">Prompts</h1><p class="section-subtitle">One-click access to your best prompts</p></div>' +
-    '<button class="btn-add" onclick="openModal(\'prompt-modal\')">+ Add Prompt</button>' +
-    '</div>';
-
-  if (prompts.length === 0) {
-    return html + '<div class="empty-state">' +
-      '<div class="empty-icon">&#x2726;</div>' +
-      '<div class="empty-title">No saved prompts</div>' +
-      '<div class="empty-sub">Save prompts you use often so they\'re one click away</div>' +
-      '<button class="btn-cta" onclick="openModal(\'prompt-modal\')">Add prompt</button>' +
-      '</div>';
-  }
-
-  html += '<div class="grid-2">';
-  prompts.forEach(function(p) {
-    html += '<div class="prompt-card">' +
-      '<div class="prompt-card-top">' +
-        '<span class="prompt-title">' + esc(p.title) + '</span>' +
-        '<span class="context-badge">' + esc(p.context || 'General') + '</span>' +
-      '</div>' +
-      '<div class="prompt-preview">' + esc(p.text) + '</div>' +
-      '<div class="prompt-footer">' +
-        '<span class="prompt-meta">Used ' + (p.times_copied || 0) + '\u00D7</span>' +
-        '<div class="prompt-actions">' +
-          '<button class="btn-copy" id="pcopy-' + p.id + '" onclick="copyPrompt(\'' + p.id + '\',this)">Copy Prompt</button>' +
-          '<button class="btn-delete" onclick="deletePrompt(\'' + p.id + '\')">&#x2715;</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  });
-  html += '</div>';
-  return html;
-}
-
-function copyPrompt(id, btn) {
-  var prompts = getPrompts(activeWorkspace);
-  var p = prompts.find(function(x) { return x.id === id; });
-  if (!p) return;
-  navigator.clipboard.writeText(p.text).then(function() {
-    p.times_copied = (p.times_copied || 0) + 1;
-    setPrompts(activeWorkspace, prompts);
-    btn.textContent = 'Copied \u2713';
-    btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = 'Copy Prompt'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-
-function deletePrompt(id) {
-  setPrompts(activeWorkspace, getPrompts(activeWorkspace).filter(function(p) { return p.id !== id; }));
-  renderSection();
-}
-
-function savePrompt() {
-  var title = document.getElementById('prompt-title-input').value.trim();
-  var context = document.getElementById('prompt-context-input').value.trim();
-  var text = document.getElementById('prompt-text-input').value.trim();
-  if (!title || !text) return;
-  var prompts = getPrompts(activeWorkspace);
-  prompts.unshift({id: uid(), title: title, context: context, text: text, times_copied: 0, created: Date.now()});
-  setPrompts(activeWorkspace, prompts);
-  closeModal('prompt-modal');
-  document.getElementById('prompt-title-input').value = '';
-  document.getElementById('prompt-context-input').value = '';
-  document.getElementById('prompt-text-input').value = '';
-  renderSection();
-}
-
-/* ===== DEPLOY DRAWER ===== */
-function toggleDrawer() {
-  drawerOpen = !drawerOpen;
-  document.getElementById('deploy-drawer').classList.toggle('open', drawerOpen);
-  if (drawerOpen) { renderDeployHistory(); }
-}
-
-function handleDragOver(e) {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.add('dragover');
-}
-function handleDragLeave(e) {
-  document.getElementById('drop-zone').classList.remove('dragover');
-}
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.remove('dragover');
-  var file = e.dataTransfer.files[0];
-  if (file) deployFile(file);
-}
-function handleFileInput(e) {
-  var file = e.target.files[0];
-  if (file) deployFile(file);
-}
-
-function setDeployStatus(state, html) {
-  document.getElementById('status-dot').className = 'status-dot' + (state ? ' ' + state : '');
-  document.getElementById('status-text').innerHTML = html;
-}
-
-function deployFile(file) {
-  var repo = document.getElementById('drawer-repo').value.trim() || ls('console_github_repo', 'adamsemien/Adam-tools');
-  var token = document.getElementById('drawer-token').value.trim() || ls('console_github_token', '');
-  if (!token) { setDeployStatus('error', 'No GitHub token saved. Add one in settings.'); return; }
-
-  var filename = file.name;
-  setDeployStatus('pushing', 'Pushing <strong>' + esc(filename) + '</strong> to GitHub...');
-
-  readFileAsBase64(file).then(function(content) {
-    return fetch('https://api.github.com/repos/' + repo + '/contents/' + filename, {
-      headers: {Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json'}
-    }).then(function(r) {
-      return r.ok ? r.json().then(function(j) { return j.sha; }) : null;
-    }).then(function(sha) {
-      var body = {message: 'Deploy ' + filename + ' via The Console', content: content, branch: 'main'};
-      if (sha) body.sha = sha;
-      return fetch('https://api.github.com/repos/' + repo + '/contents/' + filename, {
-        method: 'PUT',
-        headers: {Authorization: 'token ' + token, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json'},
-        body: JSON.stringify(body)
-      });
-    });
-  }).then(function(res) {
-    if (!res.ok) return res.json().then(function(e) { throw new Error(e.message || 'Push failed'); });
-    setDeployStatus('deploying', 'Deploying via Netlify... (~30s)');
-    var liveUrl = 'https://adam-tools.netlify.app/' + filename;
-    var startTime = Date.now();
-
-    function poll() {
-      if (Date.now() - startTime > 35000) {
-        setDeployStatus('live', 'Deployed \u2713 &mdash; <a href="' + esc(liveUrl) + '" target="_blank" style="color:var(--accent);text-decoration:underline">' + esc(liveUrl) + '</a>');
-        finishDeploy(filename, liveUrl, repo);
-        return;
-      }
-      setTimeout(function() {
-        fetch(liveUrl, {mode: 'no-cors'}).then(function(r) {
-          setDeployStatus('live', 'Live \u2713 &mdash; <a href="' + esc(liveUrl) + '" target="_blank" style="color:var(--accent);text-decoration:underline">' + esc(liveUrl) + '</a>');
-          finishDeploy(filename, liveUrl, repo);
-        }).catch(function() { poll(); });
-      }, 5000);
-    }
-    poll();
-  }).catch(function(err) {
-    setDeployStatus('error', 'Error: ' + esc(err.message));
-  });
-}
-
-function finishDeploy(filename, liveUrl, repo) {
-  var tools = getTools(activeWorkspace) || [];
-  if (!tools.find(function(t) { return t.url === '/' + filename; })) {
-    tools.unshift({
-      id: uid(),
-      name: filename.replace('.html','').replace(/-/g,' ').replace(/_/g,' '),
-      url: '/' + filename,
-      desc: 'Deployed ' + new Date().toLocaleDateString(),
-      category: 'Deployed',
-      type: 'HTML',
-      created: Date.now()
-    });
-    setTools(activeWorkspace, tools);
-  }
-  var deploys = getDeploys();
-  deploys.unshift({id: uid(), filename: filename, url: liveUrl, repo: repo, ts: Date.now()});
-  setDeploys(deploys);
-  renderDeployHistory();
-}
-
-function readFileAsBase64(file) {
-  return new Promise(function(resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function() { resolve(reader.result.split(',')[1]); };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-function renderDeployHistory() {
-  var list = document.getElementById('deploy-list');
-  if (!list) return;
-  var deploys = getDeploys().slice(0, 10);
-  if (deploys.length === 0) {
-    list.innerHTML = '<div style="font-size:12px;color:var(--text-muted)">No recent deploys</div>';
-    return;
-  }
-  list.innerHTML = deploys.map(function(d) {
-    return '<div class="deploy-item">' +
-      '<span class="deploy-item-name">' + esc(d.filename) + '</span>' +
-      '<span class="deploy-item-time">' + timeAgo(d.ts) + '</span>' +
-      '<a href="' + esc(d.url) + '" target="_blank" class="deploy-item-live">&#x2197;</a>' +
-    '</div>';
-  }).join('');
-}
-
-function timeAgo(ts) {
-  var s = Math.floor((Date.now() - ts) / 1000);
-  if (s < 60) return 'just now';
-  if (s < 3600) return Math.floor(s / 60) + 'm ago';
-  if (s < 86400) return Math.floor(s / 3600) + 'h ago';
-  return Math.floor(s / 86400) + 'd ago';
-}
-
-/* ===== SETTINGS ===== */
-function loadDrawerSettings() {
-  var repo = ls('console_github_repo', 'adamsemien/Adam-tools');
-  var token = ls('console_github_token', '');
-  var dr = document.getElementById('drawer-repo');
-  var dt = document.getElementById('drawer-token');
-  if (dr) dr.value = repo;
-  if (dt) dt.value = token;
-  var sr = document.getElementById('settings-repo');
-  var st = document.getElementById('settings-token');
-  if (sr) sr.value = repo;
-  if (st) st.value = token;
-}
-
-function saveDrawerSettings() {
-  var repo = document.getElementById('drawer-repo').value.trim() || 'adamsemien/Adam-tools';
-  var token = document.getElementById('drawer-token').value.trim();
-  lsSet('console_github_repo', repo);
-  if (token) lsSet('console_github_token', token);
-  var el = document.getElementById('drawer-conn-status');
-  el.textContent = 'Saved \u2713';
-  el.className = 'modal-status success';
-  setTimeout(function() { el.textContent = ''; el.className = 'modal-status'; }, 2000);
+  document.getElementById('sToken').value = S.cfg.token || '';
+  document.getElementById('sRepo').value  = S.cfg.repo  || 'adamsemien/Adam-tools';
+  document.getElementById('sBase').value  = S.cfg.base  || 'https://adam-tools.netlify.app';
 }
 
 function saveSettings() {
-  var repo = document.getElementById('settings-repo').value.trim() || 'adamsemien/Adam-tools';
-  var token = document.getElementById('settings-token').value.trim();
-  lsSet('console_github_repo', repo);
-  if (token) lsSet('console_github_token', token);
-  loadDrawerSettings();
-  closeModal('settings-modal');
+  S.cfg.token = document.getElementById('sToken').value.trim();
+  S.cfg.repo  = document.getElementById('sRepo').value.trim();
+  S.cfg.base  = document.getElementById('sBase').value.trim().replace(/\/$/, '');
+  localStorage.setItem('console_v2', JSON.stringify(S.cfg));
+  hide('settingsModal');
+  if (S.cfg.token) loadArtifacts();
+  else toast('Settings saved.', 'ok');
 }
 
-function testConnection() {
-  var token = document.getElementById('drawer-token').value.trim() || ls('console_github_token', '');
-  var el = document.getElementById('drawer-conn-status');
-  el.textContent = 'Testing...'; el.className = 'modal-status';
-  fetch('https://api.github.com/user', {headers: {Authorization: 'token ' + token}}).then(function(r) {
-    return r.json().then(function(u) {
-      if (r.ok) { el.textContent = 'Connected as @' + u.login + ' \u2713'; el.className = 'modal-status success'; }
-      else { el.textContent = 'Authentication failed'; el.className = 'modal-status error'; }
-    });
-  }).catch(function() { el.textContent = 'Network error'; el.className = 'modal-status error'; });
-}
-
-function testConnectionModal() {
-  var token = document.getElementById('settings-token').value.trim() || ls('console_github_token', '');
-  var el = document.getElementById('settings-status');
-  el.textContent = 'Testing...'; el.className = 'modal-status';
-  fetch('https://api.github.com/user', {headers: {Authorization: 'token ' + token}}).then(function(r) {
-    return r.json().then(function(u) {
-      if (r.ok) { el.textContent = 'Connected as @' + u.login + ' \u2713'; el.className = 'modal-status success'; }
-      else { el.textContent = 'Authentication failed'; el.className = 'modal-status error'; }
-    });
-  }).catch(function() { el.textContent = 'Network error'; el.className = 'modal-status error'; });
-}
-
-function toggleTokenVis(inputId, btn) {
-  var inp = document.getElementById(inputId);
-  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = 'Hide'; }
-  else { inp.type = 'password'; btn.textContent = 'Show'; }
-}
-
-function openSettings() {
-  loadDrawerSettings();
-  openModal('settings-modal');
-}
-
-/* ===== MODALS ===== */
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function closeOnOverlay(e, id) {
-  if (e.target === document.getElementById(id)) closeModal(id);
-}
-
-/* ===== TOOL MODAL ===== */
-var WS_CATEGORIES = {
-  canto: ['Sales Tools','Partner Program','Internal','Strategy','Other'],
-  nbc: ['Newsletter','Content','Design','Ops','Other'],
-  personal: ['Project','Finance','Creative','Utility','Other']
-};
-
-function openToolModal() {
-  var cats = WS_CATEGORIES[activeWorkspace] || ['General','Other'];
-  var sel = document.getElementById('tool-cat-input');
-  sel.innerHTML = cats.map(function(c) { return '<option value="'+esc(c)+'">'+esc(c)+'</option>'; }).join('');
-  document.getElementById('tool-url-input').value = '';
-  document.getElementById('tool-name-input').value = '';
-  document.getElementById('tool-desc-input').value = '';
-  document.getElementById('analyze-state').textContent = '';
-  document.getElementById('analyze-state').style.color = '';
-  document.getElementById('analyze-btn').disabled = false;
-  ['tool-url-input','tool-name-input','tool-desc-input'].forEach(function(id) {
-    var el = document.getElementById(id); if (el) el.classList.remove('field-filled');
-  });
-  openModal('tool-modal');
-  setTimeout(function() { document.getElementById('tool-url-input').focus(); }, 60);
-}
-
-function onToolUrlChange(url) {
-  if (!url) return;
-  // Auto-detect type from URL
-  if (url.includes('adam-tools.netlify.app') || (!url.startsWith('http') && url.match(/\.html?$/i))) {
-    document.getElementById('tool-type-input').value = 'Deployed file';
+async function testConn() {
+  const token = document.getElementById('sToken').value.trim();
+  const repo  = document.getElementById('sRepo').value.trim();
+  const el = document.getElementById('connResult');
+  el.textContent = 'Testing…';
+  try {
+    const r = await ghGet(`repos/${repo}`, token);
+    el.innerHTML = `<span style="color:var(--green)">✓ Connected to ${r.full_name}</span>`;
+  } catch(e) {
+    el.innerHTML = `<span style="color:var(--red)">✗ ${e.message}</span>`;
   }
 }
 
-function analyzeTool() {
-  var url = document.getElementById('tool-url-input').value.trim();
-  if (!url) { document.getElementById('tool-url-input').focus(); return; }
+async function ghGet(path, token) {
+  const tok = token || S.cfg.token;
+  const r = await fetch(`https://api.github.com/${path}`, {
+    headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!r.ok) { const j = await r.json().catch(()=>{}); throw new Error(j?.message || `HTTP ${r.status}`); }
+  return r.json();
+}
 
-  var stateEl = document.getElementById('analyze-state');
-  var btn = document.getElementById('analyze-btn');
-  btn.disabled = true;
-  stateEl.style.color = 'var(--text-muted)';
-  stateEl.textContent = 'Analyzing...';
+async function ghPut(path, content, message, sha) {
+  const r = await fetch(`https://api.github.com/repos/${S.cfg.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${S.cfg.token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      message,
+      content: btoa(unescape(encodeURIComponent(content))),
+      ...(sha && { sha })
+    })
+  });
+  if (!r.ok) { const j = await r.json().catch(()=>{}); throw new Error(j?.message || `HTTP ${r.status}`); }
+  return r.json();
+}
 
-  fetch('/.netlify/functions/describe-tool', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({url: url})
-  }).then(function(r) {
-    if (!r.ok) throw new Error('status ' + r.status);
-    return r.json();
-  }).then(function(data) {
-    var filled = false;
-    if (data.name) {
-      var n = document.getElementById('tool-name-input');
-      n.value = data.name; n.classList.add('field-filled'); filled = true;
+async function loadArtifacts() {
+  if (!S.cfg.token) { setStatus('off', 'Not connected'); showState('empty'); return; }
+  setStatus('spin', 'Syncing…');
+  showState('loading');
+  try {
+    const files = await ghGet(`repos/${S.cfg.repo}/contents`);
+    const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.name !== 'index.html' && f.type === 'file');
+    const artifacts = [];
+    for (let i = 0; i < htmlFiles.length; i += 6) {
+      const batch = htmlFiles.slice(i, i + 6);
+      const results = await Promise.all(batch.map(async f => {
+        let modified = null;
+        try {
+          const commits = await ghGet(`repos/${S.cfg.repo}/commits?path=${encodeURIComponent(f.name)}&per_page=1`);
+          if (commits.length) modified = commits[0].commit.committer.date;
+        } catch(e) {}
+        return { name: f.name, display: prettify(f.name), project: detectProject(f.name), url: `${S.cfg.base}/${f.name}`, sha: f.sha, size: f.size, modified };
+      }));
+      artifacts.push(...results);
     }
-    if (data.desc) {
-      var d = document.getElementById('tool-desc-input');
-      d.value = data.desc; d.classList.add('field-filled');
-    }
-    if (data.type) { document.getElementById('tool-type-input').value = data.type; }
-    stateEl.style.color = filled ? '#4ade80' : 'var(--text-muted)';
-    stateEl.textContent = filled ? 'Filled by AI ✓  — edit if needed' : 'Could not extract info. Fill in manually.';
+    artifacts.sort((a, b) => { if (!a.modified && !b.modified) return 0; if (!a.modified) return 1; if (!b.modified) return -1; return new Date(b.modified) - new Date(a.modified); });
+    S.artifacts = artifacts;
+    setStatus('on', `${artifacts.length} artifacts`);
+    buildSidebar();
+    applyFilter();
+  } catch(err) {
+    console.error(err);
+    setStatus('off', 'Error');
+    showState('error', err.message);
+    toast('Load failed: ' + err.message, 'err');
+  }
+}
+
+let _uploadContent = null;
+
+async function pushArtifact() {
+  const activeTabLabel = document.querySelector('#addModal .tab.active')?.textContent?.trim();
+  let name, content;
+  if (activeTabLabel === 'Upload File' && _uploadContent) {
+    name = document.getElementById('uploadName').value.trim();
+    content = _uploadContent;
+  } else {
+    name = document.getElementById('newName').value.trim();
+    content = document.getElementById('newContent').value.trim();
+  }
+  if (!name) { toast('Please enter a filename.', 'err'); return; }
+  if (!content) { toast('Please add HTML content.', 'err'); return; }
+  if (!S.cfg.token) { toast('GitHub token required — check Settings.', 'err'); return; }
+  const filename = name.endsWith('.html') ? name : name + '.html';
+  const btn = document.getElementById('pushBtn');
+  btn.textContent = 'Pushing…'; btn.disabled = true;
+  try {
+    let sha = null;
+    try { sha = (await ghGet(`repos/${S.cfg.repo}/contents/${filename}`)).sha; } catch(e) {}
+    await ghPut(filename, content, `Add artifact: ${filename}`, sha);
+    hide('addModal');
+    document.getElementById('newName').value = '';
+    document.getElementById('newContent').value = '';
+    _uploadContent = null;
+    toast(`✓ ${filename} pushed — deploying now…`, 'ok');
+    setTimeout(loadArtifacts, 3500);
+  } catch(err) {
+    toast('Push failed: ' + err.message, 'err');
+  } finally {
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Push to GitHub`;
     btn.disabled = false;
-  }).catch(function() {
-    stateEl.style.color = 'var(--text-muted)';
-    stateEl.textContent = 'Could not reach page — fill in manually.';
-    btn.disabled = false;
-  });
+  }
 }
 
-function saveTool() {
-  var name = document.getElementById('tool-name-input').value.trim();
-  if (!name) { document.getElementById('tool-name-input').focus(); return; }
-  var tools = getTools(activeWorkspace) || [];
-  tools.unshift({
-    id: uid(),
-    name: name,
-    url: document.getElementById('tool-url-input').value.trim(),
-    desc: document.getElementById('tool-desc-input').value.trim(),
-    category: document.getElementById('tool-cat-input').value,
-    type: document.getElementById('tool-type-input').value,
-    created: Date.now()
-  });
-  setTools(activeWorkspace, tools);
-  closeModal('tool-modal');
-  renderSection();
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    _uploadContent = ev.target.result;
+    document.getElementById('uploadName').value = file.name;
+    document.getElementById('uploadMeta').style.display = 'block';
+    document.getElementById('dz').innerHTML = `<div style="font-size:22px">✅</div><div>${file.name}</div><div style="font-size:10px;margin-top:3px;color:var(--text3)">${(file.size/1024).toFixed(1)} KB — click to change</div>`;
+  };
+  reader.readAsText(file);
 }
 
-/* ===== MOVE TOOL ===== */
-var _movePopover = null;
-
-function openMovePopover(e, id) {
-  e.stopPropagation();
-  closeMovePopover();
-
-  var rect = e.currentTarget.getBoundingClientRect();
-  var pop = document.createElement('div');
-  pop.className = 'move-popover';
-  pop.id = 'move-popover-el';
-  pop.style.top = (rect.bottom + 6) + 'px';
-  pop.style.left = rect.left + 'px';
-
-  var label = document.createElement('div');
-  label.className = 'move-popover-label';
-  label.textContent = 'Move to workspace';
-  pop.appendChild(label);
-
-  var WS_META = [
-    {id:'canto', label:'Canto', color:'#D95A00'},
-    {id:'nbc', label:'No Bad Company', color:'#BC311D'},
-    {id:'personal', label:'Personal', color:'#2C5F4A'}
-  ];
-
-  WS_META.filter(function(w) { return w.id !== activeWorkspace; }).forEach(function(w) {
-    var btn = document.createElement('button');
-    btn.className = 'move-popover-item';
-    btn.innerHTML = '<span class="move-ws-dot" style="background:'+w.color+'"></span>' + w.label;
-    btn.onclick = function(ev) { ev.stopPropagation(); moveTool(id, w.id); closeMovePopover(); };
-    pop.appendChild(btn);
-  });
-
-  document.body.appendChild(pop);
-  _movePopover = pop;
-  requestAnimationFrame(function() { pop.classList.add('visible'); });
-
-  setTimeout(function() {
-    document.addEventListener('click', closeMovePopover, {once: true});
-  }, 0);
-}
-
-function closeMovePopover() {
-  var el = document.getElementById('move-popover-el');
-  if (el) el.remove();
-  _movePopover = null;
-}
-
-function moveTool(id, targetWs) {
-  var tools = getTools(activeWorkspace) || [];
-  var tool = tools.find(function(t) { return t.id === id; });
-  if (!tool) return;
-  setTools(activeWorkspace, tools.filter(function(t) { return t.id !== id; }));
-  var dest = getTools(targetWs) || [];
-  tool.workspace = targetWs;
-  dest.unshift(tool);
-  setTools(targetWs, dest);
-  renderSection();
-}
-
-/* ===== KEYBOARD SHORTCUTS ===== */
-document.addEventListener('keydown', function(e) {
-  var meta = e.metaKey || e.ctrlKey;
-  if (meta && e.key === '1') { e.preventDefault(); switchWorkspace('canto'); }
-  if (meta && e.key === '2') { e.preventDefault(); switchWorkspace('nbc'); }
-  if (meta && e.key === '3') { e.preventDefault(); switchWorkspace('personal'); }
-  if (e.key === 'Escape') {
-    closeMovePopover();
-    if (drawerOpen) toggleDrawer();
-    ['settings-modal','prompt-modal','tool-modal'].forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el && el.classList.contains('open')) closeModal(id);
-    });
+const dz = document.getElementById('dz');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('over');
+  const f = e.dataTransfer.files[0];
+  if (f) {
+    const input = document.getElementById('fInput');
+    const dt = new DataTransfer(); dt.items.add(f); input.files = dt.files;
+    handleFile({ target: input });
   }
 });
 
-/* ===== BOOT ===== */
-init();
+function applyFilter() {
+  let list = S.artifacts;
+  if (S.proj !== 'all') list = list.filter(a => a.project === S.proj);
+  if (S.q) { const q = S.q.toLowerCase(); list = list.filter(a => a.name.toLowerCase().includes(q) || a.display.toLowerCase().includes(q)); }
+  S.filtered = list;
+  render();
+}
+
+function render() {
+  const wrap = document.getElementById('artifactsWrap');
+  const items = S.filtered;
+  document.getElementById('toolbarCount').textContent = items.length ? `${items.length} artifact${items.length !== 1 ? 's' : ''}` : '';
+  if (!items.length) {
+    const isSearch = !!S.q;
+    wrap.innerHTML = `<div class="state-box"><div class="icon">${isSearch ? '🔍' : '📭'}</div><h3>${isSearch ? 'No results' : 'No artifacts here'}</h3><p>${isSearch ? 'Try a different search term.' : 'Push your first artifact to get started.'}</p>${!isSearch ? `<button class="btn btn-primary" onclick="showAdd()">New Artifact</button>` : ''}</div>`;
+    return;
+  }
+  const container = S.view === 'grid' ? `<div class="grid">${items.map(cardHTML).join('')}</div>` : `<div class="list">${items.map(rowHTML).join('')}</div>`;
+  wrap.innerHTML = container;
+}
+
+function cardHTML(a) {
+  const p = PROJECTS[a.project] || PROJECTS.other;
+  const esc = (s) => s.replace(/'/g, "\\'");
+  return `<div class="card" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
+    <div class="card-thumb" style="background:${p.bg}"><span>${p.icon}</span><span class="card-badge" style="background:${p.bg};color:${p.color};border:1px solid ${p.color}40">${p.label}</span></div>
+    <div class="card-body">
+      <div class="card-name" title="${a.display}">${a.display}</div>
+      <div class="card-file">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div>
+      <div class="card-actions"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button></div>
+    </div></div>`;
+}
+
+function rowHTML(a) {
+  const p = PROJECTS[a.project] || PROJECTS.other;
+  const esc = (s) => s.replace(/'/g, "\\'");
+  return `<div class="row" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
+    <div class="row-icon" style="background:${p.bg}">${p.icon}</div>
+    <div class="row-info"><div class="row-name">${a.display}</div><div class="row-meta">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div></div>
+    <span class="row-badge" style="background:${p.bg};color:${p.color}">${p.label}</span>
+    <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button></div>
+  </div>`;
+}
+
+function buildSidebar() {
+  const counts = {};
+  S.artifacts.forEach(a => { counts[a.project] = (counts[a.project] || 0) + 1; });
+  const el = document.getElementById('projNav');
+  let html = '<div class="nav-label">Projects</div>';
+  for (const [key, p] of Object.entries(PROJECTS)) {
+    if (!counts[key]) continue;
+    const active = S.proj === key ? 'active' : '';
+    html += `<div class="nav-item ${active}" data-proj="${key}" onclick="filterProj('${key}',this)"><span class="proj-dot" style="background:${p.color}"></span>${p.label}<span class="nav-count">${counts[key]}</span></div>`;
+  }
+  el.innerHTML = html;
+  document.getElementById('cnt-all').textContent = S.artifacts.length;
+}
+
+function filterProj(proj, el) {
+  S.proj = proj;
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('toolbarTitle').textContent = proj === 'all' ? 'All Artifacts' : (PROJECTS[proj]?.label || proj);
+  applyFilter();
+}
+
+let _pvUrl = '';
+function openPv(name, url) {
+  _pvUrl = url;
+  document.getElementById('pvTitle').textContent = prettify(name);
+  document.getElementById('pvUrlText').textContent = url;
+  document.getElementById('pframe').src = url;
+  document.getElementById('pvOpenBtn').onclick = () => window.open(url, '_blank');
+  show('previewModal');
+}
+function closePv() { document.getElementById('pframe').src = 'about:blank'; hide('previewModal'); }
+function copyPvUrl() { cpUrl(_pvUrl); }
+
+function show(id) { document.getElementById(id).classList.remove('hidden'); }
+function hide(id) { document.getElementById(id).classList.add('hidden'); }
+
+function setStatus(state, text) {
+  document.getElementById('statusDot').className = 'status-dot ' + ({ on: 'dot-on', off: 'dot-off', spin: 'dot-spin' }[state] || 'dot-off');
+  document.getElementById('statusTxt').textContent = text;
+}
+
+function showState(type, msg) {
+  const wrap = document.getElementById('artifactsWrap');
+  if (type === 'loading') wrap.innerHTML = `<div class="state-box"><div class="spinner"></div><span style="color:var(--text3);font-size:12px">Loading from GitHub…</span></div>`;
+  else if (type === 'empty') wrap.innerHTML = `<div class="state-box"><div class="icon">◈</div><h3>Connect to GitHub</h3><p>Add your GitHub token in Settings to load all your artifacts.</p><button class="btn btn-primary" onclick="showSettings()">Open Settings</button></div>`;
+  else if (type === 'error') wrap.innerHTML = `<div class="state-box"><div class="icon">⚠️</div><h3>Could not load</h3><p>${msg || 'Check your GitHub token and repo name.'}</p><button class="btn btn-ghost" onclick="showSettings()">Settings</button></div>`;
+}
+
+function setView(v, btn) {
+  S.view = v;
+  document.getElementById('vGrid').classList.toggle('active', v === 'grid');
+  document.getElementById('vList').classList.toggle('active', v === 'list');
+  render();
+}
+
+function cpUrl(url) { navigator.clipboard.writeText(url).then(() => toast('URL copied!', 'ok')); }
+
+function toast(msg, type = 'ok') {
+  const c = document.getElementById('toasts');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${type === 'ok' ? '<span style="color:var(--green)">✓</span>' : '<span style="color:var(--red)">✗</span>'} ${msg}`;
+  c.appendChild(el);
+  setTimeout(() => { el.style.transition = '0.25s'; el.style.opacity = '0'; el.style.transform = 'translateX(110%)'; setTimeout(() => el.remove(), 260); }, 3000);
+}
+
+function switchAddTab(tab, el) {
+  document.querySelectorAll('#addModal .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-paste').style.display = tab === 'paste' ? 'block' : 'none';
+  document.getElementById('tab-upload').style.display = tab === 'upload' ? 'block' : 'none';
+}
+
+function showAdd() { show('addModal'); }
+function showSettings() { loadCfg(); show('settingsModal'); }
+
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) { if (o.id === 'previewModal') closePv(); else hide(o.id); } });
+});
+
+document.getElementById('searchInput').addEventListener('input', e => { S.q = e.target.value; applyFilter(); });
+
+loadCfg();
+if (S.cfg.token) loadArtifacts();
+else showState('empty');
 </script>
 </body>
 </html>
