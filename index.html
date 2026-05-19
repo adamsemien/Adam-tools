@@ -21,339 +21,127 @@
       --red:    #ef4444;
       --yellow: #eab308;
     }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      font-size: 13px;
-    }
-
-    /* ── Header ── */
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 14px;
-      height: 48px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      background: var(--bg);
-    }
-    .logo {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--text);
-      white-space: nowrap;
-    }
-    .logo-mark {
-      width: 22px; height: 22px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px;
-    }
-    .header-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
-    .sync-pill {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 11px; color: var(--text3);
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 20px; padding: 3px 9px;
-      cursor: pointer; transition: all 0.15s;
-    }
-    .sync-pill:hover { border-color: var(--accent); color: var(--text2); }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .dot-on   { background: var(--green); box-shadow: 0 0 6px var(--green); }
-    .dot-off  { background: var(--text3); }
-    .dot-spin { background: var(--yellow); animation: pulse 1s ease-in-out infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .header-space { flex: 1; }
-    .search-wrap {
-      display: flex; align-items: center; gap: 6px;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 7px; padding: 0 10px; height: 30px; width: 200px;
-      transition: border-color 0.15s;
-    }
-    .search-wrap:focus-within { border-color: var(--accent); }
-    .search-wrap input {
-      background: none; border: none; outline: none;
-      color: var(--text); font-size: 12px; width: 100%;
-    }
-    .search-wrap input::placeholder { color: var(--text3); }
-    .btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 0 11px; height: 30px; border-radius: 7px;
-      font-size: 12px; font-weight: 500; cursor: pointer;
-      border: none; transition: all 0.12s; white-space: nowrap;
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #6d28d9; }
-    .btn-ghost { background: var(--bg3); color: var(--text2); border: 1px solid var(--border); }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
-    .btn-icon { width: 30px; padding: 0; justify-content: center; }
-    .btn-sm { height: 24px; padding: 0 8px; font-size: 11px; }
-    .btn-danger { background: #450a0a; color: var(--red); border: 1px solid #7f1d1d; }
-    .btn-danger:hover { background: #7f1d1d; }
-
-    /* ── Layout ── */
-    .layout { display: flex; flex: 1; overflow: hidden; }
-
-    /* ── Sidebar ── */
-    .sidebar {
-      width: 188px; flex-shrink: 0;
-      border-right: 1px solid var(--border);
-      padding: 10px 6px; overflow-y: auto;
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .nav-section { margin-bottom: 4px; }
-    .nav-label {
-      font-size: 10px; font-weight: 700; color: var(--text3);
-      text-transform: uppercase; letter-spacing: 0.07em;
-      padding: 0 8px; margin-bottom: 3px;
-    }
-    .nav-item {
-      display: flex; align-items: center; gap: 8px;
-      padding: 6px 8px; border-radius: 7px;
-      cursor: pointer; color: var(--text2);
-      transition: all 0.1s; user-select: none;
-    }
-    .nav-item:hover { background: var(--bg3); color: var(--text); }
-    .nav-item.active { background: var(--bg4); color: var(--text); }
-    .nav-item .nav-count {
-      margin-left: auto; font-size: 10px; color: var(--text3);
-      background: var(--bg4); padding: 1px 5px; border-radius: 8px;
-    }
-    .nav-item.active .nav-count { background: var(--accent); color: #fff; }
-    .proj-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-    /* ── Main ── */
-    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-    .toolbar {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 14px; border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .toolbar-title { font-size: 13px; font-weight: 600; }
-    .toolbar-count { font-size: 11px; color: var(--text3); }
-    .toolbar-space { flex: 1; }
-    .view-btns {
-      display: flex; background: var(--bg3);
-      border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
-    }
-    .view-btns button {
-      padding: 4px 8px; background: none; border: none;
-      color: var(--text3); cursor: pointer; font-size: 13px;
-    }
-    .view-btns button.active { background: var(--bg4); color: var(--text); }
-
-    /* ── Artifact Grid ── */
-    .artifacts-wrap { flex: 1; overflow-y: auto; padding: 14px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-    .list { display: flex; flex-direction: column; gap: 5px; }
-
-    /* Card */
-    .card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 10px; overflow: hidden;
-      cursor: pointer; transition: all 0.15s;
-    }
-    .card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 24px rgba(124,58,237,0.12); }
-    .card-thumb {
-      height: 120px; display: flex; align-items: center;
-      justify-content: center; font-size: 44px; position: relative;
-    }
-    .card-thumb img.proj-logo {
-      width: 52px; height: 52px; border-radius: 10px; object-fit: contain;
-      background: rgba(255,255,255,0.08); padding: 4px;
-    }
-    .card-badge {
-      position: absolute; top: 8px; right: 8px;
-      font-size: 9px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; padding: 2px 7px; border-radius: 8px;
-    }
-    .card-body { padding: 11px 12px 13px; }
-    .card-name {
-      font-weight: 600; font-size: 13px; margin-bottom: 4px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      color: var(--text);
-    }
-    .card-file { font-size: 11px; color: var(--text2); margin-bottom: 9px; opacity: 0.8; }
-    .card-actions { display: flex; gap: 5px; }
-
-    /* Row */
-    .row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 11px; background: var(--bg2);
-      border: 1px solid var(--border); border-radius: 8px;
-      cursor: pointer; transition: all 0.1s;
-    }
-    .row:hover { border-color: var(--accent); }
-    .row-icon {
-      width: 34px; height: 34px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; flex-shrink: 0;
-    }
-    .row-info { flex: 1; min-width: 0; }
-    .row-name { font-size: 12px; font-weight: 600; }
-    .row-meta { font-size: 10px; color: var(--text3); margin-top: 1px; }
-    .row-badge {
-      font-size: 9px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.05em; padding: 2px 7px; border-radius: 8px; flex-shrink: 0;
-    }
-    .row-actions { display: flex; gap: 5px; flex-shrink: 0; }
-
-    /* State */
-    .state-box {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; height: 100%; gap: 10px; color: var(--text3);
-    }
-    .state-box .icon { font-size: 44px; }
-    .state-box h3 { font-size: 15px; color: var(--text2); }
-    .state-box p { font-size: 12px; text-align: center; max-width: 280px; line-height: 1.5; }
-    .spinner {
-      width: 28px; height: 28px; border-radius: 50%;
-      border: 2px solid var(--border); border-top-color: var(--accent);
-      animation: spin 0.65s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── Modals ── */
-    .overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 50; backdrop-filter: blur(3px);
-    }
-    .overlay.hidden { display: none; }
-    .modal {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 12px; display: flex; flex-direction: column;
-      max-height: 92vh; overflow: hidden;
-    }
-    .modal-sm { width: 520px; max-width: 95vw; }
-    .modal-lg { width: 92vw; max-width: 1100px; }
-    .modal-head {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px; border-bottom: 1px solid var(--border);
-    }
-    .modal-head h3 { font-size: 14px; font-weight: 600; }
-    .close-btn {
-      background: none; border: none; color: var(--text3);
-      font-size: 20px; cursor: pointer; line-height: 1; padding: 0;
-    }
-    .close-btn:hover { color: var(--text); }
-    .modal-body { padding: 18px; overflow-y: auto; flex: 1; }
-    .modal-foot {
-      display: flex; justify-content: flex-end; gap: 7px;
-      padding: 12px 18px; border-top: 1px solid var(--border);
-    }
-
-    /* Form */
-    .fgroup { margin-bottom: 14px; }
-    .flabel {
-      display: block; font-size: 11px; font-weight: 600;
-      color: var(--text2); margin-bottom: 5px;
-    }
-    .fhint { font-size: 10px; color: var(--text3); margin-top: 3px; line-height: 1.4; }
-    .finput {
-      width: 100%; background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 7px; padding: 7px 11px; color: var(--text);
-      font-size: 12px; outline: none; transition: border-color 0.15s;
-    }
-    .finput:focus { border-color: var(--accent); }
-    .ftextarea {
-      min-height: 180px; resize: vertical;
-      font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace; font-size: 11px;
-    }
-    .fselect {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%235a5a72' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 10px center;
-      padding-right: 28px; cursor: pointer;
-    }
-
-    /* Tabs */
-    .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
-    .tab {
-      padding: 7px 14px; font-size: 12px; cursor: pointer;
-      color: var(--text3); border-bottom: 2px solid transparent;
-      margin-bottom: -1px; transition: all 0.1s;
-    }
-    .tab:hover { color: var(--text2); }
-    .tab.active { color: var(--accent2); border-bottom-color: var(--accent); }
-
-    /* Info banner */
-    .info-banner {
-      background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.3);
-      border-radius: 8px; padding: 10px 13px; font-size: 11px;
-      color: var(--text2); line-height: 1.5; margin-bottom: 14px;
-    }
-    .info-banner a { color: var(--accent2); }
-
-    /* Drop zone */
-    .drop-zone {
-      border: 2px dashed var(--border); border-radius: 8px;
-      padding: 28px; text-align: center; color: var(--text3);
-      cursor: pointer; transition: all 0.15s; font-size: 12px;
-    }
-    .drop-zone:hover, .drop-zone.over {
-      border-color: var(--accent);
-      background: rgba(124,58,237,0.05); color: var(--text2);
-    }
-
-    /* Preview frame */
-    .pframe {
-      width: 100%; height: 74vh; border: none;
-      border-radius: 7px; background: #fff;
-    }
-
-    /* URL row */
-    .url-row {
-      display: flex; align-items: center; gap: 7px;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 7px; padding: 7px 11px; font-size: 11px;
-      color: var(--text2); cursor: pointer; transition: all 0.12s;
-    }
-    .url-row:hover { border-color: var(--accent); color: var(--text); }
-
-    /* Toast */
-    .toast-wrap {
-      position: fixed; bottom: 16px; right: 16px;
-      display: flex; flex-direction: column; gap: 6px; z-index: 200;
-    }
-    .toast {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 9px 13px; font-size: 12px;
-      display: flex; align-items: center; gap: 7px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      animation: tin 0.18s ease-out;
-    }
-    @keyframes tin { from { transform: translateX(120%); opacity: 0; } }
-    .toast.ok  { border-color: rgba(34,197,94,0.5); }
-    .toast.err { border-color: rgba(239,68,68,0.5); }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--border); }
+    body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; font-size:13px; }
+    .header { display:flex; align-items:center; gap:10px; padding:0 14px; height:48px; border-bottom:1px solid var(--border); flex-shrink:0; background:var(--bg); }
+    .logo { font-size:14px; font-weight:700; letter-spacing:-0.01em; display:flex; align-items:center; gap:7px; color:var(--text); white-space:nowrap; }
+    .logo-mark { width:22px; height:22px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:12px; }
+    .header-sep { width:1px; height:20px; background:var(--border); flex-shrink:0; }
+    .sync-pill { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--text3); background:var(--bg3); border:1px solid var(--border); border-radius:20px; padding:3px 9px; cursor:pointer; transition:all 0.15s; }
+    .sync-pill:hover { border-color:var(--accent); color:var(--text2); }
+    .status-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+    .dot-on { background:var(--green); box-shadow:0 0 6px var(--green); }
+    .dot-off { background:var(--text3); }
+    .dot-spin { background:var(--yellow); animation:pulse 1s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+    .header-space { flex:1; }
+    .search-wrap { display:flex; align-items:center; gap:6px; background:var(--bg3); border:1px solid var(--border); border-radius:7px; padding:0 10px; height:30px; width:200px; transition:border-color 0.15s; }
+    .search-wrap:focus-within { border-color:var(--accent); }
+    .search-wrap input { background:none; border:none; outline:none; color:var(--text); font-size:12px; width:100%; }
+    .search-wrap input::placeholder { color:var(--text3); }
+    .btn { display:inline-flex; align-items:center; gap:5px; padding:0 11px; height:30px; border-radius:7px; font-size:12px; font-weight:500; cursor:pointer; border:none; transition:all 0.12s; white-space:nowrap; }
+    .btn:active { transform:scale(0.97); }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-primary:hover { background:#6d28d9; }
+    .btn-ghost { background:var(--bg3); color:var(--text2); border:1px solid var(--border); }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--text); }
+    .btn-icon { width:30px; padding:0; justify-content:center; }
+    .btn-sm { height:24px; padding:0 8px; font-size:11px; }
+    .layout { display:flex; flex:1; overflow:hidden; }
+    .sidebar { width:188px; flex-shrink:0; border-right:1px solid var(--border); padding:10px 6px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
+    .nav-section { margin-bottom:4px; }
+    .nav-label { font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.07em; padding:0 8px; margin-bottom:3px; }
+    .nav-item { display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:7px; cursor:pointer; color:var(--text2); transition:all 0.1s; user-select:none; }
+    .nav-item:hover { background:var(--bg3); color:var(--text); }
+    .nav-item.active { background:var(--bg4); color:var(--text); }
+    .nav-item .nav-count { margin-left:auto; font-size:10px; color:var(--text3); background:var(--bg4); padding:1px 5px; border-radius:8px; }
+    .nav-item.active .nav-count { background:var(--accent); color:#fff; }
+    .proj-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+    .toolbar { display:flex; align-items:center; gap:8px; padding:8px 14px; border-bottom:1px solid var(--border); flex-shrink:0; }
+    .toolbar-title { font-size:13px; font-weight:600; }
+    .toolbar-count { font-size:11px; color:var(--text3); }
+    .toolbar-space { flex:1; }
+    .sort-select { appearance:none; background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:0 26px 0 9px; height:28px; color:var(--text2); font-size:11px; cursor:pointer; outline:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 24 24' fill='none' stroke='%235a5a72' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 8px center; transition:border-color 0.15s; }
+    .sort-select:hover { border-color:var(--accent); color:var(--text); }
+    .dir-btn { background:var(--bg3); border:1px solid var(--border); border-radius:6px; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text3); font-size:13px; transition:all 0.15s; user-select:none; }
+    .dir-btn:hover { border-color:var(--accent); color:var(--text); }
+    .sep { width:1px; height:18px; background:var(--border); flex-shrink:0; }
+    .filter-chips { display:flex; align-items:center; gap:5px; flex-wrap:wrap; padding:6px 14px; border-bottom:1px solid var(--border); background:var(--bg); flex-shrink:0; }
+    .chip { display:inline-flex; align-items:center; gap:4px; padding:2px 9px; border-radius:20px; font-size:11px; font-weight:500; background:var(--bg3); border:1px solid var(--border); cursor:pointer; color:var(--text3); transition:all 0.12s; user-select:none; }
+    .chip:hover { border-color:var(--accent); color:var(--text2); }
+    .chip.active { color:#fff; border-color:transparent; }
+    .chip-dot { width:6px; height:6px; border-radius:50%; }
+    .view-btns { display:flex; background:var(--bg3); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+    .view-btns button { padding:4px 8px; background:none; border:none; color:var(--text3); cursor:pointer; font-size:13px; }
+    .view-btns button.active { background:var(--bg4); color:var(--text); }
+    .artifacts-wrap { flex:1; overflow-y:auto; padding:14px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; }
+    .list { display:flex; flex-direction:column; gap:5px; }
+    .card { background:var(--bg2); border:1px solid var(--border); border-radius:10px; overflow:hidden; cursor:pointer; transition:all 0.15s; }
+    .card:hover { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent),0 6px 24px rgba(124,58,237,0.12); }
+    .card-thumb { height:120px; display:flex; align-items:center; justify-content:center; font-size:44px; position:relative; }
+    .card-thumb img.proj-logo { width:52px; height:52px; border-radius:10px; object-fit:contain; background:rgba(255,255,255,0.08); padding:4px; }
+    .card-badge { position:absolute; top:8px; right:8px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; padding:2px 7px; border-radius:8px; }
+    .card-body { padding:11px 12px 13px; }
+    .card-name { font-weight:600; font-size:13px; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text); }
+    .card-file { font-size:11px; color:var(--text2); margin-bottom:9px; opacity:0.8; }
+    .card-actions { display:flex; gap:5px; }
+    .row { display:flex; align-items:center; gap:10px; padding:9px 11px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; cursor:pointer; transition:all 0.1s; }
+    .row:hover { border-color:var(--accent); }
+    .row-icon { width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .row-info { flex:1; min-width:0; }
+    .row-name { font-size:12px; font-weight:600; }
+    .row-meta { font-size:10px; color:var(--text3); margin-top:1px; }
+    .row-badge { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:2px 7px; border-radius:8px; flex-shrink:0; }
+    .row-actions { display:flex; gap:5px; flex-shrink:0; }
+    .state-box { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:10px; color:var(--text3); }
+    .state-box .icon { font-size:44px; }
+    .state-box h3 { font-size:15px; color:var(--text2); }
+    .state-box p { font-size:12px; text-align:center; max-width:280px; line-height:1.5; }
+    .spinner { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); border-top-color:var(--accent); animation:spin 0.65s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; z-index:50; backdrop-filter:blur(3px); }
+    .overlay.hidden { display:none; }
+    .modal { background:var(--bg2); border:1px solid var(--border); border-radius:12px; display:flex; flex-direction:column; max-height:92vh; overflow:hidden; }
+    .modal-sm { width:520px; max-width:95vw; }
+    .modal-lg { width:92vw; max-width:1100px; }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border); }
+    .modal-head h3 { font-size:14px; font-weight:600; }
+    .close-btn { background:none; border:none; color:var(--text3); font-size:20px; cursor:pointer; line-height:1; padding:0; }
+    .close-btn:hover { color:var(--text); }
+    .modal-body { padding:18px; overflow-y:auto; flex:1; }
+    .modal-foot { display:flex; justify-content:flex-end; gap:7px; padding:12px 18px; border-top:1px solid var(--border); }
+    .fgroup { margin-bottom:14px; }
+    .flabel { display:block; font-size:11px; font-weight:600; color:var(--text2); margin-bottom:5px; }
+    .fhint { font-size:10px; color:var(--text3); margin-top:3px; line-height:1.4; }
+    .finput { width:100%; background:var(--bg3); border:1px solid var(--border); border-radius:7px; padding:7px 11px; color:var(--text); font-size:12px; outline:none; transition:border-color 0.15s; }
+    .finput:focus { border-color:var(--accent); }
+    .ftextarea { min-height:180px; resize:vertical; font-family:'SF Mono','Fira Code','Menlo',monospace; font-size:11px; }
+    .tabs { display:flex; border-bottom:1px solid var(--border); margin-bottom:14px; }
+    .tab { padding:7px 14px; font-size:12px; cursor:pointer; color:var(--text3); border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.1s; }
+    .tab:hover { color:var(--text2); }
+    .tab.active { color:var(--accent2); border-bottom-color:var(--accent); }
+    .info-banner { background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.3); border-radius:8px; padding:10px 13px; font-size:11px; color:var(--text2); line-height:1.5; margin-bottom:14px; }
+    .info-banner a { color:var(--accent2); }
+    .drop-zone { border:2px dashed var(--border); border-radius:8px; padding:28px; text-align:center; color:var(--text3); cursor:pointer; transition:all 0.15s; font-size:12px; }
+    .drop-zone:hover,.drop-zone.over { border-color:var(--accent); background:rgba(124,58,237,0.05); color:var(--text2); }
+    .pframe { width:100%; height:74vh; border:none; border-radius:7px; background:#fff; }
+    .url-row { display:flex; align-items:center; gap:7px; background:var(--bg3); border:1px solid var(--border); border-radius:7px; padding:7px 11px; font-size:11px; color:var(--text2); cursor:pointer; transition:all 0.12s; }
+    .url-row:hover { border-color:var(--accent); color:var(--text); }
+    .toast-wrap { position:fixed; bottom:16px; right:16px; display:flex; flex-direction:column; gap:6px; z-index:200; }
+    .toast { background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:9px 13px; font-size:12px; display:flex; align-items:center; gap:7px; box-shadow:0 4px 20px rgba(0,0,0,0.4); animation:tin 0.18s ease-out; }
+    @keyframes tin { from{transform:translateX(120%);opacity:0} }
+    .toast.ok { border-color:rgba(34,197,94,0.5); }
+    .toast.err { border-color:rgba(239,68,68,0.5); }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:var(--border); }
   </style>
 </head>
 <body>
-
-<!-- ── Header ── -->
 <header class="header">
-  <div class="logo">
-    <div class="logo-mark">◈</div>
-    The Console
-  </div>
+  <div class="logo"><div class="logo-mark">◈</div>The Console</div>
   <div class="header-sep"></div>
   <div class="sync-pill" onclick="loadArtifacts()" id="syncPill">
     <span class="status-dot dot-off" id="statusDot"></span>
@@ -361,9 +149,7 @@
   </div>
   <div class="header-space"></div>
   <div class="search-wrap">
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-      <circle cx="11" cy="11" r="7"/><path d="m20 20-4.35-4.35"/>
-    </svg>
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.35-4.35"/></svg>
     <input id="searchInput" type="text" placeholder="Search artifacts…">
   </div>
   <button class="btn btn-primary" onclick="showAdd()">
@@ -371,72 +157,57 @@
     New Artifact
   </button>
   <button class="btn btn-ghost btn-icon" onclick="showSettings()" title="Settings">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-    </svg>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
   </button>
 </header>
-
-<!-- ── Layout ── -->
 <div class="layout">
-
-  <!-- Sidebar -->
   <nav class="sidebar">
     <div class="nav-section">
       <div class="nav-label">Library</div>
-      <div class="nav-item active" data-proj="all" onclick="filterProj('all', this)">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/>
-          <rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/>
-        </svg>
+      <div class="nav-item active" data-proj="all" onclick="filterProj('all',this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>
         All Artifacts
         <span class="nav-count" id="cnt-all">—</span>
       </div>
     </div>
-    <div class="nav-section" id="projNav">
-      <div class="nav-label">Projects</div>
-    </div>
+    <div class="nav-section" id="projNav"><div class="nav-label">Projects</div></div>
     <div class="nav-section" style="margin-top:auto">
       <div class="nav-label">Links</div>
       <div class="nav-item" onclick="window.open('https://github.com/adamsemien/Adam-tools','_blank')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-        </svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
         GitHub Repo
       </div>
       <div class="nav-item" onclick="window.open('https://adam-tools.netlify.app','_blank')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-        </svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         Live Site
       </div>
     </div>
   </nav>
-
-  <!-- Main -->
   <main class="main">
     <div class="toolbar">
       <span class="toolbar-title" id="toolbarTitle">All Artifacts</span>
       <span class="toolbar-count" id="toolbarCount"></span>
       <div class="toolbar-space"></div>
+      <select class="sort-select" id="sortBy" onchange="setSort(this.value)" title="Sort by">
+        <option value="date">Date Modified</option>
+        <option value="name">Name</option>
+        <option value="project">Project</option>
+        <option value="size">File Size</option>
+      </select>
+      <div class="dir-btn" id="dirBtn" onclick="toggleDir()" title="Toggle direction">↓</div>
+      <div class="sep"></div>
       <div class="view-btns">
         <button class="active" id="vGrid" onclick="setView('grid',this)" title="Grid">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/>
-            <rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/>
-          </svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>
         </button>
         <button id="vList" onclick="setView('list',this)" title="List">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
     </div>
+    <div class="filter-chips" id="filterChips" style="display:none"></div>
     <div class="artifacts-wrap" id="artifactsWrap">
-      <div class="state-box" id="emptyState">
+      <div class="state-box">
         <div class="icon">◈</div>
         <h3>Connect to GitHub</h3>
         <p>Add your GitHub token in Settings to load all your artifacts.</p>
@@ -446,31 +217,26 @@
   </main>
 </div>
 
-<!-- ── Add Artifact Modal ── -->
+<!-- Add Modal -->
 <div class="overlay hidden" id="addModal">
   <div class="modal modal-sm">
-    <div class="modal-head">
-      <h3>New Artifact</h3>
-      <button class="close-btn" onclick="hide('addModal')">×</button>
-    </div>
+    <div class="modal-head"><h3>New Artifact</h3><button class="close-btn" onclick="hide('addModal')">×</button></div>
     <div class="modal-body">
       <div class="tabs">
         <div class="tab active" onclick="switchAddTab('paste',this)">Paste HTML</div>
         <div class="tab" onclick="switchAddTab('upload',this)">Upload File</div>
       </div>
-
       <div id="tab-paste">
         <div class="fgroup">
           <label class="flabel">Artifact filename</label>
           <input class="finput" id="newName" type="text" placeholder="e.g. canto-dashboard-v2">
-          <div class="fhint">Will be saved as <code>[name].html</code> and deployed automatically at <code>adam-tools.netlify.app/[name].html</code></div>
+          <div class="fhint">Saved as <code>[name].html</code>, live at <code>adam-tools.netlify.app/[name].html</code></div>
         </div>
         <div class="fgroup">
           <label class="flabel">HTML Content</label>
           <textarea class="finput ftextarea" id="newContent" placeholder="<!DOCTYPE html>&#10;<html>…"></textarea>
         </div>
       </div>
-
       <div id="tab-upload" style="display:none">
         <div class="fgroup">
           <div class="drop-zone" id="dz" onclick="document.getElementById('fInput').click()">
@@ -481,42 +247,32 @@
           <input type="file" id="fInput" accept=".html" style="display:none" onchange="handleFile(event)">
         </div>
         <div id="uploadMeta" style="display:none">
-          <div class="fgroup">
-            <label class="flabel">Filename</label>
-            <input class="finput" id="uploadName" type="text">
-          </div>
+          <div class="fgroup"><label class="flabel">Filename</label><input class="finput" id="uploadName" type="text"></div>
         </div>
       </div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" onclick="hide('addModal')">Cancel</button>
       <button class="btn btn-primary" id="pushBtn" onclick="pushArtifact()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Push to GitHub
       </button>
     </div>
   </div>
 </div>
 
-<!-- ── Preview Modal ── -->
+<!-- Preview Modal -->
 <div class="overlay hidden" id="previewModal">
   <div class="modal modal-lg">
     <div class="modal-head">
       <h3 id="pvTitle">Preview</h3>
       <div style="display:flex;gap:7px;align-items:center">
-        <div class="url-row" id="pvUrl" onclick="copyPvUrl()" style="font-size:10px;padding:4px 9px">
+        <div class="url-row" onclick="copyPvUrl()" style="font-size:10px;padding:4px 9px">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           <span id="pvUrlText">—</span>
         </div>
-        <button class="btn btn-ghost btn-sm" id="pvOpenBtn">
-          Open ↗
-        </button>
-        <button class="btn btn-ghost btn-sm" id="pvCopyBtn" onclick="copyPvUrl()">
-          Copy URL
-        </button>
+        <button class="btn btn-ghost btn-sm" id="pvOpenBtn">Open ↗</button>
+        <button class="btn btn-ghost btn-sm" onclick="copyPvUrl()">Copy URL</button>
         <button class="close-btn" onclick="closePv()">×</button>
       </div>
     </div>
@@ -526,32 +282,22 @@
   </div>
 </div>
 
-<!-- ── Settings Modal ── -->
+<!-- Settings Modal -->
 <div class="overlay hidden" id="settingsModal">
   <div class="modal modal-sm">
-    <div class="modal-head">
-      <h3>Settings</h3>
-      <button class="close-btn" onclick="hide('settingsModal')">×</button>
-    </div>
+    <div class="modal-head"><h3>Settings</h3><button class="close-btn" onclick="hide('settingsModal')">×</button></div>
     <div class="modal-body">
       <div class="info-banner">
-        Connect your GitHub repo to sync all HTML artifacts. Your token is stored locally in your browser — never sent anywhere except GitHub's API.
-        <br><br>
-        <strong style="color:var(--accent2)">How it works:</strong> Every .html file in your repo (except index.html) appears as an artifact. Netlify auto-deploys on every push — so anything you add here goes live in ~30 seconds.
+        Your token is stored locally — never sent anywhere except GitHub's API.<br><br>
+        <strong style="color:var(--accent2)">How it works:</strong> Every .html file in your repo (except index.html) appears as an artifact. Netlify auto-deploys on every push in ~30 seconds.
       </div>
       <div class="fgroup">
         <label class="flabel">GitHub Personal Access Token</label>
         <input class="finput" id="sToken" type="password" placeholder="ghp_…">
-        <div class="fhint">Needs <code>repo</code> (read + write) scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=The+Console" target="_blank" style="color:var(--accent2)">Create one →</a></div>
+        <div class="fhint">Needs <code>repo</code> scope. <a href="https://github.com/settings/tokens/new?scopes=repo&description=The+Console" target="_blank" style="color:var(--accent2)">Create one →</a></div>
       </div>
-      <div class="fgroup">
-        <label class="flabel">GitHub Repository</label>
-        <input class="finput" id="sRepo" type="text" placeholder="username/repo">
-      </div>
-      <div class="fgroup">
-        <label class="flabel">Deployed Base URL</label>
-        <input class="finput" id="sBase" type="text" placeholder="https://adam-tools.netlify.app">
-      </div>
+      <div class="fgroup"><label class="flabel">GitHub Repository</label><input class="finput" id="sRepo" type="text" placeholder="username/repo"></div>
+      <div class="fgroup"><label class="flabel">Deployed Base URL</label><input class="finput" id="sBase" type="text" placeholder="https://adam-tools.netlify.app"></div>
       <div style="display:flex;align-items:center;gap:9px">
         <button class="btn btn-ghost btn-sm" onclick="testConn()">Test Connection</button>
         <span id="connResult" style="font-size:11px;color:var(--text3)"></span>
@@ -564,16 +310,15 @@
   </div>
 </div>
 
-<!-- Toast container -->
 <div class="toast-wrap" id="toasts"></div>
 
 <script>
 const PROJECTS = {
-  canto:   { label: 'Canto',   color: '#a78bfa', bg: 'rgba(124,58,237,0.18)',  icon: '🎵', logoUrl: 'https://logo.clearbit.com/canto.com' },
-  nbc:     { label: 'NBC',     color: '#fb923c', bg: 'rgba(249,115,22,0.18)',  icon: '🏢' },
-  partner: { label: 'Partner', color: '#38bdf8', bg: 'rgba(14,165,233,0.18)', icon: '🤝' },
-  docs:    { label: 'Docs',    color: '#4ade80', bg: 'rgba(34,197,94,0.18)',   icon: '📋' },
-  other:   { label: 'Other',   color: '#94a3b8', bg: 'rgba(148,163,184,0.18)', icon: '📄' },
+  canto:   { label:'Canto',   color:'#a78bfa', bg:'rgba(124,58,237,0.18)',  icon:'🎵', logoUrl:'https://logo.clearbit.com/canto.com' },
+  nbc:     { label:'NBC',     color:'#fb923c', bg:'rgba(249,115,22,0.18)',  icon:'🏢' },
+  partner: { label:'Partner', color:'#38bdf8', bg:'rgba(14,165,233,0.18)', icon:'🤝' },
+  docs:    { label:'Docs',    color:'#4ade80', bg:'rgba(34,197,94,0.18)',   icon:'📋' },
+  other:   { label:'Other',   color:'#94a3b8', bg:'rgba(148,163,184,0.18)',icon:'📄' },
 };
 
 function detectProject(name) {
@@ -585,395 +330,313 @@ function detectProject(name) {
   return 'other';
 }
 
-function prettify(filename) {
-  return filename.replace(/\.html$/i, '').replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
-}
-
-function fmtDate(iso) {
-  if (!iso) return '';
-  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
+function prettify(f) { return f.replace(/\.html$/i,'').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()); }
+function fmtDate(iso) { if(!iso)return''; return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+function fmtSize(b) { if(!b)return''; if(b<1024)return b+' B'; if(b<1048576)return(b/1024).toFixed(1)+' KB'; return(b/1048576).toFixed(1)+' MB'; }
 
 let S = {
-  artifacts: [],
-  filtered: [],
-  proj: 'all',
-  view: 'grid',
-  q: '',
-  cfg: { token: '', repo: 'adamsemien/Adam-tools', base: 'https://adam-tools.netlify.app' },
+  artifacts:[], filtered:[], proj:'all', view:'grid', q:'',
+  sort:{ by:'date', dir:'desc' },
+  cfg:{ token:'', repo:'adamsemien/Adam-tools', base:'https://adam-tools.netlify.app' },
 };
 
 function loadCfg() {
   const raw = localStorage.getItem('console_v2');
-  if (raw) {
-    try { S.cfg = { ...S.cfg, ...JSON.parse(raw) }; } catch(e) {}
-  }
-  document.getElementById('sToken').value = S.cfg.token || '';
-  document.getElementById('sRepo').value  = S.cfg.repo  || 'adamsemien/Adam-tools';
-  document.getElementById('sBase').value  = S.cfg.base  || 'https://adam-tools.netlify.app';
+  if (raw) { try { S.cfg={...S.cfg,...JSON.parse(raw)}; } catch(e){} }
+  document.getElementById('sToken').value = S.cfg.token||'';
+  document.getElementById('sRepo').value  = S.cfg.repo||'adamsemien/Adam-tools';
+  document.getElementById('sBase').value  = S.cfg.base||'https://adam-tools.netlify.app';
 }
 
 function saveSettings() {
   S.cfg.token = document.getElementById('sToken').value.trim();
   S.cfg.repo  = document.getElementById('sRepo').value.trim();
-  S.cfg.base  = document.getElementById('sBase').value.trim().replace(/\/$/, '');
-  localStorage.setItem('console_v2', JSON.stringify(S.cfg));
+  S.cfg.base  = document.getElementById('sBase').value.trim().replace(/\/$/,'');
+  localStorage.setItem('console_v2',JSON.stringify(S.cfg));
   hide('settingsModal');
-  if (S.cfg.token) loadArtifacts();
-  else toast('Settings saved.', 'ok');
+  if(S.cfg.token) loadArtifacts(); else toast('Settings saved.','ok');
 }
 
 async function testConn() {
-  const token = document.getElementById('sToken').value.trim();
-  const repo  = document.getElementById('sRepo').value.trim();
-  const el = document.getElementById('connResult');
-  el.textContent = 'Testing…';
-  try {
-    const r = await ghGet(`repos/${repo}`, token);
-    el.innerHTML = `<span style="color:var(--green)">✓ Connected to ${r.full_name}</span>`;
-  } catch(e) {
-    el.innerHTML = `<span style="color:var(--red)">✗ ${e.message}</span>`;
-  }
+  const token=document.getElementById('sToken').value.trim();
+  const repo=document.getElementById('sRepo').value.trim();
+  const el=document.getElementById('connResult');
+  el.textContent='Testing…';
+  try { const r=await ghGet(`repos/${repo}`,token); el.innerHTML=`<span style="color:var(--green)">✓ ${r.full_name}</span>`; }
+  catch(e) { el.innerHTML=`<span style="color:var(--red)">✗ ${e.message}</span>`; }
 }
 
-async function ghGet(path, token) {
-  const tok = token || S.cfg.token;
-  const r = await fetch(`https://api.github.com/${path}`, {
-    headers: { Authorization: `Bearer ${tok}`, Accept: 'application/vnd.github.v3+json' }
-  });
-  if (!r.ok) { const j = await r.json().catch(()=>{}); throw new Error(j?.message || `HTTP ${r.status}`); }
+async function ghGet(path,token) {
+  const tok=token||S.cfg.token;
+  const r=await fetch(`https://api.github.com/${path}`,{headers:{Authorization:`Bearer ${tok}`,Accept:'application/vnd.github.v3+json'}});
+  if(!r.ok){const j=await r.json().catch(()=>{});throw new Error(j?.message||`HTTP ${r.status}`);}
   return r.json();
 }
 
-async function ghPut(path, content, message, sha) {
-  const r = await fetch(`https://api.github.com/repos/${S.cfg.repo}/contents/${path}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${S.cfg.token}`,
-      Accept: 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      message,
-      content: btoa(unescape(encodeURIComponent(content))),
-      ...(sha && { sha })
-    })
+async function ghPut(path,content,message,sha) {
+  const r=await fetch(`https://api.github.com/repos/${S.cfg.repo}/contents/${path}`,{
+    method:'PUT',
+    headers:{Authorization:`Bearer ${S.cfg.token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},
+    body:JSON.stringify({message,content:btoa(unescape(encodeURIComponent(content))),...(sha&&{sha})})
   });
-  if (!r.ok) { const j = await r.json().catch(()=>{}); throw new Error(j?.message || `HTTP ${r.status}`); }
+  if(!r.ok){const j=await r.json().catch(()=>{});throw new Error(j?.message||`HTTP ${r.status}`);}
   return r.json();
 }
 
 async function loadArtifacts() {
-  if (!S.cfg.token) {
-    setStatus('off', 'Not connected');
-    showState('empty');
-    return;
-  }
-  setStatus('spin', 'Syncing…');
+  if(!S.cfg.token){setStatus('off','Not connected');showState('empty');return;}
+  setStatus('spin','Syncing…');
   showState('loading');
   try {
-    const files = await ghGet(`repos/${S.cfg.repo}/contents`);
-    const htmlFiles = files.filter(f =>
-      f.name.endsWith('.html') &&
-      f.name !== 'index.html' &&
-      f.type === 'file'
-    );
-    const artifacts = [];
-    for (let i = 0; i < htmlFiles.length; i += 6) {
-      const batch = htmlFiles.slice(i, i + 6);
-      const results = await Promise.all(batch.map(async f => {
-        let modified = null;
-        try {
-          const commits = await ghGet(`repos/${S.cfg.repo}/commits?path=${encodeURIComponent(f.name)}&per_page=1`);
-          if (commits.length) modified = commits[0].commit.committer.date;
-        } catch(e) {}
-        return {
-          name: f.name,
-          display: prettify(f.name),
-          project: detectProject(f.name),
-          url: `${S.cfg.base}/${f.name}`,
-          sha: f.sha,
-          size: f.size,
-          modified,
-        };
+    const files=await ghGet(`repos/${S.cfg.repo}/contents`);
+    const htmlFiles=files.filter(f=>f.name.endsWith('.html')&&f.name!=='index.html'&&f.type==='file');
+    const artifacts=[];
+    for(let i=0;i<htmlFiles.length;i+=6){
+      const batch=htmlFiles.slice(i,i+6);
+      const results=await Promise.all(batch.map(async f=>{
+        let modified=null;
+        try{const c=await ghGet(`repos/${S.cfg.repo}/commits?path=${encodeURIComponent(f.name)}&per_page=1`);if(c.length)modified=c[0].commit.committer.date;}catch(e){}
+        return{name:f.name,display:prettify(f.name),project:detectProject(f.name),url:`${S.cfg.base}/${f.name}`,sha:f.sha,size:f.size,modified};
       }));
       artifacts.push(...results);
     }
-    artifacts.sort((a, b) => {
-      if (!a.modified && !b.modified) return 0;
-      if (!a.modified) return 1;
-      if (!b.modified) return -1;
-      return new Date(b.modified) - new Date(a.modified);
-    });
-    S.artifacts = artifacts;
-    setStatus('on', `${artifacts.length} artifacts`);
+    S.artifacts=artifacts;
+    setStatus('on',`${artifacts.length} artifacts`);
     buildSidebar();
+    buildChips();
     applyFilter();
   } catch(err) {
     console.error(err);
-    setStatus('off', 'Error');
-    showState('error', err.message);
-    toast('Load failed: ' + err.message, 'err');
+    setStatus('off','Error');
+    showState('error',err.message);
+    toast('Load failed: '+err.message,'err');
   }
 }
 
-let _uploadContent = null;
+let _uploadContent=null;
 
 async function pushArtifact() {
-  const activeTabLabel = document.querySelector('#addModal .tab.active')?.textContent?.trim();
-  let name, content;
-  if (activeTabLabel === 'Upload File' && _uploadContent) {
-    name    = document.getElementById('uploadName').value.trim();
-    content = _uploadContent;
-  } else {
-    name    = document.getElementById('newName').value.trim();
-    content = document.getElementById('newContent').value.trim();
-  }
-  if (!name)    { toast('Please enter a filename.', 'err'); return; }
-  if (!content) { toast('Please add HTML content.', 'err'); return; }
-  if (!S.cfg.token) { toast('GitHub token required — check Settings.', 'err'); return; }
-  const filename = name.endsWith('.html') ? name : name + '.html';
-  const btn = document.getElementById('pushBtn');
-  btn.textContent = 'Pushing…'; btn.disabled = true;
+  const tab=document.querySelector('#addModal .tab.active')?.textContent?.trim();
+  let name,content;
+  if(tab==='Upload File'&&_uploadContent){name=document.getElementById('uploadName').value.trim();content=_uploadContent;}
+  else{name=document.getElementById('newName').value.trim();content=document.getElementById('newContent').value.trim();}
+  if(!name){toast('Please enter a filename.','err');return;}
+  if(!content){toast('Please add HTML content.','err');return;}
+  if(!S.cfg.token){toast('GitHub token required — check Settings.','err');return;}
+  const filename=name.endsWith('.html')?name:name+'.html';
+  const btn=document.getElementById('pushBtn');
+  btn.textContent='Pushing…';btn.disabled=true;
   try {
-    let sha = null;
-    try { sha = (await ghGet(`repos/${S.cfg.repo}/contents/${filename}`)).sha; } catch(e) {}
-    await ghPut(filename, content, `Add artifact: ${filename}`, sha);
+    let sha=null;
+    try{sha=(await ghGet(`repos/${S.cfg.repo}/contents/${filename}`)).sha;}catch(e){}
+    await ghPut(filename,content,`Add artifact: ${filename}`,sha);
     hide('addModal');
-    document.getElementById('newName').value = '';
-    document.getElementById('newContent').value = '';
-    _uploadContent = null;
-    toast(`✓ ${filename} pushed — deploying now…`, 'ok');
-    setTimeout(loadArtifacts, 3500);
-  } catch(err) {
-    toast('Push failed: ' + err.message, 'err');
-  } finally {
-    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Push to GitHub`;
-    btn.disabled = false;
+    document.getElementById('newName').value='';
+    document.getElementById('newContent').value='';
+    _uploadContent=null;
+    toast(`✓ ${filename} pushed — deploying now…`,'ok');
+    setTimeout(loadArtifacts,3500);
+  } catch(err){toast('Push failed: '+err.message,'err');}
+  finally{
+    btn.innerHTML=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Push to GitHub`;
+    btn.disabled=false;
   }
 }
 
-function handleFile(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    _uploadContent = ev.target.result;
-    document.getElementById('uploadName').value = file.name;
-    document.getElementById('uploadMeta').style.display = 'block';
-    document.getElementById('dz').innerHTML = `<div style="font-size:22px">✅</div><div>${file.name}</div><div style="font-size:10px;margin-top:3px;color:var(--text3)">${(file.size/1024).toFixed(1)} KB — click to change</div>`;
+function handleFile(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=(ev)=>{
+    _uploadContent=ev.target.result;
+    document.getElementById('uploadName').value=file.name;
+    document.getElementById('uploadMeta').style.display='block';
+    document.getElementById('dz').innerHTML=`<div style="font-size:22px">✅</div><div>${file.name}</div><div style="font-size:10px;margin-top:3px;color:var(--text3)">${(file.size/1024).toFixed(1)} KB — click to change</div>`;
   };
   reader.readAsText(file);
 }
 
-const dz = document.getElementById('dz');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('over'));
-dz.addEventListener('drop', e => {
-  e.preventDefault(); dz.classList.remove('over');
-  const f = e.dataTransfer.files[0];
-  if (f) {
-    const input = document.getElementById('fInput');
-    const dt = new DataTransfer(); dt.items.add(f); input.files = dt.files;
-    handleFile({ target: input });
-  }
+const dz=document.getElementById('dz');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{
+  e.preventDefault();dz.classList.remove('over');
+  const f=e.dataTransfer.files[0];
+  if(f){const input=document.getElementById('fInput');const dt=new DataTransfer();dt.items.add(f);input.files=dt.files;handleFile({target:input});}
 });
 
-function applyFilter() {
-  let list = S.artifacts;
-  if (S.proj !== 'all') list = list.filter(a => a.project === S.proj);
-  if (S.q) {
-    const q = S.q.toLowerCase();
-    list = list.filter(a => a.name.toLowerCase().includes(q) || a.display.toLowerCase().includes(q));
-  }
-  S.filtered = list;
+function applyFilter(){
+  let list=[...S.artifacts];
+  if(S.proj!=='all') list=list.filter(a=>a.project===S.proj);
+  if(S.q){const q=S.q.toLowerCase();list=list.filter(a=>a.name.toLowerCase().includes(q)||a.display.toLowerCase().includes(q));}
+  const{by,dir}=S.sort;
+  list.sort((a,b)=>{
+    if(by==='name'){const va=a.display.toLowerCase(),vb=b.display.toLowerCase();return dir==='asc'?va.localeCompare(vb):vb.localeCompare(va);}
+    if(by==='project'){const cmp=a.project.localeCompare(b.project);return dir==='asc'?cmp:-cmp;}
+    let va,vb;
+    if(by==='date'){va=a.modified?new Date(a.modified).getTime():0;vb=b.modified?new Date(b.modified).getTime():0;}
+    else{va=a.size||0;vb=b.size||0;}
+    return dir==='asc'?va-vb:vb-va;
+  });
+  S.filtered=list;
   render();
 }
 
-function render() {
-  const wrap = document.getElementById('artifactsWrap');
-  const items = S.filtered;
-  document.getElementById('toolbarCount').textContent =
-    items.length ? `${items.length} artifact${items.length !== 1 ? 's' : ''}` : '';
-  if (!items.length) {
-    const isSearch = !!S.q;
-    wrap.innerHTML = `<div class="state-box">
-      <div class="icon">${isSearch ? '🔍' : '📭'}</div>
-      <h3>${isSearch ? 'No results' : 'No artifacts here'}</h3>
-      <p>${isSearch ? 'Try a different search term.' : 'Push your first artifact to get started.'}</p>
-      ${!isSearch ? `<button class="btn btn-primary" onclick="showAdd()">New Artifact</button>` : ''}
-    </div>`;
+function setSort(by){S.sort.by=by;applyFilter();}
+function toggleDir(){
+  S.sort.dir=S.sort.dir==='asc'?'desc':'asc';
+  document.getElementById('dirBtn').textContent=S.sort.dir==='asc'?'↑':'↓';
+  applyFilter();
+}
+
+function buildChips(){
+  const chips=document.getElementById('filterChips');
+  const counts={};
+  S.artifacts.forEach(a=>{counts[a.project]=(counts[a.project]||0)+1;});
+  if(!Object.keys(counts).length){chips.style.display='none';return;}
+  let html=`<span style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-right:3px">Filter</span>`;
+  html+=`<div class="chip ${S.proj==='all'?'active':''}" style="${S.proj==='all'?'background:var(--accent)':''}" onclick="chipFilter('all',this)">All <span style="opacity:0.7">${S.artifacts.length}</span></div>`;
+  for(const[key,p]of Object.entries(PROJECTS)){
+    if(!counts[key])continue;
+    const isActive=S.proj===key;
+    html+=`<div class="chip ${isActive?'active':''}" style="${isActive?`background:${p.color}`:''}" onclick="chipFilter('${key}',this)"><span class="chip-dot" style="background:${p.color}"></span>${p.label} <span style="opacity:0.7">${counts[key]}</span></div>`;
+  }
+  chips.innerHTML=html;
+  chips.style.display='flex';
+}
+
+function chipFilter(proj,el){
+  S.proj=proj;
+  document.querySelectorAll('.nav-item[data-proj]').forEach(i=>i.classList.toggle('active',i.dataset.proj===proj));
+  document.getElementById('toolbarTitle').textContent=proj==='all'?'All Artifacts':(PROJECTS[proj]?.label||proj);
+  buildChips();
+  applyFilter();
+}
+
+function render(){
+  const wrap=document.getElementById('artifactsWrap');
+  const items=S.filtered;
+  document.getElementById('toolbarCount').textContent=items.length?`${items.length} artifact${items.length!==1?'s':''}`:'';
+  if(!items.length){
+    const isSearch=!!S.q;
+    wrap.innerHTML=`<div class="state-box"><div class="icon">${isSearch?'🔍':'📭'}</div><h3>${isSearch?'No results':'No artifacts here'}</h3><p>${isSearch?'Try a different search term.':'Push your first artifact to get started.'}</p>${!isSearch?`<button class="btn btn-primary" onclick="showAdd()">New Artifact</button>`:''}</div>`;
     return;
   }
-  const container = S.view === 'grid'
-    ? `<div class="grid">${items.map(cardHTML).join('')}</div>`
-    : `<div class="list">${items.map(rowHTML).join('')}</div>`;
-  wrap.innerHTML = container;
+  wrap.innerHTML=S.view==='grid'?`<div class="grid">${items.map(cardHTML).join('')}</div>`:`<div class="list">${items.map(rowHTML).join('')}</div>`;
 }
 
-function cardHTML(a) {
-  const p = PROJECTS[a.project] || PROJECTS.other;
-  const esc = (s) => s.replace(/'/g, "\\'" );
-  const thumbIcon = p.logoUrl
-    ? `<img class="proj-logo" src="${p.logoUrl}" alt="${p.label}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" /><span style="display:none">${p.icon}</span>`
-    : `<span>${p.icon}</span>`;
-  return `
-    <div class="card" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
-      <div class="card-thumb" style="background:${p.bg}">
-        ${thumbIcon}
-        <span class="card-badge" style="background:${p.bg};color:${p.color};border:1px solid ${p.color}40">${p.label}</span>
-      </div>
-      <div class="card-body">
-        <div class="card-name" title="${a.display}">${a.display}</div>
-        <div class="card-file">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div>
-        <div class="card-actions">
-          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button>
-          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button>
-        </div>
-      </div>
-    </div>`;
-}
-
-function rowHTML(a) {
-  const p = PROJECTS[a.project] || PROJECTS.other;
-  const esc = (s) => s.replace(/'/g, "\\'" );
-  const rowIcon = p.logoUrl
-    ? `<img src="${p.logoUrl}" alt="${p.label}" style="width:20px;height:20px;border-radius:4px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" /><span style="display:none">${p.icon}</span>`
-    : p.icon;
-  return `
-    <div class="row" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
-      <div class="row-icon" style="background:${p.bg}">${rowIcon}</div>
-      <div class="row-info">
-        <div class="row-name">${a.display}</div>
-        <div class="row-meta">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div>
-      </div>
-      <span class="row-badge" style="background:${p.bg};color:${p.color}">${p.label}</span>
-      <div class="row-actions">
+function cardHTML(a){
+  const p=PROJECTS[a.project]||PROJECTS.other;
+  const esc=s=>s.replace(/'/g,"\\'");
+  const thumb=p.logoUrl?`<img class="proj-logo" src="${p.logoUrl}" alt="${p.label}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"/><span style="display:none">${p.icon}</span>`:`<span>${p.icon}</span>`;
+  return `<div class="card" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
+    <div class="card-thumb" style="background:${p.bg}">${thumb}<span class="card-badge" style="background:${p.bg};color:${p.color};border:1px solid ${p.color}40">${p.label}</span></div>
+    <div class="card-body">
+      <div class="card-name" title="${a.display}">${a.display}</div>
+      <div class="card-file">${a.modified?fmtDate(a.modified):''}${a.size?' · '+fmtSize(a.size):''}</div>
+      <div class="card-actions">
         <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button>
         <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button>
       </div>
-    </div>`;
+    </div>
+  </div>`;
 }
 
-function buildSidebar() {
-  const counts = {};
-  S.artifacts.forEach(a => { counts[a.project] = (counts[a.project] || 0) + 1; });
-  const el = document.getElementById('projNav');
-  let html = '<div class="nav-label">Projects</div>';
-  for (const [key, p] of Object.entries(PROJECTS)) {
-    if (!counts[key]) continue;
-    const active = S.proj === key ? 'active' : '';
-    html += `<div class="nav-item ${active}" data-proj="${key}" onclick="filterProj('${key}',this)">
-      <span class="proj-dot" style="background:${p.color}"></span>
-      ${p.label}
-      <span class="nav-count">${counts[key]}</span>
-    </div>`;
+function rowHTML(a){
+  const p=PROJECTS[a.project]||PROJECTS.other;
+  const esc=s=>s.replace(/'/g,"\\'");
+  const icon=p.logoUrl?`<img src="${p.logoUrl}" alt="${p.label}" style="width:20px;height:20px;border-radius:4px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"/><span style="display:none">${p.icon}</span>`:p.icon;
+  return `<div class="row" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
+    <div class="row-icon" style="background:${p.bg}">${icon}</div>
+    <div class="row-info"><div class="row-name">${a.display}</div><div class="row-meta">${a.name}${a.modified?' · '+fmtDate(a.modified):''}${a.size?' · '+fmtSize(a.size):''}</div></div>
+    <span class="row-badge" style="background:${p.bg};color:${p.color}">${p.label}</span>
+    <div class="row-actions">
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button>
+      <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button>
+    </div>
+  </div>`;
+}
+
+function buildSidebar(){
+  const counts={};
+  S.artifacts.forEach(a=>{counts[a.project]=(counts[a.project]||0)+1;});
+  const el=document.getElementById('projNav');
+  let html='<div class="nav-label">Projects</div>';
+  for(const[key,p]of Object.entries(PROJECTS)){
+    if(!counts[key])continue;
+    const active=S.proj===key?'active':'';
+    html+=`<div class="nav-item ${active}" data-proj="${key}" onclick="filterProj('${key}',this)"><span class="proj-dot" style="background:${p.color}"></span>${p.label}<span class="nav-count">${counts[key]}</span></div>`;
   }
-  el.innerHTML = html;
-  document.getElementById('cnt-all').textContent = S.artifacts.length;
+  el.innerHTML=html;
+  document.getElementById('cnt-all').textContent=S.artifacts.length;
 }
 
-function filterProj(proj, el) {
-  S.proj = proj;
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+function filterProj(proj,el){
+  S.proj=proj;
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
   el.classList.add('active');
-  const title = proj === 'all' ? 'All Artifacts' : (PROJECTS[proj]?.label || proj);
-  document.getElementById('toolbarTitle').textContent = title;
+  document.getElementById('toolbarTitle').textContent=proj==='all'?'All Artifacts':(PROJECTS[proj]?.label||proj);
+  buildChips();
   applyFilter();
 }
 
-let _pvUrl = '';
-function openPv(name, url) {
-  _pvUrl = url;
-  document.getElementById('pvTitle').textContent   = prettify(name);
-  document.getElementById('pvUrlText').textContent  = url;
-  document.getElementById('pframe').src             = url;
-  document.getElementById('pvOpenBtn').onclick      = () => window.open(url, '_blank');
+let _pvUrl='';
+function openPv(name,url){
+  _pvUrl=url;
+  document.getElementById('pvTitle').textContent=prettify(name);
+  document.getElementById('pvUrlText').textContent=url;
+  document.getElementById('pframe').src=url;
+  document.getElementById('pvOpenBtn').onclick=()=>window.open(url,'_blank');
   show('previewModal');
 }
-function closePv() {
-  document.getElementById('pframe').src = 'about:blank';
-  hide('previewModal');
+function closePv(){document.getElementById('pframe').src='about:blank';hide('previewModal');}
+function copyPvUrl(){cpUrl(_pvUrl);}
+
+function show(id){document.getElementById(id).classList.remove('hidden');}
+function hide(id){document.getElementById(id).classList.add('hidden');}
+function setStatus(state,text){
+  document.getElementById('statusDot').className='status-dot '+({on:'dot-on',off:'dot-off',spin:'dot-spin'}[state]||'dot-off');
+  document.getElementById('statusTxt').textContent=text;
 }
-function copyPvUrl() { cpUrl(_pvUrl); }
-
-function show(id) { document.getElementById(id).classList.remove('hidden'); }
-function hide(id) { document.getElementById(id).classList.add('hidden'); }
-
-function setStatus(state, text) {
-  const dot = document.getElementById('statusDot');
-  dot.className = 'status-dot ' + ({ on: 'dot-on', off: 'dot-off', spin: 'dot-spin' }[state] || 'dot-off');
-  document.getElementById('statusTxt').textContent = text;
+function showState(type,msg){
+  const wrap=document.getElementById('artifactsWrap');
+  if(type==='loading')wrap.innerHTML=`<div class="state-box"><div class="spinner"></div><span style="color:var(--text3);font-size:12px">Loading from GitHub…</span></div>`;
+  else if(type==='empty')wrap.innerHTML=`<div class="state-box"><div class="icon">◈</div><h3>Connect to GitHub</h3><p>Add your GitHub token in Settings to load all your artifacts.</p><button class="btn btn-primary" onclick="showSettings()">Open Settings</button></div>`;
+  else if(type==='error')wrap.innerHTML=`<div class="state-box"><div class="icon">⚠️</div><h3>Could not load</h3><p>${msg||'Check your token and repo name.'}</p><button class="btn btn-ghost" onclick="showSettings()">Settings</button></div>`;
 }
-
-function showState(type, msg) {
-  const wrap = document.getElementById('artifactsWrap');
-  if (type === 'loading') {
-    wrap.innerHTML = `<div class="state-box"><div class="spinner"></div><span style="color:var(--text3);font-size:12px">Loading from GitHub…</span></div>`;
-  } else if (type === 'empty') {
-    wrap.innerHTML = `<div class="state-box"><div class="icon">◈</div><h3>Connect to GitHub</h3><p>Add your GitHub token in Settings to load all your artifacts.</p><button class="btn btn-primary" onclick="showSettings()">Open Settings</button></div>`;
-  } else if (type === 'error') {
-    wrap.innerHTML = `<div class="state-box"><div class="icon">⚠️</div><h3>Could not load</h3><p>${msg || 'Check your GitHub token and repo name.'}</p><button class="btn btn-ghost" onclick="showSettings()">Settings</button></div>`;
-  }
-}
-
-function setView(v, btn) {
-  S.view = v;
-  document.getElementById('vGrid').classList.toggle('active', v === 'grid');
-  document.getElementById('vList').classList.toggle('active', v === 'list');
+function setView(v,btn){
+  S.view=v;
+  document.getElementById('vGrid').classList.toggle('active',v==='grid');
+  document.getElementById('vList').classList.toggle('active',v==='list');
   render();
 }
-
-function cpUrl(url) {
-  navigator.clipboard.writeText(url).then(() => toast('URL copied!', 'ok'));
-}
-
-function toast(msg, type = 'ok') {
-  const c = document.getElementById('toasts');
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  const icon = type === 'ok' ? `<span style="color:var(--green)">✓</span>` : `<span style="color:var(--red)">✗</span>`;
-  el.innerHTML = `${icon} ${msg}`;
+function cpUrl(url){navigator.clipboard.writeText(url).then(()=>toast('URL copied!','ok'));}
+function toast(msg,type='ok'){
+  const c=document.getElementById('toasts');
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.innerHTML=`${type==='ok'?`<span style="color:var(--green)">✓</span>`:`<span style="color:var(--red)">✗</span>`} ${msg}`;
   c.appendChild(el);
-  setTimeout(() => {
-    el.style.transition = '0.25s';
-    el.style.opacity = '0';
-    el.style.transform = 'translateX(110%)';
-    setTimeout(() => el.remove(), 260);
-  }, 3000);
+  setTimeout(()=>{el.style.transition='0.25s';el.style.opacity='0';el.style.transform='translateX(110%)';setTimeout(()=>el.remove(),260);},3000);
 }
-
-function switchAddTab(tab, el) {
-  document.querySelectorAll('#addModal .tab').forEach(t => t.classList.remove('active'));
+function switchAddTab(tab,el){
+  document.querySelectorAll('#addModal .tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('tab-paste').style.display = tab === 'paste' ? 'block' : 'none';
-  document.getElementById('tab-upload').style.display = tab === 'upload' ? 'block' : 'none';
+  document.getElementById('tab-paste').style.display=tab==='paste'?'block':'none';
+  document.getElementById('tab-upload').style.display=tab==='upload'?'block':'none';
 }
+function showAdd(){show('addModal');}
+function showSettings(){loadCfg();show('settingsModal');}
 
-function showAdd() { show('addModal'); }
-function showSettings() { loadCfg(); show('settingsModal'); }
-
-document.querySelectorAll('.overlay').forEach(o => {
-  o.addEventListener('click', e => {
-    if (e.target === o) {
-      if (o.id === 'previewModal') closePv();
-      else hide(o.id);
-    }
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{
+    if(e.target===o){if(o.id==='previewModal')closePv();else hide(o.id);}
   });
 });
-
-document.getElementById('searchInput').addEventListener('input', e => {
-  S.q = e.target.value;
-  applyFilter();
-});
+document.getElementById('searchInput').addEventListener('input',e=>{S.q=e.target.value;applyFilter();});
 
 loadCfg();
-if (S.cfg.token) {
-  loadArtifacts();
-} else {
-  showState('empty');
-}
+if(S.cfg.token)loadArtifacts();
+else showState('empty');
 </script>
 </body>
 </html>
