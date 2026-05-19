@@ -168,19 +168,24 @@
     .card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 6px 24px rgba(124,58,237,0.12); }
     .card-thumb {
       height: 120px; display: flex; align-items: center;
-      justify-content: center; font-size: 38px; position: relative;
+      justify-content: center; font-size: 44px; position: relative;
+    }
+    .card-thumb img.proj-logo {
+      width: 52px; height: 52px; border-radius: 10px; object-fit: contain;
+      background: rgba(255,255,255,0.08); padding: 4px;
     }
     .card-badge {
       position: absolute; top: 8px; right: 8px;
       font-size: 9px; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.06em; padding: 2px 7px; border-radius: 8px;
     }
-    .card-body { padding: 11px 12px 12px; }
+    .card-body { padding: 11px 12px 13px; }
     .card-name {
-      font-weight: 600; font-size: 12px; margin-bottom: 3px;
+      font-weight: 600; font-size: 13px; margin-bottom: 4px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      color: var(--text);
     }
-    .card-file { font-size: 10px; color: var(--text3); margin-bottom: 8px; }
+    .card-file { font-size: 11px; color: var(--text2); margin-bottom: 9px; opacity: 0.8; }
     .card-actions { display: flex; gap: 5px; }
 
     /* Row */
@@ -564,7 +569,7 @@
 
 <script>
 const PROJECTS = {
-  canto:   { label: 'Canto',   color: '#a78bfa', bg: 'rgba(124,58,237,0.18)',  icon: '🎵' },
+  canto:   { label: 'Canto',   color: '#a78bfa', bg: 'rgba(124,58,237,0.18)',  icon: '🎵', logoUrl: 'https://logo.clearbit.com/canto.com' },
   nbc:     { label: 'NBC',     color: '#fb923c', bg: 'rgba(249,115,22,0.18)',  icon: '🏢' },
   partner: { label: 'Partner', color: '#38bdf8', bg: 'rgba(14,165,233,0.18)', icon: '🤝' },
   docs:    { label: 'Docs',    color: '#4ade80', bg: 'rgba(34,197,94,0.18)',   icon: '📋' },
@@ -660,12 +665,20 @@ async function ghPut(path, content, message, sha) {
 }
 
 async function loadArtifacts() {
-  if (!S.cfg.token) { setStatus('off', 'Not connected'); showState('empty'); return; }
+  if (!S.cfg.token) {
+    setStatus('off', 'Not connected');
+    showState('empty');
+    return;
+  }
   setStatus('spin', 'Syncing…');
   showState('loading');
   try {
     const files = await ghGet(`repos/${S.cfg.repo}/contents`);
-    const htmlFiles = files.filter(f => f.name.endsWith('.html') && f.name !== 'index.html' && f.type === 'file');
+    const htmlFiles = files.filter(f =>
+      f.name.endsWith('.html') &&
+      f.name !== 'index.html' &&
+      f.type === 'file'
+    );
     const artifacts = [];
     for (let i = 0; i < htmlFiles.length; i += 6) {
       const batch = htmlFiles.slice(i, i + 6);
@@ -675,11 +688,24 @@ async function loadArtifacts() {
           const commits = await ghGet(`repos/${S.cfg.repo}/commits?path=${encodeURIComponent(f.name)}&per_page=1`);
           if (commits.length) modified = commits[0].commit.committer.date;
         } catch(e) {}
-        return { name: f.name, display: prettify(f.name), project: detectProject(f.name), url: `${S.cfg.base}/${f.name}`, sha: f.sha, size: f.size, modified };
+        return {
+          name: f.name,
+          display: prettify(f.name),
+          project: detectProject(f.name),
+          url: `${S.cfg.base}/${f.name}`,
+          sha: f.sha,
+          size: f.size,
+          modified,
+        };
       }));
       artifacts.push(...results);
     }
-    artifacts.sort((a, b) => { if (!a.modified && !b.modified) return 0; if (!a.modified) return 1; if (!b.modified) return -1; return new Date(b.modified) - new Date(a.modified); });
+    artifacts.sort((a, b) => {
+      if (!a.modified && !b.modified) return 0;
+      if (!a.modified) return 1;
+      if (!b.modified) return -1;
+      return new Date(b.modified) - new Date(a.modified);
+    });
     S.artifacts = artifacts;
     setStatus('on', `${artifacts.length} artifacts`);
     buildSidebar();
@@ -698,13 +724,13 @@ async function pushArtifact() {
   const activeTabLabel = document.querySelector('#addModal .tab.active')?.textContent?.trim();
   let name, content;
   if (activeTabLabel === 'Upload File' && _uploadContent) {
-    name = document.getElementById('uploadName').value.trim();
+    name    = document.getElementById('uploadName').value.trim();
     content = _uploadContent;
   } else {
-    name = document.getElementById('newName').value.trim();
+    name    = document.getElementById('newName').value.trim();
     content = document.getElementById('newContent').value.trim();
   }
-  if (!name) { toast('Please enter a filename.', 'err'); return; }
+  if (!name)    { toast('Please enter a filename.', 'err'); return; }
   if (!content) { toast('Please add HTML content.', 'err'); return; }
   if (!S.cfg.token) { toast('GitHub token required — check Settings.', 'err'); return; }
   const filename = name.endsWith('.html') ? name : name + '.html';
@@ -757,7 +783,10 @@ dz.addEventListener('drop', e => {
 function applyFilter() {
   let list = S.artifacts;
   if (S.proj !== 'all') list = list.filter(a => a.project === S.proj);
-  if (S.q) { const q = S.q.toLowerCase(); list = list.filter(a => a.name.toLowerCase().includes(q) || a.display.toLowerCase().includes(q)); }
+  if (S.q) {
+    const q = S.q.toLowerCase();
+    list = list.filter(a => a.name.toLowerCase().includes(q) || a.display.toLowerCase().includes(q));
+  }
   S.filtered = list;
   render();
 }
@@ -765,37 +794,66 @@ function applyFilter() {
 function render() {
   const wrap = document.getElementById('artifactsWrap');
   const items = S.filtered;
-  document.getElementById('toolbarCount').textContent = items.length ? `${items.length} artifact${items.length !== 1 ? 's' : ''}` : '';
+  document.getElementById('toolbarCount').textContent =
+    items.length ? `${items.length} artifact${items.length !== 1 ? 's' : ''}` : '';
   if (!items.length) {
     const isSearch = !!S.q;
-    wrap.innerHTML = `<div class="state-box"><div class="icon">${isSearch ? '🔍' : '📭'}</div><h3>${isSearch ? 'No results' : 'No artifacts here'}</h3><p>${isSearch ? 'Try a different search term.' : 'Push your first artifact to get started.'}</p>${!isSearch ? `<button class="btn btn-primary" onclick="showAdd()">New Artifact</button>` : ''}</div>`;
+    wrap.innerHTML = `<div class="state-box">
+      <div class="icon">${isSearch ? '🔍' : '📭'}</div>
+      <h3>${isSearch ? 'No results' : 'No artifacts here'}</h3>
+      <p>${isSearch ? 'Try a different search term.' : 'Push your first artifact to get started.'}</p>
+      ${!isSearch ? `<button class="btn btn-primary" onclick="showAdd()">New Artifact</button>` : ''}
+    </div>`;
     return;
   }
-  const container = S.view === 'grid' ? `<div class="grid">${items.map(cardHTML).join('')}</div>` : `<div class="list">${items.map(rowHTML).join('')}</div>`;
+  const container = S.view === 'grid'
+    ? `<div class="grid">${items.map(cardHTML).join('')}</div>`
+    : `<div class="list">${items.map(rowHTML).join('')}</div>`;
   wrap.innerHTML = container;
 }
 
 function cardHTML(a) {
   const p = PROJECTS[a.project] || PROJECTS.other;
-  const esc = (s) => s.replace(/'/g, "\\'");
-  return `<div class="card" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
-    <div class="card-thumb" style="background:${p.bg}"><span>${p.icon}</span><span class="card-badge" style="background:${p.bg};color:${p.color};border:1px solid ${p.color}40">${p.label}</span></div>
-    <div class="card-body">
-      <div class="card-name" title="${a.display}">${a.display}</div>
-      <div class="card-file">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div>
-      <div class="card-actions"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button></div>
-    </div></div>`;
+  const esc = (s) => s.replace(/'/g, "\\'" );
+  const thumbIcon = p.logoUrl
+    ? `<img class="proj-logo" src="${p.logoUrl}" alt="${p.label}" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" /><span style="display:none">${p.icon}</span>`
+    : `<span>${p.icon}</span>`;
+  return `
+    <div class="card" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
+      <div class="card-thumb" style="background:${p.bg}">
+        ${thumbIcon}
+        <span class="card-badge" style="background:${p.bg};color:${p.color};border:1px solid ${p.color}40">${p.label}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name" title="${a.display}">${a.display}</div>
+        <div class="card-file">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button>
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button>
+        </div>
+      </div>
+    </div>`;
 }
 
 function rowHTML(a) {
   const p = PROJECTS[a.project] || PROJECTS.other;
-  const esc = (s) => s.replace(/'/g, "\\'");
-  return `<div class="row" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
-    <div class="row-icon" style="background:${p.bg}">${p.icon}</div>
-    <div class="row-info"><div class="row-name">${a.display}</div><div class="row-meta">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div></div>
-    <span class="row-badge" style="background:${p.bg};color:${p.color}">${p.label}</span>
-    <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button></div>
-  </div>`;
+  const esc = (s) => s.replace(/'/g, "\\'" );
+  const rowIcon = p.logoUrl
+    ? `<img src="${p.logoUrl}" alt="${p.label}" style="width:20px;height:20px;border-radius:4px;object-fit:contain" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'" /><span style="display:none">${p.icon}</span>`
+    : p.icon;
+  return `
+    <div class="row" onclick="openPv('${esc(a.name)}','${esc(a.url)}')">
+      <div class="row-icon" style="background:${p.bg}">${rowIcon}</div>
+      <div class="row-info">
+        <div class="row-name">${a.display}</div>
+        <div class="row-meta">${a.name}${a.modified ? ' · ' + fmtDate(a.modified) : ''}</div>
+      </div>
+      <span class="row-badge" style="background:${p.bg};color:${p.color}">${p.label}</span>
+      <div class="row-actions">
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cpUrl('${esc(a.url)}')">Copy URL</button>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();window.open('${esc(a.url)}','_blank')">Open ↗</button>
+      </div>
+    </div>`;
 }
 
 function buildSidebar() {
@@ -806,7 +864,11 @@ function buildSidebar() {
   for (const [key, p] of Object.entries(PROJECTS)) {
     if (!counts[key]) continue;
     const active = S.proj === key ? 'active' : '';
-    html += `<div class="nav-item ${active}" data-proj="${key}" onclick="filterProj('${key}',this)"><span class="proj-dot" style="background:${p.color}"></span>${p.label}<span class="nav-count">${counts[key]}</span></div>`;
+    html += `<div class="nav-item ${active}" data-proj="${key}" onclick="filterProj('${key}',this)">
+      <span class="proj-dot" style="background:${p.color}"></span>
+      ${p.label}
+      <span class="nav-count">${counts[key]}</span>
+    </div>`;
   }
   el.innerHTML = html;
   document.getElementById('cnt-all').textContent = S.artifacts.length;
@@ -816,35 +878,44 @@ function filterProj(proj, el) {
   S.proj = proj;
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('toolbarTitle').textContent = proj === 'all' ? 'All Artifacts' : (PROJECTS[proj]?.label || proj);
+  const title = proj === 'all' ? 'All Artifacts' : (PROJECTS[proj]?.label || proj);
+  document.getElementById('toolbarTitle').textContent = title;
   applyFilter();
 }
 
 let _pvUrl = '';
 function openPv(name, url) {
   _pvUrl = url;
-  document.getElementById('pvTitle').textContent = prettify(name);
-  document.getElementById('pvUrlText').textContent = url;
-  document.getElementById('pframe').src = url;
-  document.getElementById('pvOpenBtn').onclick = () => window.open(url, '_blank');
+  document.getElementById('pvTitle').textContent   = prettify(name);
+  document.getElementById('pvUrlText').textContent  = url;
+  document.getElementById('pframe').src             = url;
+  document.getElementById('pvOpenBtn').onclick      = () => window.open(url, '_blank');
   show('previewModal');
 }
-function closePv() { document.getElementById('pframe').src = 'about:blank'; hide('previewModal'); }
+function closePv() {
+  document.getElementById('pframe').src = 'about:blank';
+  hide('previewModal');
+}
 function copyPvUrl() { cpUrl(_pvUrl); }
 
 function show(id) { document.getElementById(id).classList.remove('hidden'); }
 function hide(id) { document.getElementById(id).classList.add('hidden'); }
 
 function setStatus(state, text) {
-  document.getElementById('statusDot').className = 'status-dot ' + ({ on: 'dot-on', off: 'dot-off', spin: 'dot-spin' }[state] || 'dot-off');
+  const dot = document.getElementById('statusDot');
+  dot.className = 'status-dot ' + ({ on: 'dot-on', off: 'dot-off', spin: 'dot-spin' }[state] || 'dot-off');
   document.getElementById('statusTxt').textContent = text;
 }
 
 function showState(type, msg) {
   const wrap = document.getElementById('artifactsWrap');
-  if (type === 'loading') wrap.innerHTML = `<div class="state-box"><div class="spinner"></div><span style="color:var(--text3);font-size:12px">Loading from GitHub…</span></div>`;
-  else if (type === 'empty') wrap.innerHTML = `<div class="state-box"><div class="icon">◈</div><h3>Connect to GitHub</h3><p>Add your GitHub token in Settings to load all your artifacts.</p><button class="btn btn-primary" onclick="showSettings()">Open Settings</button></div>`;
-  else if (type === 'error') wrap.innerHTML = `<div class="state-box"><div class="icon">⚠️</div><h3>Could not load</h3><p>${msg || 'Check your GitHub token and repo name.'}</p><button class="btn btn-ghost" onclick="showSettings()">Settings</button></div>`;
+  if (type === 'loading') {
+    wrap.innerHTML = `<div class="state-box"><div class="spinner"></div><span style="color:var(--text3);font-size:12px">Loading from GitHub…</span></div>`;
+  } else if (type === 'empty') {
+    wrap.innerHTML = `<div class="state-box"><div class="icon">◈</div><h3>Connect to GitHub</h3><p>Add your GitHub token in Settings to load all your artifacts.</p><button class="btn btn-primary" onclick="showSettings()">Open Settings</button></div>`;
+  } else if (type === 'error') {
+    wrap.innerHTML = `<div class="state-box"><div class="icon">⚠️</div><h3>Could not load</h3><p>${msg || 'Check your GitHub token and repo name.'}</p><button class="btn btn-ghost" onclick="showSettings()">Settings</button></div>`;
+  }
 }
 
 function setView(v, btn) {
@@ -854,15 +925,23 @@ function setView(v, btn) {
   render();
 }
 
-function cpUrl(url) { navigator.clipboard.writeText(url).then(() => toast('URL copied!', 'ok')); }
+function cpUrl(url) {
+  navigator.clipboard.writeText(url).then(() => toast('URL copied!', 'ok'));
+}
 
 function toast(msg, type = 'ok') {
   const c = document.getElementById('toasts');
   const el = document.createElement('div');
   el.className = `toast ${type}`;
-  el.innerHTML = `${type === 'ok' ? '<span style="color:var(--green)">✓</span>' : '<span style="color:var(--red)">✗</span>'} ${msg}`;
+  const icon = type === 'ok' ? `<span style="color:var(--green)">✓</span>` : `<span style="color:var(--red)">✗</span>`;
+  el.innerHTML = `${icon} ${msg}`;
   c.appendChild(el);
-  setTimeout(() => { el.style.transition = '0.25s'; el.style.opacity = '0'; el.style.transform = 'translateX(110%)'; setTimeout(() => el.remove(), 260); }, 3000);
+  setTimeout(() => {
+    el.style.transition = '0.25s';
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(110%)';
+    setTimeout(() => el.remove(), 260);
+  }, 3000);
 }
 
 function switchAddTab(tab, el) {
@@ -876,14 +955,25 @@ function showAdd() { show('addModal'); }
 function showSettings() { loadCfg(); show('settingsModal'); }
 
 document.querySelectorAll('.overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) { if (o.id === 'previewModal') closePv(); else hide(o.id); } });
+  o.addEventListener('click', e => {
+    if (e.target === o) {
+      if (o.id === 'previewModal') closePv();
+      else hide(o.id);
+    }
+  });
 });
 
-document.getElementById('searchInput').addEventListener('input', e => { S.q = e.target.value; applyFilter(); });
+document.getElementById('searchInput').addEventListener('input', e => {
+  S.q = e.target.value;
+  applyFilter();
+});
 
 loadCfg();
-if (S.cfg.token) loadArtifacts();
-else showState('empty');
+if (S.cfg.token) {
+  loadArtifacts();
+} else {
+  showState('empty');
+}
 </script>
 </body>
 </html>
